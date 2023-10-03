@@ -1,0 +1,47 @@
+.contract-endpoints {
+  /*Placeholder*/
+  &-list {
+    /*Placeholder*/
+    &-item {
+      /*Placeholder*/
+    }
+  }
+}
+
+.contract-endpoint-wrapper {
+  /*Placeholder*/
+  .contract-endpoint {
+    /*Placeholder*/
+  }
+  .endpoint-general-error {
+    /*Placeholder*/
+  }
+  .button-write-action,
+  .button-read-action {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+}
+
+.endpoint-output {
+  /*Placeholder*/
+  &-results {
+    /*Placeholder*/
+  }
+}
+.endpoint-input {
+  /*Placeholder*/
+  &-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+.button-add-argument {
+  /*Placeholder*/
+}
+.button-remove-argument {
+  /*Placeholder*/
+}

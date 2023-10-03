@@ -1,0 +1,18 @@
+.input {
+  /*Placeholder*/
+}
+.input-invalid {
+  /*Placeholder*/
+}
+.input-invalid-feedback {
+  /*Placeholder*/
+}
+.input-group {
+  /*Placeholder*/
+  &-prepend,
+  &-append {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+}

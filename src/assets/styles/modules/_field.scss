@@ -1,0 +1,24 @@
+.field-wrapper {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.field {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.525rem;
+  &-name {
+    /*Placeholder*/
+  }
+  &-value {
+    /*Placeholder*/
+  }
+  &-detail {
+    /*Placeholder*/
+  }
+  &-group {
+    /*Placeholder*/
+  }
+}
