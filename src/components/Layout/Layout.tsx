@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useState } from 'react';
 import { Loader } from '@multiversx/sdk-dapp/UI/Loader';
 import classNames from 'classnames';
 import { Tab, Nav } from 'react-bootstrap';
@@ -30,19 +30,12 @@ export const LayoutComponent = (props: SCExplorerType) => {
     hasWriteEndpoints,
     hasEvents,
     hasTypes,
-    hasConstructor,
-    defaultKey
+    hasConstructor
   } = useSupport();
 
   const [activeKey, setActiveKey] = useState<VerifiedContractTabsEnum>(
-    defaultKey ?? VerifiedContractTabsEnum.details
+    VerifiedContractTabsEnum.details
   );
-
-  useEffect(() => {
-    if (defaultKey !== activeKey) {
-      setActiveKey(defaultKey);
-    }
-  }, [defaultKey]);
 
   if (!canView) {
     return loaderComponent ? <>{loaderComponent}</> : <Loader />;

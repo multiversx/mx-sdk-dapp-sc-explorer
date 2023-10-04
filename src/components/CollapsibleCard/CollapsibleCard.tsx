@@ -1,16 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import classNames from 'classnames';
 import { Collapse } from 'react-bootstrap';
 
 import globalStyles from 'assets/styles/globals.module.scss';
 import { Badge } from 'components';
 import { CollapsibleArrows } from './CollapsibleArrows';
+
+import styles from './styles.module.scss';
 import type { CollapsibleCardUIType } from './types';
 
 export const CollapsibleCard = (props: CollapsibleCardUIType) => {
   const {
     isOpen = false,
-    title,
+    title = 'default',
     titleContent,
     children,
     customInterface,
@@ -18,10 +20,17 @@ export const CollapsibleCard = (props: CollapsibleCardUIType) => {
   } = props;
   const [open, setOpen] = useState<boolean>(isOpen);
 
+  useEffect(() => {
+    if (isOpen !== open) {
+      setOpen(isOpen);
+    }
+  }, [isOpen]);
+
   return (
     <div
       className={classNames(
-        globalStyles.card,
+        styles?.collapsibleCard,
+        globalStyles?.card,
         customInterface?.customClassNames?.cardClassName,
         className,
         { open }
@@ -32,21 +41,21 @@ export const CollapsibleCard = (props: CollapsibleCardUIType) => {
         aria-controls={title}
         aria-expanded={open}
         className={classNames(
-          globalStyles.cardHeader,
+          globalStyles?.cardHeader,
           customInterface?.customClassNames?.cardHeaderClassName
         )}
       >
         {titleContent ? (
           titleContent
         ) : (
-          <span className={classNames(globalStyles.cardHeaderTitle)}>
+          <span className={classNames(globalStyles?.cardHeaderTitle)}>
             {title}
           </span>
         )}
         <Badge {...props} />
         <CollapsibleArrows
           expanded={open}
-          className={classNames(globalStyles.cardHeaderCollapseIcon)}
+          className={classNames(globalStyles?.cardHeaderCollapseIcon)}
         />
       </div>
       <Collapse in={open}>

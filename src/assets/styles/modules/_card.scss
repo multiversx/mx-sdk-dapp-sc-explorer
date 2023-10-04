@@ -5,7 +5,6 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    cursor: pointer;
     &-title {
       font-weight: 500;
     }
@@ -27,9 +26,4 @@
     flex-wrap: wrap;
     gap: 1rem;
   }
-}
-
-.wrapper {
-  display: flex;
-  flex: 1 1 auto;
 }

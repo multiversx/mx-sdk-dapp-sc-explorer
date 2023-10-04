@@ -1,11 +1,6 @@
-import { BadgeUIType } from 'types';
+import { BadgeUIType, CardUIType } from 'types';
 
-export interface CollapsibleCardUIType extends BadgeUIType {
-  title: string;
-  titleContent?: React.ReactNode;
-  children?: React.ReactNode;
-  isOpen?: boolean;
-}
+export interface CollapsibleCardUIType extends CardUIType {}
 
 export interface CollapsibleArrowsUIType extends BadgeUIType {
   expanded: boolean;

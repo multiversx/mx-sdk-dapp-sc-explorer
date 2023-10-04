@@ -1,12 +1,14 @@
-import React, { Fragment, useEffect, useRef } from 'react';
+import React, { Fragment, useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 
 import globalStyles from 'assets/styles/globals.module.scss';
+import { PanelHeader } from 'components';
 import {
   CONTRACT_FILE_EXTENSION,
   CONTRACT_FILE_TEST_PATH
 } from 'constants/general';
 import { useScContext } from 'context';
+import { useSupport } from 'hooks';
 
 import { ContractFile } from './ContractFile';
 import styles from './styles.module.scss';
@@ -18,7 +20,8 @@ export const ContractFiles = ({
 }: ContractFilesUIType) => {
   const ref = useRef<HTMLDivElement>(null);
   const { verifiedContract } = useScContext();
-  const files = verifiedContract?.source?.contract?.entries;
+  const { hasSourceCode } = useSupport();
+  const [allExpanded, setAllExpanded] = useState(false);
 
   useEffect(() => {
     setTimeout(() => {
@@ -31,9 +34,11 @@ export const ContractFiles = ({
     }, 200);
   }, [highlightFileHash]);
 
-  if (!(files && files.length > 0)) {
+  if (!hasSourceCode) {
     return null;
   }
+
+  const files = verifiedContract?.source?.contract?.entries ?? [];
 
   const filteredEntries = files.filter(
     ({ path, isTestFile }) =>
@@ -46,10 +51,17 @@ export const ContractFiles = ({
     <div
       className={classNames(
         styles.contractFiles,
-        globalStyles?.wrapper,
+        globalStyles?.panelWrapper,
         customInterface?.customClassNames?.wrapperClassName
       )}
     >
+      <PanelHeader
+        showButtons={filteredEntries.length > 1}
+        onAllExpanded={setAllExpanded}
+        customInterface={customInterface}
+      >
+        Events
+      </PanelHeader>
       {filteredEntries && filteredEntries.length > 0 && (
         <div
           className={classNames(
@@ -69,7 +81,9 @@ export const ContractFiles = ({
                   file={file}
                   entryNumber={index}
                   totalEntries={filteredEntries.length}
-                  isOpen={index === 0 || selectedFile}
+                  isOpen={
+                    filteredEntries.length === 1 || selectedFile || allExpanded
+                  }
                   className={classNames(
                     styles.contractFilesListItem,
                     globalStyles.listItem,

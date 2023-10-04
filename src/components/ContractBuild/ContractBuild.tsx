@@ -7,18 +7,20 @@ import classNames from 'classnames';
 
 import globalStyles from 'assets/styles/globals.module.scss';
 import { CardItem } from 'components';
-import { INTERFACE_NAME_PLACEHOLDER } from 'constants/general';
 import { useScContext } from 'context';
+import { useSupport } from 'hooks';
 
 import styles from './styles.module.scss';
 import { ContractBuildUIType } from './types';
 
 export const ContractBuild = ({ customInterface }: ContractBuildUIType) => {
   const { rawAbi, verifiedContract } = useScContext();
+  const { hasBuildInfo } = useSupport();
 
-  if (!(rawAbi && verifiedContract)) {
+  if (!hasBuildInfo) {
     return null;
   }
+
   return (
     <div
       className={classNames(
@@ -36,7 +38,7 @@ export const ContractBuild = ({ customInterface }: ContractBuildUIType) => {
             customInterface?.customClassNames?.cardItemContainerClassName
           )}
         >
-          {rawAbi?.name && rawAbi.name !== INTERFACE_NAME_PLACEHOLDER && (
+          {rawAbi?.name && (
             <CardItem
               title='Name'
               icon={faCogs}
@@ -112,15 +114,6 @@ export const ContractBuild = ({ customInterface }: ContractBuildUIType) => {
                 {rawAbi.buildInfo.rustc.version}
               </CardItem>
             )}
-            {rawAbi?.buildInfo?.rustc?.short && (
-              <CardItem
-                title='Short'
-                icon={faRust}
-                customInterface={customInterface}
-              >
-                {rawAbi.buildInfo.rustc.short}
-              </CardItem>
-            )}
             {rawAbi?.buildInfo?.rustc?.channel && (
               <CardItem
                 title='Channel'
@@ -128,6 +121,15 @@ export const ContractBuild = ({ customInterface }: ContractBuildUIType) => {
                 customInterface={customInterface}
               >
                 {rawAbi.buildInfo.rustc.channel}
+              </CardItem>
+            )}
+            {rawAbi?.buildInfo?.rustc?.short && (
+              <CardItem
+                title='Short'
+                icon={faRust}
+                customInterface={customInterface}
+              >
+                {rawAbi.buildInfo.rustc.short}
               </CardItem>
             )}
           </div>

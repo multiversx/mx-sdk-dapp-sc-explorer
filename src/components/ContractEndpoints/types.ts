@@ -17,6 +17,7 @@ export interface ContractEndpointsUIType extends UserInterfaceType {
 export interface ContractEndpointUIType extends UserInterfaceType {
   endpoint: EndpointDefinition;
   title?: string;
+  isOpen?: boolean;
 }
 
 export interface EndpointOutputUIType extends UserInterfaceType {

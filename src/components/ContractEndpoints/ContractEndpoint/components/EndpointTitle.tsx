@@ -83,7 +83,10 @@ export const EndpointTitle = (props: ContractEndpointUIType) => {
         />
       )}
       {endpoint?.name && rawAbiEndpoint?.docs && (
-        <DocsTooltip docs={rawAbiEndpoint.docs} />
+        <DocsTooltip
+          docs={rawAbiEndpoint.docs}
+          className={globalStyles.tooltipIcon}
+        />
       )}
     </>
   );

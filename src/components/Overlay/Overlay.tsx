@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { OverlayInjectedProps } from 'react-bootstrap/Overlay';
 
+import globalStyles from 'assets/styles/globals.module.scss';
 import { OverlayUIType } from './types';
 
 export const Overlay = ({
@@ -17,7 +18,7 @@ export const Overlay = ({
     overlay={(props: OverlayInjectedProps) => (
       <Tooltip
         {...props}
-        className={classNames(tooltipClassName)}
+        className={classNames(tooltipClassName, globalStyles?.tooltip)}
         show={props.show}
       >
         {title}

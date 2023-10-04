@@ -5,4 +5,5 @@ export interface ContractTypingsUIType extends UserInterfaceType {}
 
 export interface ContractTypingUIType extends UserInterfaceType {
   type: CustomType;
+  isOpen?: boolean;
 }

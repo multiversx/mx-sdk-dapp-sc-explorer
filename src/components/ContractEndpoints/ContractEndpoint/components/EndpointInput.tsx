@@ -94,9 +94,9 @@ export const EndpointInput = (props: EndpointInputUIType) => {
                           className={classNames(
                             globalStyles.button,
                             globalStyles.buttonSecondary,
-                            customInterface?.customClassNames?.btnClassName,
+                            customInterface?.customClassNames?.buttonClassName,
                             customInterface?.customClassNames
-                              ?.btnSecondaryClassName,
+                              ?.buttonSecondaryClassName,
                             styles?.buttonRemoveArgument
                           )}
                           onClick={() => arrayHelpers.remove(index)}
@@ -115,8 +115,9 @@ export const EndpointInput = (props: EndpointInputUIType) => {
                     className={classNames(
                       globalStyles.button,
                       globalStyles.buttonSecondary,
-                      customInterface?.customClassNames?.btnClassName,
-                      customInterface?.customClassNames?.btnSecondaryClassName,
+                      customInterface?.customClassNames?.buttonClassName,
+                      customInterface?.customClassNames
+                        ?.buttonSecondaryClassName,
                       styles?.buttonAddArgument
                     )}
                     onClick={() => arrayHelpers.insert(value.length, '')}

@@ -48,14 +48,14 @@ export const ContractFile = (props: ContractFileUIType) => {
       className={classNames(className)}
     >
       <div className={classNames(styles.codeBlock)}>
-        <div className={classNames(styles.btnHolder)}>
+        <div className={classNames(styles.buttonHolder)}>
           <CopyButton
             text={codeString}
-            className={classNames(styles.copyBtn)}
+            className={classNames(styles.copyButton)}
           />
           <CopyButton
             text={`${fullPath}#${path}`}
-            className={classNames(styles.linkBtn)}
+            className={classNames(styles.linkButton)}
             copyIcon={linkIcon as any} // TODO fix fontawesome typing issue
           />
         </div>

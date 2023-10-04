@@ -38,8 +38,8 @@ export const ContractEndpoint = (props: ContractEndpointUIType) => {
     if (obj !== undefined) {
       const shapes = {};
       try {
-        const DATA_OBJ_KEYS = Object.keys(obj);
-        DATA_OBJ_KEYS.forEach((parameter) => {
+        const validationKeys = Object.keys(obj);
+        validationKeys.forEach((parameter) => {
           const foundInput = input.find((definition, index) => {
             return getUniqueDefinitionName({ definition, index }) === parameter;
           });
@@ -143,13 +143,14 @@ export const ContractEndpoint = (props: ContractEndpointUIType) => {
               )}
               {canRead &&
                 mutability === ContractEndpointMutabilityEnum.readonly && (
-                  <div className={classNames(styles.endpointReadBtn)}>
+                  <div className={classNames(styles.endpointReadButton)}>
                     <button
                       className={classNames(
                         globalStyles.button,
                         globalStyles.buttonPrimary,
-                        customInterface?.customClassNames?.btnClassName,
-                        customInterface?.customClassNames?.btnPrimaryClassName,
+                        customInterface?.customClassNames?.buttonClassName,
+                        customInterface?.customClassNames
+                          ?.buttonPrimaryClassName,
                         styles?.buttonReadAction
                       )}
                       type='submit'

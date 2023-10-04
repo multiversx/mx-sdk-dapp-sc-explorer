@@ -1,5 +1,6 @@
 export * from 'components/Badge/types';
 export * from 'components/CardItem/types';
+export * from 'components/Card/types';
 export * from 'components/Code/types';
 export * from 'components/CollapsibleCard/types';
 export * from 'components/ContractBuild/types';

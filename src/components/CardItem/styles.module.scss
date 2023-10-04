@@ -1,6 +1,10 @@
 .card-item {
   display: flex;
   flex-basis: 25%;
+  flex-shrink: 1;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 
   /*Placeholder*/
   &-icon {
@@ -13,6 +17,7 @@
     /*Placeholder*/
   }
   &-value {
-    /*Placeholder*/
+    display: flex;
+    flex-wrap: nowrap;
   }
 }

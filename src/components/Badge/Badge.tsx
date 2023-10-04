@@ -9,6 +9,7 @@ export const Badge = ({
   badgeValue = '',
   badgeIcon,
   className,
+  badgeClassName,
   customInterface
 }: BadgeUIType) => {
   if (!badgeValue) {
@@ -20,7 +21,8 @@ export const Badge = ({
       className={classNames(
         className,
         globalStyles.badge,
-        customInterface?.customClassNames?.badgeClassName
+        customInterface?.customClassNames?.badgeClassName,
+        badgeClassName
       )}
     >
       {badgeIcon && (

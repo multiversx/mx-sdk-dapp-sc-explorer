@@ -1,18 +1,11 @@
 import { useScContext } from 'context';
-import {
-  ContractEndpointMutabilityEnum,
-  VerifiedContractTabsEnum
-} from 'types';
+import { ContractEndpointMutabilityEnum } from 'types';
 
 export const useSupport = () => {
   const { canView, canRead, canMutate, rawAbi, verifiedContract, abiRegistry } =
     useScContext();
 
-  const hasBuildInfo = Boolean(rawAbi?.buildInfo && verifiedContract);
-
-  const defaultKey = hasBuildInfo
-    ? VerifiedContractTabsEnum.details
-    : VerifiedContractTabsEnum.readEndpoints;
+  const hasBuildInfo = Boolean(rawAbi?.buildInfo || rawAbi?.name);
 
   const hasSourceCode =
     verifiedContract?.source?.contract?.entries &&
@@ -50,7 +43,6 @@ export const useSupport = () => {
     hasWriteEndpoints,
     hasEvents,
     hasTypes,
-    hasConstructor,
-    defaultKey
+    hasConstructor
   };
 };

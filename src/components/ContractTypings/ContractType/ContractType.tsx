@@ -41,6 +41,10 @@ export const ContractType = (props: ContractTypingUIType) => {
       badgeValue={rawType}
       badgeIcon={badgeIcon ?? faKeyboard}
       className={classNames(className)}
+      badgeClassName={classNames(
+        customInterface?.customClassNames?.badgeClassName,
+        customInterface?.customClassNames?.badgePrimaryClassName
+      )}
     >
       <div className={classNames(globalStyles.fieldWrapper)}>
         {struct && (

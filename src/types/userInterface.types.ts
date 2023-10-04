@@ -27,9 +27,9 @@ export interface CustomClassNamesType {
   cardItemTitleClassName?: string;
   cardItemValueClassName?: string;
   cardItemContainerClassName?: string;
-  btnClassName?: string;
-  btnPrimaryClassName?: string;
-  btnSecondaryClassName?: string;
+  buttonClassName?: string;
+  buttonPrimaryClassName?: string;
+  buttonSecondaryClassName?: string;
   inputClassName?: string;
   inputInvalidClassName?: string;
   inputInvalidFeedbackClassName?: string;

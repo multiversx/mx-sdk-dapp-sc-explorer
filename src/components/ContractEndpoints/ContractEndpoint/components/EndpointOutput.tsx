@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import classNames from 'classnames';
 
 import globalStyles from 'assets/styles/globals.module.scss';
@@ -25,7 +25,11 @@ export const EndpointOutput = (props: EndpointOutputUIType) => {
             {result?.parsedResponse?.values &&
               result.parsedResponse.values.length > 0 && (
                 <div className={classNames(styles.endpointOutputResults)}>
-                  <span>Query Result: </span>
+                  <span
+                    className={classNames(styles.endpointOutputResultsTitle)}
+                  >
+                    Query Result:{' '}
+                  </span>
                   {result.parsedResponse?.values.map((value, index) => {
                     const displayValue = value?.valueOf();
                     if (
@@ -35,6 +39,9 @@ export const EndpointOutput = (props: EndpointOutputUIType) => {
                     ) {
                       return (
                         <Code
+                          className={classNames(
+                            styles.endpointOutputResultsCode
+                          )}
                           key={index}
                           code={JSON.stringify(displayValue, null, 2)}
                           showLineNumbers={false}
@@ -43,11 +50,16 @@ export const EndpointOutput = (props: EndpointOutputUIType) => {
                       );
                     } else {
                       return (
-                        <Fragment key={index}>
+                        <span
+                          key={index}
+                          className={classNames(
+                            styles.endpointOutputResultsString
+                          )}
+                        >
                           {displayValue === ''
                             ? '<empty string>'
                             : String(displayValue)}
-                        </Fragment>
+                        </span>
                       );
                     }
                   })}

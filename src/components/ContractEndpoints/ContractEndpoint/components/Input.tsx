@@ -43,7 +43,15 @@ export const Input = ({
         className={classNames(
           globalStyles.input,
           customInterface?.customClassNames?.inputClassName,
-          { [globalStyles.inputInvalid]: hasError }
+          { [globalStyles.inputInvalid]: hasError },
+          {
+            ...(customInterface?.customClassNames?.inputInvalidClassName
+              ? {
+                  [customInterface.customClassNames.inputInvalidClassName]:
+                    hasError
+                }
+              : {})
+          }
         )}
         placeholder={placeholder}
         aria-label={placeholder}
