@@ -6,7 +6,7 @@ import { Trim } from '@multiversx/sdk-dapp/UI/Trim';
 import classNames from 'classnames';
 
 import globalStyles from 'assets/styles/globals.module.scss';
-import { CardItem } from 'components';
+import { CardItem, PanelHeader } from 'components';
 import { useScContext } from 'context';
 import { useSupport } from 'hooks';
 
@@ -24,17 +24,17 @@ export const ContractBuild = ({ customInterface }: ContractBuildUIType) => {
   return (
     <div
       className={classNames(
-        globalStyles.wrapper,
+        globalStyles?.wrapper,
         customInterface?.customClassNames?.wrapperClassName,
-        styles.contractBuild
+        styles?.contractBuild
       )}
     >
-      <div className={classNames(globalStyles.cardHeader)}>Build Info</div>
-      <div className={classNames(globalStyles.cardBody)}>
+      <PanelHeader customInterface={customInterface}>Build Info</PanelHeader>
+      <div className={classNames(globalStyles?.cardBody)}>
         <div
           className={classNames(
-            globalStyles.cardContainer,
-            globalStyles.cardItemContainer,
+            globalStyles?.cardContainer,
+            globalStyles?.cardItemContainer,
             customInterface?.customClassNames?.cardItemContainerClassName
           )}
         >
@@ -78,11 +78,11 @@ export const ContractBuild = ({ customInterface }: ContractBuildUIType) => {
           )}
         </div>
 
-        <div className={classNames(globalStyles.cardContainer)}>
-          <h6 className={classNames(globalStyles.cardContainerTitle)}>Rust</h6>
+        <div className={classNames(globalStyles?.cardContainer)}>
+          <h6 className={classNames(globalStyles?.cardContainerTitle)}>Rust</h6>
           <div
             className={classNames(
-              globalStyles.cardItemContainer,
+              globalStyles?.cardItemContainer,
               customInterface?.customClassNames?.cardItemContainerClassName
             )}
           >

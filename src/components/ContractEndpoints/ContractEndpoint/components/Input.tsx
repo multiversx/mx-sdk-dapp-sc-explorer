@@ -34,16 +34,16 @@ export const Input = ({
   return (
     <div
       className={classNames(
-        globalStyles.inputGroup,
+        globalStyles?.inputGroup,
         customInterface?.customClassNames?.inputGroupClassName
       )}
     >
       <input
         type='text'
         className={classNames(
-          globalStyles.input,
+          globalStyles?.input,
           customInterface?.customClassNames?.inputClassName,
-          { [globalStyles.inputInvalid]: hasError },
+          { [globalStyles?.inputInvalid]: hasError },
           {
             ...(customInterface?.customClassNames?.inputInvalidClassName
               ? {
@@ -68,15 +68,15 @@ export const Input = ({
       />
       <div
         className={classNames(
-          globalStyles.inputGroupAppend,
+          globalStyles?.inputGroupAppend,
           customInterface?.customClassNames?.inputGroupAppendClassName
         )}
       >
         <div
-          className={classNames(globalStyles.field)}
+          className={classNames(globalStyles?.field)}
           id={`${name}-${definitionTypeName}-definition`}
         >
-          <code className={classNames(globalStyles.fieldValue)}>
+          <code className={classNames(globalStyles?.fieldValue)}>
             {definitionTypeName}
           </code>
           <DefinitionsTooltip typeName={definitionTypeName} />
@@ -86,7 +86,7 @@ export const Input = ({
       {hasError && (
         <div
           className={classNames(
-            globalStyles.inputInvalidFeedback,
+            globalStyles?.inputInvalidFeedback,
             customInterface?.customClassNames?.inputInvalidFeedbackClassName
           )}
         >

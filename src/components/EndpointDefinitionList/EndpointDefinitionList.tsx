@@ -12,19 +12,19 @@ export const EndpointDefinitionList = ({
   definitions: FieldDefinition[];
 }) => {
   return (
-    <div className={classNames(globalStyles.fieldWrapper)}>
+    <div className={classNames(globalStyles?.fieldWrapper)}>
       {definitions.map((definition, index) => {
         return (
           <div
             key={`${definition?.name}-${index}`}
-            className={classNames(globalStyles.field)}
+            className={classNames(globalStyles?.field)}
           >
-            <code className={classNames(globalStyles.fieldName)}>
+            <code className={classNames(globalStyles?.fieldName)}>
               {definition?.name !== INTERFACE_NAME_PLACEHOLDER
                 ? definition.name
                 : null}
             </code>
-            <code className={classNames(globalStyles.fieldValue)}>
+            <code className={classNames(globalStyles?.fieldValue)}>
               {definition?.type?.toString()}
             </code>
             <DefinitionsTooltip

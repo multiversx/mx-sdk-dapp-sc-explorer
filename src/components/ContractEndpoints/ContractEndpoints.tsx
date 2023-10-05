@@ -38,7 +38,7 @@ export const ContractEndpoints = ({
   return (
     <div
       className={classNames(
-        styles.contractEndpoints,
+        styles?.contractEndpoints,
         globalStyles?.panelWrapper,
         customInterface?.customClassNames?.wrapperClassName
       )}
@@ -56,8 +56,8 @@ export const ContractEndpoints = ({
       </PanelHeader>
       <div
         className={classNames(
-          styles.contractEndpointsList,
-          globalStyles.list,
+          styles?.contractEndpointsList,
+          globalStyles?.list,
           customInterface?.customClassNames?.listClassName
         )}
       >
@@ -72,8 +72,8 @@ export const ContractEndpoints = ({
                 endpoint={endpoint}
                 key={`${endpoint.name}-${index}`}
                 className={classNames(
-                  globalStyles.listItem,
-                  styles.contractEndpointsListItem,
+                  globalStyles?.listItem,
+                  styles?.contractEndpointsListItem,
                   customInterface?.customClassNames?.listItemClassName
                 )}
                 customInterface={customInterface}
@@ -88,7 +88,7 @@ export const ContractEndpoints = ({
                 titleContent={
                   <EndpointTitle
                     endpoint={endpoint}
-                    className={classNames(styles.contractEndpointsListItem)}
+                    className={classNames(styles?.contractEndpointsListItem)}
                     customInterface={customInterface}
                   />
                 }

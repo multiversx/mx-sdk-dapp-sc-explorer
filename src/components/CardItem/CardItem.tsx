@@ -13,24 +13,24 @@ export const CardItem = ({
 }: CardItemUIType) => (
   <div
     className={classNames(
-      styles.cardItem,
+      styles?.cardItem,
       customInterface?.customClassNames?.cardItemClassName
     )}
   >
     {icon && (
       <div
         className={classNames(
-          styles.cardItemIcon,
+          styles?.cardItemIcon,
           customInterface?.customClassNames?.cardItemIconClassName
         )}
       >
         <FontAwesomeIcon icon={icon} />
       </div>
     )}
-    <div className={classNames(styles.cardItemContent)}>
+    <div className={classNames(styles?.cardItemContent)}>
       <div
         className={classNames(
-          styles.cardItemTitle,
+          styles?.cardItemTitle,
           customInterface?.customClassNames?.cardItemTitleClassName
         )}
       >
@@ -39,7 +39,7 @@ export const CardItem = ({
       {children && (
         <div
           className={classNames(
-            styles.cardItemValue,
+            styles?.cardItemValue,
             customInterface?.customClassNames?.cardItemValueClassName
           )}
         >

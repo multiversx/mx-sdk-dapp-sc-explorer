@@ -50,7 +50,7 @@ export const ContractFiles = ({
   return (
     <div
       className={classNames(
-        styles.contractFiles,
+        styles?.contractFiles,
         globalStyles?.panelWrapper,
         customInterface?.customClassNames?.wrapperClassName
       )}
@@ -60,13 +60,13 @@ export const ContractFiles = ({
         onAllExpanded={setAllExpanded}
         customInterface={customInterface}
       >
-        Events
+        Source Code
       </PanelHeader>
       {filteredEntries && filteredEntries.length > 0 && (
         <div
           className={classNames(
-            styles.contractFilesList,
-            globalStyles.list,
+            styles?.contractFilesList,
+            globalStyles?.list,
             customInterface?.customClassNames?.listClassName
           )}
         >
@@ -85,8 +85,8 @@ export const ContractFiles = ({
                     filteredEntries.length === 1 || selectedFile || allExpanded
                   }
                   className={classNames(
-                    styles.contractFilesListItem,
-                    globalStyles.listItem,
+                    styles?.contractFilesListItem,
+                    globalStyles?.listItem,
                     customInterface?.customClassNames?.listItemClassName
                   )}
                   customInterface={customInterface}

@@ -62,7 +62,7 @@ export const CollapsibleCard = (props: CollapsibleCardUIType) => {
         <div id={title}>
           <div
             className={classNames(
-              globalStyles.cardBody,
+              globalStyles?.cardBody,
               customInterface?.customClassNames?.cardBodyClassName
             )}
           >

@@ -16,4 +16,6 @@ export interface SCExplorerType extends DappProviderPropsType {
   allowMutate?: boolean;
   loaderComponent?: React.ReactNode;
   customInterface?: CustomUIType;
+  className?: string;
+  'data-testid'?: string;
 }

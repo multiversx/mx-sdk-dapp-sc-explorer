@@ -46,7 +46,7 @@ export const ContractType = (props: ContractTypingUIType) => {
         customInterface?.customClassNames?.badgePrimaryClassName
       )}
     >
-      <div className={classNames(globalStyles.fieldWrapper)}>
+      <div className={classNames(globalStyles?.fieldWrapper)}>
         {struct && (
           <EndpointDefinitionList
             definitions={struct?.getFieldsDefinitions()}
@@ -57,10 +57,10 @@ export const ContractType = (props: ContractTypingUIType) => {
             {enums?.variants?.map((variant, index) => {
               return (
                 <div
-                  className={classNames(globalStyles.fieldGroup)}
+                  className={classNames(globalStyles?.fieldGroup)}
                   key={`${variant?.name}-${index}`}
                 >
-                  <code className={classNames(globalStyles.fieldName)}>
+                  <code className={classNames(globalStyles?.fieldName)}>
                     {variant?.name}
                   </code>
                   <EndpointDefinitionList

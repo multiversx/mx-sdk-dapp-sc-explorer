@@ -92,8 +92,8 @@ export const EndpointInput = (props: EndpointInputUIType) => {
                         <button
                           type='button'
                           className={classNames(
-                            globalStyles.button,
-                            globalStyles.buttonSecondary,
+                            globalStyles?.button,
+                            globalStyles?.buttonSecondary,
                             customInterface?.customClassNames?.buttonClassName,
                             customInterface?.customClassNames
                               ?.buttonSecondaryClassName,
@@ -113,8 +113,8 @@ export const EndpointInput = (props: EndpointInputUIType) => {
                   <button
                     type='button'
                     className={classNames(
-                      globalStyles.button,
-                      globalStyles.buttonSecondary,
+                      globalStyles?.button,
+                      globalStyles?.buttonSecondary,
                       customInterface?.customClassNames?.buttonClassName,
                       customInterface?.customClassNames
                         ?.buttonSecondaryClassName,

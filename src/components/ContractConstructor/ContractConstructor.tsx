@@ -24,21 +24,25 @@ export const ContractConstructor = ({
 
   return (
     <Card
-      className={classNames(styles.contractConstructor)}
+      className={classNames(styles?.contractConstructor)}
       customInterface={customInterface}
     >
       {input.length > 0 && (
-        <div className={classNames(styles.endpointOutput, globalStyles.panel)}>
-          <div className={classNames(globalStyles.panelMode)}>Input</div>
-          <div className={classNames(globalStyles.panelContent)}>
+        <div
+          className={classNames(styles?.endpointOutput, globalStyles?.panel)}
+        >
+          <div className={classNames(globalStyles?.panelMode)}>Input</div>
+          <div className={classNames(globalStyles?.panelContent)}>
             <EndpointDefinitionList definitions={input} />
           </div>
         </div>
       )}
       {output.length > 0 && (
-        <div className={classNames(styles.endpointOutput, globalStyles.panel)}>
-          <div className={classNames(globalStyles.panelMode)}>Input</div>
-          <div className={classNames(globalStyles.panelContent)}>
+        <div
+          className={classNames(styles?.endpointOutput, globalStyles?.panel)}
+        >
+          <div className={classNames(globalStyles?.panelMode)}>Input</div>
+          <div className={classNames(globalStyles?.panelContent)}>
             <EndpointDefinitionList definitions={output} />
           </div>
         </div>
@@ -46,16 +50,16 @@ export const ContractConstructor = ({
       {docs.length > 0 && (
         <div
           className={classNames(
-            styles.endpointOutput,
-            globalStyles.panel,
-            styles.aboutPanel
+            styles?.endpointOutput,
+            globalStyles?.panel,
+            styles?.aboutPanel
           )}
         >
-          <div className={classNames(globalStyles.panelMode)}>About</div>
+          <div className={classNames(globalStyles?.panelMode)}>About</div>
           <div
             className={classNames(
-              globalStyles.panelContent,
-              styles.aboutPanelContent
+              globalStyles?.panelContent,
+              styles?.aboutPanelContent
             )}
           >
             {docs.map((string, key) => (

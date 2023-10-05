@@ -77,11 +77,11 @@ export const DefinitionsTooltip = (props: DefinitionsTooltipUIType) => {
     <Overlay
       {...rest}
       title={docs}
-      className={classNames(styles.definitionsTooltip)}
+      className={classNames(styles?.definitionsTooltip)}
     >
       <FontAwesomeIcon
         icon={hintIcon}
-        className={classNames(styles.definitionsTooltipIcon)}
+        className={classNames(styles?.definitionsTooltipIcon)}
       />
     </Overlay>
   );

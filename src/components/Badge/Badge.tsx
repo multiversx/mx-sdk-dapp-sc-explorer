@@ -20,7 +20,7 @@ export const Badge = ({
     <span
       className={classNames(
         className,
-        globalStyles.badge,
+        globalStyles?.badge,
         customInterface?.customClassNames?.badgeClassName,
         badgeClassName
       )}
@@ -29,7 +29,7 @@ export const Badge = ({
         <FontAwesomeIcon
           icon={badgeIcon}
           className={classNames(
-            globalStyles.badgeIcon,
+            globalStyles?.badgeIcon,
             customInterface?.customClassNames?.badgeIconClassName
           )}
         />

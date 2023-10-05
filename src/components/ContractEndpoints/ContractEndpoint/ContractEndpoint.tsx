@@ -121,8 +121,8 @@ export const ContractEndpoint = (props: ContractEndpointUIType) => {
           const hasOnlyGeneralValidationError =
             errors?.general && Object?.keys(errors).length === 1;
           return (
-            <Form className={classNames(styles.contractEndpointWrapper)}>
-              <div className={classNames(styles.contractEndpoint)}>
+            <Form className={classNames(styles?.contractEndpointWrapper)}>
+              <div className={classNames(styles?.contractEndpoint)}>
                 <EndpointInputList
                   {...formikProps}
                   input={input}
@@ -136,18 +136,18 @@ export const ContractEndpoint = (props: ContractEndpointUIType) => {
                 />
               </div>
               {(hasOnlyGeneralValidationError || error) && (
-                <div className={classNames(styles.endpointGeneralError)}>
+                <div className={classNames(styles?.endpointGeneralError)}>
                   {hasOnlyGeneralValidationError && <p>{errors.general}</p>}
                   {error && <p>{error}</p>}
                 </div>
               )}
               {canRead &&
                 mutability === ContractEndpointMutabilityEnum.readonly && (
-                  <div className={classNames(styles.endpointReadButton)}>
+                  <div className={classNames(styles?.endpointReadButton)}>
                     <button
                       className={classNames(
-                        globalStyles.button,
-                        globalStyles.buttonPrimary,
+                        globalStyles?.button,
+                        globalStyles?.buttonPrimary,
                         customInterface?.customClassNames?.buttonClassName,
                         customInterface?.customClassNames
                           ?.buttonPrimaryClassName,

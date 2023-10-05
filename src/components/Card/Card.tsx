@@ -12,23 +12,23 @@ export const Card = (props: CardUIType) => {
     <div
       className={classNames(
         className,
-        globalStyles.card,
+        globalStyles?.card,
         customInterface?.customClassNames?.cardClassName,
-        globalStyles.listItem,
+        globalStyles?.listItem,
         customInterface?.customClassNames?.listItemClassName
       )}
     >
       {(titleContent || title) && (
         <div
           className={classNames(
-            globalStyles.cardHeader,
+            globalStyles?.cardHeader,
             customInterface?.customClassNames?.cardHeaderClassName
           )}
         >
           {titleContent ? (
             titleContent
           ) : (
-            <span className={classNames(globalStyles.cardHeaderTitle)}>
+            <span className={classNames(globalStyles?.cardHeaderTitle)}>
               {title}
             </span>
           )}
@@ -38,7 +38,7 @@ export const Card = (props: CardUIType) => {
       {children && (
         <div
           className={classNames(
-            globalStyles.cardBody,
+            globalStyles?.cardBody,
             customInterface?.customClassNames?.cardBodyClassName
           )}
         >

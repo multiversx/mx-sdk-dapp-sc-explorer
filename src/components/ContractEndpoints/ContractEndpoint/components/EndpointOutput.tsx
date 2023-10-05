@@ -15,18 +15,18 @@ export const EndpointOutput = (props: EndpointOutputUIType) => {
   }
 
   return (
-    <div className={classNames(styles.endpointOutput, globalStyles.panel)}>
-      <div className={classNames(globalStyles.panelMode)}>Output</div>
-      <div className={classNames(globalStyles.panelContentWrapper)}>
-        <div className={classNames(globalStyles.panelContentWrapperRow)}>
-          <div className={classNames(globalStyles.panelContent)}>
+    <div className={classNames(styles?.endpointOutput, globalStyles?.panel)}>
+      <div className={classNames(globalStyles?.panelMode)}>Output</div>
+      <div className={classNames(globalStyles?.panelContentWrapper)}>
+        <div className={classNames(globalStyles?.panelContentWrapperRow)}>
+          <div className={classNames(globalStyles?.panelContent)}>
             <EndpointDefinitionList definitions={output} />
 
             {result?.parsedResponse?.values &&
               result.parsedResponse.values.length > 0 && (
-                <div className={classNames(styles.endpointOutputResults)}>
+                <div className={classNames(styles?.endpointOutputResults)}>
                   <span
-                    className={classNames(styles.endpointOutputResultsTitle)}
+                    className={classNames(styles?.endpointOutputResultsTitle)}
                   >
                     Query Result:{' '}
                   </span>
@@ -40,7 +40,7 @@ export const EndpointOutput = (props: EndpointOutputUIType) => {
                       return (
                         <Code
                           className={classNames(
-                            styles.endpointOutputResultsCode
+                            styles?.endpointOutputResultsCode
                           )}
                           key={index}
                           code={JSON.stringify(displayValue, null, 2)}
@@ -50,16 +50,16 @@ export const EndpointOutput = (props: EndpointOutputUIType) => {
                       );
                     } else {
                       return (
-                        <span
+                        <code
                           key={index}
                           className={classNames(
-                            styles.endpointOutputResultsString
+                            styles?.endpointOutputResultsString
                           )}
                         >
                           {displayValue === ''
                             ? '<empty string>'
                             : String(displayValue)}
-                        </span>
+                        </code>
                       );
                     }
                   })}

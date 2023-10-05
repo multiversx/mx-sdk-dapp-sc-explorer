@@ -42,14 +42,14 @@ export const LayoutComponent = (props: SCExplorerType) => {
   }
 
   return (
-    <div className={classNames(styles.layout)}>
-      <div className={classNames(styles.layoutHeader)}>
-        <div className={classNames(styles.layoutHeaderTitle)}>
+    <div className={classNames(styles?.layout)}>
+      <div className={classNames(styles?.layoutHeader)}>
+        <div className={classNames(styles?.layoutHeaderTitle)}>
           Smart Contract Explorer{' '}
-          <span className={classNames(styles.layoutHeaderSubtitle)}>BETA</span>
+          <span className={classNames(styles?.layoutHeaderSubtitle)}>BETA</span>
         </div>
       </div>
-      <div className={classNames(styles.layoutContent)}>
+      <div className={classNames(styles?.layoutContent)}>
         <Tab.Container
           defaultActiveKey={activeKey}
           onSelect={(selectedKey) => {
@@ -59,7 +59,9 @@ export const LayoutComponent = (props: SCExplorerType) => {
           }}
           transition={false}
         >
-          <div className={classNames(styles.layoutContentSidebar, styles.tabs)}>
+          <div
+            className={classNames(styles?.layoutContentSidebar, styles?.tabs)}
+          >
             {hasBuildInfo && (
               <Nav.Link
                 eventKey={VerifiedContractTabsEnum.details}
@@ -231,11 +233,11 @@ export const LayoutComponent = (props: SCExplorerType) => {
             )}
           </div>
 
-          <Tab.Content className={classNames(styles.layoutContentBody)}>
+          <Tab.Content className={classNames(styles?.layoutContentBody)}>
             {hasBuildInfo && (
               <Tab.Pane
                 eventKey={VerifiedContractTabsEnum.details}
-                bsPrefix={styles.tabPanel}
+                bsPrefix={styles?.tabPanel}
               >
                 <ContractBuild customInterface={customInterface} />
               </Tab.Pane>
@@ -244,7 +246,7 @@ export const LayoutComponent = (props: SCExplorerType) => {
             {hasSourceCode && (
               <Tab.Pane
                 eventKey={VerifiedContractTabsEnum.sourceCode}
-                bsPrefix={styles.tabPanel}
+                bsPrefix={styles?.tabPanel}
               >
                 <ContractFiles customInterface={customInterface} />
               </Tab.Pane>
@@ -253,7 +255,7 @@ export const LayoutComponent = (props: SCExplorerType) => {
             {hasReadEndpoints && (
               <Tab.Pane
                 eventKey={VerifiedContractTabsEnum.readEndpoints}
-                bsPrefix={styles.tabPanel}
+                bsPrefix={styles?.tabPanel}
               >
                 <ContractEndpoints
                   customInterface={customInterface}
@@ -265,7 +267,7 @@ export const LayoutComponent = (props: SCExplorerType) => {
             {hasWriteEndpoints && (
               <Tab.Pane
                 eventKey={VerifiedContractTabsEnum.writeEndpoints}
-                bsPrefix={styles.tabPanel}
+                bsPrefix={styles?.tabPanel}
               >
                 <ContractEndpoints
                   customInterface={customInterface}
@@ -277,7 +279,7 @@ export const LayoutComponent = (props: SCExplorerType) => {
             {hasEvents && (
               <Tab.Pane
                 eventKey={VerifiedContractTabsEnum.events}
-                bsPrefix={styles.tabPanel}
+                bsPrefix={styles?.tabPanel}
               >
                 <ContractEvents customInterface={customInterface} />
               </Tab.Pane>
@@ -286,7 +288,7 @@ export const LayoutComponent = (props: SCExplorerType) => {
             {hasTypes && (
               <Tab.Pane
                 eventKey={VerifiedContractTabsEnum.types}
-                bsPrefix={styles.tabPanel}
+                bsPrefix={styles?.tabPanel}
               >
                 <ContractTypings customInterface={customInterface} />
               </Tab.Pane>
@@ -295,7 +297,7 @@ export const LayoutComponent = (props: SCExplorerType) => {
             {hasConstructor && (
               <Tab.Pane
                 eventKey={VerifiedContractTabsEnum.contractConstructor}
-                bsPrefix={styles.tabPanel}
+                bsPrefix={styles?.tabPanel}
               >
                 <ContractConstructor customInterface={customInterface} />
               </Tab.Pane>

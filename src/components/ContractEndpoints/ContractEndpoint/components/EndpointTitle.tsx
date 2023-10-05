@@ -34,7 +34,7 @@ export const EndpointTitle = (props: ContractEndpointUIType) => {
 
   return (
     <>
-      <span className={classNames(globalStyles.cardHeaderTitle)}>
+      <span className={classNames(globalStyles?.cardHeaderTitle)}>
         {endpoint?.name}
       </span>
       {mutability === ContractEndpointMutabilityEnum.mutable && (
@@ -85,7 +85,7 @@ export const EndpointTitle = (props: ContractEndpointUIType) => {
       {endpoint?.name && rawAbiEndpoint?.docs && (
         <DocsTooltip
           docs={rawAbiEndpoint.docs}
-          className={globalStyles.tooltipIcon}
+          className={globalStyles?.tooltipIcon}
         />
       )}
     </>

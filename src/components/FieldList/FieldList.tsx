@@ -9,23 +9,23 @@ export const FieldList = ({ fields }: FieldListUIType) => {
   return (
     <>
       {fields && fields.length > 0 && (
-        <div className={classNames(globalStyles.fieldWrapper)}>
+        <div className={classNames(globalStyles?.fieldWrapper)}>
           {fields.map(({ name, value, detail, docs }, index) => {
             return (
               <div
                 key={`${name}-${index}`}
-                className={classNames(globalStyles.field)}
+                className={classNames(globalStyles?.field)}
               >
-                <code className={classNames(globalStyles.fieldName)}>
+                <code className={classNames(globalStyles?.fieldName)}>
                   {name}
                 </code>
                 {value && (
-                  <code className={classNames(globalStyles.fieldValue)}>
+                  <code className={classNames(globalStyles?.fieldValue)}>
                     {value}
                   </code>
                 )}
                 {detail && (
-                  <code className={classNames(globalStyles.fieldDetail)}>
+                  <code className={classNames(globalStyles?.fieldDetail)}>
                     {detail}
                   </code>
                 )}

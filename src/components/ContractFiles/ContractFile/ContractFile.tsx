@@ -28,8 +28,8 @@ export const ContractFile = (props: ContractFileUIType) => {
 
   const TitleContent = () => (
     <>
-      <FontAwesomeIcon icon={contractFileIcon} />
-      <span className={classNames(globalStyles.cardHeaderTitle)}>
+      <span className={classNames(globalStyles?.cardHeaderTitle)}>
+        <FontAwesomeIcon icon={contractFileIcon} />
         {String(path)}
       </span>
       {entryNumber !== undefined && totalEntries !== undefined && (
@@ -47,15 +47,15 @@ export const ContractFile = (props: ContractFileUIType) => {
       titleContent={<TitleContent />}
       className={classNames(className)}
     >
-      <div className={classNames(styles.codeBlock)}>
-        <div className={classNames(styles.buttonHolder)}>
+      <div className={classNames(styles?.codeBlock)}>
+        <div className={classNames(styles?.buttonHolder)}>
           <CopyButton
             text={codeString}
-            className={classNames(styles.copyButton)}
+            className={classNames(styles?.copyButton)}
           />
           <CopyButton
             text={`${fullPath}#${path}`}
-            className={classNames(styles.linkButton)}
+            className={classNames(styles?.linkButton)}
             copyIcon={linkIcon as any} // TODO fix fontawesome typing issue
           />
         </div>

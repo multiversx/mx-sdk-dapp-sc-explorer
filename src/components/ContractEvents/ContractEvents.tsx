@@ -24,7 +24,7 @@ export const ContractEvents = ({ customInterface }: ContractEventsUIType) => {
   return (
     <div
       className={classNames(
-        styles.contractEvents,
+        styles?.contractEvents,
         globalStyles?.panelWrapper,
         customInterface?.customClassNames?.wrapperClassName
       )}
@@ -38,8 +38,8 @@ export const ContractEvents = ({ customInterface }: ContractEventsUIType) => {
       </PanelHeader>
       <div
         className={classNames(
-          styles.contractEventsList,
-          globalStyles.list,
+          styles?.contractEventsList,
+          globalStyles?.list,
           customInterface?.customClassNames?.listClassName
         )}
       >
@@ -48,8 +48,8 @@ export const ContractEvents = ({ customInterface }: ContractEventsUIType) => {
             event={event}
             key={`${event.identifier}-${index}`}
             className={classNames(
-              styles.contractEventsListItem,
-              globalStyles.listItem,
+              styles?.contractEventsListItem,
+              globalStyles?.listItem,
               customInterface?.customClassNames?.listItemClassName
             )}
             customInterface={customInterface}

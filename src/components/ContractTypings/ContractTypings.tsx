@@ -24,7 +24,7 @@ export const ContractTypings = ({ customInterface }: ContractTypingsUIType) => {
   return (
     <div
       className={classNames(
-        styles.contractTypings,
+        styles?.contractTypings,
         globalStyles?.panelWrapper,
         customInterface?.customClassNames?.wrapperClassName
       )}
@@ -38,8 +38,8 @@ export const ContractTypings = ({ customInterface }: ContractTypingsUIType) => {
       </PanelHeader>
       <div
         className={classNames(
-          styles.contractTypingsList,
-          globalStyles.list,
+          styles?.contractTypingsList,
+          globalStyles?.list,
           customInterface?.customClassNames?.listClassName
         )}
       >
@@ -48,8 +48,8 @@ export const ContractTypings = ({ customInterface }: ContractTypingsUIType) => {
             key={`${customType?.getName()}-${index}`}
             type={customType}
             className={classNames(
-              styles.contractTypingsListItem,
-              globalStyles.listItem,
+              styles?.contractTypingsListItem,
+              globalStyles?.listItem,
               customInterface?.customClassNames?.listItemClassName
             )}
             customInterface={customInterface}
