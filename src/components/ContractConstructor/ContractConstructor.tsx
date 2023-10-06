@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 import globalStyles from 'assets/styles/globals.module.scss';
-import { Card, EndpointDefinitionList } from 'components';
+import { Card, EndpointDefinitionList, PanelHeader } from 'components';
 import { useScContext } from 'context';
 import { useSupport } from 'hooks';
 
@@ -23,51 +23,57 @@ export const ContractConstructor = ({
   const docs = rawAbi?.['constructor']?.docs ? rawAbi['constructor'].docs : [];
 
   return (
-    <Card
-      className={classNames(styles?.contractConstructor)}
-      customInterface={customInterface}
+    <div
+      className={classNames(
+        styles?.contractConstructor,
+        globalStyles?.panelWrapper,
+        customInterface?.customClassNames?.wrapperClassName
+      )}
     >
-      {input.length > 0 && (
-        <div
-          className={classNames(styles?.endpointOutput, globalStyles?.panel)}
-        >
-          <div className={classNames(globalStyles?.panelMode)}>Input</div>
-          <div className={classNames(globalStyles?.panelContent)}>
-            <EndpointDefinitionList definitions={input} />
+      <PanelHeader customInterface={customInterface}>Constructor</PanelHeader>
+      <Card customInterface={customInterface}>
+        {input.length > 0 && (
+          <div
+            className={classNames(styles?.endpointOutput, globalStyles?.panel)}
+          >
+            <div className={classNames(globalStyles?.panelMode)}>Input</div>
+            <div className={classNames(globalStyles?.panelContent)}>
+              <EndpointDefinitionList definitions={input} />
+            </div>
           </div>
-        </div>
-      )}
-      {output.length > 0 && (
-        <div
-          className={classNames(styles?.endpointOutput, globalStyles?.panel)}
-        >
-          <div className={classNames(globalStyles?.panelMode)}>Input</div>
-          <div className={classNames(globalStyles?.panelContent)}>
-            <EndpointDefinitionList definitions={output} />
+        )}
+        {output.length > 0 && (
+          <div
+            className={classNames(styles?.endpointOutput, globalStyles?.panel)}
+          >
+            <div className={classNames(globalStyles?.panelMode)}>Input</div>
+            <div className={classNames(globalStyles?.panelContent)}>
+              <EndpointDefinitionList definitions={output} />
+            </div>
           </div>
-        </div>
-      )}
-      {docs.length > 0 && (
-        <div
-          className={classNames(
-            styles?.endpointOutput,
-            globalStyles?.panel,
-            styles?.aboutPanel
-          )}
-        >
-          <div className={classNames(globalStyles?.panelMode)}>About</div>
+        )}
+        {docs.length > 0 && (
           <div
             className={classNames(
-              globalStyles?.panelContent,
-              styles?.aboutPanelContent
+              styles?.endpointOutput,
+              globalStyles?.panel,
+              styles?.aboutPanel
             )}
           >
-            {docs.map((string, key) => (
-              <p key={key}>{string}</p>
-            ))}
+            <div className={classNames(globalStyles?.panelMode)}>About</div>
+            <div
+              className={classNames(
+                globalStyles?.panelContent,
+                styles?.aboutPanelContent
+              )}
+            >
+              {docs.map((string, key) => (
+                <p key={key}>{string}</p>
+              ))}
+            </div>
           </div>
-        </div>
-      )}
-    </Card>
+        )}
+      </Card>
+    </div>
   );
 };
