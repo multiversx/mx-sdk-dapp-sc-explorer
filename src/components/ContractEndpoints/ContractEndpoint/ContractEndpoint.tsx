@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { faPlay } from '@fortawesome/free-solid-svg-icons';
+import { faPlay, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NativeSerializer, OptionalType } from '@multiversx/sdk-core/out';
 import classNames from 'classnames';
@@ -28,9 +28,11 @@ export const ContractEndpoint = (props: ContractEndpointUIType) => {
   const { endpoint, className, customInterface } = props;
   const { input, output, modifiers } = endpoint;
   const { mutability } = modifiers;
-  const { playIcon = faPlay } = customInterface?.icons ?? {};
+  const { playIcon = faPlay, loadIcon = faCircleNotch } =
+    customInterface?.icons ?? {};
 
   const [result, setResult] = useState<QueryContractResponse>();
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string>();
 
   // Apply general checks on submit, maybe validate per field on input based on type in a later version?
@@ -82,6 +84,7 @@ export const ContractEndpoint = (props: ContractEndpointUIType) => {
 
   const onSubmit = async (values: EndpointInputValuesType) => {
     setError(undefined);
+    setIsLoading(true);
     try {
       const valuesArray = Object.values(values);
       const args = NativeSerializer.nativeToTypedValues(
@@ -96,7 +99,9 @@ export const ContractEndpoint = (props: ContractEndpointUIType) => {
           setError(result.error);
         }
       }
+      setIsLoading(false);
     } catch (error) {
+      setIsLoading(false);
       setError(String(error));
     }
   };
@@ -154,8 +159,17 @@ export const ContractEndpoint = (props: ContractEndpointUIType) => {
                         styles?.buttonReadAction
                       )}
                       type='submit'
+                      {...(isLoading ? { disabled: true } : {})}
                     >
-                      Query <FontAwesomeIcon icon={playIcon} />
+                      Query
+                      {isLoading ? (
+                        <FontAwesomeIcon
+                          icon={loadIcon}
+                          className='fa-spin fast-spin'
+                        />
+                      ) : (
+                        <FontAwesomeIcon icon={playIcon} />
+                      )}
                     </button>
                   </div>
                 )}

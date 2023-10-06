@@ -20,4 +20,5 @@ export interface InterfaceIconsType {
   plusIcon?: IconProp;
   minusIcon?: IconProp;
   playIcon?: IconProp;
+  loadIcon?: IconProp;
 }
