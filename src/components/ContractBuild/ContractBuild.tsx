@@ -1,6 +1,6 @@
 import React from 'react';
 import { faDocker, faRust } from '@fortawesome/free-brands-svg-icons';
-import { faCogs } from '@fortawesome/free-solid-svg-icons';
+import { faCogs, faCopy } from '@fortawesome/free-solid-svg-icons';
 import { CopyButton } from '@multiversx/sdk-dapp/UI/CopyButton';
 import { Trim } from '@multiversx/sdk-dapp/UI/Trim';
 import classNames from 'classnames';
@@ -16,6 +16,8 @@ import { ContractBuildUIType } from './types';
 export const ContractBuild = ({ customInterface }: ContractBuildUIType) => {
   const { rawAbi, verifiedContract } = useScContext();
   const { hasBuildInfo } = useSupport();
+
+  const { copyIcon = faCopy } = customInterface?.icons ?? {};
 
   if (!hasBuildInfo) {
     return null;
@@ -102,7 +104,10 @@ export const ContractBuild = ({ customInterface }: ContractBuildUIType) => {
                 customInterface={customInterface}
               >
                 <Trim text={rawAbi.buildInfo.rustc.commitHash} />
-                <CopyButton text={rawAbi.buildInfo.rustc.commitHash} />
+                <CopyButton
+                  text={rawAbi.buildInfo.rustc.commitHash}
+                  copyIcon={copyIcon as any} // TODO fix fontawesome typing issue
+                />
               </CardItem>
             )}
             {rawAbi?.buildInfo?.rustc?.version && (

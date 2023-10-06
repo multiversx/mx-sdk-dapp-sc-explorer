@@ -1,5 +1,5 @@
 import React from 'react';
-import { faFileAlt, faLink } from '@fortawesome/free-solid-svg-icons';
+import { faFileAlt, faLink, faCopy } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CopyButton } from '@multiversx/sdk-dapp/UI/CopyButton';
 import classNames from 'classnames';
@@ -18,8 +18,11 @@ export const ContractFile = (props: ContractFileUIType) => {
   const { file, title, entryNumber, totalEntries, className, customInterface } =
     props;
   const { content, path } = file;
-  const { contractFileIcon = faFileAlt, linkIcon = faLink } =
-    customInterface?.icons ?? {};
+  const {
+    contractFileIcon = faFileAlt,
+    copyIcon = faCopy,
+    linkIcon = faLink
+  } = customInterface?.icons ?? {};
 
   const fullPath = window.location.href;
 
@@ -52,6 +55,7 @@ export const ContractFile = (props: ContractFileUIType) => {
           <CopyButton
             text={codeString}
             className={classNames(styles?.copyButton)}
+            copyIcon={copyIcon as any} // TODO fix fontawesome typing issue
           />
           <CopyButton
             text={`${fullPath}#${path}`}
