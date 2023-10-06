@@ -5,10 +5,7 @@ export interface InterfaceIconsType {
   collapsedIcon?: IconProp;
   structTypeIcon?: IconProp;
   enumTypeIcon?: IconProp;
-  endpointIcon?: IconProp;
   hintIcon?: IconProp;
-  viewIcon?: IconProp;
-  ownerIcon?: IconProp;
   copyIcon?: IconProp;
   linkIcon?: IconProp;
   contractFileIcon?: IconProp;
