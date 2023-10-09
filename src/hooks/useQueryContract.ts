@@ -4,7 +4,6 @@ import {
   QueryArguments,
   ResultsParser
 } from '@multiversx/sdk-core/out';
-
 import { ContractQueryRequest } from '@multiversx/sdk-network-providers/out/contractQueryRequest';
 import { ContractQueryResponse } from '@multiversx/sdk-network-providers/out/contractQueryResponse';
 

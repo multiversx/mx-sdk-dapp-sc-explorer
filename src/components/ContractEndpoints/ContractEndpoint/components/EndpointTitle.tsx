@@ -11,9 +11,7 @@ import classNames from 'classnames';
 import globalStyles from 'assets/styles/globals.module.scss';
 import { Badge, DocsTooltip } from 'components';
 import { useScContext } from 'context';
-import { ContractEndpointMutabilityEnum } from 'types';
-
-import { ContractEndpointUIType } from '../../types';
+import { ContractEndpointMutabilityEnum, ContractEndpointUIType } from 'types';
 
 export const EndpointTitle = (props: ContractEndpointUIType) => {
   const { rawAbi } = useScContext();

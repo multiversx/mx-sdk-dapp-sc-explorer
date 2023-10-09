@@ -2,23 +2,15 @@ import React from 'react';
 import classNames from 'classnames';
 
 import globalStyles from 'assets/styles/globals.module.scss';
-import { EndpointInput, DefinitionsTooltip } from 'components';
+import { DefinitionsTooltip } from 'components';
 import { getUniqueDefinitionName } from 'helpers';
+import { EndpointInputListUIType } from 'types';
 
-import styles from '../../styles.module.scss';
-import { EndpointInputListUIType } from '../../types';
+import { EndpointInput } from './EndpointInput';
+import styles from './styles.module.scss';
 
 export const EndpointInputList = (props: EndpointInputListUIType) => {
-  const {
-    input,
-    mutability,
-    handleBlur,
-    handleChange,
-    values,
-    errors,
-    touched,
-    customInterface
-  } = props;
+  const { input, values } = props;
 
   if (!input || input.length === 0) {
     return null;
@@ -57,19 +49,13 @@ export const EndpointInputList = (props: EndpointInputListUIType) => {
                     />
                   </div>
                 </div>
-                <div className={classNames(styles?.endpointInputWrapper)}>
-                  <EndpointInput
-                    definition={definition}
-                    handleBlur={handleBlur}
-                    handleChange={handleChange}
-                    value={values?.[uniqueName]}
-                    errors={errors}
-                    touched={touched}
-                    name={uniqueName}
-                    mutability={mutability}
-                    customInterface={customInterface}
-                  />
-                </div>
+                <EndpointInput
+                  {...props}
+                  index={index}
+                  name={uniqueName}
+                  definition={definition}
+                  value={values?.[uniqueName]}
+                />
               </div>
             </div>
           );

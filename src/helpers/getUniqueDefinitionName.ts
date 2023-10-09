@@ -11,7 +11,7 @@ export const getUniqueDefinitionName = ({
   try {
     return `${definition?.name}:${definition?.type?.getFullyQualifiedName()}${displayIndex}`.replaceAll(
       '.',
-      ':'
+      '-'
     );
   } catch {}
 

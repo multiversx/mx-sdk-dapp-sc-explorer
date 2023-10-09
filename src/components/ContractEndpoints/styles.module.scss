@@ -16,41 +16,9 @@
   .endpoint-general-error {
     /*Placeholder*/
   }
-  .button-write-action,
-  .button-read-action {
+  .button-endpoint-action {
     display: flex;
     align-items: center;
     gap: 1rem;
   }
-}
-
-.endpoint-output {
-  /*Placeholder*/
-  &-results {
-    /*Placeholder*/
-    &-title {
-      /*Placeholder*/
-    }
-    &-string {
-      /*Placeholder*/
-    }
-    &-code {
-      /*Placeholder*/
-    }
-  }
-}
-.endpoint-input {
-  /*Placeholder*/
-  &-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-}
-
-.button-add-argument {
-  /*Placeholder*/
-}
-.button-remove-argument {
-  /*Placeholder*/
 }

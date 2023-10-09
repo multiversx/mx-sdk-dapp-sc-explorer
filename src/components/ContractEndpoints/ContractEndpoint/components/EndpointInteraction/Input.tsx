@@ -4,8 +4,7 @@ import classNames from 'classnames';
 import globalStyles from 'assets/styles/globals.module.scss';
 import { DefinitionsTooltip } from 'components';
 import { DOCUMENTED_TYPES } from 'constants/general';
-
-import { InputUIType } from '../../types';
+import { InputUIType } from 'types';
 
 export const Input = ({
   name,
