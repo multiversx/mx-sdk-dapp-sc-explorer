@@ -2,16 +2,12 @@ import {
   EndpointDefinition,
   EndpointParameterDefinition
 } from '@multiversx/sdk-core/out';
-import { FormikHandlers, FormikErrors, FormikTouched } from 'formik';
+import { FormikProps } from 'formik';
 import {
   UserInterfaceType,
   ContractEndpointMutabilityEnum,
   QueryContractResponse
 } from 'types';
-
-export interface EndpointInputValuesType {
-  [k: string]: string | number | string[] | number[];
-}
 
 export interface ContractEndpointsUIType extends UserInterfaceType {
   mutability?: ContractEndpointMutabilityEnum;
@@ -26,18 +22,34 @@ export interface ContractEndpointUIType extends BaseEndpointUIType {
   isOpen?: boolean;
 }
 
-export interface EndpointInteractionUIType extends EndpointInputBaseType {
-  endpoint: EndpointDefinition;
-  values?: EndpointInputValuesType;
-  result?: QueryContractResponse;
+export interface FormikAbiType {
+  [key: string]: FormikAbiType | FormikAbiType[] | string[] | string;
 }
 
 export interface EndpointFormUIType extends EndpointInteractionUIType {
-  onSubmit: (values: EndpointInputValuesType) => Promise<void>;
+  onSubmit: (values: any[]) => Promise<void>;
   isLoading?: boolean;
   generalError?: string;
   buttonText?: string;
   children?: React.ReactNode;
+}
+
+export interface RecursiveContainerUIType extends UserInterfaceType {
+  config: FormikAbiType;
+  prefix: string;
+  formik?: FormikProps<FormikAbiType>;
+}
+
+export interface EndpointInteractionUIType extends UserInterfaceType {
+  endpoint: EndpointDefinition;
+  formik?: FormikProps<FormikAbiType>;
+  result?: QueryContractResponse;
+  mutability?: string | ContractEndpointMutabilityEnum;
+}
+
+export interface EndpointInputListUIType extends UserInterfaceType {
+  formik?: FormikProps<FormikAbiType>;
+  input?: EndpointParameterDefinition[];
 }
 
 export interface EndpointOutputUIType extends UserInterfaceType {
@@ -45,31 +57,9 @@ export interface EndpointOutputUIType extends UserInterfaceType {
   result?: QueryContractResponse;
 }
 
-export interface EndpointInputListUIType extends EndpointInputBaseType {
-  input?: EndpointParameterDefinition[];
-  values?: EndpointInputValuesType;
-}
-
-export interface EndpointInputUIType extends EndpointInputBaseType {
-  definition: EndpointParameterDefinition;
-  value: string | number | string[] | number[] | undefined;
-}
-
-export interface EndpointInputBaseType extends UserInterfaceType {
-  handleChange?: FormikHandlers['handleChange'];
-  handleBlur?: FormikHandlers['handleBlur'];
-  errors?: FormikErrors<EndpointInputValuesType>;
-  touched?: FormikTouched<EndpointInputValuesType>;
-  index?: number;
-  name?: string;
-  mutability?: string | ContractEndpointMutabilityEnum;
-}
-
-export interface InputUIType extends EndpointInputUIType {
-  handleChange: FormikHandlers['handleChange'];
-  handleBlur: FormikHandlers['handleBlur'];
-  errors: FormikErrors<EndpointInputValuesType>;
-  touched: FormikTouched<EndpointInputValuesType>;
+export interface InputUIType extends UserInterfaceType {
   name: string;
+  formik?: FormikProps<FormikAbiType>;
+  defaultValue?: string;
   children?: React.ReactNode;
 }

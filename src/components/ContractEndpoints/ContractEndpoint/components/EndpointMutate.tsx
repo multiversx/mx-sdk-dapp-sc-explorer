@@ -3,12 +3,7 @@ import { NativeSerializer } from '@multiversx/sdk-core/out';
 
 import { useScContext } from 'context';
 import { useCallContract } from 'hooks';
-import {
-  ContractEndpointMutabilityEnum,
-  BaseEndpointUIType,
-  EndpointInputValuesType
-} from 'types';
-
+import { ContractEndpointMutabilityEnum, BaseEndpointUIType } from 'types';
 import { EndpointForm } from './EndpointForm';
 
 export const EndpointMutate = (props: BaseEndpointUIType) => {
@@ -21,17 +16,17 @@ export const EndpointMutate = (props: BaseEndpointUIType) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string>();
 
-  const onSubmit = async (values: EndpointInputValuesType) => {
+  const onSubmit = async (nativeValues: any[]) => {
     setError(undefined);
     setIsLoading(true);
 
     try {
-      const valuesArray = Object.values(values);
+      console.log('-----nativeValues', nativeValues);
       const args = NativeSerializer.nativeToTypedValues(
-        valuesArray || [],
+        nativeValues || [],
         endpoint
       );
-
+      console.log('-----args', args);
       const transaction = await callContract({ func: endpoint.name, args });
       console.log('----transaction', transaction);
       setIsLoading(false);

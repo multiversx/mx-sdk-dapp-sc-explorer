@@ -71,7 +71,10 @@ export const EndpointTitle = (props: ContractEndpointUIType) => {
           )}
         />
       )}
-      {(input.length > 0 || output.length > 0) && (
+      {((mutability === ContractEndpointMutabilityEnum.mutable &&
+        input.length > 0) ||
+        (mutability === ContractEndpointMutabilityEnum.readonly &&
+          output.length > 0)) && (
         <Badge
           badgeValue='Interactive'
           badgeIcon={interactiveEndpointIcon}

@@ -36,6 +36,10 @@ export const DefinitionsTooltip = (props: DefinitionsTooltipUIType) => {
   const { hintIcon = faQuestionCircle } = customInterface?.icons ?? {};
   let docs: React.ReactNode = null;
 
+  if (!typeName) {
+    return null;
+  }
+
   const existingDocs = DOCUMENTED_TYPES?.[typeName];
   if (existingDocs) {
     docs = (

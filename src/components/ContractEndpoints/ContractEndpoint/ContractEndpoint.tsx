@@ -1,16 +1,14 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import { CollapsibleCard, EndpointTitle } from 'components';
+import { CollapsibleCard } from 'components';
 import { useScContext } from 'context';
-import { ContractEndpointMutabilityEnum } from 'types';
-
+import { ContractEndpointMutabilityEnum, ContractEndpointUIType } from 'types';
 import { EndpointInteraction } from './components/EndpointInteraction';
 import { EndpointMutate } from './components/EndpointMutate';
 import { EndpointRead } from './components/EndpointRead';
-
-import styles from '../styles.module.scss';
-import { ContractEndpointUIType } from '../types';
+import { EndpointTitle } from './components/EndpointTitle';
+import styles from './styles.module.scss';
 
 export const ContractEndpoint = (props: ContractEndpointUIType) => {
   const { canRead, canMutate, canView } = useScContext();

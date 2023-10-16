@@ -2,10 +2,9 @@ import React from 'react';
 import classNames from 'classnames';
 
 import { EndpointInteractionUIType } from 'types';
-
 import { EndpointInputList } from './EndpointInputList';
 import { EndpointOutput } from './EndpointOutput';
-import styles from './styles.module.scss';
+import styles from '../styles.module.scss';
 
 export const EndpointInteraction = ({
   endpoint,

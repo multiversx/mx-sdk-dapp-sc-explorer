@@ -1,34 +1,44 @@
 import React from 'react';
 import classNames from 'classnames';
+import { getIn } from 'formik';
 
 import globalStyles from 'assets/styles/globals.module.scss';
 import { DefinitionsTooltip } from 'components';
 import { DOCUMENTED_TYPES } from 'constants/general';
 import { InputUIType } from 'types';
+import { getTypeFromPrefix } from '../helpers';
 
 export const Input = ({
   name,
-  value,
-  definition,
-  children,
-  handleChange,
-  handleBlur,
+  defaultValue,
+  formik,
   customInterface,
-  errors,
-  touched
+  children
 }: InputUIType) => {
-  const definitionTypeName = definition?.type?.isGenericType()
-    ? definition?.type?.getFirstTypeParameter()?.toString()
-    : definition?.type?.toString();
+  if (!formik) {
+    return null;
+  }
 
-  const knownInputType = DOCUMENTED_TYPES?.[definitionTypeName];
+  const inputError = getIn(formik.errors, name);
+  const prefixParts = name.split('.');
+  const curentType =
+    prefixParts.length > 0 ? prefixParts[prefixParts.length - 1] : name;
+
+  const inputType = getTypeFromPrefix(curentType);
+  const definitionTypeName = inputType?.isGenericType()
+    ? inputType?.getFirstTypeParameter()?.toString()
+    : inputType?.toString();
+
+  const knownInputType = definitionTypeName
+    ? DOCUMENTED_TYPES?.[definitionTypeName]
+    : {};
+
+  const placeholder = knownInputType?.example ?? definitionTypeName;
   const inputMode =
     knownInputType?.type === 'integer' ||
     knownInputType?.inputType === 'numeric'
       ? 'numeric'
       : ''; // UI Only
-  const placeholder = knownInputType?.example ?? definitionTypeName;
-  const hasError = name in errors && name in touched;
 
   return (
     <div
@@ -42,25 +52,25 @@ export const Input = ({
         className={classNames(
           globalStyles?.input,
           customInterface?.customClassNames?.inputClassName,
-          { [globalStyles?.inputInvalid]: hasError },
+          { [globalStyles?.inputInvalid]: inputError },
           {
             ...(customInterface?.customClassNames?.inputInvalidClassName
               ? {
                   [customInterface.customClassNames.inputInvalidClassName]:
-                    hasError
+                    inputError
                 }
               : {})
           }
         )}
         placeholder={placeholder}
-        aria-label={placeholder}
-        aria-describedby={`${name}-${definitionTypeName}-definition`}
+        aria-label={name}
+        aria-describedby={`${name}-definition`}
         name={name}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        {...(!Array.isArray(value)
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+        {...(defaultValue
           ? {
-              defaultValue: value
+              defaultValue: defaultValue
             }
           : {})}
         {...(inputMode ? { inputMode } : {})}
@@ -73,7 +83,7 @@ export const Input = ({
       >
         <div
           className={classNames(globalStyles?.field)}
-          id={`${name}-${definitionTypeName}-definition`}
+          id={`${name}-definition`}
         >
           <code className={classNames(globalStyles?.fieldValue)}>
             {definitionTypeName}
@@ -82,14 +92,14 @@ export const Input = ({
         </div>
         {children}
       </div>
-      {hasError && (
+      {inputError && (
         <div
           className={classNames(
             globalStyles?.inputInvalidFeedback,
             customInterface?.customClassNames?.inputInvalidFeedbackClassName
           )}
         >
-          {errors?.[name]}
+          {JSON.stringify(inputError)}
         </div>
       )}
     </div>

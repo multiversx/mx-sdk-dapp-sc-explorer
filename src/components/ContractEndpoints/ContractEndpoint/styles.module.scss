@@ -2,6 +2,10 @@
   /*Placeholder*/
 }
 
+.endpoint-general-error {
+  /*Placeholder*/
+}
+
 .endpoint-output {
   /*Placeholder*/
   &-results {
@@ -32,4 +36,9 @@
 }
 .button-remove-argument {
   /*Placeholder*/
+}
+.button-endpoint-action {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }

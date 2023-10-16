@@ -6,10 +6,8 @@ import { useQueryContract } from 'hooks';
 import {
   ContractEndpointMutabilityEnum,
   QueryContractResponse,
-  BaseEndpointUIType,
-  EndpointInputValuesType
+  BaseEndpointUIType
 } from 'types';
-
 import { EndpointForm } from './EndpointForm';
 
 export const EndpointRead = (props: BaseEndpointUIType) => {
@@ -23,13 +21,12 @@ export const EndpointRead = (props: BaseEndpointUIType) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string>();
 
-  const onSubmit = async (values: EndpointInputValuesType) => {
+  const onSubmit = async (nativeValues: any[]) => {
     setError(undefined);
     setIsLoading(true);
     try {
-      const valuesArray = Object.values(values);
       const args = NativeSerializer.nativeToTypedValues(
-        valuesArray || [],
+        nativeValues || [],
         endpoint
       );
       const result = await queryContract({ func: endpoint.name, args });

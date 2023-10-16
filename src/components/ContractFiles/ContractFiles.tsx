@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useRef, useState } from 'react';
+import React, { memo, Fragment, useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 
 import globalStyles from 'assets/styles/globals.module.scss';
@@ -14,7 +14,7 @@ import { ContractFile } from './ContractFile';
 import styles from './styles.module.scss';
 import type { ContractFilesUIType } from './types';
 
-export const ContractFiles = ({
+export const ContractFilesComponent = ({
   highlightFileHash,
   customInterface
 }: ContractFilesUIType) => {
@@ -99,3 +99,5 @@ export const ContractFiles = ({
     </div>
   );
 };
+
+export const ContractFiles = memo(ContractFilesComponent);

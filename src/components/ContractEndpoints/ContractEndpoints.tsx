@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import classNames from 'classnames';
 
 import globalStyles from 'assets/styles/globals.module.scss';
-import { Card, EndpointTitle, PanelHeader } from 'components';
+import { Card, PanelHeader } from 'components';
 import { useScContext } from 'context';
 import { useSupport } from 'hooks';
 import { ContractEndpointMutabilityEnum } from 'types';
-
 import { ContractEndpoint } from './ContractEndpoint';
+import { EndpointTitle } from './ContractEndpoint/components/EndpointTitle';
 import styles from './styles.module.scss';
 import { ContractEndpointsUIType } from './types';
 
@@ -63,8 +63,12 @@ export const ContractEndpoints = ({
       >
         {filteredEndpoints.map((endpoint, index) => {
           const hasInteraction =
-            (endpoint?.input && endpoint.input.length > 0) ||
-            (endpoint?.output && endpoint.output.length > 0);
+            (endpoint?.input &&
+              endpoint.input.length > 0 &&
+              mutability === ContractEndpointMutabilityEnum.mutable) ||
+            (endpoint?.output &&
+              endpoint.output.length > 0 &&
+              mutability === ContractEndpointMutabilityEnum.readonly);
 
           if (hasInteraction) {
             return (

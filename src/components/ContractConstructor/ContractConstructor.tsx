@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import classNames from 'classnames';
 
 import globalStyles from 'assets/styles/globals.module.scss';
@@ -9,7 +9,7 @@ import { useSupport } from 'hooks';
 import styles from './styles.module.scss';
 import { ContractConstructorUIType } from './types';
 
-export const ContractConstructor = ({
+export const ContractConstructorComponent = ({
   customInterface
 }: ContractConstructorUIType) => {
   const { abiRegistry, rawAbi } = useScContext();
@@ -77,3 +77,5 @@ export const ContractConstructor = ({
     </div>
   );
 };
+
+export const ContractConstructor = memo(ContractConstructorComponent);

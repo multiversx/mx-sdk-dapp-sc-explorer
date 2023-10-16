@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import classNames from 'classnames';
 
 import globalStyles from 'assets/styles/globals.module.scss';
@@ -10,7 +10,9 @@ import { ContractEvent } from './ContractEvent';
 import styles from './styles.module.scss';
 import type { ContractEventsUIType } from './types';
 
-export const ContractEvents = ({ customInterface }: ContractEventsUIType) => {
+export const ContractEventsComponent = ({
+  customInterface
+}: ContractEventsUIType) => {
   const { rawAbi } = useScContext();
   const { hasEvents } = useSupport();
   const [allExpanded, setAllExpanded] = useState(false);
@@ -60,3 +62,5 @@ export const ContractEvents = ({ customInterface }: ContractEventsUIType) => {
     </div>
   );
 };
+
+export const ContractEvents = memo(ContractEventsComponent);

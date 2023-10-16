@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import classNames from 'classnames';
 
 import globalStyles from 'assets/styles/globals.module.scss';
@@ -10,7 +10,9 @@ import { ContractType } from './ContractType';
 import styles from './styles.module.scss';
 import type { ContractTypingsUIType } from './types';
 
-export const ContractTypings = ({ customInterface }: ContractTypingsUIType) => {
+export const ContractTypingsComponent = ({
+  customInterface
+}: ContractTypingsUIType) => {
   const { abiRegistry } = useScContext();
   const { hasTypes } = useSupport();
   const [allExpanded, setAllExpanded] = useState(false);
@@ -60,3 +62,5 @@ export const ContractTypings = ({ customInterface }: ContractTypingsUIType) => {
     </div>
   );
 };
+
+export const ContractTypings = memo(ContractTypingsComponent);

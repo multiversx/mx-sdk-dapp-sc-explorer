@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { faDocker, faRust } from '@fortawesome/free-brands-svg-icons';
 import { faCogs, faCopy } from '@fortawesome/free-solid-svg-icons';
 import { CopyButton } from '@multiversx/sdk-dapp/UI/CopyButton';
@@ -13,7 +13,9 @@ import { useSupport } from 'hooks';
 import styles from './styles.module.scss';
 import { ContractBuildUIType } from './types';
 
-export const ContractBuild = ({ customInterface }: ContractBuildUIType) => {
+export const ContractBuildComponent = ({
+  customInterface
+}: ContractBuildUIType) => {
   const { rawAbi, verifiedContract } = useScContext();
   const { hasBuildInfo } = useSupport();
 
@@ -143,3 +145,5 @@ export const ContractBuild = ({ customInterface }: ContractBuildUIType) => {
     </div>
   );
 };
+
+export const ContractBuild = memo(ContractBuildComponent);
