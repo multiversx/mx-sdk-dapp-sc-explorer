@@ -1,17 +1,28 @@
-import React, { memo } from 'react';
-import classNames from 'classnames';
+import React from 'react';
+import { DappProvider } from '@multiversx/sdk-dapp/wrappers';
 
 import { Layout } from 'components';
-import { usePrepareSCState } from 'hooks';
+import { useScContext } from 'context';
 import { SCExplorerType } from 'types';
 
-export const AppWrapper = memo((props: SCExplorerType) => {
-  const { children, className } = props;
-  usePrepareSCState(props);
+export const AppWrapper = (props: SCExplorerType) => {
+  const { customNetworkConfig } = props;
+  const { canMutate, environment } = useScContext();
+
+  if (!canMutate) {
+    return <Layout {...props} />;
+  }
 
   return (
-    <div className={classNames('mx-sdk-sc', className)}>
-      {children ? children : <Layout {...props} />}
-    </div>
+    <DappProvider
+      environment={environment}
+      customNetworkConfig={{
+        ...customNetworkConfig,
+        name: 'sdk-sc-explorer',
+        skipFetchFromServer: true
+      }}
+    >
+      <Layout {...props} />
+    </DappProvider>
   );
-});
+};

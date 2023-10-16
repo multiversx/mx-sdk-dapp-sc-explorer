@@ -9,7 +9,9 @@ import {
   ContractFiles,
   ContractTypings,
   ContractConstructor,
-  ContractEndpoints
+  ContractEndpoints,
+  LoginModal,
+  LoginButton
 } from 'components';
 import { useSupport } from 'hooks';
 import {
@@ -17,13 +19,13 @@ import {
   ContractEndpointMutabilityEnum,
   VerifiedContractTabsEnum
 } from 'types';
-
 import styles from './styles.module.scss';
 
 export const LayoutComponent = (props: SCExplorerType) => {
   const { loaderComponent, customInterface } = props;
   const {
     canView,
+    canMutate,
     hasBuildInfo,
     hasSourceCode,
     hasReadEndpoints,
@@ -43,11 +45,13 @@ export const LayoutComponent = (props: SCExplorerType) => {
 
   return (
     <div className={classNames(styles?.layout)}>
+      {canMutate && <LoginModal customInterface={customInterface} />}
       <div className={classNames(styles?.layoutHeader)}>
         <div className={classNames(styles?.layoutHeaderTitle)}>
           Smart Contract Explorer{' '}
           <span className={classNames(styles?.layoutHeaderSubtitle)}>BETA</span>
         </div>
+        <LoginButton customInterface={customInterface} />
       </div>
       <div className={classNames(styles?.layoutContent)}>
         <Tab.Container

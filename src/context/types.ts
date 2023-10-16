@@ -13,6 +13,7 @@ export interface StateType {
   canView: boolean | undefined;
   canRead: boolean | undefined;
   canMutate: boolean | undefined;
+  loginModalOpen: boolean | undefined;
 }
 
 export enum ActionTypeEnum {
@@ -25,7 +26,8 @@ export enum ActionTypeEnum {
   setAbiRegistry = 'setAbiRegistry',
   setCanView = 'setCanView',
   setCanRead = 'setCanRead',
-  setCanMutate = 'setCanMutate'
+  setCanMutate = 'setCanMutate',
+  setLoginModalOpen = 'setLoginModalOpen'
 }
 
 export type DispatchType = (action: ActionType) => void;
@@ -41,4 +43,5 @@ export interface ActionType {
   canView?: boolean;
   canRead?: boolean;
   canMutate?: boolean;
+  loginModalOpen?: boolean;
 }

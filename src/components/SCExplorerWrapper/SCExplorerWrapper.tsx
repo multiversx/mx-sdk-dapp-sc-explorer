@@ -1,14 +1,14 @@
 import React from 'react';
 import { ContextProvider } from 'context';
 import { SCExplorerType } from 'types';
-import { AppWrapper } from './AppWrapper';
+import { AppStateWrapper } from './AppStateWrapper';
 
 export const SCExplorerWrapper = (props: SCExplorerType) => {
   const { children } = props;
 
   return (
     <ContextProvider>
-      <AppWrapper {...props}>{children}</AppWrapper>
+      <AppStateWrapper {...props}>{children}</AppStateWrapper>
     </ContextProvider>
   );
 };

@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import { useFormik } from 'formik';
 
 import globalStyles from 'assets/styles/globals.module.scss';
+import { LoginButtonWrapper } from 'components';
 import { EndpointFormUIType, FormikAbiType } from 'types';
 import { EndpointInteraction } from './EndpointInteraction';
 import {
@@ -17,7 +18,6 @@ import styles from '../styles.module.scss';
 export const EndpointForm = (props: EndpointFormUIType) => {
   const {
     endpoint,
-    children,
     onSubmit,
     buttonText,
     result,
@@ -26,7 +26,8 @@ export const EndpointForm = (props: EndpointFormUIType) => {
     className,
     customInterface
   } = props;
-  const { input } = endpoint;
+  const { input, modifiers } = endpoint;
+  const { mutability } = modifiers;
   const { playIcon = faPlay, loadIcon = faCircleNotch } =
     customInterface?.icons ?? {};
 
@@ -64,26 +65,31 @@ export const EndpointForm = (props: EndpointFormUIType) => {
           {generalError && <p>{generalError}</p>}
         </div>
       )}
-      <div className={classNames(styles?.endpointReadButton)}>
-        <button
-          className={classNames(
-            globalStyles?.button,
-            globalStyles?.buttonPrimary,
-            customInterface?.customClassNames?.buttonClassName,
-            customInterface?.customClassNames?.buttonPrimaryClassName,
-            styles?.buttonEndpointAction
-          )}
-          type='submit'
-          {...(isLoading || !formik.isValid ? { disabled: true } : {})}
+      <div className={classNames(styles?.endpointActionWrapper)}>
+        <LoginButtonWrapper
+          customInterface={customInterface}
+          className={classNames(styles?.buttonEndpointAction)}
+          mutability={mutability}
         >
-          {buttonText}
-          {isLoading ? (
-            <FontAwesomeIcon icon={loadIcon} className='fa-spin fast-spin' />
-          ) : (
-            <FontAwesomeIcon icon={playIcon} />
-          )}
-        </button>
-        {children}
+          <button
+            className={classNames(
+              globalStyles?.button,
+              globalStyles?.buttonPrimary,
+              customInterface?.customClassNames?.buttonClassName,
+              customInterface?.customClassNames?.buttonPrimaryClassName,
+              styles?.buttonEndpointAction
+            )}
+            type='submit'
+            {...(isLoading || !formik.isValid ? { disabled: true } : {})}
+          >
+            {buttonText}
+            {isLoading ? (
+              <FontAwesomeIcon icon={loadIcon} className='fa-spin fast-spin' />
+            ) : (
+              <FontAwesomeIcon icon={playIcon} />
+            )}
+          </button>
+        </LoginButtonWrapper>
       </div>
     </form>
   );

@@ -10,5 +10,6 @@ export const initializer: StateType = {
   canView: false,
   canRead: false,
   canMutate: false,
-  provider: 'api'
+  provider: 'api',
+  loginModalOpen: false
 };

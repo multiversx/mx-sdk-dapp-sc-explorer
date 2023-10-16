@@ -31,7 +31,6 @@ export interface EndpointFormUIType extends EndpointInteractionUIType {
   isLoading?: boolean;
   generalError?: string;
   buttonText?: string;
-  children?: React.ReactNode;
 }
 
 export interface RecursiveContainerUIType extends UserInterfaceType {

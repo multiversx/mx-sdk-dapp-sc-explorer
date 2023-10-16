@@ -62,6 +62,12 @@ const reducer = (state: StateType, action: ActionType) => {
         canMutate: action.canMutate
       };
     }
+    case ActionTypeEnum.setLoginModalOpen: {
+      return {
+        ...state,
+        loginModalOpen: action.loginModalOpen
+      };
+    }
 
     default: {
       throw new Error(`Unhandled action type: ${action}`);

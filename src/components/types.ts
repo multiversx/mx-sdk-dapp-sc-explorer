@@ -9,6 +9,7 @@ export * from 'components/ContractEndpoints/types';
 export * from 'components/ContractEvents/types';
 export * from 'components/ContractFiles/types';
 export * from 'components/ContractTypings/types';
-export * from 'components/DocsTooltip';
+export * from 'components/DocsTooltip/types';
 export * from 'components/FieldList/types';
+export * from 'components/LoginButton/types';
 export * from 'components/Overlay/types';
