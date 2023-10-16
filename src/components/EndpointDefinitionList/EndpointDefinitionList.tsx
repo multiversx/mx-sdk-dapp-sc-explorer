@@ -27,13 +27,7 @@ export const EndpointDefinitionList = ({
             <code className={classNames(globalStyles?.fieldValue)}>
               {definition?.type?.toString()}
             </code>
-            <DefinitionsTooltip
-              typeName={
-                definition?.type?.isGenericType()
-                  ? definition?.type?.getFirstTypeParameter()?.getName()
-                  : definition?.type?.toString()
-              }
-            />
+            <DefinitionsTooltip typeName={definition?.type?.toString()} />
           </div>
         );
       })}

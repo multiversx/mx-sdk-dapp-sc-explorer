@@ -154,13 +154,7 @@ export const RecursiveContainer = ({
                       <code className={classNames(globalStyles?.fieldValue)}>
                         {currentType?.toString()}
                       </code>
-                      <DefinitionsTooltip
-                        typeName={
-                          currentType?.isGenericType()
-                            ? currentType?.getFirstTypeParameter()?.getName()
-                            : currentType?.toString()
-                        }
-                      />
+                      <DefinitionsTooltip typeName={currentType?.toString()} />
                     </div>
                   </div>
                 )}

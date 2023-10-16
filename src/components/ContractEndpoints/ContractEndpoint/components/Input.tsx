@@ -25,10 +25,7 @@ export const Input = ({
     prefixParts.length > 0 ? prefixParts[prefixParts.length - 1] : name;
 
   const inputType = getTypeFromPrefix(curentType);
-  const definitionTypeName = inputType?.isGenericType()
-    ? inputType?.getFirstTypeParameter()?.toString()
-    : inputType?.toString();
-
+  const definitionTypeName = inputType?.toString();
   const knownInputType = definitionTypeName
     ? DOCUMENTED_TYPES?.[definitionTypeName]
     : {};
