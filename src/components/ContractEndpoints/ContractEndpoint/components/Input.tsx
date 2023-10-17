@@ -1,12 +1,13 @@
 import React from 'react';
+import { Type } from '@multiversx/sdk-core/out';
 import classNames from 'classnames';
-import { getIn } from 'formik';
+import { Field, getIn } from 'formik';
 
 import globalStyles from 'assets/styles/globals.module.scss';
 import { DefinitionsTooltip } from 'components';
 import { DOCUMENTED_TYPES } from 'constants/general';
 import { InputUIType, DocumentedTypesExampleType } from 'types';
-import { getTypeFromPrefix } from '../helpers';
+import { getTypeFromPrefix, validateFieldType } from '../helpers';
 
 export const Input = ({
   name,
@@ -37,6 +38,27 @@ export const Input = ({
       ? 'numeric'
       : ''; // UI Only
 
+  const validateField = (value: any, inputType?: Type) => {
+    if (value === undefined) {
+      return 'Required';
+    }
+
+    const formattedValue = value.replace(/\s/g, '');
+    if (inputType) {
+      try {
+        const errorMessage = validateFieldType(formattedValue, inputType);
+        if (errorMessage) {
+          return errorMessage;
+        }
+      } catch (error) {
+        console.warn('Invalid Input: ', error);
+        return 'Invalid Input';
+      }
+    }
+
+    return;
+  };
+
   return (
     <div
       className={classNames(
@@ -44,8 +66,9 @@ export const Input = ({
         customInterface?.customClassNames?.inputGroupClassName
       )}
     >
-      <input
+      <Field
         type='text'
+        validate={(value: any) => validateField(value, inputType)}
         className={classNames(
           globalStyles?.input,
           customInterface?.customClassNames?.inputClassName,
@@ -89,14 +112,14 @@ export const Input = ({
         </div>
         {children}
       </div>
-      {inputError && (
+      {inputError && typeof inputError === 'string' && (
         <div
           className={classNames(
             globalStyles?.inputInvalidFeedback,
             customInterface?.customClassNames?.inputInvalidFeedbackClassName
           )}
         >
-          {JSON.stringify(inputError)}
+          {inputError}
         </div>
       )}
     </div>

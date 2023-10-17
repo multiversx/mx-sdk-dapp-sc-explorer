@@ -16,6 +16,7 @@ export const getTypeFromPrefix = (
 
   try {
     const parsedType = new TypeExpressionParser().parse(cleanPrefix);
+
     return parsedType;
   } catch {
     return undefined;
