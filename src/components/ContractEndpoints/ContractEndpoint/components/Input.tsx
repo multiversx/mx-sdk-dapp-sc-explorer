@@ -5,7 +5,7 @@ import { getIn } from 'formik';
 import globalStyles from 'assets/styles/globals.module.scss';
 import { DefinitionsTooltip } from 'components';
 import { DOCUMENTED_TYPES } from 'constants/general';
-import { InputUIType } from 'types';
+import { InputUIType, DocumentedTypesExampleType } from 'types';
 import { getTypeFromPrefix } from '../helpers';
 
 export const Input = ({
@@ -28,7 +28,7 @@ export const Input = ({
   const definitionTypeName = inputType?.toString();
   const knownInputType = definitionTypeName
     ? DOCUMENTED_TYPES?.[definitionTypeName]
-    : {};
+    : ({} as DocumentedTypesExampleType);
 
   const placeholder = knownInputType?.example ?? definitionTypeName;
   const inputMode =
@@ -59,7 +59,7 @@ export const Input = ({
               : {})
           }
         )}
-        placeholder={placeholder}
+        placeholder={String(placeholder) ?? ''}
         aria-label={name}
         aria-describedby={`${name}-definition`}
         name={name}

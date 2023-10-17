@@ -45,7 +45,7 @@ export const LayoutComponent = (props: SCExplorerType) => {
 
   return (
     <div className={classNames(styles?.layout)}>
-      {canMutate && <LoginModal customInterface={customInterface} />}
+      {canMutate && <LoginModal />}
       <div className={classNames(styles?.layoutHeader)}>
         <div className={classNames(styles?.layoutHeaderTitle)}>
           Smart Contract Explorer{' '}

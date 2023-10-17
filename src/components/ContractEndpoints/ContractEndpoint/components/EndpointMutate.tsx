@@ -21,15 +21,16 @@ export const EndpointMutate = (props: BaseEndpointUIType) => {
     setIsLoading(true);
 
     try {
-      console.log('-----nativeValues', nativeValues);
       const args = NativeSerializer.nativeToTypedValues(
         nativeValues || [],
         endpoint
       );
-      console.log('-----args', args);
-      const transaction = await callContract({ func: endpoint.name, args });
-      console.log('----transaction', transaction);
+
+      const result = await callContract({ func: endpoint.name, args });
       setIsLoading(false);
+      if (result?.error) {
+        setError(String(result.error));
+      }
     } catch (error) {
       setIsLoading(false);
       setError(String(error));

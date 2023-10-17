@@ -12,4 +12,5 @@ export * from 'components/ContractTypings/types';
 export * from 'components/DocsTooltip/types';
 export * from 'components/FieldList/types';
 export * from 'components/LoginButton/types';
+export * from 'components/Modals/types';
 export * from 'components/Overlay/types';

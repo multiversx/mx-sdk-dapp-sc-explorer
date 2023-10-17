@@ -1,5 +1,8 @@
 import React from 'react';
-import { DappProvider } from '@multiversx/sdk-dapp/wrappers';
+import { NotificationModal } from '@multiversx/sdk-dapp/UI/NotificationModal/NotificationModal';
+import { SignTransactionsModals } from '@multiversx/sdk-dapp/UI/SignTransactionsModals/SignTransactionsModals';
+import { TransactionsToastList } from '@multiversx/sdk-dapp/UI/TransactionsToastList/TransactionsToastList';
+import { DappProvider } from '@multiversx/sdk-dapp/wrappers/DappProvider/DappProvider';
 
 import { Layout } from 'components';
 import { useScContext } from 'context';
@@ -22,6 +25,9 @@ export const AppWrapper = (props: SCExplorerType) => {
         skipFetchFromServer: true
       }}
     >
+      <TransactionsToastList />
+      <NotificationModal />
+      <SignTransactionsModals />
       <Layout {...props} />
     </DappProvider>
   );

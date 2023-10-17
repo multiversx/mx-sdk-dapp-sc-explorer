@@ -1,3 +1,5 @@
+import { DocumentedTypesExampleType } from 'types';
+
 export const TIMEOUT = 10000;
 
 /*-----------------------*/
@@ -8,7 +10,7 @@ export const INTERFACE_NAME_PLACEHOLDER = '?';
 export const INTERFACE_DESCRIPTION_PLACEHOLDER = 'N / A';
 export const TYPE_PREFIX = 'multiversx:types:';
 
-export const DOCUMENTED_TYPES = {
+export const DOCUMENTED_TYPES: { [key: string]: DocumentedTypesExampleType } = {
   u8: {
     type: 'integer',
     example: 1

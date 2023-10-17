@@ -1,21 +1,26 @@
-import React, { ReactNode, useState, useCallback } from 'react';
-import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import React, { useState, useCallback } from 'react';
+import { faArrowRight, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-//import { fallbackNetworkConfigurations } from '@multiversx/sdk-dapp/constants/network';
-import { useGetAccountProvider } from '@multiversx/sdk-dapp/hooks';
-import { LoginMethodsEnum } from '@multiversx/sdk-dapp/types';
 import {
   ExtensionLoginButton,
   LedgerLoginButton,
   WalletConnectLoginButton,
   WebWalletLoginButton
 } from '@multiversx/sdk-dapp/UI';
-import { Modal } from 'react-bootstrap';
+import { isWindowAvailable } from '@multiversx/sdk-dapp/utils/isWindowAvailable';
+import classNames from 'classnames';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
+import globalStyles from 'assets/styles/globals.module.scss';
 import { useDispatch, useScContext } from 'context';
 import { ActionTypeEnum } from 'types';
+import DeFiWallet from './assets/extension-defi-wallet.svg';
+import LedgerWallet from './assets/ledger-wallet.svg';
+import MobileWallet from './assets/mobile-wallet.svg';
+import WebWallet from './assets/web-wallet.svg';
+
 import styles from './styles.module.scss';
-import { LoginModalUIType } from './types';
+import { Modal } from '../Modal';
 
 enum LoginContainersTypesEnum {
   walletConnect = 'walletConnect',
@@ -23,49 +28,29 @@ enum LoginContainersTypesEnum {
   none = 'none'
 }
 
-export const LoginModal = (props: LoginModalUIType) => {
+export const UnlockTitle = (
+  <div className={classNames(styles?.unlockTitle)}>
+    Connect to a wallet
+    <OverlayTrigger
+      placement='top'
+      delay={{ show: 250, hide: 400 }}
+      overlay={(props) => (
+        <Tooltip id='connect-to-wallet-tooltip' {...props}>
+          Connect securely using one of the provided options
+        </Tooltip>
+      )}
+    >
+      <FontAwesomeIcon icon={faInfoCircle} className='i-icon ' />
+    </OverlayTrigger>
+  </div>
+);
+
+export const LoginModal = () => {
   const dispatch = useDispatch();
   const { loginModalOpen } = useScContext();
-  const { providerType } = useGetAccountProvider();
   const [openedLoginContainerType, setOpenedContainerType] = useState(
     LoginContainersTypesEnum.none
   );
-
-  const buttons = [
-    {
-      name: 'MultiversX DeFi Wallet',
-      component: ExtensionLoginButton
-    },
-    {
-      name: 'xPortal',
-      component: WalletConnectLoginButton,
-      id: LoginContainersTypesEnum.walletConnect,
-      isWalletConnectV2: true,
-      onModalOpens: () =>
-        setOpenedContainerType(LoginContainersTypesEnum.walletConnect)
-    },
-    {
-      name: 'Ledger',
-      id: LoginContainersTypesEnum.ledger,
-      component: LedgerLoginButton,
-      onModalOpens: () =>
-        setOpenedContainerType(LoginContainersTypesEnum.ledger)
-    },
-    {
-      name: 'MultiversX Web Wallet',
-      component: WebWalletLoginButton
-    }
-  ];
-
-  function renderLoginButton(
-    content: ReactNode,
-    containerType = LoginContainersTypesEnum.none
-  ) {
-    const shouldRender =
-      openedLoginContainerType === LoginContainersTypesEnum.none ||
-      containerType === openedLoginContainerType;
-    return shouldRender ? content : null;
-  }
 
   const onClose = useCallback(() => {
     dispatch({
@@ -75,61 +60,140 @@ export const LoginModal = (props: LoginModalUIType) => {
     setOpenedContainerType(LoginContainersTypesEnum.none);
   }, []);
 
-  const onLoginRedirect = () => {
-    onClose();
+  const loginParams = {
+    callbackRoute: isWindowAvailable() ? window?.location?.href : '/',
+    redirectAfterLogin: false,
+    wrapContentInsideModal: false,
+    hideButtonWhenModalOpens: true,
+    shouldRenderDefaultCss: false,
+    className: classNames(globalStyles?.button, styles?.buttonLoginProvider),
+    nativeAuth: true,
+    onLoginRedirect: () => {
+      onClose();
+    }
   };
 
-  const titles = {
-    [LoginContainersTypesEnum.none]: 'Select Provider',
-    [LoginContainersTypesEnum.ledger]: 'Login with Ledger',
-    [LoginContainersTypesEnum.walletConnect]: 'Login with xPortal'
-  };
+  function handleOpenWalletConnect() {
+    setOpenedContainerType(LoginContainersTypesEnum.walletConnect);
+  }
+
+  function handleOpenLedgerLogin() {
+    setOpenedContainerType(LoginContainersTypesEnum.ledger);
+  }
+
+  function getLoginTitle() {
+    switch (openedLoginContainerType) {
+      case LoginContainersTypesEnum.walletConnect:
+        return 'xPortal Login';
+      case LoginContainersTypesEnum.ledger:
+        return 'Login with Ledger';
+      default:
+        return UnlockTitle;
+    }
+  }
+
+  function renderLoginButton(
+    content: React.ReactNode,
+    containerType = LoginContainersTypesEnum.none
+  ) {
+    const shouldRender =
+      openedLoginContainerType == LoginContainersTypesEnum.none ||
+      containerType === openedLoginContainerType;
+    return shouldRender ? content : null;
+  }
 
   return (
     <Modal
       show={loginModalOpen}
-      onHide={onClose}
-      keyboard={false}
-      backdrop='static'
-      animation={false}
-      centered={true}
-      className={styles.modal}
-      dialogClassName={styles.dialog}
+      onClose={onClose}
+      className={styles.LoginModal}
+      title={getLoginTitle()}
     >
-      <div className={styles.unlock}>
-        <div className={styles.heading}>
-          <div className={styles.title}>
-            {titles[openedLoginContainerType] ||
-              titles[LoginContainersTypesEnum.none]}
-          </div>
+      <div className={styles.loginModal}>
+        {renderLoginButton(
+          <ExtensionLoginButton {...loginParams}>
+            <div className={classNames(styles?.buttonLoginProviderMethod)}>
+              <div className={classNames(styles?.buttonLoginProviderTitle)}>
+                <DeFiWallet height='20' style={{ width: '1.8rem' }} />
+                MultiversX DeFi Wallet
+              </div>
+            </div>
 
-          <div className={styles.close} onClick={onClose}>
-            x
-          </div>
-        </div>
+            <FontAwesomeIcon icon={faArrowRight} className='arrow' />
+          </ExtensionLoginButton>
+        )}
 
-        <div className={styles.buttons}>
-          {buttons.map((button) =>
-            renderLoginButton(
-              <button.component
-                key={button.name}
-                callbackRoute={
-                  providerType === LoginMethodsEnum.wallet ? '/' : undefined
-                }
-                className={styles.button}
-                wrapContentInsideModal={false}
-                hideButtonWhenModalOpens={true}
-                //nativeAuth={{ apiAddress, expirySeconds: 7200 }}
-                onLoginRedirect={onLoginRedirect}
-                {...button}
-              >
-                <span className={styles.name}>{button.name}</span>
-                <FontAwesomeIcon icon={faArrowRight} className={styles.arrow} />
-              </button.component>,
-              button.id
-            )
-          )}
-        </div>
+        {renderLoginButton(
+          <WalletConnectLoginButton
+            onContentShow={handleOpenWalletConnect}
+            title=''
+            {...loginParams}
+          >
+            <div className={classNames(styles?.buttonLoginProviderMethod)}>
+              <div className={classNames(styles?.buttonLoginProviderTitle)}>
+                <MobileWallet height='20' style={{ width: '1.8rem' }} />
+                xPortal App
+              </div>
+            </div>
+            <FontAwesomeIcon icon={faArrowRight} className='arrow' />
+          </WalletConnectLoginButton>,
+          LoginContainersTypesEnum.walletConnect
+        )}
+
+        {renderLoginButton(
+          <LedgerLoginButton
+            loginButtonText={''}
+            onContentShow={handleOpenLedgerLogin}
+            innerLedgerComponentsClasses={{
+              ledgerProgressBarClassNames: {
+                ledgerProgressBarThumbClassName: 'ledger-progressbar-thumb',
+                ledgerProgressBarTrackClassName: 'ledger-progressbar-track'
+              },
+              addressTableClassNames: {
+                ledgerModalTableItemClassName: 'ledger-address-row',
+                ledgerModalTableSelectedItemClassName:
+                  'ledger-address-row-selected',
+                ledgerModalTableHeadClassName: 'ledger-address-header',
+                ledgerModalTableNavigationButtonClassName:
+                  'ledger-address-navigation-button'
+              },
+              ledgerConnectClassNames: {
+                ledgerModalButtonClassName: 'ledger-connect-button',
+                ledgerModalIconClassName: 'ledger-connect-icon'
+              },
+              confirmAddressClassNames: {
+                ledgerModalConfirmDescriptionClassName:
+                  'ledger-confirm-address-description',
+                ledgerModalConfirmFooterClassName:
+                  'ledger-confirm-address-footer',
+                ledgerModalConfirmDataClassName: 'ledger-confirm-address-data'
+              }
+            }}
+            {...loginParams}
+          >
+            <div className={classNames(styles?.buttonLoginProviderMethod)}>
+              <div className={classNames(styles?.buttonLoginProviderTitle)}>
+                <LedgerWallet height='20' style={{ width: '1.8rem' }} />
+                Ledger
+              </div>
+            </div>
+
+            <FontAwesomeIcon icon={faArrowRight} className='arrow' />
+          </LedgerLoginButton>,
+          LoginContainersTypesEnum.ledger
+        )}
+
+        {renderLoginButton(
+          <WebWalletLoginButton {...loginParams}>
+            <div className={classNames(styles?.buttonLoginProviderMethod)}>
+              <div className={classNames(styles?.buttonLoginProviderTitle)}>
+                <WebWallet height='20' style={{ width: '1.8rem' }} />
+                MultiversX Web Wallet
+              </div>
+            </div>
+            <FontAwesomeIcon icon={faArrowRight} className='arrow' />
+          </WebWalletLoginButton>
+        )}
       </div>
     </Modal>
   );
