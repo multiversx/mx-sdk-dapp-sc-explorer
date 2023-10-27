@@ -5,7 +5,7 @@ import classNames from 'classnames';
 
 import globalStyles from 'assets/styles/globals.module.scss';
 import { DefinitionsTooltip } from 'components';
-import { TYPE_PREFIX } from 'constants/general';
+import { TYPE_PREFIX_REGEX } from 'constants/general';
 import { RecursiveContainerUIType, FormikAbiType } from 'types';
 import { Input } from './Input';
 import { getTypeFromPrefix } from '../helpers';
@@ -142,13 +142,13 @@ export const RecursiveContainer = ({
               className={classNames(globalStyles?.panelContentWrapperRow)}
               key={key}
             >
-              {!name.startsWith(TYPE_PREFIX) && (
+              {!TYPE_PREFIX_REGEX.test(name) && (
                 <div className={classNames(globalStyles?.panelName)}>
                   {name}
                 </div>
               )}
               <div className={classNames(globalStyles?.panelContent)}>
-                {Boolean(name.startsWith(TYPE_PREFIX) && currentType) && (
+                {Boolean(TYPE_PREFIX_REGEX.test(name)) && currentType && (
                   <div className={classNames(globalStyles?.fieldWrapper)}>
                     <div className={classNames(globalStyles?.field)}>
                       <code className={classNames(globalStyles?.fieldValue)}>

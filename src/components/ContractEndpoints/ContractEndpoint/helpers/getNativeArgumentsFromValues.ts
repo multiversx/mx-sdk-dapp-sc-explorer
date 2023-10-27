@@ -5,6 +5,7 @@ export const getNativeArgumentsFromValues = (values: FormikAbiType): any[] => {
     const flattenHelped = flattenValues(values);
     const flattenedArray = flattenNestedResultArray(flattenHelped);
     const nativeArgs = prepareArgs(flattenedArray);
+
     return nativeArgs;
   } catch {
     return [];

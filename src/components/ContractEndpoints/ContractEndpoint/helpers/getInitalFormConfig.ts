@@ -24,7 +24,7 @@ export const getInitalFormConfig = (type: Type): FormikAbiType => {
     }
     return {
       [`${type?.getFullyQualifiedName()}`]: Object.fromEntries(
-        typeParameters.map((definition) => {
+        typeParameters.map((definition, index) => {
           const typeParameters = definition?.getTypeParameters();
           const upperBound = definition?.getCardinality()?.getUpperBound();
           const isArray = Boolean(
@@ -32,7 +32,10 @@ export const getInitalFormConfig = (type: Type): FormikAbiType => {
               typeParameters.length !== upperBound
           );
 
-          return [definition?.getFullyQualifiedName(), isArray ? [''] : ''];
+          return [
+            `${index}:${definition?.getFullyQualifiedName()}`,
+            isArray ? [''] : ''
+          ];
         })
       )
     };
