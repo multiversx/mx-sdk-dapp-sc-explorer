@@ -8,7 +8,7 @@ import { getInitalFormConfig } from '../helpers';
 import styles from '../styles.module.scss';
 
 export const EndpointInputList = (props: EndpointInputListUIType) => {
-  const { formik, input, customInterface } = props;
+  const { formik, input, endpoint, customInterface } = props;
 
   if (!(input && input.length > 0)) {
     return null;
@@ -29,6 +29,7 @@ export const EndpointInputList = (props: EndpointInputListUIType) => {
         <RecursiveContainer
           config={config}
           formik={formik}
+          endpoint={endpoint}
           prefix=''
           customInterface={customInterface}
         />

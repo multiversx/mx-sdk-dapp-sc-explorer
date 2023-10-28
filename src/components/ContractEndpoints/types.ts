@@ -36,6 +36,7 @@ export interface EndpointFormUIType extends EndpointInteractionUIType {
 export interface RecursiveContainerUIType extends UserInterfaceType {
   config: FormikAbiType;
   prefix: string;
+  endpoint: EndpointDefinition;
   formik?: FormikProps<FormikAbiType>;
 }
 
@@ -47,6 +48,7 @@ export interface EndpointInteractionUIType extends UserInterfaceType {
 }
 
 export interface EndpointInputListUIType extends UserInterfaceType {
+  endpoint: EndpointDefinition;
   formik?: FormikProps<FormikAbiType>;
   input?: EndpointParameterDefinition[];
 }

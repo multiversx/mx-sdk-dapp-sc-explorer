@@ -12,10 +12,14 @@ export const EndpointInteraction = ({
 }: EndpointInteractionUIType) => {
   const { input, output, modifiers } = endpoint;
   const { mutability } = modifiers;
-
   return (
     <div className={classNames(styles?.endpointInteraction)}>
-      <EndpointInputList input={input} mutability={mutability} {...rest} />
+      <EndpointInputList
+        input={input}
+        mutability={mutability}
+        endpoint={endpoint}
+        {...rest}
+      />
       <EndpointOutput output={output} {...rest} />
     </div>
   );

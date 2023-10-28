@@ -8,13 +8,14 @@ import { DefinitionsTooltip } from 'components';
 import { TYPE_PREFIX_REGEX } from 'constants/general';
 import { RecursiveContainerUIType, FormikAbiType } from 'types';
 import { Input } from './Input';
-import { getTypeFromPrefix } from '../helpers';
+import { getTypeFromPrefix, getNestedType } from '../helpers';
 import { useFormProperty } from '../hooks';
 import styles from '../styles.module.scss';
 
 export const RecursiveContainer = ({
   config,
   formik,
+  endpoint,
   prefix = '',
   customInterface
 }: RecursiveContainerUIType) => {
@@ -54,44 +55,76 @@ export const RecursiveContainer = ({
         );
       }
 
+      let isComposite = false;
+      let upperBound = 1;
+      if (formattedPrefix.includes(':')) {
+        const fullEndpointName = formattedPrefix.split(':')?.[0];
+        const fieldName = fullEndpointName.split('.')?.[0];
+
+        if (fieldName) {
+          const currentInput = endpoint?.input?.find(
+            ({ name }) => name === fieldName
+          );
+
+          if (currentInput && currentPrefix?.includes(':')) {
+            const foundType = getNestedType({
+              inputType: currentInput?.type,
+              searchedType: currentPrefix
+            });
+            if (foundType) {
+              isComposite = foundType?.getCardinality()?.isComposite();
+              upperBound = foundType?.getCardinality()?.getUpperBound();
+            }
+          }
+        }
+      }
       return (
         <>
           <RecursiveContainer
             config={individualConfig}
             formik={formik}
             prefix={formattedPrefix}
+            endpoint={endpoint}
             customInterface={customInterface}
           />
-          {individualConfig.length > 1 && (
-            <button
-              type='button'
-              className={classNames(
-                globalStyles?.button,
-                globalStyles?.buttonSecondary,
-                customInterface?.customClassNames?.buttonClassName,
-                customInterface?.customClassNames?.buttonSecondaryClassName,
-                styles?.buttonRemoveArgument
+          {isComposite && (
+            <>
+              {individualConfig.length > 1 &&
+                individualConfig.length !== upperBound && (
+                  <button
+                    type='button'
+                    className={classNames(
+                      globalStyles?.button,
+                      globalStyles?.buttonSecondary,
+                      customInterface?.customClassNames?.buttonClassName,
+                      customInterface?.customClassNames
+                        ?.buttonSecondaryClassName,
+                      styles?.buttonRemoveArgument
+                    )}
+                    onClick={removeProperty(individualConfig.length - 1)}
+                    {...(!formik ? { disabled: true } : {})}
+                  >
+                    Remove Argument <FontAwesomeIcon icon={minusIcon} />
+                  </button>
+                )}
+              {individualConfig.length < upperBound && (
+                <button
+                  type='button'
+                  className={classNames(
+                    globalStyles?.button,
+                    globalStyles?.buttonSecondary,
+                    customInterface?.customClassNames?.buttonClassName,
+                    customInterface?.customClassNames?.buttonSecondaryClassName,
+                    styles?.buttonAddArgument
+                  )}
+                  onClick={addNewProperty}
+                  {...(!formik ? { disabled: true } : {})}
+                >
+                  Add Argument <FontAwesomeIcon icon={plusIcon} />
+                </button>
               )}
-              onClick={removeProperty(individualConfig.length - 1)}
-              {...(!formik ? { disabled: true } : {})}
-            >
-              Remove Argument <FontAwesomeIcon icon={minusIcon} />
-            </button>
+            </>
           )}
-          <button
-            type='button'
-            className={classNames(
-              globalStyles?.button,
-              globalStyles?.buttonSecondary,
-              customInterface?.customClassNames?.buttonClassName,
-              customInterface?.customClassNames?.buttonSecondaryClassName,
-              styles?.buttonAddArgument
-            )}
-            onClick={addNewProperty}
-            {...(!formik ? { disabled: true } : {})}
-          >
-            Add Argument <FontAwesomeIcon icon={plusIcon} />
-          </button>
         </>
       );
     } else if (
@@ -103,6 +136,7 @@ export const RecursiveContainer = ({
           config={individualConfig}
           formik={formik}
           prefix={formattedPrefix}
+          endpoint={endpoint}
           customInterface={customInterface}
         />
       );

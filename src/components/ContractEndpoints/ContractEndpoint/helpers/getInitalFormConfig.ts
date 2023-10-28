@@ -3,61 +3,33 @@ import { Type, StructType } from '@multiversx/sdk-core/out';
 import { CUSTOM_TYPE_PREFIX } from 'constants/general';
 import { FormikAbiType } from 'types';
 
-const isTypeVariadic = (type: Type) => {
-  const typeParameters = type?.getTypeParameters();
-  const upperBound = type?.getCardinality()?.getUpperBound();
+export function getInitalFormConfig(
+  type: Type,
+  name: string = '',
+  index: number = 0
+): FormikAbiType {
+  const typeParameters = type?.getTypeParameters() ?? [];
+  const hasDependencies = type?.getNamesOfDependencies();
+  const entryName = `${
+    name ? `${CUSTOM_TYPE_PREFIX}${name}:` : ''
+  }${index}:${type?.getFullyQualifiedName()}`;
 
-  return Boolean(
-    type?.getCardinality()?.isComposite() &&
-      typeParameters.length !== upperBound
-  );
-};
+  if (hasDependencies.length > 0) {
+    try {
+      const fieldsDefinitions = (type as StructType)
+        .getFieldsDefinitions()
+        .map(({ type, name }) => getInitalFormConfig(type, name));
 
-export const getInitalFormConfig = (type: Type): FormikAbiType => {
-  const typeParameters = type?.getTypeParameters();
-  const upperBound = type?.getCardinality()?.getUpperBound();
-  const isArray = Boolean(
-    type?.getCardinality()?.isComposite() &&
-      typeParameters.length !== upperBound
-  );
-
-  if (isArray) {
-    const props = typeParameters?.map((curentType: Type) =>
-      getInitalFormConfig(curentType)
-    );
-
-    return {
-      [`${type?.getFullyQualifiedName()}`]:
-        props.length === 0 ? (isArray ? [''] : '') : props
-    };
-  } else {
-    if (typeParameters.length === 0) {
-      const hasDependencies = type?.getNamesOfDependencies();
-      if (hasDependencies.length > 0) {
-        const fieldsDefinitions = (type as StructType).getFieldsDefinitions();
-        if (fieldsDefinitions.length > 0) {
-          // handle customTypes
-          const objectProps = Object.fromEntries(
-            fieldsDefinitions.map(({ type, name }, index) => [
-              `${CUSTOM_TYPE_PREFIX}${name}:${index}:${type?.getFullyQualifiedName()}`,
-              isTypeVariadic(type) ? [''] : ''
-            ])
-          );
-
-          return { [`${type?.getFullyQualifiedName()}`]: objectProps };
-        }
-      }
-
-      return { [`${type?.getFullyQualifiedName()}`]: '' };
-    }
-
-    return {
-      [`${type?.getFullyQualifiedName()}`]: Object.fromEntries(
-        typeParameters.map((definition, index) => [
-          `${index}:${definition?.getFullyQualifiedName()}`,
-          isTypeVariadic(definition) ? [''] : ''
-        ])
-      )
-    };
+      return {
+        [entryName]: fieldsDefinitions.length > 0 ? fieldsDefinitions : ''
+      };
+    } catch {}
   }
-};
+
+  const props = typeParameters?.map((curentType: Type) =>
+    getInitalFormConfig(curentType)
+  );
+  return {
+    [entryName]: props.length > 0 ? props : ''
+  };
+}
