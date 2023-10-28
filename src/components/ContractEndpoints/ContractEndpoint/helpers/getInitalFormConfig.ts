@@ -37,14 +37,14 @@ export const getInitalFormConfig = (type: Type): FormikAbiType => {
         const fieldsDefinitions = (type as StructType).getFieldsDefinitions();
         if (fieldsDefinitions.length > 0) {
           // handle customTypes
-          const objectprops = Object.fromEntries(
+          const objectProps = Object.fromEntries(
             fieldsDefinitions.map(({ type, name }, index) => [
               `${CUSTOM_TYPE_PREFIX}${name}:${index}:${type?.getFullyQualifiedName()}`,
               isTypeVariadic(type) ? [''] : ''
             ])
           );
 
-          return { [`${type?.getFullyQualifiedName()}`]: objectprops };
+          return { [`${type?.getFullyQualifiedName()}`]: objectProps };
         }
       }
 
