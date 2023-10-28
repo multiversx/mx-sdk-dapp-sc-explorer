@@ -1,3 +1,4 @@
+import { CUSTOM_TYPE_PREFIX } from 'constants/general';
 import { FormikAbiType } from 'types';
 
 export const getNativeArgumentsFromValues = (values: FormikAbiType): any[] => {
@@ -16,6 +17,20 @@ function flattenValues(innerObj: any): any {
   if (Array.isArray(innerObj)) {
     return innerObj.map((obj) => flattenValues(obj));
   } else if (typeof innerObj === 'object' && innerObj !== null) {
+    const objKeys = Object.keys(innerObj);
+    const isCustomType = objKeys.every((key) =>
+      key.startsWith(CUSTOM_TYPE_PREFIX)
+    );
+    if (isCustomType) {
+      // handle customTypes
+      const processedObject = Object.fromEntries(
+        Object.entries(innerObj).map(([k, v]) => {
+          const key = k.split(':')?.[1];
+          return [key, v];
+        })
+      );
+      return processedObject;
+    }
     const values = Object.values(innerObj);
     return values.map((obj) => flattenValues(obj));
   } else {

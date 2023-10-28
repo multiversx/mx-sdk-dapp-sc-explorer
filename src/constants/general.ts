@@ -9,8 +9,11 @@ export const CONTRACT_FILE_EXTENSION = '.rs';
 export const INTERFACE_NAME_PLACEHOLDER = '?';
 export const INTERFACE_DESCRIPTION_PLACEHOLDER = 'N / A';
 export const TYPE_PREFIX = 'multiversx:types:';
-export const TYPE_REGEX = /(?:\d+:)?multiversx:types:/g;
-export const TYPE_PREFIX_REGEX = /^(?:\d+:)?multiversx:types:/;
+export const CUSTOM_TYPE_PREFIX = 'customType:';
+export const TYPE_REGEX =
+  /(customType:)?([a-z_:]+:)?(?:\d+:)?multiversx:types:/g;
+export const TYPE_PREFIX_REGEX =
+  /^(customType:)?([a-z_:]+:)?(?:\d+:)?multiversx:types:/;
 
 export const DOCUMENTED_TYPES: { [key: string]: DocumentedTypesExampleType } = {
   u8: {
