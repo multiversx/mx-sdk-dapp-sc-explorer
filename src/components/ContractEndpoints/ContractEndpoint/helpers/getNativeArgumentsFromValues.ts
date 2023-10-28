@@ -26,7 +26,13 @@ function flattenValues(innerObj: any): any {
       const processedObject = Object.fromEntries(
         Object.entries(innerObj).map(([k, v]) => {
           const key = k.split(':')?.[1];
-          return [key, v];
+          const processedValue = flattenValues(v);
+          if (Array.isArray(processedValue)) {
+            const flattenedArray = flattenNestedResultArray(processedValue);
+            const flatArgs = prepareArgs(flattenedArray);
+            return [key, flatArgs];
+          }
+          return [key, processedValue];
         })
       );
       return processedObject;

@@ -18,7 +18,7 @@ export const EndpointInputList = (props: EndpointInputListUIType) => {
     formik?.values ??
     Object.fromEntries(
       input.map((input) => {
-        return [input.name, getInitalFormConfig(input.type)];
+        return [input.name, getInitalFormConfig({ type: input.type })];
       })
     );
 

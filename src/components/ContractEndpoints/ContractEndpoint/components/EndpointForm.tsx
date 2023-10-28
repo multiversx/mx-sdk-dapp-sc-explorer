@@ -31,7 +31,7 @@ export const EndpointForm = (props: EndpointFormUIType) => {
 
   const initialValues: FormikAbiType = Object.fromEntries(
     input.map((input) => {
-      return [input?.name, getInitalFormConfig(input.type)];
+      return [input?.name, getInitalFormConfig({ type: input.type })];
     })
   );
 
