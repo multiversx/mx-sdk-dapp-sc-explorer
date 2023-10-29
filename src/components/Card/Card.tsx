@@ -3,26 +3,27 @@ import classNames from 'classnames';
 
 import globalStyles from 'assets/styles/globals.module.scss';
 import { Badge } from 'components';
-
+import { useSCExplorerContext } from 'contexts';
 import { CardUIType } from './types';
 
 export const Card = (props: CardUIType) => {
-  const { title, children, className, customInterface, titleContent } = props;
+  const { title, children, className, titleContent } = props;
+  const { customClassNames } = useSCExplorerContext();
   return (
     <div
       className={classNames(
         className,
         globalStyles?.card,
-        customInterface?.customClassNames?.cardClassName,
         globalStyles?.listItem,
-        customInterface?.customClassNames?.listItemClassName
+        customClassNames?.cardClassName,
+        customClassNames?.listItemClassName
       )}
     >
       {(titleContent || title) && (
         <div
           className={classNames(
             globalStyles?.cardHeader,
-            customInterface?.customClassNames?.cardHeaderClassName
+            customClassNames?.cardHeaderClassName
           )}
         >
           {titleContent ? (
@@ -39,7 +40,7 @@ export const Card = (props: CardUIType) => {
         <div
           className={classNames(
             globalStyles?.cardBody,
-            customInterface?.customClassNames?.cardBodyClassName
+            customClassNames?.cardBodyClassName
           )}
         >
           {children}

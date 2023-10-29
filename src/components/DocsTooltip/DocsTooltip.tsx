@@ -2,12 +2,13 @@ import React from 'react';
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Overlay } from 'components';
-
+import { useSCExplorerContext } from 'contexts';
 import { DocsTooltipUIType } from './types';
 
 export const DocsTooltip = (props: DocsTooltipUIType) => {
-  const { docs, customInterface, ...rest } = props;
-  const { hintIcon = faQuestionCircle } = customInterface?.icons ?? {};
+  const { icons } = useSCExplorerContext();
+  const { docs, ...rest } = props;
+  const { hintIcon = faQuestionCircle } = icons ?? {};
 
   if (!docs || docs.length === 0) {
     return null;

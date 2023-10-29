@@ -12,7 +12,7 @@ import classNames from 'classnames';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 import globalStyles from 'assets/styles/globals.module.scss';
-import { useDispatch, useScContext } from 'context';
+import { useDispatch, useSCExplorerContext } from 'contexts';
 import { ActionTypeEnum } from 'types';
 import DeFiWallet from './assets/extension-defi-wallet.svg';
 import LedgerWallet from './assets/ledger-wallet.svg';
@@ -47,7 +47,8 @@ export const UnlockTitle = (
 
 export const LoginModal = () => {
   const dispatch = useDispatch();
-  const { loginModalOpen } = useScContext();
+  const { userActions } = useSCExplorerContext();
+  const { loginModalOpen } = userActions;
   const [openedLoginContainerType, setOpenedContainerType] = useState(
     LoginContainersTypesEnum.none
   );

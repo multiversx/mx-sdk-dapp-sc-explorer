@@ -1,7 +1,3 @@
-export { SCExplorerWrapper } from './SCExplorerWrapper';
-
-/* ------------------------- */
-
 export { Badge } from './Badge';
 export { CardItem } from './CardItem';
 export { Code } from './Code';

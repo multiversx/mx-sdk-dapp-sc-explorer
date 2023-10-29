@@ -3,25 +3,26 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
 import globalStyles from 'assets/styles/globals.module.scss';
+import { useSCExplorerContext } from 'contexts';
 import { BadgeUIType } from 'types';
 
 export const Badge = ({
   badgeValue = '',
   badgeIcon,
   className,
-  badgeClassName,
-  customInterface
+  badgeClassName
 }: BadgeUIType) => {
   if (!badgeValue) {
     return null;
   }
+  const { customClassNames } = useSCExplorerContext();
 
   return (
     <span
       className={classNames(
         className,
         globalStyles?.badge,
-        customInterface?.customClassNames?.badgeClassName,
+        customClassNames?.badgeClassName,
         badgeClassName
       )}
     >
@@ -30,7 +31,7 @@ export const Badge = ({
           icon={badgeIcon}
           className={classNames(
             globalStyles?.badgeIcon,
-            customInterface?.customClassNames?.badgeIconClassName
+            customClassNames?.badgeIconClassName
           )}
         />
       )}

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { NativeSerializer } from '@multiversx/sdk-core/out';
 
-import { useScContext } from 'context';
+import { useSCExplorerContext } from 'contexts';
 import { useQueryContract } from 'hooks';
 import {
   ContractEndpointMutabilityEnum,
@@ -12,7 +12,8 @@ import { EndpointForm } from './EndpointForm';
 
 export const EndpointRead = (props: BaseEndpointUIType) => {
   const queryContract = useQueryContract();
-  const { canRead } = useScContext();
+  const { support } = useSCExplorerContext();
+  const { canRead } = support;
   const { endpoint } = props;
   const { modifiers } = endpoint;
   const { mutability } = modifiers;

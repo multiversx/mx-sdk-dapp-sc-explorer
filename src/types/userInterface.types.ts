@@ -1,14 +1,13 @@
 import { InterfaceIconsType } from './icons.types';
 
-export interface CustomUIType {
-  icons?: InterfaceIconsType;
-  customClassNames?: CustomClassNamesType;
-}
-
 export interface UserInterfaceType {
-  customInterface?: CustomUIType;
   className?: string;
   'data-testid'?: string;
+}
+
+export interface CustomUIType extends UserInterfaceType {
+  icons?: InterfaceIconsType;
+  customClassNames?: CustomClassNamesType;
 }
 
 export interface CustomClassNamesType {

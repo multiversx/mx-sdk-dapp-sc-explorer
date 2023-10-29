@@ -7,20 +7,18 @@ import {
   CONTRACT_FILE_EXTENSION,
   CONTRACT_FILE_TEST_PATH
 } from 'constants/general';
-import { useScContext } from 'context';
-import { useSupport } from 'hooks';
-
+import { useSCExplorerContext } from 'contexts';
 import { ContractFile } from './ContractFile';
 import styles from './styles.module.scss';
 import type { ContractFilesUIType } from './types';
 
 export const ContractFilesComponent = ({
-  highlightFileHash,
-  customInterface
+  highlightFileHash
 }: ContractFilesUIType) => {
   const ref = useRef<HTMLDivElement>(null);
-  const { verifiedContract } = useScContext();
-  const { hasSourceCode } = useSupport();
+  const { smartContract, support, customClassNames } = useSCExplorerContext();
+  const { verifiedContract } = smartContract;
+  const { hasSourceCode } = support;
   const [allExpanded, setAllExpanded] = useState(false);
 
   useEffect(() => {
@@ -52,13 +50,12 @@ export const ContractFilesComponent = ({
       className={classNames(
         styles?.contractFiles,
         globalStyles?.panelWrapper,
-        customInterface?.customClassNames?.wrapperClassName
+        customClassNames?.wrapperClassName
       )}
     >
       <PanelHeader
         showButtons={filteredEntries.length > 1}
         onAllExpanded={setAllExpanded}
-        customInterface={customInterface}
       >
         Source Code
       </PanelHeader>
@@ -67,7 +64,7 @@ export const ContractFilesComponent = ({
           className={classNames(
             styles?.contractFilesList,
             globalStyles?.list,
-            customInterface?.customClassNames?.listClassName
+            customClassNames?.listClassName
           )}
         >
           {filteredEntries.map((file, index) => {
@@ -87,9 +84,8 @@ export const ContractFilesComponent = ({
                   className={classNames(
                     styles?.contractFilesListItem,
                     globalStyles?.listItem,
-                    customInterface?.customClassNames?.listItemClassName
+                    customClassNames?.listItemClassName
                   )}
-                  customInterface={customInterface}
                 />
               </Fragment>
             );

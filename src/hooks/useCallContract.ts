@@ -4,12 +4,11 @@ import {
   IContractFunction,
   TypedValue
 } from '@multiversx/sdk-core/out';
-import { useGetAccount, useGetIsLoggedIn } from '@multiversx/sdk-dapp/hooks';
-//import { sendTransactions } from '@multiversx/sdk-dapp/services/transactions/sendTransactions';
-import { signTransactions } from '@multiversx/sdk-dapp/services/transactions/signTransactions';
-import { refreshAccount } from '@multiversx/sdk-dapp/utils/account/refreshAccount';
+import { GAS_LIMIT } from '@multiversx/sdk-dapp/constants/index';
+import { sendTransactions } from '@multiversx/sdk-dapp/services/transactions/sendTransactions';
 import { getChainID } from '@multiversx/sdk-dapp/utils/network';
-import { useScContext } from 'context';
+import { useSCExplorerContext } from 'contexts';
+import { calculateGasLimit } from 'helpers';
 
 export interface CallContractProps {
   func: IContractFunction;
@@ -17,15 +16,15 @@ export interface CallContractProps {
 }
 
 export const useCallContract = () => {
-  const isLoggedIn = useGetIsLoggedIn();
-  const { address: userAddress } = useGetAccount();
-  const { abiRegistry, ownerAddress } = useScContext();
+  const { accountInfo, smartContract } = useSCExplorerContext();
+  const { isLoggedIn, address: callerAddress, isGuarded } = accountInfo;
+  const { abiRegistry, contractAddress } = smartContract;
 
   const callContract = async (props: CallContractProps) => {
-    if (isLoggedIn && userAddress && abiRegistry && ownerAddress) {
+    if (isLoggedIn && callerAddress && abiRegistry && contractAddress) {
       try {
-        const owner = new Address(ownerAddress);
-        const caller = new Address(userAddress);
+        const owner = new Address(contractAddress);
+        const caller = new Address(callerAddress);
         const contract = new SmartContract({
           address: owner,
           abi: abiRegistry
@@ -36,19 +35,25 @@ export const useCallContract = () => {
           const transaction = contract.call({
             func,
             args,
-            gasLimit: 2000000,
+            gasLimit: GAS_LIMIT,
             chainID: getChainID(),
             caller
           });
+          const gasLimit = calculateGasLimit({
+            data: transaction.getData().toString(),
+            isGuarded
+          });
+          transaction.setGasLimit(Number(gasLimit));
+
           console.log('transaction Object', transaction.toPlainObject());
 
-          await refreshAccount();
-          const { error, sessionId } = await signTransactions({
-            transactions: transaction,
+          const { error, sessionId } = await sendTransactions({
+            signWithoutSending: true,
+            transactions: [transaction],
             transactionsDisplayInfo: {
               processingMessage: 'Processing Transaction',
-              errorMessage: 'An error has occured during Contract Write',
-              successMessage: 'Contract Write Transaction successful'
+              errorMessage: 'An error has occured during Contract Mutation',
+              successMessage: 'Contract Mutation Transaction successful'
             }
           });
 
@@ -67,15 +72,23 @@ export const useCallContract = () => {
       }
     }
 
-    if (!(isLoggedIn && userAddress)) {
+    if (!(isLoggedIn && callerAddress)) {
       return {
         success: false,
         error: 'Not Logged In'
       };
     }
 
+    if (!contractAddress) {
+      return {
+        success: false,
+        error: 'Missing SC Address'
+      };
+    }
+
     return {
-      success: false
+      success: false,
+      error: 'Invalid Config'
     };
   };
 

@@ -6,6 +6,7 @@ import { Field, getIn } from 'formik';
 import globalStyles from 'assets/styles/globals.module.scss';
 import { DefinitionsTooltip } from 'components';
 import { DOCUMENTED_TYPES } from 'constants/general';
+import { useSCExplorerContext } from 'contexts';
 import { InputUIType, DocumentedTypesExampleType } from 'types';
 import { getTypeFromPrefix, validateFieldType } from '../helpers';
 
@@ -13,13 +14,12 @@ export const Input = ({
   name,
   defaultValue,
   formik,
-  customInterface,
   children
 }: InputUIType) => {
   if (!formik) {
     return null;
   }
-
+  const { customClassNames } = useSCExplorerContext();
   const inputError = getIn(formik.errors, name);
   const prefixParts = name.split('.');
   const curentType =
@@ -63,7 +63,7 @@ export const Input = ({
     <div
       className={classNames(
         globalStyles?.inputGroup,
-        customInterface?.customClassNames?.inputGroupClassName
+        customClassNames?.inputGroupClassName
       )}
     >
       <Field
@@ -71,13 +71,12 @@ export const Input = ({
         validate={(value: any) => validateField(value, inputType)}
         className={classNames(
           globalStyles?.input,
-          customInterface?.customClassNames?.inputClassName,
+          customClassNames?.inputClassName,
           { [globalStyles?.inputInvalid]: inputError },
           {
-            ...(customInterface?.customClassNames?.inputInvalidClassName
+            ...(customClassNames?.inputInvalidClassName
               ? {
-                  [customInterface.customClassNames.inputInvalidClassName]:
-                    inputError
+                  [customClassNames.inputInvalidClassName]: inputError
                 }
               : {})
           }
@@ -98,7 +97,7 @@ export const Input = ({
       <div
         className={classNames(
           globalStyles?.inputGroupAppend,
-          customInterface?.customClassNames?.inputGroupAppendClassName
+          customClassNames?.inputGroupAppendClassName
         )}
       >
         <div
@@ -116,7 +115,7 @@ export const Input = ({
         <div
           className={classNames(
             globalStyles?.inputInvalidFeedback,
-            customInterface?.customClassNames?.inputInvalidFeedbackClassName
+            customClassNames?.inputInvalidFeedbackClassName
           )}
         >
           {inputError}

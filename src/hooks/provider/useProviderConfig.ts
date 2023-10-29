@@ -1,6 +1,5 @@
 import { TIMEOUT } from 'constants/general';
-import { useScContext } from 'context';
-
+import { useSCExplorerContext } from 'contexts';
 import { apiProvider } from './api';
 import { proxyProvider } from './proxy';
 import { BasicPropsType, ApiProviderResponseType } from './types';
@@ -29,7 +28,8 @@ async function wrap(asyncRequest: () => Promise<ApiProviderResponseType>) {
 }
 
 export const useProviderConfig = () => {
-  const { networkConfig, provider: networkProvider } = useScContext();
+  const { networkConfig } = useSCExplorerContext();
+  const { provider: networkProvider } = networkConfig;
 
   const providers = {
     api: {

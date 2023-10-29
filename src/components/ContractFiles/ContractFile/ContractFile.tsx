@@ -9,20 +9,21 @@ import androidstudio from 'react-syntax-highlighter/dist/esm/styles/hljs/android
 
 import globalStyles from 'assets/styles/globals.module.scss';
 import { CollapsibleCard } from 'components';
+import { useSCExplorerContext } from 'contexts';
 import styles from '../styles.module.scss';
 import { ContractFileUIType } from '../types';
 
 SyntaxHighlighter.registerLanguage('rust', rust);
 
 export const ContractFile = (props: ContractFileUIType) => {
-  const { file, title, entryNumber, totalEntries, className, customInterface } =
-    props;
+  const { icons } = useSCExplorerContext();
+  const { file, title, entryNumber, totalEntries, className } = props;
   const { content, path } = file;
   const {
     contractFileIcon = faFileAlt,
     copyIcon = faCopy,
     linkIcon = faLink
-  } = customInterface?.icons ?? {};
+  } = icons ?? {};
 
   const fullPath = window.location.href;
 

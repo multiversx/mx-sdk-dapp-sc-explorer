@@ -7,19 +7,16 @@ import classNames from 'classnames';
 
 import globalStyles from 'assets/styles/globals.module.scss';
 import { CardItem, PanelHeader } from 'components';
-import { useScContext } from 'context';
-import { useSupport } from 'hooks';
-
+import { useSCExplorerContext } from 'contexts';
 import styles from './styles.module.scss';
-import { ContractBuildUIType } from './types';
 
-export const ContractBuildComponent = ({
-  customInterface
-}: ContractBuildUIType) => {
-  const { rawAbi, verifiedContract } = useScContext();
-  const { hasBuildInfo } = useSupport();
+export const ContractBuildComponent = () => {
+  const { smartContract, support, icons, customClassNames } =
+    useSCExplorerContext();
+  const { rawAbi, verifiedContract } = smartContract;
+  const { hasBuildInfo } = support;
 
-  const { copyIcon = faCopy } = customInterface?.icons ?? {};
+  const { copyIcon = faCopy } = icons ?? {};
 
   if (!hasBuildInfo) {
     return null;
@@ -29,44 +26,32 @@ export const ContractBuildComponent = ({
     <div
       className={classNames(
         globalStyles?.wrapper,
-        customInterface?.customClassNames?.wrapperClassName,
+        customClassNames?.wrapperClassName,
         styles?.contractBuild
       )}
     >
-      <PanelHeader customInterface={customInterface}>Build Info</PanelHeader>
+      <PanelHeader>Build Info</PanelHeader>
       <div className={classNames(globalStyles?.cardBody)}>
         <div
           className={classNames(
             globalStyles?.cardContainer,
             globalStyles?.cardItemContainer,
-            customInterface?.customClassNames?.cardItemContainerClassName
+            customClassNames?.cardItemContainerClassName
           )}
         >
           {rawAbi?.name && (
-            <CardItem
-              title='Name'
-              icon={faCogs}
-              customInterface={customInterface}
-            >
+            <CardItem title='Name' icon={faCogs}>
               {rawAbi.name}
             </CardItem>
           )}
           {rawAbi?.buildInfo?.framework && (
-            <CardItem
-              title='Framework'
-              icon={faCogs}
-              customInterface={customInterface}
-            >
+            <CardItem title='Framework' icon={faCogs}>
               {rawAbi.buildInfo?.framework?.name}{' '}
               {rawAbi.buildInfo?.framework?.version}
             </CardItem>
           )}
           {rawAbi?.hasCallback && (
-            <CardItem
-              title='Has Callback'
-              icon={faCogs}
-              customInterface={customInterface}
-            >
+            <CardItem title='Has Callback' icon={faCogs}>
               {String(rawAbi.hasCallback)}
             </CardItem>
           )}
@@ -75,7 +60,6 @@ export const ContractBuildComponent = ({
               title='Docker Image'
               icon={faDocker}
               className={!rawAbi?.hasCallback ? 'double' : ''}
-              customInterface={customInterface}
             >
               {verifiedContract.dockerImage}
             </CardItem>
@@ -87,24 +71,16 @@ export const ContractBuildComponent = ({
           <div
             className={classNames(
               globalStyles?.cardItemContainer,
-              customInterface?.customClassNames?.cardItemContainerClassName
+              customClassNames?.cardItemContainerClassName
             )}
           >
             {rawAbi?.buildInfo?.rustc?.commitDate && (
-              <CardItem
-                title='Commit Date'
-                icon={faRust}
-                customInterface={customInterface}
-              >
+              <CardItem title='Commit Date' icon={faRust}>
                 {rawAbi.buildInfo.rustc.commitDate}
               </CardItem>
             )}
             {rawAbi?.buildInfo?.rustc?.commitHash && (
-              <CardItem
-                title='Commit Hash'
-                icon={faRust}
-                customInterface={customInterface}
-              >
+              <CardItem title='Commit Hash' icon={faRust}>
                 <Trim text={rawAbi.buildInfo.rustc.commitHash} />
                 <CopyButton
                   text={rawAbi.buildInfo.rustc.commitHash}
@@ -113,29 +89,17 @@ export const ContractBuildComponent = ({
               </CardItem>
             )}
             {rawAbi?.buildInfo?.rustc?.version && (
-              <CardItem
-                title='Version'
-                icon={faRust}
-                customInterface={customInterface}
-              >
+              <CardItem title='Version' icon={faRust}>
                 {rawAbi.buildInfo.rustc.version}
               </CardItem>
             )}
             {rawAbi?.buildInfo?.rustc?.channel && (
-              <CardItem
-                title='Channel'
-                icon={faRust}
-                customInterface={customInterface}
-              >
+              <CardItem title='Channel' icon={faRust}>
                 {rawAbi.buildInfo.rustc.channel}
               </CardItem>
             )}
             {rawAbi?.buildInfo?.rustc?.short && (
-              <CardItem
-                title='Short'
-                icon={faRust}
-                customInterface={customInterface}
-              >
+              <CardItem title='Short' icon={faRust}>
                 {rawAbi.buildInfo.rustc.short}
               </CardItem>
             )}

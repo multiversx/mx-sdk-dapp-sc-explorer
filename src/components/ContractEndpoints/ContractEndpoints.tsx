@@ -1,22 +1,19 @@
-import React, { memo, useState } from 'react';
+import React, { useState } from 'react';
 import classNames from 'classnames';
 
 import globalStyles from 'assets/styles/globals.module.scss';
 import { Card, PanelHeader } from 'components';
-import { useScContext } from 'context';
-import { useSupport } from 'hooks';
+import { useSCExplorerContext } from 'contexts';
 import { ContractEndpointMutabilityEnum } from 'types';
 import { ContractEndpoint } from './ContractEndpoint';
 import { EndpointTitle } from './ContractEndpoint/components/EndpointTitle';
 import styles from './styles.module.scss';
 import { ContractEndpointsUIType } from './types';
 
-export const ContractEndpoints = ({
-  mutability,
-  customInterface
-}: ContractEndpointsUIType) => {
-  const { abiRegistry } = useScContext();
-  const { hasEndpoints } = useSupport();
+export const ContractEndpoints = ({ mutability }: ContractEndpointsUIType) => {
+  const { smartContract, support, customClassNames } = useSCExplorerContext();
+  const { abiRegistry } = smartContract;
+  const { hasEndpoints } = support;
   const [allExpanded, setAllExpanded] = useState(false);
 
   if (!hasEndpoints) {
@@ -27,7 +24,13 @@ export const ContractEndpoints = ({
   let filteredEndpoints = endpoints;
   if (mutability) {
     filteredEndpoints = endpoints.filter(
-      (endpoint) => endpoint?.modifiers?.mutability === mutability
+      (endpoint) => endpoint?.modifiers?.mutability === mutability // &&
+      // [
+      //   'revertUnstake',
+      //   'addLockOptions',
+      //   'setEnergyForOldTokens',
+      //   'updateEnergyAfterOldTokenUnlock'
+      // ].includes(endpoint.name)
     );
   }
 
@@ -40,13 +43,12 @@ export const ContractEndpoints = ({
       className={classNames(
         styles?.contractEndpoints,
         globalStyles?.panelWrapper,
-        customInterface?.customClassNames?.wrapperClassName
+        customClassNames?.wrapperClassName
       )}
     >
       <PanelHeader
         showButtons={filteredEndpoints.length > 1}
         onAllExpanded={setAllExpanded}
-        customInterface={customInterface}
       >
         {mutability === ContractEndpointMutabilityEnum.mutable && <>Write</>}
         {mutability === ContractEndpointMutabilityEnum.readonly && (
@@ -58,7 +60,7 @@ export const ContractEndpoints = ({
         className={classNames(
           styles?.contractEndpointsList,
           globalStyles?.list,
-          customInterface?.customClassNames?.listClassName
+          customClassNames?.listClassName
         )}
       >
         {filteredEndpoints.map((endpoint, index) => {
@@ -78,9 +80,8 @@ export const ContractEndpoints = ({
                 className={classNames(
                   globalStyles?.listItem,
                   styles?.contractEndpointsListItem,
-                  customInterface?.customClassNames?.listItemClassName
+                  customClassNames?.listItemClassName
                 )}
-                customInterface={customInterface}
                 isOpen={filteredEndpoints.length === 1 || allExpanded}
               />
             );
@@ -88,12 +89,10 @@ export const ContractEndpoints = ({
             return (
               <Card
                 key={`${endpoint.name}-${index}`}
-                customInterface={customInterface}
                 titleContent={
                   <EndpointTitle
                     endpoint={endpoint}
                     className={classNames(styles?.contractEndpointsListItem)}
-                    customInterface={customInterface}
                   />
                 }
               />

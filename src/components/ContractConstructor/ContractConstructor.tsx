@@ -3,17 +3,13 @@ import classNames from 'classnames';
 
 import globalStyles from 'assets/styles/globals.module.scss';
 import { Card, EndpointDefinitionList, PanelHeader } from 'components';
-import { useScContext } from 'context';
-import { useSupport } from 'hooks';
-
+import { useSCExplorerContext } from 'contexts';
 import styles from './styles.module.scss';
-import { ContractConstructorUIType } from './types';
 
-export const ContractConstructorComponent = ({
-  customInterface
-}: ContractConstructorUIType) => {
-  const { abiRegistry, rawAbi } = useScContext();
-  const { hasConstructor } = useSupport();
+export const ContractConstructorComponent = () => {
+  const { smartContract, support, customClassNames } = useSCExplorerContext();
+  const { abiRegistry, rawAbi } = smartContract;
+  const { hasConstructor } = support;
 
   if (!hasConstructor || !abiRegistry) {
     return null;
@@ -27,11 +23,11 @@ export const ContractConstructorComponent = ({
       className={classNames(
         styles?.contractConstructor,
         globalStyles?.panelWrapper,
-        customInterface?.customClassNames?.wrapperClassName
+        customClassNames?.wrapperClassName
       )}
     >
-      <PanelHeader customInterface={customInterface}>Constructor</PanelHeader>
-      <Card customInterface={customInterface}>
+      <PanelHeader>Constructor</PanelHeader>
+      <Card>
         {input.length > 0 && (
           <div
             className={classNames(styles?.endpointOutput, globalStyles?.panel)}

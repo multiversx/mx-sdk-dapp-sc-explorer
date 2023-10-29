@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 import { CollapsibleCard } from 'components';
-import { useScContext } from 'context';
+import { useSCExplorerContext } from 'contexts';
 import { ContractEndpointMutabilityEnum, ContractEndpointUIType } from 'types';
 import { EndpointInteraction } from './components/EndpointInteraction';
 import { EndpointMutate } from './components/EndpointMutate';
@@ -11,8 +11,9 @@ import { EndpointTitle } from './components/EndpointTitle';
 import styles from './styles.module.scss';
 
 export const ContractEndpoint = (props: ContractEndpointUIType) => {
-  const { canRead, canMutate, canView } = useScContext();
-  const { endpoint, className, customInterface } = props;
+  const { support } = useSCExplorerContext();
+  const { canRead, canMutate, canView } = support;
+  const { endpoint, className } = props;
   const { modifiers } = endpoint;
   const { mutability } = modifiers;
 
@@ -27,28 +28,22 @@ export const ContractEndpoint = (props: ContractEndpointUIType) => {
       title={endpoint.name}
       titleContent={<EndpointTitle {...props} />}
       className={classNames(className)}
-      customInterface={customInterface}
     >
       {allowRead && (
         <EndpointRead
           endpoint={endpoint}
-          customInterface={customInterface}
           className={classNames(styles?.contractEndpointWrapper)}
         />
       )}
       {allowMutate && (
         <EndpointMutate
           endpoint={endpoint}
-          customInterface={customInterface}
           className={classNames(styles?.contractEndpointWrapper)}
         />
       )}
       {canView && !allowRead && !allowMutate && (
         <div className={classNames(styles?.contractEndpointWrapper)}>
-          <EndpointInteraction
-            endpoint={endpoint}
-            customInterface={customInterface}
-          />
+          <EndpointInteraction endpoint={endpoint} />
         </div>
       )}
     </CollapsibleCard>

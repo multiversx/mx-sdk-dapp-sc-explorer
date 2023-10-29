@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react';
 import { faCopy, faBolt, faPowerOff } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useGetAccount, useGetIsLoggedIn } from '@multiversx/sdk-dapp/hooks';
 import { CopyButton } from '@multiversx/sdk-dapp/UI/CopyButton';
 import { Trim } from '@multiversx/sdk-dapp/UI/Trim';
 import { isWindowAvailable } from '@multiversx/sdk-dapp/utils/isWindowAvailable';
@@ -9,20 +8,21 @@ import { logout } from '@multiversx/sdk-dapp/utils/logout';
 import classNames from 'classnames';
 
 import globalStyles from 'assets/styles/globals.module.scss';
-import { useDispatch } from 'context';
+import { useSCExplorerContext, useDispatch } from 'contexts';
 import { ActionTypeEnum, LoginButtonUIType } from 'types';
 import styles from './styles.module.scss';
 
 export const LoginButton = (props: LoginButtonUIType) => {
-  const { className, customInterface } = props;
+  const { customClassNames, icons, accountInfo } = useSCExplorerContext();
+  const { isLoggedIn, address } = accountInfo;
+  const { className } = props;
   const dispatch = useDispatch();
-  const isLoggedIn = useGetIsLoggedIn();
-  const { address } = useGetAccount();
+
   const {
     copyIcon = faCopy,
     connectIcon = faBolt,
     disconnectIcon = faPowerOff
-  } = customInterface?.icons ?? {};
+  } = icons ?? {};
 
   const onOpenModalClick = useCallback(() => {
     dispatch({
@@ -64,8 +64,8 @@ export const LoginButton = (props: LoginButtonUIType) => {
               className,
               globalStyles?.button,
               globalStyles?.buttonPrimary,
-              customInterface?.customClassNames?.buttonClassName,
-              customInterface?.customClassNames?.buttonPrimaryClassName,
+              customClassNames?.buttonClassName,
+              customClassNames?.buttonPrimaryClassName,
               styles?.buttonLogin
             )}
           >

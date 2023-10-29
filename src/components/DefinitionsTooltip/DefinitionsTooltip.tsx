@@ -6,8 +6,7 @@ import classNames from 'classnames';
 
 import { Code, Overlay } from 'components';
 import { DOCUMENTED_TYPES } from 'constants/general';
-import { useScContext } from 'context';
-
+import { useSCExplorerContext } from 'contexts';
 import styles from './styles.module.scss';
 import { DefinitionsTooltipUIType } from './types';
 
@@ -31,9 +30,10 @@ const formatDefinitionsForDisplay = (definitions: FieldDefinition[]) => {
 };
 
 export const DefinitionsTooltip = (props: DefinitionsTooltipUIType) => {
-  const { abiRegistry } = useScContext();
-  const { typeName, customInterface, ...rest } = props;
-  const { hintIcon = faQuestionCircle } = customInterface?.icons ?? {};
+  const { smartContract, icons } = useSCExplorerContext();
+  const { abiRegistry } = smartContract;
+  const { typeName, ...rest } = props;
+  const { hintIcon = faQuestionCircle } = icons ?? {};
   let docs: React.ReactNode = null;
 
   if (!typeName) {

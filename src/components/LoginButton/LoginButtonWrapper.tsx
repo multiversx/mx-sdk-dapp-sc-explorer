@@ -1,11 +1,10 @@
 import React, { useCallback } from 'react';
 import { faBolt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useGetAccount, useGetIsLoggedIn } from '@multiversx/sdk-dapp/hooks';
 import classNames from 'classnames';
 
 import globalStyles from 'assets/styles/globals.module.scss';
-import { useDispatch } from 'context';
+import { useSCExplorerContext, useDispatch } from 'contexts';
 import {
   ActionTypeEnum,
   LoginButtonWrapperUIType,
@@ -14,12 +13,12 @@ import {
 import styles from './styles.module.scss';
 
 export const LoginButtonWrapper = (props: LoginButtonWrapperUIType) => {
-  const { mutability, children, className, customInterface } = props;
-  const isLoggedIn = useGetIsLoggedIn();
-  const { address } = useGetAccount();
+  const { mutability, children, className } = props;
+  const { accountInfo, customClassNames, icons } = useSCExplorerContext();
+  const { isLoggedIn, address } = accountInfo;
   const dispatch = useDispatch();
 
-  const { connectIcon = faBolt } = customInterface?.icons ?? {};
+  const { connectIcon = faBolt } = icons ?? {};
 
   const onOpenModalClick = useCallback(() => {
     dispatch({
@@ -45,8 +44,8 @@ export const LoginButtonWrapper = (props: LoginButtonWrapperUIType) => {
               className,
               globalStyles?.button,
               globalStyles?.buttonPrimary,
-              customInterface?.customClassNames?.buttonClassName,
-              customInterface?.customClassNames?.buttonPrimaryClassName,
+              customClassNames?.buttonClassName,
+              customClassNames?.buttonPrimaryClassName,
               styles?.buttonLogin
             )}
           >

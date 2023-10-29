@@ -2,16 +2,16 @@ import React from 'react';
 import classNames from 'classnames';
 
 import globalStyles from 'assets/styles/globals.module.scss';
-
+import { useSCExplorerContext } from 'contexts';
 import styles from './styles.module.scss';
 import { PanelHeaderUIType } from './types';
 
 export const PanelHeader = ({
   children,
   showButtons = false,
-  onAllExpanded,
-  customInterface
+  onAllExpanded
 }: PanelHeaderUIType) => {
+  const { customClassNames } = useSCExplorerContext();
   return (
     <div className={classNames(styles?.panelHeader)}>
       {children && (
@@ -24,7 +24,7 @@ export const PanelHeader = ({
             className={classNames(
               globalStyles?.button,
               globalStyles?.buttonUnstyled,
-              customInterface?.customClassNames?.buttonClassName
+              customClassNames?.buttonClassName
             )}
             onClick={() => {
               if (onAllExpanded) {
@@ -39,7 +39,7 @@ export const PanelHeader = ({
             className={classNames(
               globalStyles?.button,
               globalStyles?.buttonUnstyled,
-              customInterface?.customClassNames?.buttonClassName
+              customClassNames?.buttonClassName
             )}
             onClick={() => {
               if (onAllExpanded) {

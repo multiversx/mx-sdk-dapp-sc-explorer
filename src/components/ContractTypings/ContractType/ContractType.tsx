@@ -4,15 +4,15 @@ import classNames from 'classnames';
 
 import globalStyles from 'assets/styles/globals.module.scss';
 import { CollapsibleCard, EndpointDefinitionList } from 'components';
-import { useScContext } from 'context';
+import { useSCExplorerContext } from 'contexts';
 import { ContractTypingsTypeEnum } from 'types';
-
 import { ContractTypingUIType } from '../types';
 
 export const ContractType = (props: ContractTypingUIType) => {
-  const { type, className, customInterface } = props;
-  const { structTypeIcon, enumTypeIcon } = customInterface?.icons ?? {};
-  const { abiRegistry, rawAbi } = useScContext();
+  const { type, className } = props;
+  const { smartContract, customClassNames, icons } = useSCExplorerContext();
+  const { abiRegistry, rawAbi } = smartContract;
+  const { structTypeIcon, enumTypeIcon } = icons ?? {};
 
   if (!type) {
     return null;
@@ -42,8 +42,8 @@ export const ContractType = (props: ContractTypingUIType) => {
       badgeIcon={badgeIcon ?? faKeyboard}
       className={classNames(className)}
       badgeClassName={classNames(
-        customInterface?.customClassNames?.badgeClassName,
-        customInterface?.customClassNames?.badgePrimaryClassName
+        customClassNames?.badgeClassName,
+        customClassNames?.badgePrimaryClassName
       )}
     >
       <div className={classNames(globalStyles?.fieldWrapper)}>

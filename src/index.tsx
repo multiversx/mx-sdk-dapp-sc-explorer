@@ -1,5 +1,4 @@
-import { SCExplorerWrapper } from 'components';
-import { usePrepareSCState } from 'hooks';
+import { ScExplorerContainer } from 'containers';
 import { SCExplorerType } from 'types';
 
-export { SCExplorerWrapper, SCExplorerType, usePrepareSCState };
+export { SCExplorerType, ScExplorerContainer };

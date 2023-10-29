@@ -3,18 +3,14 @@ import classNames from 'classnames';
 
 import globalStyles from 'assets/styles/globals.module.scss';
 import { PanelHeader } from 'components';
-import { useScContext } from 'context';
-import { useSupport } from 'hooks';
-
+import { useSCExplorerContext } from 'contexts';
 import { ContractEvent } from './ContractEvent';
 import styles from './styles.module.scss';
-import type { ContractEventsUIType } from './types';
 
-export const ContractEventsComponent = ({
-  customInterface
-}: ContractEventsUIType) => {
-  const { rawAbi } = useScContext();
-  const { hasEvents } = useSupport();
+export const ContractEventsComponent = () => {
+  const { smartContract, support, customClassNames } = useSCExplorerContext();
+  const { rawAbi } = smartContract;
+  const { hasEvents } = support;
   const [allExpanded, setAllExpanded] = useState(false);
 
   if (!hasEvents) {
@@ -28,13 +24,12 @@ export const ContractEventsComponent = ({
       className={classNames(
         styles?.contractEvents,
         globalStyles?.panelWrapper,
-        customInterface?.customClassNames?.wrapperClassName
+        customClassNames?.wrapperClassName
       )}
     >
       <PanelHeader
         showButtons={events.length > 1}
         onAllExpanded={setAllExpanded}
-        customInterface={customInterface}
       >
         Events
       </PanelHeader>
@@ -42,7 +37,7 @@ export const ContractEventsComponent = ({
         className={classNames(
           styles?.contractEventsList,
           globalStyles?.list,
-          customInterface?.customClassNames?.listClassName
+          customClassNames?.listClassName
         )}
       >
         {events.map((event, index) => (
@@ -52,9 +47,8 @@ export const ContractEventsComponent = ({
             className={classNames(
               styles?.contractEventsListItem,
               globalStyles?.listItem,
-              customInterface?.customClassNames?.listItemClassName
+              customClassNames?.listItemClassName
             )}
-            customInterface={customInterface}
             isOpen={events.length === 1 || allExpanded}
           />
         ))}

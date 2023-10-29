@@ -13,7 +13,7 @@ import {
   LoginModal,
   LoginButton
 } from 'components';
-import { useSupport } from 'hooks';
+import { useSCExplorerContext } from 'contexts';
 import {
   SCExplorerType,
   ContractEndpointMutabilityEnum,
@@ -22,7 +22,8 @@ import {
 import styles from './styles.module.scss';
 
 export const LayoutComponent = (props: SCExplorerType) => {
-  const { loaderComponent, customInterface } = props;
+  const { support, customClassNames } = useSCExplorerContext();
+  const { className, loaderComponent } = props;
   const {
     canView,
     canMutate,
@@ -33,7 +34,7 @@ export const LayoutComponent = (props: SCExplorerType) => {
     hasEvents,
     hasTypes,
     hasConstructor
-  } = useSupport();
+  } = support;
 
   const [activeKey, setActiveKey] = useState<VerifiedContractTabsEnum>(
     VerifiedContractTabsEnum.details
@@ -44,14 +45,14 @@ export const LayoutComponent = (props: SCExplorerType) => {
   }
 
   return (
-    <div className={classNames(styles?.layout)}>
+    <div className={classNames(className, styles?.layout)}>
       {canMutate && <LoginModal />}
       <div className={classNames(styles?.layoutHeader)}>
         <div className={classNames(styles?.layoutHeaderTitle)}>
           Smart Contract Explorer{' '}
           <span className={classNames(styles?.layoutHeaderSubtitle)}>BETA</span>
         </div>
-        <LoginButton customInterface={customInterface} />
+        <LoginButton />
       </div>
       <div className={classNames(styles?.layoutContent)}>
         <Tab.Container
@@ -71,15 +72,15 @@ export const LayoutComponent = (props: SCExplorerType) => {
                 eventKey={VerifiedContractTabsEnum.details}
                 className={classNames(
                   styles?.tab,
-                  customInterface?.customClassNames?.tabClassName,
+                  customClassNames?.tabClassName,
                   {
                     [styles?.tabActive]:
                       activeKey === VerifiedContractTabsEnum.details
                   },
                   {
-                    ...(customInterface?.customClassNames?.activeTabClassName
+                    ...(customClassNames?.activeTabClassName
                       ? {
-                          [customInterface.customClassNames.activeTabClassName]:
+                          [customClassNames.activeTabClassName]:
                             activeKey === VerifiedContractTabsEnum.details
                         }
                       : {})
@@ -95,15 +96,15 @@ export const LayoutComponent = (props: SCExplorerType) => {
                 eventKey={VerifiedContractTabsEnum.sourceCode}
                 className={classNames(
                   styles?.tab,
-                  customInterface?.customClassNames?.tabClassName,
+                  customClassNames?.tabClassName,
                   {
                     [styles?.tabActive]:
                       activeKey === VerifiedContractTabsEnum.sourceCode
                   },
                   {
-                    ...(customInterface?.customClassNames?.activeTabClassName
+                    ...(customClassNames?.activeTabClassName
                       ? {
-                          [customInterface.customClassNames.activeTabClassName]:
+                          [customClassNames.activeTabClassName]:
                             activeKey === VerifiedContractTabsEnum.sourceCode
                         }
                       : {})
@@ -119,15 +120,15 @@ export const LayoutComponent = (props: SCExplorerType) => {
                 eventKey={VerifiedContractTabsEnum.readEndpoints}
                 className={classNames(
                   styles?.tab,
-                  customInterface?.customClassNames?.tabClassName,
+                  customClassNames?.tabClassName,
                   {
                     [styles?.tabActive]:
                       activeKey === VerifiedContractTabsEnum.readEndpoints
                   },
                   {
-                    ...(customInterface?.customClassNames?.activeTabClassName
+                    ...(customClassNames?.activeTabClassName
                       ? {
-                          [customInterface.customClassNames.activeTabClassName]:
+                          [customClassNames.activeTabClassName]:
                             activeKey === VerifiedContractTabsEnum.readEndpoints
                         }
                       : {})
@@ -143,15 +144,15 @@ export const LayoutComponent = (props: SCExplorerType) => {
                 eventKey={VerifiedContractTabsEnum.writeEndpoints}
                 className={classNames(
                   styles?.tab,
-                  customInterface?.customClassNames?.tabClassName,
+                  customClassNames?.tabClassName,
                   {
                     [styles?.tabActive]:
                       activeKey === VerifiedContractTabsEnum.writeEndpoints
                   },
                   {
-                    ...(customInterface?.customClassNames?.activeTabClassName
+                    ...(customClassNames?.activeTabClassName
                       ? {
-                          [customInterface.customClassNames.activeTabClassName]:
+                          [customClassNames.activeTabClassName]:
                             activeKey ===
                             VerifiedContractTabsEnum.writeEndpoints
                         }
@@ -168,15 +169,15 @@ export const LayoutComponent = (props: SCExplorerType) => {
                 eventKey={VerifiedContractTabsEnum.events}
                 className={classNames(
                   styles?.tab,
-                  customInterface?.customClassNames?.tabClassName,
+                  customClassNames?.tabClassName,
                   {
                     [styles?.tabActive]:
                       activeKey === VerifiedContractTabsEnum.events
                   },
                   {
-                    ...(customInterface?.customClassNames?.activeTabClassName
+                    ...(customClassNames?.activeTabClassName
                       ? {
-                          [customInterface.customClassNames.activeTabClassName]:
+                          [customClassNames.activeTabClassName]:
                             activeKey === VerifiedContractTabsEnum.events
                         }
                       : {})
@@ -192,15 +193,15 @@ export const LayoutComponent = (props: SCExplorerType) => {
                 eventKey={VerifiedContractTabsEnum.types}
                 className={classNames(
                   styles?.tab,
-                  customInterface?.customClassNames?.tabClassName,
+                  customClassNames?.tabClassName,
                   {
                     [styles?.tabActive]:
                       activeKey === VerifiedContractTabsEnum.types
                   },
                   {
-                    ...(customInterface?.customClassNames?.activeTabClassName
+                    ...(customClassNames?.activeTabClassName
                       ? {
-                          [customInterface.customClassNames.activeTabClassName]:
+                          [customClassNames.activeTabClassName]:
                             activeKey === VerifiedContractTabsEnum.types
                         }
                       : {})
@@ -216,15 +217,15 @@ export const LayoutComponent = (props: SCExplorerType) => {
                 eventKey={VerifiedContractTabsEnum.contractConstructor}
                 className={classNames(
                   styles?.tab,
-                  customInterface?.customClassNames?.tabClassName,
+                  customClassNames?.tabClassName,
                   {
                     [styles?.tabActive]:
                       activeKey === VerifiedContractTabsEnum.contractConstructor
                   },
                   {
-                    ...(customInterface?.customClassNames?.activeTabClassName
+                    ...(customClassNames?.activeTabClassName
                       ? {
-                          [customInterface.customClassNames.activeTabClassName]:
+                          [customClassNames.activeTabClassName]:
                             activeKey ===
                             VerifiedContractTabsEnum.contractConstructor
                         }
@@ -243,7 +244,7 @@ export const LayoutComponent = (props: SCExplorerType) => {
                 eventKey={VerifiedContractTabsEnum.details}
                 bsPrefix={styles?.tabPanel}
               >
-                <ContractBuild customInterface={customInterface} />
+                <ContractBuild />
               </Tab.Pane>
             )}
 
@@ -252,7 +253,7 @@ export const LayoutComponent = (props: SCExplorerType) => {
                 eventKey={VerifiedContractTabsEnum.sourceCode}
                 bsPrefix={styles?.tabPanel}
               >
-                <ContractFiles customInterface={customInterface} />
+                <ContractFiles />
               </Tab.Pane>
             )}
 
@@ -262,7 +263,6 @@ export const LayoutComponent = (props: SCExplorerType) => {
                 bsPrefix={styles?.tabPanel}
               >
                 <ContractEndpoints
-                  customInterface={customInterface}
                   mutability={ContractEndpointMutabilityEnum.readonly}
                 />
               </Tab.Pane>
@@ -274,7 +274,6 @@ export const LayoutComponent = (props: SCExplorerType) => {
                 bsPrefix={styles?.tabPanel}
               >
                 <ContractEndpoints
-                  customInterface={customInterface}
                   mutability={ContractEndpointMutabilityEnum.mutable}
                 />
               </Tab.Pane>
@@ -285,7 +284,7 @@ export const LayoutComponent = (props: SCExplorerType) => {
                 eventKey={VerifiedContractTabsEnum.events}
                 bsPrefix={styles?.tabPanel}
               >
-                <ContractEvents customInterface={customInterface} />
+                <ContractEvents />
               </Tab.Pane>
             )}
 
@@ -294,7 +293,7 @@ export const LayoutComponent = (props: SCExplorerType) => {
                 eventKey={VerifiedContractTabsEnum.types}
                 bsPrefix={styles?.tabPanel}
               >
-                <ContractTypings customInterface={customInterface} />
+                <ContractTypings />
               </Tab.Pane>
             )}
 
@@ -303,7 +302,7 @@ export const LayoutComponent = (props: SCExplorerType) => {
                 eventKey={VerifiedContractTabsEnum.contractConstructor}
                 bsPrefix={styles?.tabPanel}
               >
-                <ContractConstructor customInterface={customInterface} />
+                <ContractConstructor />
               </Tab.Pane>
             )}
           </Tab.Content>

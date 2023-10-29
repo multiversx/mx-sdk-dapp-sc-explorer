@@ -10,19 +10,20 @@ import classNames from 'classnames';
 
 import globalStyles from 'assets/styles/globals.module.scss';
 import { Badge, DocsTooltip } from 'components';
-import { useScContext } from 'context';
+import { useSCExplorerContext } from 'contexts';
 import { ContractEndpointMutabilityEnum, ContractEndpointUIType } from 'types';
 
 export const EndpointTitle = (props: ContractEndpointUIType) => {
-  const { rawAbi } = useScContext();
-  const { endpoint, customInterface } = props;
+  const { smartContract, customClassNames, icons } = useSCExplorerContext();
+  const { rawAbi } = smartContract;
+  const { endpoint } = props;
   const {
     mutableEndpointIcon = faSquarePen,
     readonlyEndpointIcon = faSquareMinus,
     onlyOwnerEndpointIcon = faUserCheck,
     interactiveEndpointIcon = faCode,
     payableEndpointIcon = faReceipt
-  } = customInterface?.icons ?? {};
+  } = icons ?? {};
   const { input, output, modifiers } = endpoint;
   const { mutability } = modifiers;
 
@@ -39,36 +40,28 @@ export const EndpointTitle = (props: ContractEndpointUIType) => {
         <Badge
           badgeValue='Write'
           badgeIcon={mutableEndpointIcon}
-          className={classNames(
-            customInterface?.customClassNames?.badgeSecondaryClassName
-          )}
+          className={classNames(customClassNames?.badgeSecondaryClassName)}
         />
       )}
       {mutability === ContractEndpointMutabilityEnum.readonly && (
         <Badge
           badgeValue='View'
           badgeIcon={readonlyEndpointIcon}
-          className={classNames(
-            customInterface?.customClassNames?.badgeSecondaryClassName
-          )}
+          className={classNames(customClassNames?.badgeSecondaryClassName)}
         />
       )}
       {modifiers?.isPayable() && (
         <Badge
           badgeValue='Payable'
           badgeIcon={payableEndpointIcon}
-          className={classNames(
-            customInterface?.customClassNames?.badgeSecondaryClassName
-          )}
+          className={classNames(customClassNames?.badgeSecondaryClassName)}
         />
       )}
       {Boolean(rawAbiEndpoint?.onlyOwner) && (
         <Badge
           badgeValue='Only Owner'
           badgeIcon={onlyOwnerEndpointIcon}
-          className={classNames(
-            customInterface?.customClassNames?.badgePrimaryClassName
-          )}
+          className={classNames(customClassNames?.badgePrimaryClassName)}
         />
       )}
       {((mutability === ContractEndpointMutabilityEnum.mutable &&
@@ -78,9 +71,7 @@ export const EndpointTitle = (props: ContractEndpointUIType) => {
         <Badge
           badgeValue='Interactive'
           badgeIcon={interactiveEndpointIcon}
-          className={classNames(
-            customInterface?.customClassNames?.badgePrimaryClassName
-          )}
+          className={classNames(customClassNames?.badgePrimaryClassName)}
         />
       )}
       {endpoint?.name && rawAbiEndpoint?.docs && (

@@ -1,29 +1,33 @@
 import React from 'react';
-import { DappProviderPropsType } from '@multiversx/sdk-dapp/wrappers';
 import {
   RawAbiType,
   VerifiedContractType,
   NetworkType,
-  CustomUIType
+  InterfaceIconsType,
+  CustomClassNamesType,
+  UserInterfaceType
 } from 'types';
 
-export interface SCExplorerType extends DappProviderPropsType {
+export interface SCExplorerType extends UserInterfaceType {
+  accountConsumerHandlers: AccountConsumerHandlersType;
+  smartContract: SmartContractType;
   networkConfig?: NetworkType;
-  provider?: 'api' | 'proxy';
-  address?: string;
-  abi?: RawAbiType;
-  verifiedContract?: VerifiedContractType;
-  allowMutate?: boolean;
+  icons?: InterfaceIconsType;
+  customClassNames?: CustomClassNamesType;
   loaderComponent?: React.ReactNode;
-  customInterface?: CustomUIType;
-  className?: string;
-  'data-testid'?: string;
+  children?: React.ReactNode;
 }
 
-export interface DocumentedTypesExampleType {
-  type: string;
-  example?: string | number;
-  docs?: string;
-  validationType?: string;
-  inputType?: string;
+export interface SmartContractType {
+  contractAddress?: string;
+  ownerAddress?: string;
+  allowMutate?: boolean;
+  abi?: RawAbiType;
+  verifiedContract?: VerifiedContractType;
 }
+export type AccountConsumerHandlersType = {
+  useGetLoginInfo: () => {
+    isLoggedIn: boolean;
+  };
+  useGetAccountInfo: () => { address: string; isGuarded: boolean };
+};

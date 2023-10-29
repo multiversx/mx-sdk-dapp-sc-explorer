@@ -3,18 +3,14 @@ import classNames from 'classnames';
 
 import globalStyles from 'assets/styles/globals.module.scss';
 import { PanelHeader } from 'components';
-import { useScContext } from 'context';
-import { useSupport } from 'hooks';
-
+import { useSCExplorerContext } from 'contexts';
 import { ContractType } from './ContractType';
 import styles from './styles.module.scss';
-import type { ContractTypingsUIType } from './types';
 
-export const ContractTypingsComponent = ({
-  customInterface
-}: ContractTypingsUIType) => {
-  const { abiRegistry } = useScContext();
-  const { hasTypes } = useSupport();
+export const ContractTypingsComponent = () => {
+  const { smartContract, support, customClassNames } = useSCExplorerContext();
+  const { abiRegistry } = smartContract;
+  const { hasTypes } = support;
   const [allExpanded, setAllExpanded] = useState(false);
 
   if (!hasTypes) {
@@ -28,13 +24,12 @@ export const ContractTypingsComponent = ({
       className={classNames(
         styles?.contractTypings,
         globalStyles?.panelWrapper,
-        customInterface?.customClassNames?.wrapperClassName
+        customClassNames?.wrapperClassName
       )}
     >
       <PanelHeader
         showButtons={customTypes.length > 1}
         onAllExpanded={setAllExpanded}
-        customInterface={customInterface}
       >
         Types
       </PanelHeader>
@@ -42,7 +37,7 @@ export const ContractTypingsComponent = ({
         className={classNames(
           styles?.contractTypingsList,
           globalStyles?.list,
-          customInterface?.customClassNames?.listClassName
+          customClassNames?.listClassName
         )}
       >
         {customTypes.map((customType, index) => (
@@ -52,9 +47,8 @@ export const ContractTypingsComponent = ({
             className={classNames(
               styles?.contractTypingsListItem,
               globalStyles?.listItem,
-              customInterface?.customClassNames?.listItemClassName
+              customClassNames?.listItemClassName
             )}
-            customInterface={customInterface}
             isOpen={customTypes.length === 1 || allExpanded}
           />
         ))}

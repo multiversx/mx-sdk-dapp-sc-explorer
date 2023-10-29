@@ -27,7 +27,7 @@ const formatEventFields = ({
 };
 
 export const ContractEvent = (props: ContractEventUIType) => {
-  const { event, title, className, customInterface } = props;
+  const { event, title, className } = props;
   const { inputs, outputs } = event;
   const formattedFields = formatEventFields({ inputs, outputs });
 
@@ -36,7 +36,6 @@ export const ContractEvent = (props: ContractEventUIType) => {
       {...props}
       title={title ?? event.identifier}
       className={classNames(className)}
-      customInterface={customInterface}
     >
       <FieldList fields={formattedFields} />
     </CollapsibleCard>

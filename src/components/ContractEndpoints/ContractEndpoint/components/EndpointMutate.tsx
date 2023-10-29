@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { NativeSerializer } from '@multiversx/sdk-core/out';
 
-import { useScContext } from 'context';
+import { useSCExplorerContext } from 'contexts';
 import { useCallContract } from 'hooks';
 import { ContractEndpointMutabilityEnum, BaseEndpointUIType } from 'types';
 import { EndpointForm } from './EndpointForm';
 
 export const EndpointMutate = (props: BaseEndpointUIType) => {
   const callContract = useCallContract();
-  const { canMutate } = useScContext();
+  const { support } = useSCExplorerContext();
+  const { canMutate } = support;
   const { endpoint } = props;
   const { modifiers } = endpoint;
   const { mutability } = modifiers;

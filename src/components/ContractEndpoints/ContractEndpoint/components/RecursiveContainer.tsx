@@ -6,6 +6,7 @@ import classNames from 'classnames';
 import globalStyles from 'assets/styles/globals.module.scss';
 import { DefinitionsTooltip } from 'components';
 import { TYPE_PREFIX_REGEX } from 'constants/general';
+import { useSCExplorerContext } from 'contexts';
 import { RecursiveContainerUIType, FormikAbiType } from 'types';
 import { Input } from './Input';
 import { getTypeFromPrefix, getNestedType } from '../helpers';
@@ -16,11 +17,10 @@ export const RecursiveContainer = ({
   config,
   formik,
   endpoint,
-  prefix = '',
-  customInterface
+  prefix = ''
 }: RecursiveContainerUIType) => {
-  const { plusIcon = faPlus, minusIcon = faMinus } =
-    customInterface?.icons ?? {};
+  const { customClassNames, icons } = useSCExplorerContext();
+  const { plusIcon = faPlus, minusIcon = faMinus } = icons ?? {};
 
   const builder = ({
     individualConfig,
@@ -50,7 +50,6 @@ export const RecursiveContainer = ({
             name={`${formattedPrefix}.0`}
             formik={formik}
             defaultValue=''
-            customInterface={customInterface}
           />
         );
       }
@@ -85,7 +84,6 @@ export const RecursiveContainer = ({
             formik={formik}
             prefix={formattedPrefix}
             endpoint={endpoint}
-            customInterface={customInterface}
           />
           {isComposite && (
             <>
@@ -96,9 +94,8 @@ export const RecursiveContainer = ({
                     className={classNames(
                       globalStyles?.button,
                       globalStyles?.buttonSecondary,
-                      customInterface?.customClassNames?.buttonClassName,
-                      customInterface?.customClassNames
-                        ?.buttonSecondaryClassName,
+                      customClassNames?.buttonClassName,
+                      customClassNames?.buttonSecondaryClassName,
                       styles?.buttonRemoveArgument
                     )}
                     onClick={removeProperty(individualConfig.length - 1)}
@@ -113,8 +110,8 @@ export const RecursiveContainer = ({
                   className={classNames(
                     globalStyles?.button,
                     globalStyles?.buttonSecondary,
-                    customInterface?.customClassNames?.buttonClassName,
-                    customInterface?.customClassNames?.buttonSecondaryClassName,
+                    customClassNames?.buttonClassName,
+                    customClassNames?.buttonSecondaryClassName,
                     styles?.buttonAddArgument
                   )}
                   onClick={addNewProperty}
@@ -137,7 +134,6 @@ export const RecursiveContainer = ({
           formik={formik}
           prefix={formattedPrefix}
           endpoint={endpoint}
-          customInterface={customInterface}
         />
       );
     } else {
@@ -146,7 +142,6 @@ export const RecursiveContainer = ({
           name={formattedPrefix}
           formik={formik}
           defaultValue={individualConfig !== undefined ? individualConfig : ''}
-          customInterface={customInterface}
         />
       );
     }

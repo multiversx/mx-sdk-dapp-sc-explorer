@@ -7,17 +7,18 @@ import {
 import { ContractQueryRequest } from '@multiversx/sdk-network-providers/out/contractQueryRequest';
 import { ContractQueryResponse } from '@multiversx/sdk-network-providers/out/contractQueryResponse';
 
-import { useScContext } from 'context';
+import { useSCExplorerContext } from 'contexts';
 import { useNetworkProvider } from 'hooks';
 
 export const useQueryContract = () => {
-  const { abiRegistry, ownerAddress } = useScContext();
+  const { smartContract } = useSCExplorerContext();
+  const { abiRegistry, contractAddress } = smartContract;
   const { post } = useNetworkProvider();
 
   const queryContract = async (props: QueryArguments) => {
-    if (abiRegistry && ownerAddress) {
+    if (abiRegistry && contractAddress) {
       try {
-        const address = new Address(ownerAddress);
+        const address = new Address(contractAddress);
         const contract = new SmartContract({
           address,
           abi: abiRegistry
@@ -53,8 +54,16 @@ export const useQueryContract = () => {
       }
     }
 
+    if (!contractAddress) {
+      return {
+        success: false,
+        error: 'Missing SC Address'
+      };
+    }
+
     return {
-      success: false
+      success: false,
+      error: 'Unable to call SC'
     };
   };
 

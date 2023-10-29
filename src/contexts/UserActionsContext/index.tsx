@@ -7,12 +7,12 @@ import React, {
 
 import { reducer } from './reducer';
 import { initializer } from './state';
-import { DispatchType, StateType } from './types';
+import { DispatchType, UserActionsType } from '../types';
 
-const Context = createContext<StateType | undefined>(undefined);
+const Context = createContext<UserActionsType | undefined>(undefined);
 const Dispatch = createContext<DispatchType | undefined>(undefined);
 
-const ContextProvider = (props: PropsWithChildren) => {
+const UserActionsContextProvider = (props: PropsWithChildren) => {
   const { children } = props;
   const [state, dispatch] = useReducer(reducer, initializer);
 
@@ -23,7 +23,7 @@ const ContextProvider = (props: PropsWithChildren) => {
   );
 };
 
-const useScContext = () => {
+const useUserActionsContext = () => {
   const context = useContext(Context);
 
   if (context === undefined) {
@@ -47,4 +47,4 @@ const useDispatch = () => {
   }
 };
 
-export { ContextProvider, useScContext, useDispatch };
+export { UserActionsContextProvider, useUserActionsContext, useDispatch };
