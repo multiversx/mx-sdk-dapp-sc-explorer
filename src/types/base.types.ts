@@ -16,6 +16,10 @@ export interface SCExplorerType extends UserInterfaceType {
   customClassNames?: CustomClassNamesType;
   loaderComponent?: React.ReactNode;
   children?: React.ReactNode;
+  activeSection?: VerifiedContractTabsEnum;
+  setActiveSection?: React.Dispatch<
+    React.SetStateAction<VerifiedContractTabsEnum>
+  >;
 }
 
 export interface SmartContractType {
@@ -25,9 +29,21 @@ export interface SmartContractType {
   abi?: RawAbiType;
   verifiedContract?: VerifiedContractType;
 }
+
 export type AccountConsumerHandlersType = {
   useGetLoginInfo: () => {
     isLoggedIn: boolean;
   };
   useGetAccountInfo: () => { address: string; isGuarded: boolean };
 };
+
+export enum VerifiedContractTabsEnum {
+  details = 'details',
+  sourceCode = 'source',
+  endpoints = 'endpoints',
+  readEndpoints = 'endpoints-read',
+  writeEndpoints = 'endpoints-write',
+  events = 'events',
+  types = 'types',
+  contractConstructor = 'constructor'
+}

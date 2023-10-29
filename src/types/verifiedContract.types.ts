@@ -24,14 +24,3 @@ export interface ContractFileType {
   dependencyDepth: number;
   isTestFile: boolean;
 }
-
-export enum VerifiedContractTabsEnum {
-  details = 'details',
-  sourceCode = 'source',
-  endpoints = 'endpoints',
-  readEndpoints = 'endpoints-read',
-  writeEndpoints = 'endpoints-write',
-  events = 'events',
-  types = 'types',
-  contractConstructor = 'constructor'
-}

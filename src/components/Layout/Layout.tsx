@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { Loader } from '@multiversx/sdk-dapp/UI/Loader';
 import classNames from 'classnames';
 import { Tab, Nav } from 'react-bootstrap';
@@ -23,7 +23,7 @@ import styles from './styles.module.scss';
 
 export const LayoutComponent = (props: SCExplorerType) => {
   const { support, customClassNames } = useSCExplorerContext();
-  const { className, loaderComponent } = props;
+  const { className, loaderComponent, activeSection, setActiveSection } = props;
   const {
     canView,
     canMutate,
@@ -37,8 +37,16 @@ export const LayoutComponent = (props: SCExplorerType) => {
   } = support;
 
   const [activeKey, setActiveKey] = useState<VerifiedContractTabsEnum>(
-    VerifiedContractTabsEnum.details
+    activeSection ?? VerifiedContractTabsEnum.details
   );
+
+  useEffect(() => {
+    if (activeSection && !setActiveSection) {
+      setActiveKey(activeSection);
+    }
+  }, [activeSection]);
+
+  const activePanel = activeSection ?? activeKey;
 
   if (!canView) {
     return loaderComponent ? <>{loaderComponent}</> : <Loader />;
@@ -56,11 +64,15 @@ export const LayoutComponent = (props: SCExplorerType) => {
       </div>
       <div className={classNames(styles?.layoutContent)}>
         <Tab.Container
-          defaultActiveKey={activeKey}
+          defaultActiveKey={activePanel}
           onSelect={(selectedKey) => {
-            return selectedKey
-              ? setActiveKey(selectedKey as VerifiedContractTabsEnum)
-              : VerifiedContractTabsEnum.details;
+            if (selectedKey) {
+              if (setActiveSection) {
+                setActiveSection(selectedKey as VerifiedContractTabsEnum);
+                return;
+              }
+              setActiveKey(selectedKey as VerifiedContractTabsEnum);
+            }
           }}
           transition={false}
         >
@@ -75,13 +87,13 @@ export const LayoutComponent = (props: SCExplorerType) => {
                   customClassNames?.tabClassName,
                   {
                     [styles?.tabActive]:
-                      activeKey === VerifiedContractTabsEnum.details
+                      activePanel === VerifiedContractTabsEnum.details
                   },
                   {
                     ...(customClassNames?.activeTabClassName
                       ? {
                           [customClassNames.activeTabClassName]:
-                            activeKey === VerifiedContractTabsEnum.details
+                            activePanel === VerifiedContractTabsEnum.details
                         }
                       : {})
                   }
@@ -99,13 +111,13 @@ export const LayoutComponent = (props: SCExplorerType) => {
                   customClassNames?.tabClassName,
                   {
                     [styles?.tabActive]:
-                      activeKey === VerifiedContractTabsEnum.sourceCode
+                      activePanel === VerifiedContractTabsEnum.sourceCode
                   },
                   {
                     ...(customClassNames?.activeTabClassName
                       ? {
                           [customClassNames.activeTabClassName]:
-                            activeKey === VerifiedContractTabsEnum.sourceCode
+                            activePanel === VerifiedContractTabsEnum.sourceCode
                         }
                       : {})
                   }
@@ -123,13 +135,14 @@ export const LayoutComponent = (props: SCExplorerType) => {
                   customClassNames?.tabClassName,
                   {
                     [styles?.tabActive]:
-                      activeKey === VerifiedContractTabsEnum.readEndpoints
+                      activePanel === VerifiedContractTabsEnum.readEndpoints
                   },
                   {
                     ...(customClassNames?.activeTabClassName
                       ? {
                           [customClassNames.activeTabClassName]:
-                            activeKey === VerifiedContractTabsEnum.readEndpoints
+                            activePanel ===
+                            VerifiedContractTabsEnum.readEndpoints
                         }
                       : {})
                   }
@@ -147,7 +160,7 @@ export const LayoutComponent = (props: SCExplorerType) => {
                   customClassNames?.tabClassName,
                   {
                     [styles?.tabActive]:
-                      activeKey === VerifiedContractTabsEnum.writeEndpoints
+                      activePanel === VerifiedContractTabsEnum.writeEndpoints
                   },
                   {
                     ...(customClassNames?.activeTabClassName
@@ -172,13 +185,13 @@ export const LayoutComponent = (props: SCExplorerType) => {
                   customClassNames?.tabClassName,
                   {
                     [styles?.tabActive]:
-                      activeKey === VerifiedContractTabsEnum.events
+                      activePanel === VerifiedContractTabsEnum.events
                   },
                   {
                     ...(customClassNames?.activeTabClassName
                       ? {
                           [customClassNames.activeTabClassName]:
-                            activeKey === VerifiedContractTabsEnum.events
+                            activePanel === VerifiedContractTabsEnum.events
                         }
                       : {})
                   }
@@ -196,13 +209,13 @@ export const LayoutComponent = (props: SCExplorerType) => {
                   customClassNames?.tabClassName,
                   {
                     [styles?.tabActive]:
-                      activeKey === VerifiedContractTabsEnum.types
+                      activePanel === VerifiedContractTabsEnum.types
                   },
                   {
                     ...(customClassNames?.activeTabClassName
                       ? {
                           [customClassNames.activeTabClassName]:
-                            activeKey === VerifiedContractTabsEnum.types
+                            activePanel === VerifiedContractTabsEnum.types
                         }
                       : {})
                   }
@@ -220,7 +233,8 @@ export const LayoutComponent = (props: SCExplorerType) => {
                   customClassNames?.tabClassName,
                   {
                     [styles?.tabActive]:
-                      activeKey === VerifiedContractTabsEnum.contractConstructor
+                      activePanel ===
+                      VerifiedContractTabsEnum.contractConstructor
                   },
                   {
                     ...(customClassNames?.activeTabClassName
