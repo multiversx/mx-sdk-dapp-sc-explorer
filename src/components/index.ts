@@ -6,7 +6,7 @@ export { CollapsibleCard, CollapsibleArrows } from './CollapsibleCard';
 export { FieldList } from './FieldList';
 export { Layout } from './Layout';
 export { LoginButton, LoginButtonWrapper } from './LoginButton';
-export { LoginModal } from './Modals';
+export { LoginModal, MutateModal } from './Modals';
 export { Overlay } from './Overlay';
 export { PanelHeader } from './PanelHeader';
 export { DocsTooltip } from './DocsTooltip';

@@ -9,3 +9,5 @@ export interface ModalUIType extends UserInterfaceType {
 }
 
 export interface LoginModalUIType extends UserInterfaceType {}
+
+export interface MutateModalUIType extends UserInterfaceType {}

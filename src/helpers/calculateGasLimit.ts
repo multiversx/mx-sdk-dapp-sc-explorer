@@ -1,9 +1,9 @@
 import {
-  GAS_LIMIT,
   GAS_PER_DATA_BYTE,
   EXTRA_GAS_LIMIT_GUARDED_TX
 } from '@multiversx/sdk-dapp/constants/index';
 import BigNumber from 'bignumber.js';
+import { SC_GAS_LIMIT } from 'constants/general';
 
 interface CalculateGasLimitType {
   data: string;
@@ -15,7 +15,7 @@ export const calculateGasLimit = ({
   isGuarded
 }: CalculateGasLimitType) => {
   const guardedAccountGasLimit = isGuarded ? EXTRA_GAS_LIMIT_GUARDED_TX : 0;
-  const bNconfigGasLimit = new BigNumber(GAS_LIMIT).plus(
+  const bNconfigGasLimit = new BigNumber(SC_GAS_LIMIT).plus(
     guardedAccountGasLimit
   );
   const bNgasPerDataByte = new BigNumber(GAS_PER_DATA_BYTE);

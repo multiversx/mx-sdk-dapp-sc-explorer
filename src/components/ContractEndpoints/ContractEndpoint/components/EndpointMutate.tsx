@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import { NativeSerializer } from '@multiversx/sdk-core/out';
 
-import { useSCExplorerContext } from 'contexts';
-import { useCallContract } from 'hooks';
-import { ContractEndpointMutabilityEnum, BaseEndpointUIType } from 'types';
+import { useSCExplorerContext, useDispatch } from 'contexts';
+import {
+  ContractEndpointMutabilityEnum,
+  BaseEndpointUIType,
+  ActionTypeEnum
+} from 'types';
 import { EndpointForm } from './EndpointForm';
 
 export const EndpointMutate = (props: BaseEndpointUIType) => {
-  const callContract = useCallContract();
+  const dispatch = useDispatch();
   const { support } = useSCExplorerContext();
   const { canMutate } = support;
   const { endpoint } = props;
@@ -26,15 +29,19 @@ export const EndpointMutate = (props: BaseEndpointUIType) => {
         nativeValues || [],
         endpoint
       );
-
-      const result = await callContract({ func: endpoint.name, args });
-      setIsLoading(false);
-      if (result?.error) {
-        setError(String(result.error));
-      }
+      dispatch({
+        type: ActionTypeEnum.setMutateModalState,
+        mutateModalState: {
+          mutateModalOpen: true,
+          args,
+          endpoint
+        }
+      });
     } catch (error) {
-      setIsLoading(false);
       setError(String(error));
+    } finally {
+      setIsLoading(false);
+      return;
     }
   };
 

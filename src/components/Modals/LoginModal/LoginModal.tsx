@@ -107,7 +107,7 @@ export const LoginModal = () => {
     <Modal
       show={loginModalOpen}
       onClose={onClose}
-      className={styles.LoginModal}
+      className={styles.loginModal}
       title={getLoginTitle()}
     >
       <div className={styles.loginModal}>

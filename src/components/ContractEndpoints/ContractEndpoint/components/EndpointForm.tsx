@@ -99,7 +99,12 @@ export const EndpointForm = (props: EndpointFormUIType) => {
               result={result}
             />
             {(hasOnlyGeneralValidationError || generalError) && (
-              <div className={classNames(styles?.endpointGeneralError)}>
+              <div
+                className={classNames(
+                  styles?.endpointGeneralError,
+                  globalStyles?.generalError
+                )}
+              >
                 {hasOnlyGeneralValidationError && <p>{errors?.general}</p>}
                 {generalError && <p>{generalError}</p>}
               </div>

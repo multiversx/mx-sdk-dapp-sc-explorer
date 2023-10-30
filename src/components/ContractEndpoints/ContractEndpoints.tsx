@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import classNames from 'classnames';
 
 import globalStyles from 'assets/styles/globals.module.scss';
-import { Card, PanelHeader } from 'components';
+import { Card, PanelHeader, MutateModal } from 'components';
 import { useSCExplorerContext } from 'contexts';
 import { ContractEndpointMutabilityEnum } from 'types';
 import { ContractEndpoint } from './ContractEndpoint';
@@ -13,7 +13,7 @@ import { ContractEndpointsUIType } from './types';
 export const ContractEndpoints = ({ mutability }: ContractEndpointsUIType) => {
   const { smartContract, support, customClassNames } = useSCExplorerContext();
   const { abiRegistry } = smartContract;
-  const { hasEndpoints } = support;
+  const { hasEndpoints, canMutate } = support;
   const [allExpanded, setAllExpanded] = useState(false);
 
   if (!hasEndpoints) {
@@ -24,13 +24,7 @@ export const ContractEndpoints = ({ mutability }: ContractEndpointsUIType) => {
   let filteredEndpoints = endpoints;
   if (mutability) {
     filteredEndpoints = endpoints.filter(
-      (endpoint) => endpoint?.modifiers?.mutability === mutability // &&
-      // [
-      //   'revertUnstake',
-      //   'addLockOptions',
-      //   'setEnergyForOldTokens',
-      //   'updateEnergyAfterOldTokenUnlock'
-      // ].includes(endpoint.name)
+      (endpoint) => endpoint?.modifiers?.mutability === mutability
     );
   }
 
@@ -46,6 +40,9 @@ export const ContractEndpoints = ({ mutability }: ContractEndpointsUIType) => {
         customClassNames?.wrapperClassName
       )}
     >
+      {mutability === ContractEndpointMutabilityEnum.mutable && canMutate && (
+        <MutateModal />
+      )}
       <PanelHeader
         showButtons={filteredEndpoints.length > 1}
         onAllExpanded={setAllExpanded}

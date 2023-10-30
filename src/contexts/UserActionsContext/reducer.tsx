@@ -9,6 +9,13 @@ const reducer = (state: UserActionsType, action: ActionType) => {
       };
     }
 
+    case ActionTypeEnum.setMutateModalState: {
+      return {
+        ...state,
+        mutateModalState: action.mutateModalState
+      };
+    }
+
     default: {
       throw new Error(`Unhandled action type: ${action}`);
     }
