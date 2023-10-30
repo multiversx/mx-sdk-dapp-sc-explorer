@@ -44,10 +44,7 @@ export const EndpointForm = (props: EndpointFormUIType) => {
   } = icons ?? {};
 
   const isOwnerConnected = Boolean(
-    isLoggedIn &&
-      callerAddress &&
-      ownerAddress &&
-      callerAddress === ownerAddress
+    callerAddress && ownerAddress && callerAddress === ownerAddress
   );
 
   const initialValues: FormikAbiType = Object.fromEntries(
@@ -123,7 +120,7 @@ export const EndpointForm = (props: EndpointFormUIType) => {
                   type='submit'
                   {...(isLoading ||
                   !formik.isValid ||
-                  (modifiers?.isOnlyOwner() && !isOwnerConnected)
+                  (modifiers?.isOnlyOwner() && isLoggedIn && !isOwnerConnected)
                     ? { disabled: true }
                     : {})}
                 >
@@ -138,7 +135,8 @@ export const EndpointForm = (props: EndpointFormUIType) => {
                   )}
                 </button>
               </LoginButtonWrapper>
-              {modifiers?.isOnlyOwner() &&
+              {isLoggedIn &&
+                modifiers?.isOnlyOwner() &&
                 !isOwnerConnected &&
                 ownerAddress && (
                   <div

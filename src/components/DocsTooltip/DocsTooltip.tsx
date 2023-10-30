@@ -1,8 +1,11 @@
 import React from 'react';
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classNames from 'classnames';
+
 import { Overlay } from 'components';
 import { useSCExplorerContext } from 'contexts';
+import styles from './styles.module.scss';
 import { DocsTooltipUIType } from './types';
 
 export const DocsTooltip = (props: DocsTooltipUIType) => {
@@ -15,11 +18,13 @@ export const DocsTooltip = (props: DocsTooltipUIType) => {
   }
 
   const DocsContent = () => (
-    <>
+    <div className={classNames(styles.docsTooltip)}>
       {docs.map((row, key) => (
-        <code key={key}>{row}</code>
+        <p key={key}>
+          <code>{row}</code>
+        </p>
       ))}
-    </>
+    </div>
   );
 
   return (

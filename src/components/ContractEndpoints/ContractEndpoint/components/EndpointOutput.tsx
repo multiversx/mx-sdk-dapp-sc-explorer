@@ -1,13 +1,18 @@
 import React from 'react';
+import { faCopy } from '@fortawesome/free-solid-svg-icons';
+import { CopyButton } from '@multiversx/sdk-dapp/UI/CopyButton';
 import classNames from 'classnames';
 
 import globalStyles from 'assets/styles/globals.module.scss';
 import { EndpointDefinitionList, Code } from 'components';
+import { useSCExplorerContext } from 'contexts';
 import { EndpointOutputUIType } from 'types';
 import styles from '../styles.module.scss';
 
 export const EndpointOutput = (props: EndpointOutputUIType) => {
   const { output, result } = props;
+  const { icons } = useSCExplorerContext();
+  const { copyIcon = faCopy } = icons ?? {};
 
   if (!output || output.length === 0) {
     return null;
@@ -36,16 +41,30 @@ export const EndpointOutput = (props: EndpointOutputUIType) => {
                       (typeof displayValue === 'object' ||
                         Array.isArray(displayValue))
                     ) {
+                      const code = JSON.stringify(displayValue, null, 2);
                       return (
-                        <Code
-                          className={classNames(
-                            styles?.endpointOutputResultsCode
-                          )}
+                        <div
+                          className={classNames(globalStyles?.codeBlock)}
                           key={index}
-                          code={JSON.stringify(displayValue, null, 2)}
-                          showLineNumbers={false}
-                          language='properties'
-                        />
+                        >
+                          <div
+                            className={classNames(globalStyles?.buttonHolder)}
+                          >
+                            <CopyButton
+                              text={code}
+                              className={classNames(globalStyles?.copyButton)}
+                              copyIcon={copyIcon as any} // TODO fix fontawesome typing issue
+                            />
+                          </div>
+                          <Code
+                            className={classNames(
+                              globalStyles?.endpointOutputResultsCode
+                            )}
+                            code={code}
+                            showLineNumbers={false}
+                            language='properties'
+                          />
+                        </div>
                       );
                     } else {
                       return (

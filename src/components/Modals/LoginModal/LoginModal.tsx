@@ -62,7 +62,7 @@ export const LoginModal = () => {
   }, []);
 
   const loginParams = {
-    callbackRoute: isWindowAvailable() ? window?.location?.href : '/',
+    callbackRoute: isWindowAvailable() ? window?.location?.pathname : '/',
     redirectAfterLogin: false,
     wrapContentInsideModal: false,
     hideButtonWhenModalOpens: true,

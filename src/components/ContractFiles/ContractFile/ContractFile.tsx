@@ -10,7 +10,6 @@ import androidstudio from 'react-syntax-highlighter/dist/esm/styles/hljs/android
 import globalStyles from 'assets/styles/globals.module.scss';
 import { CollapsibleCard } from 'components';
 import { useSCExplorerContext } from 'contexts';
-import styles from '../styles.module.scss';
 import { ContractFileUIType } from '../types';
 
 SyntaxHighlighter.registerLanguage('rust', rust);
@@ -51,16 +50,16 @@ export const ContractFile = (props: ContractFileUIType) => {
       titleContent={<TitleContent />}
       className={classNames(className)}
     >
-      <div className={classNames(styles?.codeBlock)}>
-        <div className={classNames(styles?.buttonHolder)}>
+      <div className={classNames(globalStyles?.codeBlock)}>
+        <div className={classNames(globalStyles?.buttonHolder)}>
           <CopyButton
             text={codeString}
-            className={classNames(styles?.copyButton)}
+            className={classNames(globalStyles?.copyButton)}
             copyIcon={copyIcon as any} // TODO fix fontawesome typing issue
           />
           <CopyButton
             text={`${fullPath}#${path}`}
-            className={classNames(styles?.linkButton)}
+            className={classNames(globalStyles?.linkButton)}
             copyIcon={linkIcon as any} // TODO fix fontawesome typing issue
           />
         </div>
