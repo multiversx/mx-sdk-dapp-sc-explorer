@@ -1,6 +1,6 @@
 {
   "name": "@multiversx/sdk-dapp-sc-explorer",
-  "version": "0.0.1-alpha.0",
+  "version": "0.0.1-alpha.8",
   "description": "A library to hold the main logic for a validating a form for transactions on the MultiversX blockchain",
   "author": "MultiversX",
   "license": "GPL-3.0-or-later",
@@ -27,8 +27,8 @@
   "devDependencies": {
     "@testing-library/jest-dom": "6.1.3",
     "@testing-library/react": "14.0.0",
-    "@types/react": "18.2.22",
-    "@types/react-dom": "18.2.7",
+    "@types/react": "18.2.33",
+    "@types/react-dom": "18.2.14",
     "@types/react-syntax-highlighter": "15.5.7",
     "@typescript-eslint/eslint-plugin": "6.7.0",
     "@typescript-eslint/parser": "6.7.0",
@@ -77,10 +77,14 @@
     "transaction"
   ],
   "peerDependencies": {
+    "@multiversx/sdk-core": "^12.12.0",
+    "@multiversx/sdk-dapp": "^2.23.0",
     "react": ">=18",
     "react-dom": ">=18"
   },
   "resolutions": {
+    "@multiversx/sdk-core": "^12.12.0",
+    "@multiversx/sdk-dapp": "^2.23.0",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
@@ -92,8 +96,9 @@
     "classnames": "2.3.2"
   },
   "dependencies": {
-    "@multiversx/sdk-core": "12.11.0",
-    "@multiversx/sdk-dapp": "2.22.5",
+    "@multiversx/sdk-core": "12.12.0",
+    "@multiversx/sdk-dapp": "2.23.0",
+    "@multiversx/sdk-dapp-form": "0.8.18",
     "@multiversx/sdk-network-providers": "2.0.0",
     "axios": "1.5.0",
     "bignumber.js": "9.x",
