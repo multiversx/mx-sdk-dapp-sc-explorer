@@ -5,6 +5,7 @@ import { AccountConsumerHandlersType } from 'types';
 
 export interface AccountContextPropsType {
   address: AccountType['address'];
+  balance: AccountType['balance'];
   isLoggedIn: boolean;
   isGuarded: boolean;
 }
@@ -22,15 +23,17 @@ export function AccountContextProvider({
 }: AccountContextProviderPropsType) {
   const { useGetLoginInfo, useGetAccountInfo } = value;
   const { isLoggedIn } = useGetLoginInfo();
-  const { address, isGuarded } = useGetAccountInfo();
-  const account = {
+  const { address, account } = useGetAccountInfo();
+  const { isGuarded, balance } = account ?? {};
+  const stateAccount = {
     address,
+    balance,
     isLoggedIn,
     isGuarded
   };
 
   return (
-    <AccountContext.Provider value={account}>
+    <AccountContext.Provider value={stateAccount}>
       {children}
     </AccountContext.Provider>
   );

@@ -3,12 +3,13 @@ import {
   SmartContract,
   IContractFunction,
   TypedValue,
-  AbiRegistry
+  AbiRegistry,
+  Interaction,
+  ContractFunction
 } from '@multiversx/sdk-core/out';
 import { getChainID } from '@multiversx/sdk-dapp/utils/network';
 
 import { SC_GAS_LIMIT } from 'constants/general';
-import { calculateGasLimit } from 'helpers';
 
 interface GetCallContractTransactionType {
   contractAddress?: string;
@@ -16,7 +17,6 @@ interface GetCallContractTransactionType {
   abiRegistry?: AbiRegistry;
   func?: IContractFunction;
   args?: TypedValue[];
-  isGuarded?: boolean;
   userGasLimit?: string | number;
 }
 
@@ -26,7 +26,6 @@ export const getCallContractTransaction = ({
   abiRegistry,
   func,
   args,
-  isGuarded,
   userGasLimit
 }: GetCallContractTransactionType) => {
   if (contractAddress && callerAddress && abiRegistry && func && args) {
@@ -39,6 +38,20 @@ export const getCallContractTransaction = ({
       });
 
       if (contract) {
+        const interaction = new Interaction(
+          contract,
+          new ContractFunction(func.toString()),
+          args
+        )
+          .withChainID(getChainID())
+          .withGasLimit(Number(userGasLimit ?? SC_GAS_LIMIT))
+          .withSender(caller);
+
+        console.log(
+          '---interaction',
+          interaction.buildTransaction().toPlainObject()
+        );
+
         const transaction = contract.call({
           func,
           args,
@@ -46,15 +59,8 @@ export const getCallContractTransaction = ({
           chainID: getChainID(),
           caller
         });
-        if (userGasLimit) {
-          transaction.setGasLimit(Number(userGasLimit));
-        } else {
-          const gasLimit = calculateGasLimit({
-            data: transaction.getData().toString(),
-            isGuarded
-          });
-          transaction.setGasLimit(Number(gasLimit));
-        }
+
+        console.log('----transaction', transaction.toPlainObject());
 
         return transaction;
       }

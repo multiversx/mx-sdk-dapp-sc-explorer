@@ -13,7 +13,7 @@ import { ContractEndpointsUIType } from './types';
 export const ContractEndpoints = ({ mutability }: ContractEndpointsUIType) => {
   const { smartContract, support, customClassNames } = useSCExplorerContext();
   const { abiRegistry } = smartContract;
-  const { hasEndpoints, canMutate } = support;
+  const { hasEndpoints, canMutate, canRead } = support;
   const [allExpanded, setAllExpanded] = useState(false);
 
   if (!hasEndpoints) {
@@ -62,12 +62,9 @@ export const ContractEndpoints = ({ mutability }: ContractEndpointsUIType) => {
       >
         {filteredEndpoints.map((endpoint, index) => {
           const hasInteraction =
-            (endpoint?.input &&
-              endpoint.input.length > 0 &&
+            (canMutate &&
               mutability === ContractEndpointMutabilityEnum.mutable) ||
-            (endpoint?.output &&
-              endpoint.output.length > 0 &&
-              mutability === ContractEndpointMutabilityEnum.readonly);
+            (canRead && mutability === ContractEndpointMutabilityEnum.readonly);
 
           if (hasInteraction) {
             return (

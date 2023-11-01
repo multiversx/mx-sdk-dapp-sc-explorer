@@ -8,7 +8,7 @@ export interface NetworkContextPropsType {
 
 interface NetworkContextProviderPropsType {
   children: ReactNode;
-  value?: NetworkType;
+  value: NetworkType;
 }
 
 export const NetworkContext = createContext({} as NetworkType);
@@ -17,9 +17,12 @@ export function NetworkContextProvider({
   children,
   value
 }: NetworkContextProviderPropsType) {
-  const networkConfig = value ?? {
-    ...fallbackNetworkConfigurations['devnet'],
-    provider: 'api'
+  const fallback = fallbackNetworkConfigurations[value.environment];
+  const networkConfig = {
+    environment: value.environment,
+    provider: value?.provider ?? 'api',
+    apiAddress: value?.apiAddress ?? fallback?.apiAddress,
+    ...(value?.proxyUrl ? { proxyUrl: value.proxyUrl } : {})
   };
 
   return (

@@ -17,7 +17,7 @@ import { UserActionsContextProvider } from './UserActionsContext';
 
 interface AppContextProviderPropsType {
   accountConsumerHandlers: AccountConsumerHandlersType;
-  networkConfig?: NetworkType;
+  networkConfig: NetworkType;
   smartContract?: SmartContractType;
   customClassNames?: CustomClassNamesType;
   icons?: InterfaceIconsType;

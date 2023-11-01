@@ -11,7 +11,7 @@ import {
 export interface SCExplorerType extends UserInterfaceType {
   accountConsumerHandlers: AccountConsumerHandlersType;
   smartContract: SmartContractType;
-  networkConfig?: NetworkType;
+  networkConfig: NetworkType;
   icons?: InterfaceIconsType;
   customClassNames?: CustomClassNamesType;
   loaderComponent?: React.ReactNode;
@@ -34,7 +34,10 @@ export type AccountConsumerHandlersType = {
   useGetLoginInfo: () => {
     isLoggedIn: boolean;
   };
-  useGetAccountInfo: () => { address: string; isGuarded: boolean };
+  useGetAccountInfo: () => {
+    address: string;
+    account: { isGuarded: boolean; balance: string };
+  };
 };
 
 export enum VerifiedContractTabsEnum {
