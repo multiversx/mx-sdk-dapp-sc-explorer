@@ -5,7 +5,7 @@ import {
 import BigNumber from 'bignumber.js';
 import { SC_GAS_LIMIT } from 'constants/general';
 
-interface CalculateGasLimitType {
+export interface CalculateGasLimitType {
   data: string;
   isGuarded?: boolean;
 }

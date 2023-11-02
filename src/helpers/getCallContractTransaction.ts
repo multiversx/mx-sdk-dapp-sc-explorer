@@ -1,24 +1,77 @@
 import {
   Address,
   SmartContract,
-  IContractFunction,
-  TypedValue,
-  AbiRegistry,
   Interaction,
-  ContractFunction
+  ContractFunction,
+  TokenTransfer
 } from '@multiversx/sdk-core/out';
+import {
+  EsdtEnumType,
+  NftEnumType
+} from '@multiversx/sdk-dapp/types/tokens.types';
 import { getChainID } from '@multiversx/sdk-dapp/utils/network';
 
 import { SC_GAS_LIMIT } from 'constants/general';
+import { GetCallContractTransactionType, ProcessedFormTokenType } from 'types';
 
-interface GetCallContractTransactionType {
-  contractAddress?: string;
-  callerAddress?: string;
-  abiRegistry?: AbiRegistry;
-  func?: IContractFunction;
-  args?: TypedValue[];
-  userGasLimit?: string | number;
-}
+const getTokenTransferInteraction = ({
+  tokens,
+  interaction
+}: {
+  tokens: ProcessedFormTokenType[];
+  interaction: Interaction;
+}) => {
+  try {
+    const validTokens = tokens.filter((token) =>
+      Boolean(
+        token.tokenType === 'native' ||
+          token.tokenType === EsdtEnumType.FungibleESDT ||
+          token.tokenType === NftEnumType.MetaESDT
+      )
+    );
+
+    if (
+      validTokens.length === 1 &&
+      validTokens.every((token) => token.tokenType === 'native')
+    ) {
+      return interaction.withValue(validTokens[0].tokenAmount);
+    }
+
+    if (
+      validTokens.every(
+        (token) =>
+          token.tokenType === EsdtEnumType.FungibleESDT ||
+          token.tokenType === NftEnumType.MetaESDT
+      )
+    ) {
+      const transfers = validTokens.map((token) => {
+        if (token.tokenType === NftEnumType.MetaESDT && token.tokenNonce) {
+          return TokenTransfer.metaEsdtFromAmount(
+            token.tokenIdentifier,
+            token.tokenNonce,
+            token.tokenAmount,
+            token.tokenDecimals
+          );
+        }
+        return TokenTransfer.fungibleFromAmount(
+          token.tokenIdentifier,
+          token.tokenAmount,
+          token.tokenDecimals
+        );
+      });
+
+      if (transfers.length === 1) {
+        return interaction.withSingleESDTNFTTransfer(transfers[0]);
+      }
+
+      return interaction.withMultiESDTNFTTransfer(transfers);
+    }
+  } catch (error) {
+    console.error('Unable to prepare SC Token Trasnfer: ', error);
+  }
+
+  return;
+};
 
 export const getCallContractTransaction = ({
   contractAddress,
@@ -26,7 +79,8 @@ export const getCallContractTransaction = ({
   abiRegistry,
   func,
   args,
-  userGasLimit
+  userGasLimit,
+  tokens
 }: GetCallContractTransactionType) => {
   if (contractAddress && callerAddress && abiRegistry && func && args) {
     try {
@@ -47,22 +101,18 @@ export const getCallContractTransaction = ({
           .withGasLimit(Number(userGasLimit ?? SC_GAS_LIMIT))
           .withSender(caller);
 
-        console.log(
-          '---interaction',
-          interaction.buildTransaction().toPlainObject()
-        );
+        if (tokens && tokens.length > 0) {
+          // Accept only native EGLD, Fungible Tokens and metaESDTs for now
+          const tokenTransferInteraction = getTokenTransferInteraction({
+            tokens,
+            interaction
+          });
+          if (tokenTransferInteraction) {
+            return tokenTransferInteraction.buildTransaction();
+          }
+        }
 
-        const transaction = contract.call({
-          func,
-          args,
-          gasLimit: SC_GAS_LIMIT,
-          chainID: getChainID(),
-          caller
-        });
-
-        console.log('----transaction', transaction.toPlainObject());
-
-        return transaction;
+        return interaction.buildTransaction();
       }
     } catch (error) {
       console.error('Unable to prepare SC Call Transaction: ', error);

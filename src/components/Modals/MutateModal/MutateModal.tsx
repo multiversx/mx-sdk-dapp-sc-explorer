@@ -1,33 +1,39 @@
 import React, { useState, useCallback } from 'react';
-
 import {
   faPlay,
   faCircleNotch,
   faTriangleExclamation
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
+import { DECIMALS } from '@multiversx/sdk-dapp/constants/index';
 import { sendTransactions } from '@multiversx/sdk-dapp/services/transactions/sendTransactions';
 import { parseAmount } from '@multiversx/sdk-dapp/utils/operations/parseAmount';
 import { stringIsFloat } from '@multiversx/sdk-dapp/utils/validation/stringIsFloat';
-export { AmountSelect } from '@multiversx/sdk-dapp-form/UI/Fields/AmountSelect/AmountSelect';
-
 import BigNumber from 'bignumber.js';
 import classNames from 'classnames';
 import { Formik, Form, Field, getIn } from 'formik';
-import { object, string } from 'yup';
+import { array, object, string } from 'yup';
 
 import globalStyles from 'assets/styles/globals.module.scss';
 import { SC_GAS_LIMIT, ZERO } from 'constants/general';
 import { useDispatch, useSCExplorerContext } from 'contexts';
 import { getCallContractTransaction } from 'helpers';
-import { ActionTypeEnum, SelectOptionType } from 'types';
+import {
+  ActionTypeEnum,
+  SelectOptionType,
+  ProcessedFormTokenType
+} from 'types';
 import { AmountSelectInput } from './AmountSelectInput';
 import { getSelectOptions } from './AmountSelectInput/getSelectOptions';
 import styles from './styles.module.scss';
 import { Modal } from '../Modal';
 
 const optionTokensResponse: any[] = [];
+export interface InitialValuesType {
+  gasLimit: number;
+  tokens: ProcessedFormTokenType[];
+}
+
 export const MutateModal = () => {
   const dispatch = useDispatch();
   const { accountInfo, smartContract, userActions, customClassNames, icons } =
@@ -46,10 +52,19 @@ export const MutateModal = () => {
   const [generalError, setGeneralError] = useState<string>();
   const [selectedToken, setSelectedToken] = useState<SelectOptionType>();
 
-  const initialValues = {
+  const initialValues: InitialValuesType = {
     gasLimit: SC_GAS_LIMIT,
-    tokenAmount: '',
-    tokenIdentifier: ''
+    tokens: modifiers?.isPayable()
+      ? [
+          {
+            tokenAmount: '',
+            tokenIdentifier: '',
+            tokenDecimals: DECIMALS,
+            tokenType: '',
+            tokenNonce: 0
+          }
+        ]
+      : []
   };
 
   const onClose = useCallback(() => {
@@ -71,12 +86,11 @@ export const MutateModal = () => {
         abiRegistry,
         func: endpoint?.name,
         args,
-        userGasLimit: values.gasLimit
+        userGasLimit: values.gasLimit,
+        tokens: values.tokens
       });
 
-      console.log('+++ Transaction', contractTransaction?.toPlainObject());
-
-      const { sessionId, error } = await sendTransactions({
+      const { error } = await sendTransactions({
         transactions: [contractTransaction],
         transactionsDisplayInfo: {
           processingMessage: 'Processing Transaction',
@@ -84,7 +98,10 @@ export const MutateModal = () => {
           successMessage: 'Contract Mutation Transaction successful'
         }
       });
-      console.log('Tx sessionId, error', sessionId, error);
+
+      if (error) {
+        setGeneralError(String(error));
+      }
 
       dispatch({
         type: ActionTypeEnum.setMutateModalState,
@@ -113,31 +130,37 @@ export const MutateModal = () => {
       .test('isValidNumber', 'Invalid Number', (value) =>
         Boolean(value && stringIsFloat(value))
       ),
-    tokenAmount: string()
-      .required('Required')
-      .test('isValidNumber', 'Invalid Number', (value) =>
-        Boolean(value && stringIsFloat(value))
-      )
-      .test('hasFunds', 'Insufficient funds', (value) => {
-        if (value && selectedToken?.token !== undefined) {
-          const parsedAmount = parseAmount(
-            value.toString(),
-            selectedToken.token.decimals
-          );
-          const bnAmount = new BigNumber(parsedAmount);
-          const bnBalance = new BigNumber(selectedToken.token.balance ?? '0');
-          return bnBalance.comparedTo(bnAmount) >= 0;
-        }
-        return true;
-      }),
-    tokenIdentifier: string()
-      .required('Required')
-      .test('tokenIdentifier', 'Invalid Token', (value) => {
-        if (tokenList.length > 0) {
-          return tokenList.some((token) => token.value === value);
-        }
-        return true;
+    tokens: array().of(
+      object().shape({
+        tokenAmount: string()
+          .required('Required')
+          .test('isValidNumber', 'Invalid Number', (value) =>
+            Boolean(value && stringIsFloat(value))
+          )
+          .test('hasFunds', 'Insufficient funds', (value) => {
+            if (value && selectedToken?.token !== undefined) {
+              const parsedAmount = parseAmount(
+                value.toString(),
+                selectedToken.token.decimals
+              );
+              const bnAmount = new BigNumber(parsedAmount);
+              const bnBalance = new BigNumber(
+                selectedToken.token.balance ?? '0'
+              );
+              return bnBalance.comparedTo(bnAmount) >= 0;
+            }
+            return true;
+          }),
+        tokenIdentifier: string()
+          .required('Required')
+          .test('tokenIdentifier', 'Invalid Token', (value) => {
+            if (tokenList.length > 0) {
+              return tokenList.some((token) => token.value === value);
+            }
+            return true;
+          })
       })
+    )
   });
 
   if (!(isLoggedIn && endpoint && args)) {
@@ -231,41 +254,77 @@ export const MutateModal = () => {
                   )}
                 </div>
                 {modifiers?.isPayable() && (
-                  <AmountSelectInput
-                    errorMessage={errors.tokenAmount || errors.tokenIdentifier}
-                    handleBlurSelect={handleBlur}
-                    handleChangeInput={(event) => {
-                      if (event?.currentTarget?.value !== undefined) {
-                        setFieldValue('tokenAmount', event.currentTarget.value);
-                      }
-                    }}
-                    hasErrors={Boolean(
-                      (touched.tokenAmount && errors.tokenAmount) ||
-                        (touched.tokenIdentifier && errors.tokenIdentifier)
-                    )}
-                    inputName='tokenAmount'
-                    inputPlaceholder='Amount'
-                    isInputDisabled={false}
-                    isSelectLoading={false}
-                    onBlurInput={handleBlur}
-                    onChangeSelect={(option) => {
-                      setSelectedToken(option);
-                      if (option?.value !== undefined) {
-                        setFieldValue('tokenAmount', '');
-                        setFieldValue('tokenIdentifier', option?.value);
-                      }
-                    }}
-                    onMaxBtnClick={(value) => {
-                      setFieldValue('tokenAmount', value);
-                    }}
-                    optionsSelect={tokenList}
-                    selectName='selectToken'
-                    showMaxButton
-                    title='You send'
-                    token={selectedToken}
-                    tokenAmount={values.tokenAmount}
-                    tokenUsdPrice={selectedToken?.token?.price ?? ZERO}
-                  />
+                  <>
+                    {values.tokens.map((token, index) => {
+                      const prefix = `tokens.${index}`;
+                      const tokenAmount = `${prefix}.tokenAmount`;
+                      const tokenIdentifier = `${prefix}.tokenIdentifier`;
+                      const tokenDecimals = `${prefix}.tokenDecimals`;
+                      const tokenType = `${prefix}.tokenType`;
+                      const tokenNonce = `${prefix}.tokenNonce`;
+                      const activeToken = tokenList.find(
+                        (token) =>
+                          token.value === getIn(values, tokenIdentifier)
+                      );
+                      return (
+                        <AmountSelectInput
+                          key={index}
+                          errorMessage={
+                            getIn(errors, tokenAmount) ||
+                            getIn(errors, tokenIdentifier)
+                          }
+                          handleBlurSelect={handleBlur}
+                          handleChangeInput={(event) => {
+                            if (event?.currentTarget?.value !== undefined) {
+                              setFieldValue(
+                                tokenAmount,
+                                event.currentTarget.value
+                              );
+                            }
+                          }}
+                          hasErrors={Boolean(
+                            (getIn(errors, tokenAmount) &&
+                              getIn(touched, tokenAmount)) ||
+                              (getIn(errors, tokenIdentifier) &&
+                                getIn(touched, tokenIdentifier))
+                          )}
+                          inputName={tokenAmount}
+                          inputPlaceholder='Amount'
+                          isInputDisabled={false}
+                          isSelectLoading={false}
+                          onBlurInput={handleBlur}
+                          onChangeSelect={(option) => {
+                            setSelectedToken(option);
+                            if (option?.value !== undefined) {
+                              setFieldValue(tokenAmount, '');
+                              setFieldValue(tokenIdentifier, option?.value);
+                              setFieldValue(
+                                tokenDecimals,
+                                option?.token?.decimals ?? DECIMALS
+                              );
+                              setFieldValue(
+                                tokenType,
+                                option?.token?.type ?? ''
+                              );
+                              if (option?.token?.nonce) {
+                                setFieldValue(tokenNonce, option.token.nonce);
+                              }
+                            }
+                          }}
+                          onMaxBtnClick={(value) => {
+                            setFieldValue(tokenAmount, value);
+                          }}
+                          optionsSelect={tokenList}
+                          selectName={`${prefix}.selectAmount`}
+                          showMaxButton
+                          title='You send'
+                          token={activeToken}
+                          tokenAmount={getIn(values, tokenAmount)}
+                          tokenUsdPrice={activeToken?.token?.price ?? ZERO}
+                        />
+                      );
+                    })}
+                  </>
                 )}
               </div>
               {generalError && (

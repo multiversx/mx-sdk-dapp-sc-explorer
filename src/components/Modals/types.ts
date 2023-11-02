@@ -1,3 +1,8 @@
+import {
+  EsdtEnumType,
+  NftEnumType
+} from '@multiversx/sdk-dapp/types/tokens.types';
+
 import { UserInterfaceType } from 'types';
 
 export interface ModalUIType extends UserInterfaceType {
@@ -60,13 +65,7 @@ export interface EsdtType {
   identifier: string;
   ticker: string;
   owner: string;
+  type: EsdtEnumType | NftEnumType | 'native' | '';
   assets?: AssetsType;
   price?: string | number;
-}
-export interface UserEsdtType extends EsdtType {
-  valueUSD: string;
-  usdPrice?: string;
-}
-export interface WrappingInfoType {
-  wrappedToken: EsdtType;
 }

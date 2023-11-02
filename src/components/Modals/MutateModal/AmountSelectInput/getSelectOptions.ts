@@ -55,7 +55,8 @@ export const getSelectOptions = ({
         ticker: egldLabel,
         owner: 'erd1...',
         decimals: DECIMALS,
-        balance: egldBalance
+        balance: egldBalance,
+        type: 'native'
       });
     }
   }
