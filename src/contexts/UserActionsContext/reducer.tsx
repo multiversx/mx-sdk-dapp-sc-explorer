@@ -1,11 +1,11 @@
-import { ActionType, ActionTypeEnum, UserActionsType } from '../types';
+import { ActionType, ActionTypeEnum, UserActionsStateType } from '../types';
 
-const reducer = (state: UserActionsType, action: ActionType) => {
+const reducer = (state: UserActionsStateType, action: ActionType) => {
   switch (action.type) {
-    case ActionTypeEnum.setLoginModalOpen: {
+    case ActionTypeEnum.setLoginModalState: {
       return {
         ...state,
-        loginModalOpen: action.loginModalOpen
+        loginModalState: action.loginModalState
       };
     }
 
@@ -13,6 +13,13 @@ const reducer = (state: UserActionsType, action: ActionType) => {
       return {
         ...state,
         mutateModalState: action.mutateModalState
+      };
+    }
+
+    case ActionTypeEnum.setAccountTokensState: {
+      return {
+        ...state,
+        accountTokens: action.accountTokens
       };
     }
 

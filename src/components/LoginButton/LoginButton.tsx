@@ -26,8 +26,8 @@ export const LoginButton = (props: LoginButtonUIType) => {
 
   const onOpenModalClick = useCallback(() => {
     dispatch({
-      type: ActionTypeEnum.setLoginModalOpen,
-      loginModalOpen: true
+      type: ActionTypeEnum.setLoginModalState,
+      loginModalState: { loginModalOpen: true }
     });
   }, []);
 

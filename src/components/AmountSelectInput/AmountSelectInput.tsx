@@ -18,7 +18,7 @@ import globalStyles from 'assets/styles/globals.module.scss';
 import { ZERO } from 'constants/general';
 import { useSCExplorerContext } from 'contexts';
 import styles from './styles.module.scss';
-import { AmountSelectInputUIType } from '../../types';
+import { AmountSelectInputUIType } from './types';
 
 export const AmountSelectInput = ({
   inputName,

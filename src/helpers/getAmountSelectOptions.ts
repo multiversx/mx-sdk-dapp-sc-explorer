@@ -1,7 +1,7 @@
 import { DECIMALS } from '@multiversx/sdk-dapp/constants/index';
 import { getEgldLabel } from '@multiversx/sdk-dapp/utils/network/getEgldLabel';
 
-import { SelectOptionType, EsdtType } from 'types';
+import { SelectOptionType, PartialEsdtType } from 'types';
 
 export const getSelectOptions = ({
   tokens = [],
@@ -9,7 +9,7 @@ export const getSelectOptions = ({
   egldBalance = '0',
   wrappedEgldIdentifier = ''
 }: {
-  tokens?: EsdtType[];
+  tokens?: PartialEsdtType[];
   includeEgld?: boolean;
   egldBalance?: string;
   wrappedEgldIdentifier?: string;
@@ -53,7 +53,6 @@ export const getSelectOptions = ({
         name: egldLabel,
         identifier: egldLabel,
         ticker: egldLabel,
-        owner: 'erd1...',
         decimals: DECIMALS,
         balance: egldBalance,
         type: 'native'

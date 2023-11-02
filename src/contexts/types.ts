@@ -1,25 +1,35 @@
 import { EndpointDefinition, TypedValue } from '@multiversx/sdk-core/out';
 
-export interface UserActionsType {
-  loginModalOpen: boolean | undefined;
-  mutateModalState: MutateModalType | undefined;
+import { PartialEsdtType, PartialNftType } from 'types';
+
+export interface UserActionsStateType {
+  loginModalState: LoginModalStateType | undefined;
+  mutateModalState: MutateModalStateType | undefined;
+  accountTokens: PartialEsdtType[] | undefined;
+  accountNfts: PartialNftType[] | undefined;
 }
 
 export enum ActionTypeEnum {
-  setLoginModalOpen = 'setLoginModalOpen',
-  setMutateModalState = 'setMutateModaState'
+  setLoginModalState = 'setLoginModalState',
+  setMutateModalState = 'setMutateModalState',
+  setAccountTokensState = 'setAccountTokensState'
 }
 
 export type DispatchType = (action: ActionType) => void;
 
-export interface MutateModalType {
+export interface MutateModalStateType {
   mutateModalOpen?: boolean;
   args?: TypedValue[];
   endpoint?: EndpointDefinition;
 }
 
+export interface LoginModalStateType {
+  loginModalOpen?: boolean;
+}
+
 export interface ActionType {
   type: ActionTypeEnum;
-  loginModalOpen?: boolean;
-  mutateModalState?: MutateModalType;
+  loginModalState?: LoginModalStateType;
+  mutateModalState?: MutateModalStateType;
+  accountTokens?: PartialEsdtType[];
 }

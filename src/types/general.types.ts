@@ -1,8 +1,4 @@
-import {
-  IContractFunction,
-  TypedValue,
-  AbiRegistry
-} from '@multiversx/sdk-core/out';
+import { TypedValue, AbiRegistry } from '@multiversx/sdk-core/out';
 import {
   EsdtEnumType,
   NftEnumType
@@ -25,11 +21,41 @@ export interface ProcessedFormTokenType {
 }
 
 export interface GetCallContractTransactionType {
+  func?: string;
   contractAddress?: string;
   callerAddress?: string;
   abiRegistry?: AbiRegistry;
-  func?: IContractFunction;
   args?: TypedValue[];
   userGasLimit?: string | number;
   tokens?: ProcessedFormTokenType[];
+}
+
+export interface AssetsType {
+  website?: string;
+  description?: string;
+  status?: string;
+  pngUrl?: string;
+  svgUrl?: string;
+  social?: any;
+}
+
+export interface PartialTokenType {
+  identifier: string;
+  name: string;
+  balance: string | null;
+  ticker: string;
+  assets?: AssetsType;
+}
+
+// includes MetaEsdts and egld exception
+export interface PartialEsdtType extends PartialTokenType {
+  decimals: number;
+  type: EsdtEnumType | NftEnumType | 'native' | '';
+  price?: string | number;
+  nonce?: number;
+}
+
+export interface PartialNftType extends PartialTokenType {
+  type: NftEnumType | '';
+  nonce?: number;
 }

@@ -1,17 +1,5 @@
 import { UserInterfaceType } from 'types';
 
-export interface ModalUIType extends UserInterfaceType {
-  onClose: () => void;
-  show: boolean | undefined;
-  children?: React.ReactNode;
-  title?: string | React.ReactNode;
-  footer?: string | React.ReactNode;
-}
-
-export interface LoginModalUIType extends UserInterfaceType {}
-
-export interface MutateModalUIType extends UserInterfaceType {}
-
 export interface SelectOptionType {
   label: string;
   value: string;
@@ -19,7 +7,7 @@ export interface SelectOptionType {
   assets?: any;
 }
 
-export interface AmountSelectInputUIType {
+export interface AmountSelectInputUIType extends UserInterfaceType {
   inputName: string;
   selectName: string;
   title: string;

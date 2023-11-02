@@ -15,16 +15,15 @@ import { Formik, Form, Field, getIn } from 'formik';
 import { array, object, string } from 'yup';
 
 import globalStyles from 'assets/styles/globals.module.scss';
+import { AmountSelectInput } from 'components';
 import { SC_GAS_LIMIT, ZERO } from 'constants/general';
 import { useDispatch, useSCExplorerContext } from 'contexts';
-import { getCallContractTransaction } from 'helpers';
+import { getCallContractTransaction, getSelectOptions } from 'helpers';
 import {
   ActionTypeEnum,
   SelectOptionType,
   ProcessedFormTokenType
 } from 'types';
-import { AmountSelectInput } from './AmountSelectInput';
-import { getSelectOptions } from './AmountSelectInput/getSelectOptions';
 import styles from './styles.module.scss';
 import { Modal } from '../Modal';
 
@@ -36,9 +35,14 @@ export interface InitialValuesType {
 
 export const MutateModal = () => {
   const dispatch = useDispatch();
-  const { accountInfo, smartContract, userActions, customClassNames, icons } =
-    useSCExplorerContext();
-  const { mutateModalState } = userActions;
+  const {
+    accountInfo,
+    smartContract,
+    userActionsState,
+    customClassNames,
+    icons
+  } = useSCExplorerContext();
+  const { mutateModalState } = userActionsState;
   const { mutateModalOpen = false, args, endpoint } = mutateModalState ?? {};
   const {
     isLoggedIn,
@@ -93,9 +97,9 @@ export const MutateModal = () => {
       const { error } = await sendTransactions({
         transactions: [contractTransaction],
         transactionsDisplayInfo: {
-          processingMessage: 'Processing Transaction',
-          errorMessage: 'An error has occured during Contract Mutation',
-          successMessage: 'Contract Mutation Transaction successful'
+          processingMessage: `Processing ${endpoint?.name} Transaction`,
+          errorMessage: `An error has occured during ${endpoint?.name} Transaction`,
+          successMessage: `${endpoint?.name} Transaction successful`
         }
       });
 

@@ -1,10 +1,14 @@
-import { UserActionsType } from '../types';
+import { UserActionsStateType } from '../types';
 
-export const initializer: UserActionsType = {
-  loginModalOpen: false,
+export const initializer: UserActionsStateType = {
+  loginModalState: {
+    loginModalOpen: false
+  },
   mutateModalState: {
     mutateModalOpen: false,
     args: [],
     endpoint: undefined
-  }
+  },
+  accountTokens: [],
+  accountNfts: []
 };

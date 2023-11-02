@@ -7,9 +7,9 @@ import React, {
 
 import { reducer } from './reducer';
 import { initializer } from './state';
-import { DispatchType, UserActionsType } from '../types';
+import { DispatchType, UserActionsStateType } from '../types';
 
-const Context = createContext<UserActionsType | undefined>(undefined);
+const Context = createContext<UserActionsStateType | undefined>(undefined);
 const Dispatch = createContext<DispatchType | undefined>(undefined);
 
 const UserActionsContextProvider = (props: PropsWithChildren) => {

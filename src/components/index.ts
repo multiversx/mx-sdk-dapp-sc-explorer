@@ -1,3 +1,4 @@
+export { AmountSelectInput } from './AmountSelectInput';
 export { Badge } from './Badge';
 export { CardItem } from './CardItem';
 export { Code } from './Code';

@@ -47,16 +47,17 @@ export const UnlockTitle = (
 
 export const LoginModal = () => {
   const dispatch = useDispatch();
-  const { userActions } = useSCExplorerContext();
-  const { loginModalOpen } = userActions;
+  const { userActionsState } = useSCExplorerContext();
+  const { loginModalState } = userActionsState;
+  const { loginModalOpen } = loginModalState ?? {};
   const [openedLoginContainerType, setOpenedContainerType] = useState(
     LoginContainersTypesEnum.none
   );
 
   const onClose = useCallback(() => {
     dispatch({
-      type: ActionTypeEnum.setLoginModalOpen,
-      loginModalOpen: false
+      type: ActionTypeEnum.setLoginModalState,
+      loginModalState: { loginModalOpen: false }
     });
     setOpenedContainerType(LoginContainersTypesEnum.none);
   }, []);
