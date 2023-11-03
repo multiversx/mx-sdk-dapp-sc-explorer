@@ -32,7 +32,7 @@ export interface QueryContractResponse extends ContractQueryResponse {
 export type ApiProviderResponseType =
   | {
       success: boolean;
-      data: QueryContractResponse;
+      data: any;
       error?: string;
     }
   | {

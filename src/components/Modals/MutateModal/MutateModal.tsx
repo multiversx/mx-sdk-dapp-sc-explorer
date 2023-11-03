@@ -27,7 +27,6 @@ import {
 import styles from './styles.module.scss';
 import { Modal } from '../Modal';
 
-const optionTokensResponse: any[] = [];
 export interface InitialValuesType {
   gasLimit: number;
   tokens: ProcessedFormTokenType[];
@@ -42,7 +41,7 @@ export const MutateModal = () => {
     customClassNames,
     icons
   } = useSCExplorerContext();
-  const { mutateModalState } = userActionsState;
+  const { mutateModalState, accountTokens } = userActionsState;
   const { mutateModalOpen = false, args, endpoint } = mutateModalState ?? {};
   const {
     isLoggedIn,
@@ -123,7 +122,7 @@ export const MutateModal = () => {
   };
 
   const tokenList = getSelectOptions({
-    tokens: optionTokensResponse,
+    tokens: accountTokens,
     includeEgld: modifiers?.isPayableInEGLD(),
     egldBalance
   });
