@@ -61,12 +61,14 @@ export const ContractEndpoints = ({ mutability }: ContractEndpointsUIType) => {
         )}
       >
         {filteredEndpoints.map((endpoint, index) => {
-          const hasInteraction =
-            (canMutate &&
-              mutability === ContractEndpointMutabilityEnum.mutable) ||
-            (canRead && mutability === ContractEndpointMutabilityEnum.readonly);
+          const canExpand =
+            (mutability === ContractEndpointMutabilityEnum.readonly &&
+              canRead) ||
+            (mutability === ContractEndpointMutabilityEnum.mutable &&
+              canRead &&
+              ((!canMutate && endpoint?.input.length > 0) || canMutate));
 
-          if (hasInteraction) {
+          if (canExpand) {
             return (
               <ContractEndpoint
                 endpoint={endpoint}

@@ -17,11 +17,6 @@ export const ContractEndpoint = (props: ContractEndpointUIType) => {
   const { modifiers } = endpoint;
   const { mutability } = modifiers;
 
-  const allowRead =
-    canRead && mutability === ContractEndpointMutabilityEnum.readonly;
-  const allowMutate =
-    canMutate && mutability === ContractEndpointMutabilityEnum.mutable;
-
   return (
     <CollapsibleCard
       {...props}
@@ -29,22 +24,37 @@ export const ContractEndpoint = (props: ContractEndpointUIType) => {
       titleContent={<EndpointTitle {...props} />}
       className={classNames(className)}
     >
-      {allowRead && (
-        <EndpointRead
-          endpoint={endpoint}
-          className={classNames(styles?.contractEndpointWrapper)}
-        />
-      )}
-      {allowMutate && (
-        <EndpointMutate
-          endpoint={endpoint}
-          className={classNames(styles?.contractEndpointWrapper)}
-        />
-      )}
-      {canView && !allowRead && !allowMutate && (
-        <div className={classNames(styles?.contractEndpointWrapper)}>
-          <EndpointInteraction endpoint={endpoint} />
-        </div>
+      {canRead ? (
+        <>
+          {mutability === ContractEndpointMutabilityEnum.readonly && (
+            <EndpointRead
+              endpoint={endpoint}
+              className={classNames(styles?.contractEndpointWrapper)}
+            />
+          )}
+          {mutability === ContractEndpointMutabilityEnum.mutable && (
+            <>
+              {canMutate ? (
+                <EndpointMutate
+                  endpoint={endpoint}
+                  className={classNames(styles?.contractEndpointWrapper)}
+                />
+              ) : (
+                <div className={classNames(styles?.contractEndpointWrapper)}>
+                  <EndpointInteraction endpoint={endpoint} />
+                </div>
+              )}
+            </>
+          )}
+        </>
+      ) : (
+        <>
+          {canView && (
+            <div className={classNames(styles?.contractEndpointWrapper)}>
+              <EndpointInteraction endpoint={endpoint} />
+            </div>
+          )}
+        </>
       )}
     </CollapsibleCard>
   );

@@ -19,7 +19,8 @@ export const RecursiveContainer = ({
   endpoint,
   prefix = ''
 }: RecursiveContainerUIType) => {
-  const { customClassNames, icons } = useSCExplorerContext();
+  const { customClassNames, icons, support } = useSCExplorerContext();
+  const { canMutate } = support ?? {};
   const { plusIcon = faPlus, minusIcon = faMinus } = icons ?? {};
 
   const builder = ({
@@ -85,7 +86,7 @@ export const RecursiveContainer = ({
             prefix={formattedPrefix}
             endpoint={endpoint}
           />
-          {isComposite && (
+          {Boolean(isComposite && canMutate) && (
             <>
               {individualConfig.length > 1 &&
                 individualConfig.length !== upperBound && (

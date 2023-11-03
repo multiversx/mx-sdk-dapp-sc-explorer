@@ -94,6 +94,7 @@ export const MutateModal = () => {
       });
 
       const { error } = await sendTransactions({
+        signWithoutSending: true,
         transactions: [contractTransaction],
         transactionsDisplayInfo: {
           processingMessage: `Processing ${endpoint?.name} Transaction`,
