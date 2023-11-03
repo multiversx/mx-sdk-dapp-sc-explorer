@@ -35,12 +35,14 @@ export interface InitialValuesType {
 export const MutateModal = () => {
   const dispatch = useDispatch();
   const {
+    networkConfig,
     accountInfo,
     smartContract,
     userActionsState,
     customClassNames,
     icons
   } = useSCExplorerContext();
+  const { environment } = networkConfig;
   const { mutateModalState, accountTokens } = userActionsState;
   const { mutateModalOpen = false, args, endpoint } = mutateModalState ?? {};
   const {
@@ -93,11 +95,11 @@ export const MutateModal = () => {
         tokens: values.tokens
       });
 
-      console.log('Signed Transaction: ', contractTransaction?.toPlainObject());
+      console.log('Transaction: ', contractTransaction?.toPlainObject());
 
-      // TODO - temporary - don't send the transactions for now - show them in console
+      // TODO - temporary - don't send the transactions for now - show them in console on mainnet
       const { error } = await sendTransactions({
-        signWithoutSending: true,
+        ...(environment === 'mainnet' ? { signWithoutSending: true } : {}),
         transactions: [contractTransaction],
         transactionsDisplayInfo: {
           processingMessage: `Processing ${endpoint?.name} Transaction`,
@@ -105,6 +107,8 @@ export const MutateModal = () => {
           successMessage: `${endpoint?.name} Transaction successful`
         }
       });
+
+      console.log('Signed Transaction: ', contractTransaction?.toPlainObject());
 
       if (error) {
         setGeneralError(String(error));
@@ -140,7 +144,7 @@ export const MutateModal = () => {
     tokens: array().of(
       object().shape({
         tokenAmount: string()
-          .required('Required')
+          .required('Amount Required')
           .test('isValidNumber', 'Invalid Number', (value) =>
             Boolean(value && stringIsFloat(value))
           )
@@ -159,7 +163,7 @@ export const MutateModal = () => {
             return true;
           }),
         tokenIdentifier: string()
-          .required('Required')
+          .required('Token Required')
           .test('tokenIdentifier', 'Invalid Token', (value) => {
             if (tokenList.length > 0) {
               return tokenList.some((token) => token.value === value);
@@ -216,18 +220,21 @@ export const MutateModal = () => {
                   Please make sure that the entered data is valid !
                 </div>
               </div>
-              {/* TODO - temporary - don't send the transactions for now - show them in console */}
-              <div className={classNames(styles?.mutateModalWarnPanel)}>
-                <FontAwesomeIcon
-                  icon={faTriangleExclamation}
-                  size='2x'
-                  className={classNames(styles?.mutateModalWarnPanelIcon)}
-                />
-                <div className={classNames(styles?.mutateModalWarnPanelText)}>
-                  Temporary for testing. Transactions will not be sent. <br />
-                  Check out the Console Panel for the Signed Transaction
+              {/* TODO - temporary - don't send the transactions for now - show them in console on mainnet */}
+              {environment === 'mainnet' && (
+                <div className={classNames(styles?.mutateModalWarnPanel)}>
+                  <FontAwesomeIcon
+                    icon={faTriangleExclamation}
+                    size='2x'
+                    className={classNames(styles?.mutateModalWarnPanelIcon)}
+                  />
+                  <div className={classNames(styles?.mutateModalWarnPanelText)}>
+                    Temporary for testing. Transactions will not be sent on
+                    mainnet. <br />
+                    Check out the Console Panel for the Signed Transaction
+                  </div>
                 </div>
-              </div>
+              )}
               <div className={classNames(styles?.mutateModalFormFields)}>
                 <label htmlFor='gasLimit' className={globalStyles?.label}>
                   Contract Transaction Gas Limit
@@ -289,8 +296,8 @@ export const MutateModal = () => {
                         <AmountSelectInput
                           key={index}
                           errorMessage={
-                            getIn(errors, tokenAmount) ||
-                            getIn(errors, tokenIdentifier)
+                            getIn(errors, tokenIdentifier) ||
+                            getIn(errors, tokenAmount)
                           }
                           handleBlurSelect={handleBlur}
                           handleChangeInput={(event) => {
