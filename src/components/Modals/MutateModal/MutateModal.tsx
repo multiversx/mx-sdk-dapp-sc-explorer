@@ -108,8 +108,6 @@ export const MutateModal = () => {
         }
       });
 
-      console.log('Signed Transaction: ', contractTransaction?.toPlainObject());
-
       if (error) {
         setGeneralError(String(error));
       }
@@ -230,7 +228,7 @@ export const MutateModal = () => {
                   />
                   <div className={classNames(styles?.mutateModalWarnPanelText)}>
                     Temporary for testing. Transactions will not be sent on
-                    mainnet. <br />
+                    <strong>mainnet</strong>. <br />
                     Check out the Console Panel for the Signed Transaction
                   </div>
                 </div>

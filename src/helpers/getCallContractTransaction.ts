@@ -34,7 +34,9 @@ const getTokenTransferInteraction = ({
       validTokens.length === 1 &&
       validTokens.every((token) => token.tokenType === 'native')
     ) {
-      return interaction.withValue(validTokens[0].tokenAmount);
+      return interaction.withValue(
+        TokenTransfer.egldFromAmount(validTokens[0].tokenAmount)
+      );
     }
 
     if (
