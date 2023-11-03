@@ -93,6 +93,9 @@ export const MutateModal = () => {
         tokens: values.tokens
       });
 
+      console.log('Signed Transaction: ', contractTransaction?.toPlainObject());
+
+      // TODO - temporary - don't send the transactions for now - show them in console
       const { error } = await sendTransactions({
         signWithoutSending: true,
         transactions: [contractTransaction],
@@ -213,6 +216,18 @@ export const MutateModal = () => {
                   Please make sure that the entered data is valid !
                 </div>
               </div>
+              {/* TODO - temporary - don't send the transactions for now - show them in console */}
+              <div className={classNames(styles?.mutateModalWarnPanel)}>
+                <FontAwesomeIcon
+                  icon={faTriangleExclamation}
+                  size='2x'
+                  className={classNames(styles?.mutateModalWarnPanelIcon)}
+                />
+                <div className={classNames(styles?.mutateModalWarnPanelText)}>
+                  Temporary for testing. Transactions will not be sent. <br />
+                  Check out the Console Panel for the Signed Transaction
+                </div>
+              </div>
               <div className={classNames(styles?.mutateModalFormFields)}>
                 <label htmlFor='gasLimit' className={globalStyles?.label}>
                   Contract Transaction Gas Limit
@@ -289,8 +304,7 @@ export const MutateModal = () => {
                           hasErrors={Boolean(
                             (getIn(errors, tokenAmount) &&
                               getIn(touched, tokenAmount)) ||
-                              (getIn(errors, tokenIdentifier) &&
-                                getIn(touched, tokenIdentifier))
+                              getIn(errors, tokenIdentifier)
                           )}
                           inputName={tokenAmount}
                           inputPlaceholder='Amount'
