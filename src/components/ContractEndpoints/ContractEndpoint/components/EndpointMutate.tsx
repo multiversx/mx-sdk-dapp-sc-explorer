@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import { NativeSerializer } from '@multiversx/sdk-core/out';
 
-import { useSCExplorerContext, useDispatch } from 'contexts';
+import { useSCExplorerContext, useUserActionDispatch } from 'contexts';
 import { useGetAccountTokens } from 'hooks';
 import {
   ContractEndpointMutabilityEnum,
   BaseEndpointUIType,
-  ActionTypeEnum
+  UserActionDispatchTypeEnum
 } from 'types';
 import { EndpointForm } from './EndpointForm';
 
 export const EndpointMutate = (props: BaseEndpointUIType) => {
-  const dispatch = useDispatch();
+  const userActionDispatch = useUserActionDispatch();
   const getAccountTokens = useGetAccountTokens();
   const { support } = useSCExplorerContext();
   const { canMutate } = support;
@@ -32,8 +32,8 @@ export const EndpointMutate = (props: BaseEndpointUIType) => {
         endpoint
       );
       await getAccountTokens(modifiers.payableInTokens ?? []);
-      dispatch({
-        type: ActionTypeEnum.setMutateModalState,
+      userActionDispatch({
+        type: UserActionDispatchTypeEnum.setMutateModalState,
         mutateModalState: {
           mutateModalOpen: true,
           args,

@@ -1,4 +1,6 @@
 import React from 'react';
+import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
 import { CollapsibleCard } from 'components';
@@ -11,8 +13,9 @@ import { EndpointTitle } from './components/EndpointTitle';
 import styles from './styles.module.scss';
 
 export const ContractEndpoint = (props: ContractEndpointUIType) => {
-  const { support } = useSCExplorerContext();
+  const { support, smartContract } = useSCExplorerContext();
   const { canRead, canMutate, canView } = support;
+  const { deployedContractDetails } = smartContract;
   const { endpoint, className } = props;
   const { modifiers } = endpoint;
   const { mutability } = modifiers;
@@ -52,6 +55,21 @@ export const ContractEndpoint = (props: ContractEndpointUIType) => {
           {canView && (
             <div className={classNames(styles?.contractEndpointWrapper)}>
               <EndpointInteraction endpoint={endpoint} />
+              <div className={classNames(styles?.endpointActionWrapper)}>
+                {!deployedContractDetails?.code && (
+                  <div className={classNames(styles?.endpointWarning)}>
+                    <FontAwesomeIcon
+                      icon={faTriangleExclamation}
+                      className={classNames(styles?.endpointWarningIcon)}
+                    />
+                    <span className={classNames(styles?.endpointWarningText)}>
+                      Smart Contract Address is required and the Contract must
+                      be Deployed on the current Network in order to interact
+                      with the Endpoints
+                    </span>
+                  </div>
+                )}
+              </div>
             </div>
           )}
         </>

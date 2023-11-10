@@ -67,7 +67,6 @@ export const ContractFile = (props: ContractFileUIType) => {
           language='rust'
           style={androidstudio}
           showLineNumbers
-          wrapLongLines
         >
           {codeString}
         </SyntaxHighlighter>

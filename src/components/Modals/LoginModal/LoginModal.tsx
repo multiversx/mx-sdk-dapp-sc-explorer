@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import { faArrowRight, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -12,8 +12,8 @@ import classNames from 'classnames';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 import globalStyles from 'assets/styles/globals.module.scss';
-import { useDispatch, useSCExplorerContext } from 'contexts';
-import { ActionTypeEnum } from 'types';
+import { useUserActionDispatch, useSCExplorerContext } from 'contexts';
+import { UserActionDispatchTypeEnum } from 'types';
 import DeFiWallet from './assets/extension-defi-wallet.svg';
 import LedgerWallet from './assets/ledger-wallet.svg';
 import MobileWallet from './assets/mobile-wallet.svg';
@@ -46,7 +46,7 @@ export const UnlockTitle = (
 );
 
 export const LoginModal = () => {
-  const dispatch = useDispatch();
+  const userActionDispatch = useUserActionDispatch();
   const { userActionsState } = useSCExplorerContext();
   const { loginModalState } = userActionsState;
   const { loginModalOpen } = loginModalState ?? {};
@@ -54,13 +54,13 @@ export const LoginModal = () => {
     LoginContainersTypesEnum.none
   );
 
-  const onClose = useCallback(() => {
-    dispatch({
-      type: ActionTypeEnum.setLoginModalState,
+  const onClose = () => {
+    userActionDispatch({
+      type: UserActionDispatchTypeEnum.setLoginModalState,
       loginModalState: { loginModalOpen: false }
     });
     setOpenedContainerType(LoginContainersTypesEnum.none);
-  }, []);
+  };
 
   const loginParams = {
     callbackRoute: isWindowAvailable() ? window?.location?.pathname : '/',

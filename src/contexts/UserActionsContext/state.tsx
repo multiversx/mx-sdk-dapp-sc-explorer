@@ -1,6 +1,6 @@
-import { UserActionsStateType } from '../types';
+import { UserActionStateType } from './types';
 
-export const initializer: UserActionsStateType = {
+export const initializer: UserActionStateType = {
   loginModalState: {
     loginModalOpen: false
   },

@@ -15,7 +15,16 @@ export function SupportContextProvider({
 }: SupportContextProviderPropsType) {
   const networkConfig = useNetworkConfigContext();
   const smartContract = useSmartContractContext();
-  const { rawAbi, verifiedContract, abiRegistry, allowMutate } = smartContract;
+  const {
+    rawAbi,
+    verifiedContract,
+    abiRegistry,
+    deployedContractDetails,
+    canMutate,
+    canLoadAbi,
+    canDeploy,
+    canUpdate
+  } = smartContract;
 
   const hasBuildInfo = rawAbi?.buildInfo || rawAbi?.name;
 
@@ -25,6 +34,7 @@ export function SupportContextProvider({
 
   const hasEndpoints =
     abiRegistry?.endpoints && abiRegistry.endpoints.length > 0;
+
   const hasReadEndpoints =
     hasEndpoints &&
     abiRegistry.endpoints.some(
@@ -32,6 +42,7 @@ export function SupportContextProvider({
         endpoint?.modifiers?.mutability ===
         ContractEndpointMutabilityEnum.readonly
     );
+
   const hasWriteEndpoints =
     hasEndpoints &&
     abiRegistry.endpoints.some(
@@ -39,15 +50,29 @@ export function SupportContextProvider({
         endpoint?.modifiers?.mutability ===
         ContractEndpointMutabilityEnum.mutable
     );
+
   const hasEvents = rawAbi?.events && rawAbi.events.length > 0;
   const hasTypes =
     abiRegistry?.customTypes && abiRegistry.customTypes.length > 0;
-  const hasConstructor = rawAbi?.['constructor'];
+
+  const abiConstructor = rawAbi?.['constructor'];
+  const hasConstructor =
+    abiConstructor &&
+    ((abiConstructor?.inputs && abiConstructor.inputs.length > 0) ||
+      (abiConstructor?.outputs && abiConstructor.outputs.length > 0) ||
+      (abiConstructor?.docs && abiConstructor?.docs.length > 0));
 
   const value = {
+    canUpdate: Boolean(canUpdate),
+    canDeploy: Boolean(canDeploy),
+    canLoadAbi: Boolean(canLoadAbi),
     canView: Boolean(abiRegistry),
-    canRead: Boolean(abiRegistry && networkConfig),
-    canMutate: Boolean(abiRegistry && networkConfig && allowMutate),
+    canRead: Boolean(
+      abiRegistry && networkConfig && deployedContractDetails?.code
+    ),
+    canMutate: Boolean(
+      abiRegistry && networkConfig && deployedContractDetails?.code && canMutate
+    ),
     hasBuildInfo: Boolean(hasBuildInfo),
     hasSourceCode: Boolean(hasSourceCode),
     hasEndpoints: Boolean(hasEndpoints),

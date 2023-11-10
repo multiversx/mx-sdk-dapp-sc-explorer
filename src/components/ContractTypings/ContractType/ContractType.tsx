@@ -53,23 +53,26 @@ export const ContractType = (props: ContractTypingUIType) => {
           />
         )}
         {enums && (
-          <>
+          <div className={classNames(globalStyles?.fieldWrapper)}>
             {enums?.variants?.map((variant, index) => {
+              const fieldsDefinitions = variant?.getFieldsDefinitions() ?? [];
               return (
                 <div
-                  className={classNames(globalStyles?.fieldGroup)}
+                  className={classNames(globalStyles?.field)}
                   key={`${variant?.name}-${index}`}
                 >
                   <code className={classNames(globalStyles?.fieldName)}>
                     {variant?.name}
                   </code>
-                  <EndpointDefinitionList
-                    definitions={variant?.getFieldsDefinitions()}
-                  />
+                  {fieldsDefinitions.length > 0 && (
+                    <EndpointDefinitionList
+                      definitions={variant?.getFieldsDefinitions()}
+                    />
+                  )}
                 </div>
               );
             })}
-          </>
+          </div>
         )}
       </div>
     </CollapsibleCard>

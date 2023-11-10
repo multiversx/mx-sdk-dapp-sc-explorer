@@ -34,7 +34,8 @@ export const EndpointForm = (props: EndpointFormUIType) => {
     className
   } = props;
   const { address: callerAddress, isLoggedIn } = accountInfo;
-  const { ownerAddress } = smartContract;
+  const { deployedContractDetails } = smartContract;
+  const { ownerAddress } = deployedContractDetails || {};
   const { input, modifiers } = endpoint;
   const { mutability } = modifiers;
   const {
@@ -144,38 +145,22 @@ export const EndpointForm = (props: EndpointFormUIType) => {
                 modifiers?.isOnlyOwner() &&
                 !isOwnerConnected &&
                 ownerAddress && (
-                  <div
-                    className={classNames(styles?.endpointOwnerNotification)}
-                  >
+                  <div className={classNames(styles?.endpointWarning)}>
                     <FontAwesomeIcon
                       icon={faTriangleExclamation}
-                      className={classNames(
-                        styles?.endpointOwnerNotificationIcon
-                      )}
+                      className={classNames(styles?.endpointWarningIcon)}
                     />
-                    <span
-                      className={classNames(
-                        styles?.endpointOwnerNotificationText
-                      )}
-                    >
+                    <span className={classNames(styles?.endpointWarningText)}>
                       You must connect with
                     </span>
-                    <div
-                      className={classNames(
-                        styles?.endpointOwnerNotificationAddress
-                      )}
-                    >
+                    <div className={classNames(styles?.endpointWarningAddress)}>
                       <Trim text={ownerAddress} />
                       <CopyButton
                         text={ownerAddress}
                         copyIcon={copyIcon as any} // TODO fix fontawesome typing issue
                       />
                     </div>
-                    <span
-                      className={classNames(
-                        styles?.endpointOwnerNotificationText
-                      )}
-                    >
+                    <span className={classNames(styles?.endpointWarningText)}>
                       to call this endpoint.
                     </span>
                   </div>

@@ -4,7 +4,7 @@ import {
   CustomClassNamesType,
   InterfaceIconsType,
   NetworkType,
-  SmartContractType
+  SmartContractInitialType
 } from 'types';
 import { AccountContextProvider } from './AccountContext';
 import { CustomClassNamesContextProvider } from './CustomClassNamesContext';
@@ -18,7 +18,7 @@ import { UserActionsContextProvider } from './UserActionsContext';
 interface AppContextProviderPropsType {
   accountConsumerHandlers: AccountConsumerHandlersType;
   networkConfig: NetworkType;
-  smartContract?: SmartContractType;
+  smartContract?: SmartContractInitialType;
   customClassNames?: CustomClassNamesType;
   icons?: InterfaceIconsType;
   children: ReactNode;
@@ -53,4 +53,5 @@ export function AppContextProvider({
 }
 
 export * from './UserActionsContext';
+export * from './SmartContractContext';
 export * from './SCExplorerContextProvider';

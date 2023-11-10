@@ -1,6 +1,6 @@
 {
   "name": "@multiversx/sdk-dapp-sc-explorer",
-  "version": "0.0.1-alpha.4",
+  "version": "0.0.1-alpha.5",
   "description": "A library to hold the main logic for Smart Contract Interactions on the MultiversX blockchain",
   "author": "MultiversX",
   "license": "GPL-3.0-or-later",
@@ -19,7 +19,7 @@
     "build": "rimraf dist && node esbuild.js && yarn build:esm-types && yarn build:cjs-types && cp package.json dist && cp README.md dist",
     "publish-package": "yarn build && cd dist && npm publish",
     "publish-package-next": "yarn build && cd dist && npm publish --tag next",
-    "publish-yalc": "yarn build && cd dist && yalc publish --push",
+    "publish-yalc": "yarn build && cd dist && yalc publish --push --sig",
     "watch": "yarn node esbuild-watch.js && yarn build:esm-types && yarn build:cjs-types -- --watch",
     "test": "jest",
     "test:watch": "jest --watch"
@@ -96,15 +96,16 @@
     "classnames": "2.3.2"
   },
   "dependencies": {
-    "@multiversx/sdk-core": "12.12.0",
+    "@multiversx/sdk-core": "12.13.0",
     "@multiversx/sdk-dapp": "2.23.0",
-    "@multiversx/sdk-dapp-form": "0.8.18",
-    "@multiversx/sdk-network-providers": "2.0.0",
+    "@multiversx/sdk-dapp-form": "0.8.19",
+    "@multiversx/sdk-network-providers": "2.1.0",
     "axios": "1.5.0",
     "bignumber.js": "9.x",
     "formik": "2.4.4",
     "lodash": "4.17.21",
     "react-bootstrap": "2.8.0",
+    "react-dropzone": "11.5.1",
     "react-syntax-highlighter": "15.5.0",
     "yup": "1.2.0"
   }

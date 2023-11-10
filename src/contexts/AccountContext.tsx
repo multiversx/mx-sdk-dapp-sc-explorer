@@ -8,6 +8,7 @@ export interface AccountContextPropsType {
   balance: AccountType['balance'];
   isLoggedIn: boolean;
   isGuarded: boolean;
+  onLoginClick?: (() => void) | undefined;
 }
 
 interface AccountContextProviderPropsType {
@@ -21,7 +22,7 @@ export function AccountContextProvider({
   children,
   value
 }: AccountContextProviderPropsType) {
-  const { useGetLoginInfo, useGetAccountInfo } = value;
+  const { useGetLoginInfo, useGetAccountInfo, onLoginClick } = value;
   const { isLoggedIn } = useGetLoginInfo();
   const { address, account } = useGetAccountInfo();
   const { isGuarded, balance } = account ?? {};
@@ -29,7 +30,8 @@ export function AccountContextProvider({
     address,
     balance,
     isLoggedIn,
-    isGuarded
+    isGuarded,
+    ...(onLoginClick ? { onLoginClick } : {})
   };
 
   return (

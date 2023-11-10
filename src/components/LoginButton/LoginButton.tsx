@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { faCopy, faBolt, faPowerOff } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CopyButton } from '@multiversx/sdk-dapp/UI/CopyButton';
@@ -8,15 +8,15 @@ import { logout } from '@multiversx/sdk-dapp/utils/logout';
 import classNames from 'classnames';
 
 import globalStyles from 'assets/styles/globals.module.scss';
-import { useSCExplorerContext, useDispatch } from 'contexts';
-import { ActionTypeEnum, LoginButtonUIType } from 'types';
+import { useSCExplorerContext, useUserActionDispatch } from 'contexts';
+import { UserActionDispatchTypeEnum, LoginButtonUIType } from 'types';
 import styles from './styles.module.scss';
 
 export const LoginButton = (props: LoginButtonUIType) => {
   const { customClassNames, icons, accountInfo } = useSCExplorerContext();
   const { isLoggedIn, address } = accountInfo;
   const { className } = props;
-  const dispatch = useDispatch();
+  const userActionDispatch = useUserActionDispatch();
 
   const {
     copyIcon = faCopy,
@@ -24,12 +24,12 @@ export const LoginButton = (props: LoginButtonUIType) => {
     disconnectIcon = faPowerOff
   } = icons ?? {};
 
-  const onOpenModalClick = useCallback(() => {
-    dispatch({
-      type: ActionTypeEnum.setLoginModalState,
+  const onOpenModalClick = () => {
+    userActionDispatch({
+      type: UserActionDispatchTypeEnum.setLoginModalState,
       loginModalState: { loginModalOpen: true }
     });
-  }, []);
+  };
 
   const onDisconnectClick = () => {
     logout(isWindowAvailable() ? window.location.href : '/');

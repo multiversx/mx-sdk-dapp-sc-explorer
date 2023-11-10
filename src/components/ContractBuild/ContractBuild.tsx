@@ -66,45 +66,49 @@ export const ContractBuildComponent = () => {
           )}
         </div>
 
-        <div className={classNames(globalStyles?.cardContainer)}>
-          <h6 className={classNames(globalStyles?.cardContainerTitle)}>Rust</h6>
-          <div
-            className={classNames(
-              globalStyles?.cardItemContainer,
-              customClassNames?.cardItemContainerClassName
-            )}
-          >
-            {rawAbi?.buildInfo?.rustc?.commitDate && (
-              <CardItem title='Commit Date' icon={faRust}>
-                {rawAbi.buildInfo.rustc.commitDate}
-              </CardItem>
-            )}
-            {rawAbi?.buildInfo?.rustc?.commitHash && (
-              <CardItem title='Commit Hash' icon={faRust}>
-                <Trim text={rawAbi.buildInfo.rustc.commitHash} />
-                <CopyButton
-                  text={rawAbi.buildInfo.rustc.commitHash}
-                  copyIcon={copyIcon as any} // TODO fix fontawesome typing issue
-                />
-              </CardItem>
-            )}
-            {rawAbi?.buildInfo?.rustc?.version && (
-              <CardItem title='Version' icon={faRust}>
-                {rawAbi.buildInfo.rustc.version}
-              </CardItem>
-            )}
-            {rawAbi?.buildInfo?.rustc?.channel && (
-              <CardItem title='Channel' icon={faRust}>
-                {rawAbi.buildInfo.rustc.channel}
-              </CardItem>
-            )}
-            {rawAbi?.buildInfo?.rustc?.short && (
-              <CardItem title='Short' icon={faRust}>
-                {rawAbi.buildInfo.rustc.short}
-              </CardItem>
-            )}
+        {rawAbi?.buildInfo?.rustc && (
+          <div className={classNames(globalStyles?.cardContainer)}>
+            <h6 className={classNames(globalStyles?.cardContainerTitle)}>
+              Rust
+            </h6>
+            <div
+              className={classNames(
+                globalStyles?.cardItemContainer,
+                customClassNames?.cardItemContainerClassName
+              )}
+            >
+              {rawAbi.buildInfo.rustc?.commitDate && (
+                <CardItem title='Commit Date' icon={faRust}>
+                  {rawAbi.buildInfo.rustc.commitDate}
+                </CardItem>
+              )}
+              {rawAbi.buildInfo.rustc?.commitHash && (
+                <CardItem title='Commit Hash' icon={faRust}>
+                  <Trim text={rawAbi.buildInfo.rustc.commitHash} />
+                  <CopyButton
+                    text={rawAbi.buildInfo.rustc.commitHash}
+                    copyIcon={copyIcon as any} // TODO fix fontawesome typing issue
+                  />
+                </CardItem>
+              )}
+              {rawAbi.buildInfo.rustc?.version && (
+                <CardItem title='Version' icon={faRust}>
+                  {rawAbi.buildInfo.rustc.version}
+                </CardItem>
+              )}
+              {rawAbi.buildInfo.rustc?.channel && (
+                <CardItem title='Channel' icon={faRust}>
+                  {rawAbi.buildInfo.rustc.channel}
+                </CardItem>
+              )}
+              {rawAbi.buildInfo.rustc?.short && (
+                <CardItem title='Short' icon={faRust}>
+                  {rawAbi.buildInfo.rustc.short}
+                </CardItem>
+              )}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

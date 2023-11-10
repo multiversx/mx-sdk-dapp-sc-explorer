@@ -13,7 +13,7 @@ import { ContractEndpointsUIType } from './types';
 export const ContractEndpoints = ({ mutability }: ContractEndpointsUIType) => {
   const { smartContract, support, customClassNames } = useSCExplorerContext();
   const { abiRegistry } = smartContract;
-  const { hasEndpoints, canMutate, canRead } = support;
+  const { hasEndpoints, canMutate, canView } = support;
   const [allExpanded, setAllExpanded] = useState(false);
 
   if (!hasEndpoints) {
@@ -61,14 +61,7 @@ export const ContractEndpoints = ({ mutability }: ContractEndpointsUIType) => {
         )}
       >
         {filteredEndpoints.map((endpoint, index) => {
-          const canExpand =
-            (mutability === ContractEndpointMutabilityEnum.readonly &&
-              canRead) ||
-            (mutability === ContractEndpointMutabilityEnum.mutable &&
-              canRead &&
-              ((!canMutate && endpoint?.input.length > 0) || canMutate));
-
-          if (canExpand) {
+          if (canView) {
             return (
               <ContractEndpoint
                 endpoint={endpoint}

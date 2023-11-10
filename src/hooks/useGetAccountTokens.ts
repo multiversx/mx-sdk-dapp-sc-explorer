@@ -1,9 +1,9 @@
-import { useSCExplorerContext, useDispatch } from 'contexts';
+import { useSCExplorerContext, useUserActionDispatch } from 'contexts';
 import { useNetworkProvider } from 'hooks';
-import { ActionTypeEnum } from 'types';
+import { UserActionDispatchTypeEnum } from 'types';
 
 export const useGetAccountTokens = () => {
-  const dispatch = useDispatch();
+  const userActionDispatch = useUserActionDispatch();
   const { get } = useNetworkProvider();
   const { accountInfo, userActionsState } = useSCExplorerContext();
   const { address } = accountInfo ?? {};
@@ -42,8 +42,8 @@ export const useGetAccountTokens = () => {
     const url = `accounts/${address}/tokens`;
     const response = await get({ url, params });
     if (response?.success && response?.data && response.data.length > 0) {
-      dispatch({
-        type: ActionTypeEnum.setAccountTokensState,
+      userActionDispatch({
+        type: UserActionDispatchTypeEnum.setAccountTokensState,
         accountTokens: response.data
       });
       return response.data;

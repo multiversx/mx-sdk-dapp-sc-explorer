@@ -7,10 +7,10 @@ import React, {
 
 import { reducer } from './reducer';
 import { initializer } from './state';
-import { DispatchType, UserActionsStateType } from '../types';
+import { UserActionDispatchType, UserActionStateType } from './types';
 
-const Context = createContext<UserActionsStateType | undefined>(undefined);
-const Dispatch = createContext<DispatchType | undefined>(undefined);
+const Context = createContext<UserActionStateType | undefined>(undefined);
+const Dispatch = createContext<UserActionDispatchType | undefined>(undefined);
 
 const UserActionsContextProvider = (props: PropsWithChildren) => {
   const { children } = props;
@@ -35,16 +35,20 @@ const useUserActionsContext = () => {
   }
 };
 
-const useDispatch = () => {
+const useUserActionDispatch = () => {
   const context = useContext(Dispatch);
 
   if (context === undefined) {
     throw new Error(
-      'The useDispatch hook must be used within a Dispatch.Provider.'
+      'The useUserActionDispatch hook must be used within a Dispatch.Provider.'
     );
   } else {
     return context;
   }
 };
 
-export { UserActionsContextProvider, useUserActionsContext, useDispatch };
+export {
+  UserActionsContextProvider,
+  useUserActionsContext,
+  useUserActionDispatch
+};

@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import {
   faPlay,
   faCircleNotch,
@@ -17,10 +17,10 @@ import { array, object, string } from 'yup';
 import globalStyles from 'assets/styles/globals.module.scss';
 import { AmountSelectInput } from 'components';
 import { SC_GAS_LIMIT, ZERO } from 'constants/general';
-import { useDispatch, useSCExplorerContext } from 'contexts';
+import { useUserActionDispatch, useSCExplorerContext } from 'contexts';
 import { getCallContractTransaction, getSelectOptions } from 'helpers';
 import {
-  ActionTypeEnum,
+  UserActionDispatchTypeEnum,
   SelectOptionType,
   ProcessedFormTokenType
 } from 'types';
@@ -33,7 +33,7 @@ export interface InitialValuesType {
 }
 
 export const MutateModal = () => {
-  const dispatch = useDispatch();
+  const userActionDispatch = useUserActionDispatch();
   const {
     networkConfig,
     accountInfo,
@@ -72,15 +72,15 @@ export const MutateModal = () => {
       : []
   };
 
-  const onClose = useCallback(() => {
-    dispatch({
-      type: ActionTypeEnum.setMutateModalState,
+  const onClose = () => {
+    userActionDispatch({
+      type: UserActionDispatchTypeEnum.setMutateModalState,
       mutateModalState: {
         mutateModalOpen: false,
         args: []
       }
     });
-  }, []);
+  };
 
   const onSubmit = async (values: typeof initialValues) => {
     try {
@@ -112,8 +112,8 @@ export const MutateModal = () => {
         setGeneralError(String(error));
       }
 
-      dispatch({
-        type: ActionTypeEnum.setMutateModalState,
+      userActionDispatch({
+        type: UserActionDispatchTypeEnum.setMutateModalState,
         mutateModalState: {
           mutateModalOpen: false,
           args: []

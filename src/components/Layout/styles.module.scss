@@ -35,10 +35,17 @@
     &-active {
       /*Placeholder*/
     }
+    &-load-abi-icon {
+      /*Placeholder*/
+    }
   }
 }
 
 .tab-panel {
   width: 100%;
   display: none;
+  &.active {
+    display: flex;
+    flex-direction: column;
+  }
 }

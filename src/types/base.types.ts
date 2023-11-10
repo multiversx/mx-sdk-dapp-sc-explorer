@@ -1,4 +1,5 @@
 import React from 'react';
+import { AccountType } from '@multiversx/sdk-dapp/types/account.types';
 import {
   RawAbiType,
   VerifiedContractType,
@@ -10,7 +11,7 @@ import {
 
 export interface SCExplorerType extends UserInterfaceType {
   accountConsumerHandlers: AccountConsumerHandlersType;
-  smartContract: SmartContractType;
+  smartContract: SmartContractInitialType;
   networkConfig: NetworkType;
   icons?: InterfaceIconsType;
   customClassNames?: CustomClassNamesType;
@@ -22,12 +23,15 @@ export interface SCExplorerType extends UserInterfaceType {
   >;
 }
 
-export interface SmartContractType {
+export interface SmartContractInitialType {
+  canMutate?: boolean;
+  canLoadAbi?: boolean;
+  canDeploy?: boolean;
+  canUpdate?: boolean;
   contractAddress?: string;
-  ownerAddress?: string;
-  allowMutate?: boolean;
   abi?: RawAbiType;
   verifiedContract?: VerifiedContractType;
+  deployedContractDetails?: AccountType;
 }
 
 export type AccountConsumerHandlersType = {
@@ -38,6 +42,7 @@ export type AccountConsumerHandlersType = {
     address: string;
     account: { isGuarded: boolean; balance: string };
   };
+  onLoginClick?: () => void;
 };
 
 export enum VerifiedContractTabsEnum {
@@ -48,5 +53,8 @@ export enum VerifiedContractTabsEnum {
   writeEndpoints = 'endpoints-write',
   events = 'events',
   types = 'types',
-  contractConstructor = 'constructor'
+  contractConstructor = 'constructor',
+  loadAbi = 'load-abi',
+  deploy = 'deploy',
+  update = 'update'
 }

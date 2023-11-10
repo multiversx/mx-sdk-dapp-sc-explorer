@@ -5,16 +5,14 @@ import {
   InterfaceIconsType,
   NetworkType,
   SupportType,
-  UserActionsStateType
+  SmartContractStateType,
+  UserActionStateType
 } from 'types';
 import { useAccountContext, AccountContextPropsType } from './AccountContext';
 import { useCustomClassNamesContext } from './CustomClassNamesContext';
 import { useIconsContext } from './IconsContext';
 import { useNetworkConfigContext } from './NetworkContext';
-import {
-  useSmartContractContext,
-  SmartContractContextPropsType
-} from './SmartContractContext';
+import { useSmartContractContext } from './SmartContractContext';
 import { useSupportContext } from './SupportContext';
 import { useUserActionsContext } from './UserActionsContext';
 
@@ -23,9 +21,9 @@ export interface SCExplorerContextPropsType {
   customClassNames: CustomClassNamesType;
   icons: InterfaceIconsType;
   networkConfig: NetworkType;
-  smartContract: SmartContractContextPropsType;
+  smartContract: SmartContractStateType;
   support: SupportType;
-  userActionsState: UserActionsStateType;
+  userActionsState: UserActionStateType;
 }
 
 interface SCExplorerContextProviderPropsType {

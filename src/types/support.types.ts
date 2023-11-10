@@ -1,7 +1,10 @@
 export interface SupportType {
+  canUpdate: boolean;
+  canDeploy: boolean;
+  canLoadAbi: boolean;
+  canMutate: boolean;
   canView: boolean;
   canRead: boolean;
-  canMutate: boolean;
   hasBuildInfo: boolean;
   hasSourceCode: boolean;
   hasEndpoints: boolean;
