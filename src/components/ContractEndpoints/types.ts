@@ -6,7 +6,8 @@ import { FormikProps } from 'formik';
 import {
   UserInterfaceType,
   ContractEndpointMutabilityEnum,
-  QueryContractResponse
+  QueryContractResponse,
+  FormikAbiType
 } from 'types';
 
 export interface ContractEndpointsUIType extends UserInterfaceType {
@@ -22,22 +23,11 @@ export interface ContractEndpointUIType extends BaseEndpointUIType {
   isOpen?: boolean;
 }
 
-export interface FormikAbiType {
-  [key: string]: FormikAbiType | FormikAbiType[] | string[] | string;
-}
-
 export interface EndpointFormUIType extends EndpointInteractionUIType {
   onSubmit: (values: any[]) => Promise<void>;
   isLoading?: boolean;
   generalError?: string;
   buttonText?: string;
-}
-
-export interface RecursiveContainerUIType extends UserInterfaceType {
-  config: FormikAbiType;
-  prefix: string;
-  endpoint: EndpointDefinition;
-  formik?: FormikProps<FormikAbiType>;
 }
 
 export interface EndpointInteractionUIType extends UserInterfaceType {
@@ -47,20 +37,7 @@ export interface EndpointInteractionUIType extends UserInterfaceType {
   mutability?: string | ContractEndpointMutabilityEnum;
 }
 
-export interface EndpointInputListUIType extends UserInterfaceType {
-  endpoint: EndpointDefinition;
-  formik?: FormikProps<FormikAbiType>;
-  input?: EndpointParameterDefinition[];
-}
-
 export interface EndpointOutputUIType extends UserInterfaceType {
   output?: EndpointParameterDefinition[];
   result?: QueryContractResponse;
-}
-
-export interface InputUIType extends UserInterfaceType {
-  name: string;
-  formik?: FormikProps<FormikAbiType>;
-  defaultValue?: string;
-  children?: React.ReactNode;
 }

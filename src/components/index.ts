@@ -6,6 +6,7 @@ export { Card } from './Card';
 export { CollapsibleCard, CollapsibleArrows } from './CollapsibleCard';
 export { Dropzone } from './Dropzone';
 export { FieldList } from './FieldList';
+export { InputList } from './InputList';
 export { Layout } from './Layout';
 export { LoginButton, LoginButtonWrapper } from './LoginButton';
 export { LoginModal, MutateModal } from './Modals';

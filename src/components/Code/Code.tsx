@@ -15,7 +15,7 @@ export const Code = ({
   code,
   language = 'rust',
   showLineNumbers = false,
-  wrapLongLines = false
+  wrapLongLines = true
 }: CodeUIType) => {
   return (
     <SyntaxHighlighter

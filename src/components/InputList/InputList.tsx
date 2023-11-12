@@ -2,12 +2,12 @@ import React from 'react';
 import classNames from 'classnames';
 
 import globalStyles from 'assets/styles/globals.module.scss';
-import { EndpointInputListUIType } from 'types';
-import { RecursiveContainer } from './RecursiveContainer';
-import { getInitalFormConfig } from '../helpers';
-import styles from '../styles.module.scss';
+import { getInitalFormConfig } from 'helpers';
+import { InputListUIType } from 'types';
+import { RecursiveContainer } from './components/RecursiveContainer';
+import styles from './styles.module.scss';
 
-export const EndpointInputList = (props: EndpointInputListUIType) => {
+export const InputList = (props: InputListUIType) => {
   const { formik, input, endpoint } = props;
 
   if (!(input && input.length > 0)) {

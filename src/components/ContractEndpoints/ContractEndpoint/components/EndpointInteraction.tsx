@@ -1,8 +1,8 @@
 import React from 'react';
 import classNames from 'classnames';
 
+import { InputList } from 'components';
 import { EndpointInteractionUIType } from 'types';
-import { EndpointInputList } from './EndpointInputList';
 import { EndpointOutput } from './EndpointOutput';
 import styles from '../styles.module.scss';
 
@@ -14,7 +14,7 @@ export const EndpointInteraction = ({
   const { mutability } = modifiers;
   return (
     <div className={classNames(styles?.endpointInteraction)}>
-      <EndpointInputList
+      <InputList
         input={input}
         mutability={mutability}
         endpoint={endpoint}

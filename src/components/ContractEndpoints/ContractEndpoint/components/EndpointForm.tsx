@@ -16,9 +16,9 @@ import { lazy, mixed, object } from 'yup';
 import globalStyles from 'assets/styles/globals.module.scss';
 import { LoginButtonWrapper } from 'components';
 import { useSCExplorerContext } from 'contexts';
+import { getInitalFormConfig, getNativeArgumentsFromValues } from 'helpers';
 import { EndpointFormUIType, FormikAbiType } from 'types';
 import { EndpointInteraction } from './EndpointInteraction';
-import { getInitalFormConfig, getNativeArgumentsFromValues } from '../helpers';
 import styles from '../styles.module.scss';
 
 export const EndpointForm = (props: EndpointFormUIType) => {
