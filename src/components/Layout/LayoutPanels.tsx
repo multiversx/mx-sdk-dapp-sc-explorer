@@ -9,7 +9,8 @@ import {
   ContractTypings,
   ContractConstructor,
   ContractEndpoints,
-  ContractLoadAbi
+  ContractLoadAbi,
+  ContractDeploy
 } from 'components';
 import { useSCExplorerContext } from 'contexts';
 import {
@@ -29,7 +30,8 @@ export const LayoutPanelsComponent = () => {
     hasEvents,
     hasTypes,
     hasConstructor,
-    canLoadAbi
+    canLoadAbi,
+    canDeploy
   } = support;
 
   return (
@@ -106,6 +108,15 @@ export const LayoutPanelsComponent = () => {
           bsPrefix={styles?.tabPanel}
         >
           <ContractConstructor />
+        </Tab.Pane>
+      )}
+
+      {canDeploy && (
+        <Tab.Pane
+          eventKey={VerifiedContractTabsEnum.deploy}
+          bsPrefix={styles?.tabPanel}
+        >
+          <ContractDeploy />
         </Tab.Pane>
       )}
     </Tab.Content>

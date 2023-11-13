@@ -83,6 +83,7 @@ export const EndpointForm = (props: EndpointFormUIType) => {
       validationSchema={validationSchema}
       validateOnChange={false}
       validateOnBlur={true}
+      enableReinitialize
     >
       {(formik) => {
         const { errors } = formik;
@@ -106,41 +107,60 @@ export const EndpointForm = (props: EndpointFormUIType) => {
                   globalStyles?.generalError
                 )}
               >
-                {hasOnlyGeneralValidationError && <p>{errors?.general}</p>}
+                {hasOnlyGeneralValidationError &&
+                  typeof errors?.general === 'string' && (
+                    <p>{errors.general}</p>
+                  )}
                 {generalError && <p>{generalError}</p>}
               </div>
             )}
             <div className={classNames(styles?.endpointActionWrapper)}>
-              <LoginButtonWrapper
-                className={classNames(styles?.buttonEndpointAction)}
-                mutability={mutability}
-              >
-                <button
-                  className={classNames(
-                    globalStyles?.button,
-                    globalStyles?.buttonPrimary,
-                    customClassNames?.buttonClassName,
-                    customClassNames?.buttonPrimaryClassName,
-                    styles?.buttonEndpointAction
-                  )}
-                  type='submit'
-                  {...(isLoading ||
-                  !formik.isValid ||
-                  (modifiers?.isOnlyOwner() && isLoggedIn && !isOwnerConnected)
-                    ? { disabled: true }
-                    : {})}
+              {deployedContractDetails?.code ? (
+                <LoginButtonWrapper
+                  className={classNames(styles?.buttonEndpointAction)}
+                  mutability={mutability}
+                  buttonText='to interact with this endpoint.'
                 >
-                  {buttonText}
-                  {isLoading ? (
+                  <button
+                    className={classNames(
+                      globalStyles?.button,
+                      globalStyles?.buttonPrimary,
+                      customClassNames?.buttonClassName,
+                      customClassNames?.buttonPrimaryClassName,
+                      styles?.buttonEndpointAction
+                    )}
+                    type='submit'
+                    {...(isLoading ||
+                    !formik.isValid ||
+                    (modifiers?.isOnlyOwner() &&
+                      isLoggedIn &&
+                      !isOwnerConnected)
+                      ? { disabled: true }
+                      : {})}
+                  >
+                    {buttonText}
+                    {isLoading ? (
+                      <FontAwesomeIcon
+                        icon={loadIcon}
+                        className='fa-spin fast-spin'
+                      />
+                    ) : (
+                      <FontAwesomeIcon icon={playIcon} />
+                    )}
+                  </button>
+                </LoginButtonWrapper>
+              ) : (
+                <div className={classNames(styles?.loginButtonWrapper)}>
+                  <div className={classNames(styles?.loginButtonWrapperText)}>
                     <FontAwesomeIcon
-                      icon={loadIcon}
-                      className='fa-spin fast-spin'
+                      icon={faTriangleExclamation}
+                      className={classNames(styles?.loginButtonWarningIcon)}
                     />
-                  ) : (
-                    <FontAwesomeIcon icon={playIcon} />
-                  )}
-                </button>
-              </LoginButtonWrapper>
+                    Contract Address is required in order to interact with the
+                    Endpoints
+                  </div>
+                </div>
+              )}
               {isLoggedIn &&
                 modifiers?.isOnlyOwner() &&
                 !isOwnerConnected &&

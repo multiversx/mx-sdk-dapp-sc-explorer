@@ -10,16 +10,11 @@ export const EndpointInteraction = ({
   endpoint,
   ...rest
 }: EndpointInteractionUIType) => {
-  const { input, output, modifiers } = endpoint;
-  const { mutability } = modifiers;
+  const { input, output } = endpoint;
+
   return (
     <div className={classNames(styles?.endpointInteraction)}>
-      <InputList
-        input={input}
-        mutability={mutability}
-        endpoint={endpoint}
-        {...rest}
-      />
+      <InputList input={input} endpoint={endpoint} {...rest} />
       <EndpointOutput output={output} {...rest} />
     </div>
   );

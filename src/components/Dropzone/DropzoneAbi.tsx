@@ -1,32 +1,34 @@
 import React, { useState } from 'react';
+import { AbiRegistry } from '@multiversx/sdk-core/out';
 import { FormikProps, getIn } from 'formik';
 
 import { Dropzone } from 'components';
+import { INTERFACE_NAME_PLACEHOLDER } from 'constants/general';
 import { useSmartContractDispatch } from 'contexts';
 import {
   AcceptedFileTypeEnum,
   FormikLoadAbiType,
   FileType,
-  SmartContractDispatchTypeEnum,
-  ContractLoadAbiFormikFieldsEnum
+  SmartContractDispatchTypeEnum
 } from 'types';
 
-export interface DropzoneAbiPropsType {
-  formikProps: FormikProps<FormikLoadAbiType>;
+export interface DropzoneAbiPropsType extends FormikProps<FormikLoadAbiType> {
+  fieldName: string;
 }
 
 export const DropzoneAbi = ({
+  fieldName,
   setFieldValue,
   setFieldTouched,
   setErrors,
   errors
-}: FormikProps<FormikLoadAbiType>) => {
+}: DropzoneAbiPropsType) => {
   const smartContractDispatch = useSmartContractDispatch();
   const [file, setFile] = useState<FileType | undefined>();
 
   const onRemove = () => {
     setFile(undefined);
-    setFieldValue(ContractLoadAbiFormikFieldsEnum.abiFileContent, {});
+    setFieldValue(fieldName, undefined);
     smartContractDispatch({
       type: SmartContractDispatchTypeEnum.setRawAbi,
       rawAbi: undefined
@@ -39,15 +41,24 @@ export const DropzoneAbi = ({
 
   const onFileDrop = ([newFile]: File[]) => {
     const fileReader = new FileReader();
-    setFieldTouched(ContractLoadAbiFormikFieldsEnum.abiFileContent, true);
+    setFieldTouched(fieldName, true);
     fileReader.onload = () => {
       if (fileReader.result) {
         try {
-          const parsedAbiFileContent = JSON.parse(fileReader.result.toString());
-          setFieldValue(
-            ContractLoadAbiFormikFieldsEnum.abiFileContent,
-            parsedAbiFileContent
-          );
+          const abi = JSON.parse(fileReader.result.toString());
+          setFieldValue(fieldName, abi);
+          if (!abi.name) {
+            abi.name = INTERFACE_NAME_PLACEHOLDER;
+          }
+          smartContractDispatch({
+            type: SmartContractDispatchTypeEnum.setRawAbi,
+            rawAbi: abi
+          });
+          const abiRegistry = AbiRegistry.create(abi);
+          smartContractDispatch({
+            type: SmartContractDispatchTypeEnum.setAbiRegistry,
+            abiRegistry
+          });
         } catch {
           setErrors({
             abiFileContent: 'Invalid ABI File'
@@ -69,10 +80,7 @@ export const DropzoneAbi = ({
       onFileRemove={onRemove}
       files={file ? [file] : []}
       onFileDrop={onFileDrop}
-      errorMessage={getIn(
-        errors,
-        ContractLoadAbiFormikFieldsEnum.abiFileContent
-      )}
+      errorMessage={getIn(errors, fieldName)}
     />
   );
 };

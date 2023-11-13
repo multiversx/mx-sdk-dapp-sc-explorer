@@ -5,7 +5,6 @@ import {
   faCircleNotch
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { AbiRegistry } from '@multiversx/sdk-core/out';
 import { CopyButton } from '@multiversx/sdk-dapp/UI/CopyButton';
 import { addressIsValid } from '@multiversx/sdk-dapp/utils/account/addressIsValid';
 import classNames from 'classnames';
@@ -14,11 +13,10 @@ import { mixed, object, string } from 'yup';
 
 import globalStyles from 'assets/styles/globals.module.scss';
 import { Card, Code, PanelHeader } from 'components';
-import { INTERFACE_NAME_PLACEHOLDER } from 'constants/general';
+import { DropzoneAbi } from 'components/Dropzone/DropzoneAbi';
 import { useSCExplorerContext, useSmartContractDispatch } from 'contexts';
 import { useGetDeployedContractDetails } from 'hooks';
 import { SmartContractDispatchTypeEnum } from 'types';
-import { DropzoneAbi } from './components';
 import styles from './styles.module.scss';
 import { FormikLoadAbiType, ContractLoadAbiFormikFieldsEnum } from './types';
 
@@ -26,7 +24,7 @@ export const ContractLoadAbiComponent = () => {
   const { support, customClassNames, smartContract, icons } =
     useSCExplorerContext();
   const { canLoadAbi } = support;
-  const { abiRegistry, rawAbi, deployedContractDetails } = smartContract;
+  const { rawAbi, deployedContractDetails } = smartContract;
   const { copyIcon = faCopy, loadIcon = faCircleNotch } = icons ?? {};
   const smartContractDispatch = useSmartContractDispatch();
   const getDeployedContractDetails = useGetDeployedContractDetails();
@@ -68,41 +66,28 @@ export const ContractLoadAbiComponent = () => {
       })
   });
 
-  const onSubmit = async (values: typeof initialValues) => {
-    if (values[ContractLoadAbiFormikFieldsEnum.contractAddress]) {
+  const checkAddress = async (address: string) => {
+    if (address && addressIsValid(address)) {
+      setIsContractAddressCheckLoading(true);
       smartContractDispatch({
         type: SmartContractDispatchTypeEnum.setContractAddress,
-        contractAddress: values[ContractLoadAbiFormikFieldsEnum.contractAddress]
+        contractAddress: address
       });
-
-      setIsContractAddressCheckLoading(true);
       await getDeployedContractDetails({
-        address: values[ContractLoadAbiFormikFieldsEnum.contractAddress]
+        address
       });
       setIsContractAddressCheckLoading(false);
-    }
-    if (values[ContractLoadAbiFormikFieldsEnum.abiFileContent]) {
-      const abi = values[ContractLoadAbiFormikFieldsEnum.abiFileContent];
-      if (!abi.name) {
-        abi.name = INTERFACE_NAME_PLACEHOLDER;
-      }
+    } else {
       smartContractDispatch({
-        type: SmartContractDispatchTypeEnum.setRawAbi,
-        rawAbi: abi
+        type: SmartContractDispatchTypeEnum.setContractAddress,
+        contractAddress: undefined
       });
-      try {
-        const abiRegistry = AbiRegistry.create(abi);
-        smartContractDispatch({
-          type: SmartContractDispatchTypeEnum.setAbiRegistry,
-          abiRegistry
-        });
-      } catch (error) {
-        console.error('Unable to parse Loaded ABI: ', error);
-      }
+      smartContractDispatch({
+        type: SmartContractDispatchTypeEnum.setDeployedContractDetails,
+        deployedContractDetails: undefined
+      });
     }
   };
-
-  const code = rawAbi ? JSON.stringify(rawAbi, null, 2) : '';
 
   if (!canLoadAbi) {
     return null;
@@ -120,7 +105,8 @@ export const ContractLoadAbiComponent = () => {
       <Card>
         <Formik
           initialValues={initialValues}
-          onSubmit={onSubmit}
+          onSubmit={() => {}}
+          validateOnChange
           validationSchema={validationSchema}
         >
           {(formik) => {
@@ -130,12 +116,19 @@ export const ContractLoadAbiComponent = () => {
               ContractLoadAbiFormikFieldsEnum.contractAddress
             );
 
+            const formattedContent = rawAbi
+              ? JSON.stringify(rawAbi, null, 2)
+              : '';
+
             return (
               <Form
                 onSubmit={formik.handleSubmit}
                 className={classNames(styles?.contractLoadAbiForm)}
               >
-                <DropzoneAbi {...formik} />
+                <DropzoneAbi
+                  {...formik}
+                  fieldName={ContractLoadAbiFormikFieldsEnum.abiFileContent}
+                />
                 <div className={classNames(styles?.contractLoadAbiFormFields)}>
                   <label
                     htmlFor={ContractLoadAbiFormikFieldsEnum.contractAddress}
@@ -154,7 +147,10 @@ export const ContractLoadAbiComponent = () => {
                       name={ContractLoadAbiFormikFieldsEnum.contractAddress}
                       autoComplete='off'
                       type='text'
-                      onChange={handleChange}
+                      onChange={async (e: React.FocusEvent<any, Element>) => {
+                        handleChange(e);
+                        await checkAddress(e?.target?.value);
+                      }}
                       onBlur={handleBlur}
                       placeholder='Contract Address'
                       className={classNames(
@@ -205,22 +201,7 @@ export const ContractLoadAbiComponent = () => {
                     )}
                   </div>
                 </div>
-                <button
-                  type='submit'
-                  className={classNames(
-                    globalStyles?.button,
-                    globalStyles?.buttonPrimary,
-                    customClassNames?.buttonClassName,
-                    customClassNames?.buttonPrimaryClassName,
-                    styles?.contractLoadAbiButton
-                  )}
-                  {...(!formik.isValid ? { disabled: true } : {})}
-                >
-                  {Boolean(abiRegistry || deployedContractDetails)
-                    ? 'Update Config'
-                    : 'Save Config'}
-                </button>
-                {code && (
+                {formattedContent && (
                   <div
                     className={classNames(
                       globalStyles?.codeContainer,
@@ -235,7 +216,7 @@ export const ContractLoadAbiComponent = () => {
                     <div className={classNames(globalStyles?.codeBlock)}>
                       <div className={classNames(globalStyles?.buttonHolder)}>
                         <CopyButton
-                          text={code}
+                          text={formattedContent}
                           className={classNames(globalStyles?.copyButton)}
                           copyIcon={copyIcon as any} // TODO fix fontawesome typing issue
                         />
@@ -244,7 +225,7 @@ export const ContractLoadAbiComponent = () => {
                         className={classNames(
                           globalStyles?.endpointOutputResultsCode
                         )}
-                        code={code}
+                        code={formattedContent}
                         showLineNumbers={true}
                         language='properties'
                       />

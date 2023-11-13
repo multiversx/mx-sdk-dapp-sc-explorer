@@ -4,5 +4,6 @@ export interface LoginButtonUIType extends UserInterfaceType {}
 
 export interface LoginButtonWrapperUIType extends LoginButtonUIType {
   children?: React.ReactNode;
-  mutability: string | ContractEndpointMutabilityEnum;
+  mutability?: string | ContractEndpointMutabilityEnum;
+  buttonText?: string;
 }

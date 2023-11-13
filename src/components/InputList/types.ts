@@ -1,4 +1,5 @@
 import {
+  Code,
   EndpointDefinition,
   EndpointParameterDefinition
 } from '@multiversx/sdk-core/out';
@@ -6,7 +7,7 @@ import { FormikProps } from 'formik';
 import { UserInterfaceType } from 'types';
 
 export interface FormikAbiType {
-  [key: string]: FormikAbiType | FormikAbiType[] | string[] | string;
+  [key: string]: FormikAbiType | FormikAbiType[] | string[] | string | Code;
 }
 
 export interface RecursiveContainerUIType extends UserInterfaceType {
@@ -20,6 +21,7 @@ export interface InputListUIType extends UserInterfaceType {
   endpoint: EndpointDefinition;
   formik?: FormikProps<FormikAbiType>;
   input?: EndpointParameterDefinition[];
+  excludedKeys?: string[];
 }
 
 export interface InputUIType extends UserInterfaceType {

@@ -5,6 +5,7 @@ export * from 'components/Code/types';
 export * from 'components/CollapsibleCard/types';
 export * from 'components/ContractBuild/types';
 export * from 'components/ContractConstructor/types';
+export * from 'components/ContractDeploy/types';
 export * from 'components/ContractEndpoints/types';
 export * from 'components/ContractEvents/types';
 export * from 'components/ContractFiles/types';

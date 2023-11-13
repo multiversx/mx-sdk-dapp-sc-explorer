@@ -4,6 +4,7 @@ export { CardItem } from './CardItem';
 export { Code } from './Code';
 export { Card } from './Card';
 export { CollapsibleCard, CollapsibleArrows } from './CollapsibleCard';
+export { DocsPanel } from './DocsPanel';
 export { Dropzone } from './Dropzone';
 export { FieldList } from './FieldList';
 export { InputList } from './InputList';
@@ -18,6 +19,7 @@ export { DefinitionsTooltip } from './DefinitionsTooltip';
 
 export * from './ContractBuild';
 export * from './ContractConstructor';
+export * from './ContractDeploy';
 export * from './ContractEndpoints';
 export * from './ContractEvents';
 export * from './ContractFiles';
