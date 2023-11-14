@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { NativeSerializer } from '@multiversx/sdk-core/out';
 
+import { EndpointForm } from 'components';
 import { useSCExplorerContext, useUserActionDispatch } from 'contexts';
 import { useGetAccountTokens } from 'hooks';
 import {
@@ -8,7 +9,6 @@ import {
   BaseEndpointUIType,
   UserActionDispatchTypeEnum
 } from 'types';
-import { EndpointForm } from './EndpointForm';
 
 export const EndpointMutate = (props: BaseEndpointUIType) => {
   const userActionDispatch = useUserActionDispatch();
@@ -31,7 +31,9 @@ export const EndpointMutate = (props: BaseEndpointUIType) => {
         nativeValues || [],
         endpoint
       );
-      await getAccountTokens(modifiers.payableInTokens ?? []);
+      if (modifiers?.isPayable()) {
+        await getAccountTokens(modifiers.payableInTokens ?? []);
+      }
       userActionDispatch({
         type: UserActionDispatchTypeEnum.setMutateModalState,
         mutateModalState: {

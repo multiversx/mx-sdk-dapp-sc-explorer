@@ -13,7 +13,7 @@ import {
 import styles from './styles.module.scss';
 
 export const LoginButtonWrapper = (props: LoginButtonWrapperUIType) => {
-  const { mutability, children, buttonText, className } = props;
+  const { mutability, children, buttonDescription, className } = props;
   const { accountInfo, customClassNames, icons } = useSCExplorerContext();
   const { isLoggedIn, address, onLoginClick } = accountInfo;
   const userActionDispatch = useUserActionDispatch();
@@ -56,9 +56,16 @@ export const LoginButtonWrapper = (props: LoginButtonWrapperUIType) => {
             <FontAwesomeIcon icon={connectIcon} />
             Connect Your Wallet
           </button>
-          {buttonText && (
-            <div className={classNames(styles?.loginButtonWrapperText)}>
-              {buttonText}
+          {buttonDescription && (
+            <div
+              className={classNames(
+                styles?.loginButtonWrapperText,
+                globalStyles?.formWarning
+              )}
+            >
+              <div className={classNames(globalStyles?.formWarningText)}>
+                {buttonDescription}
+              </div>
             </div>
           )}
         </div>

@@ -27,10 +27,10 @@ const reducer = (
         canDeploy: action.canDeploy
       };
     }
-    case SmartContractDispatchTypeEnum.setCanUpdate: {
+    case SmartContractDispatchTypeEnum.setCanUpgrade: {
       return {
         ...state,
-        canUpdate: action.canUpdate
+        canUpgrade: action.canUpgrade
       };
     }
     case SmartContractDispatchTypeEnum.setAbiRegistry: {

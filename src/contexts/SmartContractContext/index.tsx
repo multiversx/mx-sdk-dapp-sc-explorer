@@ -38,7 +38,7 @@ const SmartContractContextProvider = (
     canLoadAbi = false,
     canMutate = false,
     canDeploy = false,
-    canUpdate = false
+    canUpgrade = false
   } = value;
 
   const [state, dispatch] = useReducer(reducer, initializer);
@@ -66,10 +66,10 @@ const SmartContractContextProvider = (
 
   useEffect(() => {
     dispatch({
-      type: SmartContractDispatchTypeEnum.setCanUpdate,
-      canUpdate
+      type: SmartContractDispatchTypeEnum.setCanUpgrade,
+      canUpgrade
     });
-  }, [canUpdate]);
+  }, [canUpgrade]);
 
   useEffect(() => {
     if (deployedContractDetails) {

@@ -27,7 +27,7 @@ import {
 import styles from './styles.module.scss';
 import { Modal } from '../Modal';
 
-export interface InitialValuesType {
+export interface MutateModalInitialValuesType {
   gasLimit: number;
   tokens: ProcessedFormTokenType[];
 }
@@ -57,7 +57,7 @@ export const MutateModal = () => {
   const [generalError, setGeneralError] = useState<string>();
   const [selectedToken, setSelectedToken] = useState<SelectOptionType>();
 
-  const initialValues: InitialValuesType = {
+  const initialValues: MutateModalInitialValuesType = {
     gasLimit: SC_GAS_LIMIT,
     tokens: modifiers?.isPayable()
       ? [
@@ -76,6 +76,7 @@ export const MutateModal = () => {
     userActionDispatch({
       type: UserActionDispatchTypeEnum.setMutateModalState,
       mutateModalState: {
+        endpoint: undefined,
         mutateModalOpen: false,
         args: []
       }
@@ -116,6 +117,7 @@ export const MutateModal = () => {
         type: UserActionDispatchTypeEnum.setMutateModalState,
         mutateModalState: {
           mutateModalOpen: false,
+          endpoint: undefined,
           args: []
         }
       });
@@ -206,28 +208,28 @@ export const MutateModal = () => {
               onSubmit={formik.handleSubmit}
               className={classNames(styles?.mutateModalForm)}
             >
-              <div className={classNames(styles?.mutateModalWarnPanel)}>
+              <div className={classNames(globalStyles?.formWarnPanel)}>
                 <FontAwesomeIcon
                   icon={faTriangleExclamation}
                   size='2x'
-                  className={classNames(styles?.mutateModalWarnPanelIcon)}
+                  className={classNames(globalStyles?.formWarnPanelIcon)}
                 />
-                <div className={classNames(styles?.mutateModalWarnPanelText)}>
-                  You are about to mutate the state of the Smart Contract.{' '}
-                  <br />
+                <div className={classNames(globalStyles?.formWarnPanelText)}>
+                  This is a real transaction that will be executed on the Smart
+                  Contract. <br />
                   Please make sure that the entered data is valid !
                 </div>
               </div>
               {/* TODO - temporary - don't send the transactions for now - show them in console on mainnet */}
               {environment === 'mainnet' && (
-                <div className={classNames(styles?.mutateModalWarnPanel)}>
+                <div className={classNames(globalStyles?.formWarnPanel)}>
                   <FontAwesomeIcon
                     icon={faTriangleExclamation}
                     size='2x'
-                    className={classNames(styles?.mutateModalWarnPanelIcon)}
+                    className={classNames(globalStyles?.formWarnPanelIcon)}
                   />
-                  <div className={classNames(styles?.mutateModalWarnPanelText)}>
-                    Temporary for testing. Transactions will not be sent on
+                  <div className={classNames(globalStyles?.formWarnPanelText)}>
+                    Temporary for testing. Transactions will not be sent on{' '}
                     <strong>mainnet</strong>. <br />
                     Check out the Console Panel for the Signed Transaction
                   </div>
@@ -359,9 +361,9 @@ export const MutateModal = () => {
                 className={classNames(
                   globalStyles?.button,
                   globalStyles?.buttonPrimary,
+                  globalStyles?.buttonAction,
                   customClassNames?.buttonClassName,
                   customClassNames?.buttonPrimaryClassName,
-                  styles?.buttonEndpointAction,
                   styles?.mutateModalFormButton
                 )}
                 type='submit'

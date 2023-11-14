@@ -23,6 +23,20 @@ const reducer = (
       };
     }
 
+    case UserActionDispatchTypeEnum.setDeployModalState: {
+      return {
+        ...state,
+        deployModalState: action.deployModalState
+      };
+    }
+
+    case UserActionDispatchTypeEnum.setUpgradeModalState: {
+      return {
+        ...state,
+        upgradeModalState: action.upgradeModalState
+      };
+    }
+
     case UserActionDispatchTypeEnum.setAccountTokensState: {
       return {
         ...state,

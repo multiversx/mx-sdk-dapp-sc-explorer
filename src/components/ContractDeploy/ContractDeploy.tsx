@@ -3,12 +3,19 @@ import { NativeSerializer, Code } from '@multiversx/sdk-core/out';
 import classNames from 'classnames';
 
 import globalStyles from 'assets/styles/globals.module.scss';
-import { Card, DocsPanel, PanelHeader } from 'components';
-import { useSCExplorerContext } from 'contexts';
-import { ContractDeployForm } from './components';
+import {
+  Card,
+  DeployUpgradeFileForm,
+  DocsPanel,
+  PanelHeader,
+  DeployModal
+} from 'components';
+import { useSCExplorerContext, useUserActionDispatch } from 'contexts';
+import { UserActionDispatchTypeEnum } from 'types';
 import styles from './styles.module.scss';
 
 export const ContractDeploy = () => {
+  const userActionDispatch = useUserActionDispatch();
   const { smartContract, customClassNames } = useSCExplorerContext();
   const { abiRegistry } = smartContract;
   const [isLoading, setIsLoading] = useState(false);
@@ -23,6 +30,7 @@ export const ContractDeploy = () => {
   }) => {
     setError(undefined);
     setIsLoading(true);
+
     try {
       const args = abiRegistry?.constructorDefinition
         ? NativeSerializer.nativeToTypedValues(
@@ -30,8 +38,15 @@ export const ContractDeploy = () => {
             abiRegistry.constructorDefinition
           )
         : [];
-
-      console.log('-------values', values, args, wasmFileContent);
+      userActionDispatch({
+        type: UserActionDispatchTypeEnum.setDeployModalState,
+        deployModalState: {
+          deployModalOpen: true,
+          args,
+          code: wasmFileContent,
+          endpoint: abiRegistry?.constructorDefinition
+        }
+      });
     } catch (error) {
       setError(String(error));
     } finally {
@@ -48,13 +63,16 @@ export const ContractDeploy = () => {
         customClassNames?.wrapperClassName
       )}
     >
+      <DeployModal />
       <PanelHeader>Contract Deploy</PanelHeader>
       <Card>
         <DocsPanel />
-        <ContractDeployForm
+        <DeployUpgradeFileForm
           onSubmit={onSubmit}
           isLoading={isLoading}
           generalError={error}
+          buttonText='Deploy Contract'
+          buttonLoginDescription='to deploy a contract'
         />
       </Card>
     </div>

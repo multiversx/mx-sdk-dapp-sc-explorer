@@ -23,7 +23,7 @@ export function SupportContextProvider({
     canMutate,
     canLoadAbi,
     canDeploy,
-    canUpdate
+    canUpgrade
   } = smartContract;
 
   const hasBuildInfo = rawAbi?.buildInfo || rawAbi?.name;
@@ -63,7 +63,7 @@ export function SupportContextProvider({
       (abiConstructor?.docs && abiConstructor?.docs.length > 0));
 
   const value = {
-    canUpdate: Boolean(canUpdate),
+    canUpgrade: Boolean(canUpgrade),
     canDeploy: Boolean(canDeploy),
     canLoadAbi: Boolean(canLoadAbi),
     canView: Boolean(abiRegistry),

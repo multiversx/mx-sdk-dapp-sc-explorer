@@ -3,14 +3,14 @@ import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
-import { CollapsibleCard } from 'components';
+import globalStyles from 'assets/styles/globals.module.scss';
+import { CollapsibleCard, EndpointInteraction } from 'components';
 import { useSCExplorerContext } from 'contexts';
 import { ContractEndpointMutabilityEnum, ContractEndpointUIType } from 'types';
-import { EndpointInteraction } from './components/EndpointInteraction';
 import { EndpointMutate } from './components/EndpointMutate';
 import { EndpointRead } from './components/EndpointRead';
 import { EndpointTitle } from './components/EndpointTitle';
-import styles from './styles.module.scss';
+import styles from '../styles.module.scss';
 
 export const ContractEndpoint = (props: ContractEndpointUIType) => {
   const { support, smartContract } = useSCExplorerContext();
@@ -55,14 +55,19 @@ export const ContractEndpoint = (props: ContractEndpointUIType) => {
           {canView && (
             <div className={classNames(styles?.contractEndpointWrapper)}>
               <EndpointInteraction endpoint={endpoint} />
-              <div className={classNames(styles?.endpointActionWrapper)}>
+              <div
+                className={classNames(
+                  styles?.endpointActionWrapper,
+                  globalStyles?.formActionWrapper
+                )}
+              >
                 {!deployedContractDetails?.code && (
-                  <div className={classNames(styles?.endpointWarning)}>
+                  <div className={classNames(globalStyles?.formWarning)}>
                     <FontAwesomeIcon
                       icon={faTriangleExclamation}
-                      className={classNames(styles?.endpointWarningIcon)}
+                      className={classNames(globalStyles?.formWarningIcon)}
                     />
-                    <span className={classNames(styles?.endpointWarningText)}>
+                    <span className={classNames(globalStyles?.formWarningText)}>
                       Smart Contract Address is required and the Contract must
                       be Deployed on the current Network in order to interact
                       with the Endpoints

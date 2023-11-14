@@ -6,7 +6,7 @@ export interface SmartContractStateType {
   canMutate: boolean | undefined;
   canLoadAbi: boolean | undefined;
   canDeploy: boolean | undefined;
-  canUpdate: boolean | undefined;
+  canUpgrade: boolean | undefined;
   contractAddress: string | undefined;
   rawAbi: RawAbiType | undefined;
   abiRegistry: AbiRegistry | undefined;
@@ -18,7 +18,7 @@ export enum SmartContractDispatchTypeEnum {
   setCanMutate = 'setCanMutate',
   setCanLoadAbi = 'setCanLoadAbi',
   setCanDeploy = 'setCanDeploy',
-  setCanUpdate = 'setCanUpdate',
+  setCanUpgrade = 'setCanUpgrade',
   setContractAddress = 'setContractAddress',
   setRawAbi = 'setRawAbi',
   setAbiRegistry = 'setAbiRegistry',
@@ -35,7 +35,7 @@ export interface SmartContractDispatchActionType {
   canMutate?: boolean;
   canLoadAbi?: boolean;
   canDeploy?: boolean;
-  canUpdate?: boolean;
+  canUpgrade?: boolean;
   contractAddress?: string;
   rawAbi?: RawAbiType;
   abiRegistry?: AbiRegistry;

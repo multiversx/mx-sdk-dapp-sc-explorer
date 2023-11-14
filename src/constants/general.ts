@@ -1,4 +1,8 @@
-import { DocumentedTypesExampleType } from 'types';
+import {
+  DocumentedTypesExampleType,
+  MetadataFieldsEnum,
+  MetadataOptionsType
+} from 'types';
 
 export const TIMEOUT = 10000;
 export const SC_GAS_LIMIT = 10_000_000;
@@ -16,6 +20,25 @@ export const TYPE_REGEX =
   /(customType:)?([a-z_:]+:)?(?:\d+:)?multiversx:types:/g;
 export const TYPE_PREFIX_REGEX =
   /^(customType:)?([a-z_:]+:)?(?:\d+:)?multiversx:types:/;
+
+export const METADATA_OPTIONS: MetadataOptionsType = {
+  [MetadataFieldsEnum.upgradeable]: {
+    label: 'Upgradeable',
+    checked: true
+  },
+  [MetadataFieldsEnum.readable]: {
+    label: 'Readable',
+    checked: true
+  },
+  [MetadataFieldsEnum.payable]: {
+    label: 'Payable',
+    checked: false
+  },
+  [MetadataFieldsEnum.payableBySc]: {
+    label: 'Payable By Smart Contract',
+    checked: true
+  }
+};
 
 export const DOCUMENTED_TYPES: { [key: string]: DocumentedTypesExampleType } = {
   u8: {

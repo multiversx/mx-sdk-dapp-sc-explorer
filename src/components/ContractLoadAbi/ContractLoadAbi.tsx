@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react';
+import React, { memo } from 'react';
 import {
   faCopy,
   faCircleCheck,
@@ -14,9 +14,8 @@ import { mixed, object, string } from 'yup';
 import globalStyles from 'assets/styles/globals.module.scss';
 import { Card, Code, PanelHeader } from 'components';
 import { DropzoneAbi } from 'components/Dropzone/DropzoneAbi';
-import { useSCExplorerContext, useSmartContractDispatch } from 'contexts';
-import { useGetDeployedContractDetails } from 'hooks';
-import { SmartContractDispatchTypeEnum } from 'types';
+import { useSCExplorerContext } from 'contexts';
+import { useUpdateDeployedContractDetails } from 'hooks';
 import styles from './styles.module.scss';
 import { FormikLoadAbiType, ContractLoadAbiFormikFieldsEnum } from './types';
 
@@ -26,10 +25,8 @@ export const ContractLoadAbiComponent = () => {
   const { canLoadAbi } = support;
   const { rawAbi, deployedContractDetails } = smartContract;
   const { copyIcon = faCopy, loadIcon = faCircleNotch } = icons ?? {};
-  const smartContractDispatch = useSmartContractDispatch();
-  const getDeployedContractDetails = useGetDeployedContractDetails();
-  const [isContractAddressCheckLoading, setIsContractAddressCheckLoading] =
-    useState(false);
+  const { updateDeployedContractDetails, isContractAddressCheckLoading } =
+    useUpdateDeployedContractDetails();
 
   const initialValues: FormikLoadAbiType = {
     [ContractLoadAbiFormikFieldsEnum.contractAddress]: '',
@@ -65,29 +62,6 @@ export const ContractLoadAbiComponent = () => {
         return type === 'application/json';
       })
   });
-
-  const checkAddress = async (address: string) => {
-    if (address && addressIsValid(address)) {
-      setIsContractAddressCheckLoading(true);
-      smartContractDispatch({
-        type: SmartContractDispatchTypeEnum.setContractAddress,
-        contractAddress: address
-      });
-      await getDeployedContractDetails({
-        address
-      });
-      setIsContractAddressCheckLoading(false);
-    } else {
-      smartContractDispatch({
-        type: SmartContractDispatchTypeEnum.setContractAddress,
-        contractAddress: undefined
-      });
-      smartContractDispatch({
-        type: SmartContractDispatchTypeEnum.setDeployedContractDetails,
-        deployedContractDetails: undefined
-      });
-    }
-  };
 
   if (!canLoadAbi) {
     return null;
@@ -125,16 +99,13 @@ export const ContractLoadAbiComponent = () => {
                 onSubmit={formik.handleSubmit}
                 className={classNames(styles?.contractLoadAbiForm)}
               >
-                <DropzoneAbi
-                  {...formik}
-                  fieldName={ContractLoadAbiFormikFieldsEnum.abiFileContent}
-                />
                 <div className={classNames(styles?.contractLoadAbiFormFields)}>
                   <label
                     htmlFor={ContractLoadAbiFormikFieldsEnum.contractAddress}
                     className={globalStyles?.label}
                   >
-                    Contract Address (Required for Contract Interaction)
+                    Contract Address (Required for Contract Interaction and
+                    Upgrade)
                   </label>
                   <div
                     className={classNames(
@@ -149,7 +120,7 @@ export const ContractLoadAbiComponent = () => {
                       type='text'
                       onChange={async (e: React.FocusEvent<any, Element>) => {
                         handleChange(e);
-                        await checkAddress(e?.target?.value);
+                        await updateDeployedContractDetails(e?.target?.value);
                       }}
                       onBlur={handleBlur}
                       placeholder='Contract Address'
@@ -201,6 +172,11 @@ export const ContractLoadAbiComponent = () => {
                     )}
                   </div>
                 </div>
+                <DropzoneAbi
+                  {...formik}
+                  fieldName={ContractLoadAbiFormikFieldsEnum.abiFileContent}
+                />
+
                 {formattedContent && (
                   <div
                     className={classNames(

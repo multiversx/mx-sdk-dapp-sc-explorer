@@ -10,7 +10,8 @@ import {
   ContractConstructor,
   ContractEndpoints,
   ContractLoadAbi,
-  ContractDeploy
+  ContractDeploy,
+  ContractUpgrade
 } from 'components';
 import { useSCExplorerContext } from 'contexts';
 import {
@@ -31,7 +32,8 @@ export const LayoutPanelsComponent = () => {
     hasTypes,
     hasConstructor,
     canLoadAbi,
-    canDeploy
+    canDeploy,
+    canUpgrade
   } = support;
 
   return (
@@ -117,6 +119,15 @@ export const LayoutPanelsComponent = () => {
           bsPrefix={styles?.tabPanel}
         >
           <ContractDeploy />
+        </Tab.Pane>
+      )}
+
+      {canUpgrade && (
+        <Tab.Pane
+          eventKey={VerifiedContractTabsEnum.upgrade}
+          bsPrefix={styles?.tabPanel}
+        >
+          <ContractUpgrade />
         </Tab.Pane>
       )}
     </Tab.Content>

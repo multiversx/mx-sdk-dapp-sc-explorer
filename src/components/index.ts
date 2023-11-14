@@ -10,12 +10,15 @@ export { FieldList } from './FieldList';
 export { InputList } from './InputList';
 export { Layout } from './Layout';
 export { LoginButton, LoginButtonWrapper } from './LoginButton';
-export { LoginModal, MutateModal } from './Modals';
 export { Overlay } from './Overlay';
 export { PanelHeader } from './PanelHeader';
+export { TransactionStatus } from './TransactionStatus';
 export { DocsTooltip } from './DocsTooltip';
 export { EndpointDefinitionList } from './EndpointDefinitionList';
 export { DefinitionsTooltip } from './DefinitionsTooltip';
+
+export * from './Forms';
+export * from './Modals';
 
 export * from './ContractBuild';
 export * from './ContractConstructor';
@@ -25,3 +28,4 @@ export * from './ContractEvents';
 export * from './ContractFiles';
 export * from './ContractLoadAbi';
 export * from './ContractTypings';
+export * from './ContractUpgrade';

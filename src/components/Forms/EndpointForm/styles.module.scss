@@ -6,6 +6,10 @@
   /*Placeholder*/
 }
 
+.endpoint-action-wrapper {
+  /*Placeholder*/
+}
+
 .endpoint-output {
   /*Placeholder*/
   &-results {
@@ -19,28 +23,5 @@
     &-code {
       /*Placeholder*/
     }
-  }
-}
-
-.endpoint-action-wrapper {
-  /*Placeholder*/
-}
-
-.button-endpoint-action {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.endpoint-warning {
-  /*Placeholder*/
-  &-icon {
-    /*Placeholder*/
-  }
-  &-text {
-    /*Placeholder*/
-  }
-  &-address {
-    /*Placeholder*/
   }
 }

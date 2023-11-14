@@ -13,6 +13,7 @@ export const DropzoneWasm = ({
   fieldName,
   setFieldValue,
   setFieldTouched,
+  setFieldError,
   setErrors,
   errors,
   values
@@ -44,6 +45,8 @@ export const DropzoneWasm = ({
           const buffer = toBuffer(fileReader.result as ArrayBuffer);
           const wasmCode = Code.fromBuffer(buffer);
           setFieldValue(fieldName, wasmCode);
+          setFieldTouched(fieldName, true, true);
+          setFieldError(fieldName, undefined);
         } catch (error) {
           setErrors({
             wasmFileContent: 'Invalid WASM File'

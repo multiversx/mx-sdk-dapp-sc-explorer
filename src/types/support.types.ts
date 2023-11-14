@@ -1,5 +1,5 @@
 export interface SupportType {
-  canUpdate: boolean;
+  canUpgrade: boolean;
   canDeploy: boolean;
   canLoadAbi: boolean;
   canMutate: boolean;

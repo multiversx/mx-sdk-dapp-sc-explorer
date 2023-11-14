@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { NativeSerializer } from '@multiversx/sdk-core/out';
 
+import { EndpointForm } from 'components';
 import { useSCExplorerContext } from 'contexts';
 import { useQueryContract } from 'hooks';
 import {
@@ -8,7 +9,6 @@ import {
   QueryContractResponse,
   BaseEndpointUIType
 } from 'types';
-import { EndpointForm } from './EndpointForm';
 
 export const EndpointRead = (props: BaseEndpointUIType) => {
   const queryContract = useQueryContract();

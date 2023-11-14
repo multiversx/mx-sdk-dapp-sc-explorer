@@ -23,7 +23,7 @@ export const LayoutSidebarComponent = (props: LayoutComponentUIType) => {
     hasConstructor,
     canLoadAbi,
     canDeploy,
-    canUpdate
+    canUpgrade
   } = support;
 
   const NavLink = ({
@@ -95,9 +95,9 @@ export const LayoutSidebarComponent = (props: LayoutComponentUIType) => {
       isActive: canDeploy,
       title: 'Deploy Contract'
     },
-    [VerifiedContractTabsEnum.update]: {
-      isActive: canUpdate,
-      title: 'Update Contract'
+    [VerifiedContractTabsEnum.upgrade]: {
+      isActive: canUpgrade,
+      title: 'Upgrade Contract'
     }
   };
 

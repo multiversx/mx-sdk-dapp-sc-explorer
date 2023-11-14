@@ -27,7 +27,7 @@ export interface SmartContractInitialType {
   canMutate?: boolean;
   canLoadAbi?: boolean;
   canDeploy?: boolean;
-  canUpdate?: boolean;
+  canUpgrade?: boolean;
   contractAddress?: string;
   abi?: RawAbiType;
   verifiedContract?: VerifiedContractType;
@@ -56,5 +56,15 @@ export enum VerifiedContractTabsEnum {
   contractConstructor = 'constructor',
   loadAbi = 'load-abi',
   deploy = 'deploy',
-  update = 'update'
+  upgrade = 'upgrade'
 }
+
+export enum MetadataFieldsEnum {
+  readable = 'readable',
+  upgradeable = 'upgradeable',
+  payable = 'payable',
+  payableBySc = 'payableBySc'
+}
+export type MetadataOptionsType = {
+  [key in MetadataFieldsEnum]: { label: string; checked: boolean };
+};

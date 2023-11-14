@@ -9,6 +9,18 @@ export const initializer: UserActionStateType = {
     args: [],
     endpoint: undefined
   },
+  deployModalState: {
+    deployModalOpen: false,
+    args: [],
+    endpoint: undefined,
+    code: undefined
+  },
+  upgradeModalState: {
+    upgradeModalOpen: false,
+    args: [],
+    endpoint: undefined,
+    code: undefined
+  },
   accountTokens: [],
   accountNfts: []
 };

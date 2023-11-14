@@ -19,7 +19,7 @@ import { useSCExplorerContext } from 'contexts';
 import { getInitalFormConfig, getNativeArgumentsFromValues } from 'helpers';
 import { EndpointFormUIType, FormikAbiType } from 'types';
 import { EndpointInteraction } from './EndpointInteraction';
-import styles from '../styles.module.scss';
+import styles from './styles.module.scss';
 
 export const EndpointForm = (props: EndpointFormUIType) => {
   const { smartContract, accountInfo, customClassNames, icons } =
@@ -114,20 +114,25 @@ export const EndpointForm = (props: EndpointFormUIType) => {
                 {generalError && <p>{generalError}</p>}
               </div>
             )}
-            <div className={classNames(styles?.endpointActionWrapper)}>
+            <div
+              className={classNames(
+                styles?.endpointActionWrapper,
+                globalStyles?.formActionWrapper
+              )}
+            >
               {deployedContractDetails?.code ? (
                 <LoginButtonWrapper
-                  className={classNames(styles?.buttonEndpointAction)}
+                  className={classNames(globalStyles?.buttonAction)}
                   mutability={mutability}
-                  buttonText='to interact with this endpoint.'
+                  buttonDescription='to interact with this endpoint.'
                 >
                   <button
                     className={classNames(
                       globalStyles?.button,
                       globalStyles?.buttonPrimary,
+                      globalStyles?.buttonAction,
                       customClassNames?.buttonClassName,
-                      customClassNames?.buttonPrimaryClassName,
-                      styles?.buttonEndpointAction
+                      customClassNames?.buttonPrimaryClassName
                     )}
                     type='submit'
                     {...(isLoading ||
@@ -150,11 +155,11 @@ export const EndpointForm = (props: EndpointFormUIType) => {
                   </button>
                 </LoginButtonWrapper>
               ) : (
-                <div className={classNames(styles?.loginButtonWrapper)}>
-                  <div className={classNames(styles?.loginButtonWrapperText)}>
+                <div className={classNames(globalStyles?.formWarning)}>
+                  <div className={classNames(globalStyles?.formWarningText)}>
                     <FontAwesomeIcon
                       icon={faTriangleExclamation}
-                      className={classNames(styles?.loginButtonWarningIcon)}
+                      className={classNames(globalStyles?.formWarningIcon)}
                     />
                     Contract Address is required in order to interact with the
                     Endpoints
@@ -165,22 +170,24 @@ export const EndpointForm = (props: EndpointFormUIType) => {
                 modifiers?.isOnlyOwner() &&
                 !isOwnerConnected &&
                 ownerAddress && (
-                  <div className={classNames(styles?.endpointWarning)}>
+                  <div className={classNames(globalStyles?.formWarning)}>
                     <FontAwesomeIcon
                       icon={faTriangleExclamation}
-                      className={classNames(styles?.endpointWarningIcon)}
+                      className={classNames(globalStyles?.formWarningIcon)}
                     />
-                    <span className={classNames(styles?.endpointWarningText)}>
+                    <span className={classNames(globalStyles?.formWarningText)}>
                       You must connect with
                     </span>
-                    <div className={classNames(styles?.endpointWarningAddress)}>
+                    <div
+                      className={classNames(globalStyles?.formWarningAddress)}
+                    >
                       <Trim text={ownerAddress} />
                       <CopyButton
                         text={ownerAddress}
                         copyIcon={copyIcon as any} // TODO fix fontawesome typing issue
                       />
                     </div>
-                    <span className={classNames(styles?.endpointWarningText)}>
+                    <span className={classNames(globalStyles?.formWarningText)}>
                       to call this endpoint.
                     </span>
                   </div>

@@ -7,7 +7,7 @@ import globalStyles from 'assets/styles/globals.module.scss';
 import { EndpointDefinitionList, Code } from 'components';
 import { useSCExplorerContext } from 'contexts';
 import { EndpointOutputUIType } from 'types';
-import styles from '../styles.module.scss';
+import styles from './styles.module.scss';
 
 export const EndpointOutput = (props: EndpointOutputUIType) => {
   const { output, result } = props;

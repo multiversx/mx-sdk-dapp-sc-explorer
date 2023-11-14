@@ -21,16 +21,25 @@ import { DropzoneWasm } from 'components/Dropzone/DropzoneWasm';
 import { useSCExplorerContext } from 'contexts';
 import { getInitalFormConfig, getNativeArgumentsFromValues } from 'helpers';
 import {
-  ContractDeployFormUIType,
   FormikAbiType,
-  ContractDeployFormikFieldsEnum
+  DeployUpgradeFileFormUIType,
+  DeployUpgradeFileFormikFieldsEnum
 } from 'types';
-import styles from '../styles.module.scss';
+import styles from './styles.module.scss';
 
-export const ContractDeployForm = (props: ContractDeployFormUIType) => {
-  const { onSubmit, isLoading, generalError } = props;
+export const DeployUpgradeFileForm = (props: DeployUpgradeFileFormUIType) => {
+  const {
+    isUpgrade = false,
+    onSubmit,
+    isLoading,
+    generalError,
+    buttonText,
+    buttonLoginDescription,
+    buttonDescription
+  } = props;
   const { smartContract, customClassNames, icons } = useSCExplorerContext();
-  const { abiRegistry } = smartContract || {};
+  const { abiRegistry, deployedContractDetails, contractAddress } =
+    smartContract ?? {};
   const { input } = abiRegistry?.constructorDefinition ?? {
     input: []
   };
@@ -45,7 +54,7 @@ export const ContractDeployForm = (props: ContractDeployFormUIType) => {
     ...input.map((input) => {
       return [input.name, getInitalFormConfig({ type: input.type })];
     }),
-    [ContractDeployFormikFieldsEnum.wasmFileContent, '']
+    [DeployUpgradeFileFormikFieldsEnum.wasmFileContent, '']
   ]);
 
   const validationSchema = lazy((innerObj) => {
@@ -62,12 +71,20 @@ export const ContractDeployForm = (props: ContractDeployFormUIType) => {
                 abiRegistry.constructorDefinition
               );
             }
-            if (wasmFileContent && wasmFileContent.toString() === '') {
-              return createError({
-                path: ContractDeployFormikFieldsEnum.wasmFileContent,
-                message: 'Empty File'
-              });
+            if (wasmFileContent) {
+              if (wasmFileContent.toString() === '') {
+                return createError({
+                  path: DeployUpgradeFileFormikFieldsEnum.wasmFileContent,
+                  message: 'Empty File'
+                });
+              }
             }
+            // } else {
+            //   return createError({
+            //     path: DeployUpgradeFileFormikFieldsEnum.wasmFileContent,
+            //     message: 'Required'
+            //   });
+            // }
           } catch (error) {
             return createError({
               path: 'general',
@@ -94,8 +111,7 @@ export const ContractDeployForm = (props: ContractDeployFormUIType) => {
         });
       }}
       validationSchema={validationSchema}
-      validateOnChange={false}
-      validateOnBlur={true}
+      validateOnChange={true}
       enableReinitialize
     >
       {(formik) => {
@@ -106,16 +122,16 @@ export const ContractDeployForm = (props: ContractDeployFormUIType) => {
         return (
           <Form
             onSubmit={formik.handleSubmit}
-            className={classNames(styles?.contractDeployForm)}
+            className={classNames(styles?.deployUpgradeFileForm)}
           >
             {abiRegistry?.constructorDefinition && (
-              <div className={classNames(styles?.contractDeployFormFields)}>
+              <div className={classNames(styles?.deployUpgradeFileFormFields)}>
                 <InputList
                   input={input}
                   endpoint={abiRegistry?.constructorDefinition}
                   formik={formik}
                   excludedKeys={[
-                    ContractDeployFormikFieldsEnum.wasmFileContent
+                    DeployUpgradeFileFormikFieldsEnum.wasmFileContent
                   ]}
                 />
                 {(hasOnlyGeneralValidationError || generalError) && (
@@ -137,41 +153,58 @@ export const ContractDeployForm = (props: ContractDeployFormUIType) => {
 
             <DropzoneWasm
               {...formik}
-              fieldName={ContractDeployFormikFieldsEnum.wasmFileContent}
+              fieldName={DeployUpgradeFileFormikFieldsEnum.wasmFileContent}
             />
 
-            <LoginButtonWrapper
-              buttonText='to deploy a contract.'
-              className={classNames(styles?.contractDeployFormButton)}
-            >
-              <button
-                className={classNames(
-                  globalStyles?.button,
-                  globalStyles?.buttonPrimary,
-                  customClassNames?.buttonClassName,
-                  customClassNames?.buttonPrimaryClassName,
-                  styles?.contractDeployFormButton
-                )}
-                type='submit'
-                {...(isLoading || !formik.isValid ? { disabled: true } : {})}
+            <div className={classNames(globalStyles?.formActionWrapper)}>
+              <LoginButtonWrapper
+                className={classNames(styles?.deployUpgradeFileFormButton)}
+                buttonDescription={
+                  buttonLoginDescription && !buttonDescription
+                    ? buttonLoginDescription
+                    : ''
+                }
               >
-                Deploy Contract
-                {isLoading ? (
-                  <FontAwesomeIcon
-                    icon={loadIcon}
-                    className='fa-spin fast-spin'
-                  />
-                ) : (
-                  <FontAwesomeIcon icon={playIcon} />
-                )}
-              </button>
-            </LoginButtonWrapper>
+                <button
+                  className={classNames(
+                    globalStyles?.button,
+                    globalStyles?.buttonPrimary,
+                    customClassNames?.buttonClassName,
+                    customClassNames?.buttonPrimaryClassName,
+                    styles?.deployUpgradeFileFormButton
+                  )}
+                  type='submit'
+                  {...(isLoading ||
+                  !formik.isValid ||
+                  (isUpgrade && !contractAddress && !deployedContractDetails)
+                    ? { disabled: true }
+                    : {})}
+                >
+                  {buttonText}
+                  {isLoading ? (
+                    <FontAwesomeIcon
+                      icon={loadIcon}
+                      className='fa-spin fast-spin'
+                    />
+                  ) : (
+                    <FontAwesomeIcon icon={playIcon} />
+                  )}
+                </button>
+              </LoginButtonWrapper>
+              {buttonDescription && (
+                <div className={classNames(globalStyles?.formWarning)}>
+                  <div className={classNames(globalStyles?.formWarningText)}>
+                    {buttonDescription}
+                  </div>
+                </div>
+              )}
+            </div>
 
-            {values?.[ContractDeployFormikFieldsEnum.wasmFileContent] && (
+            {values?.[DeployUpgradeFileFormikFieldsEnum.wasmFileContent] && (
               <div
                 className={classNames(
                   globalStyles?.codeContainer,
-                  styles?.contractDeployCodeContainer
+                  styles?.deployUpgradeFileFormCodeContainer
                 )}
               >
                 <h6 className={classNames(globalStyles?.cardContainerTitle)}>
@@ -181,7 +214,7 @@ export const ContractDeployForm = (props: ContractDeployFormUIType) => {
                   <div className={classNames(globalStyles?.buttonHolder)}>
                     <CopyButton
                       text={values[
-                        ContractDeployFormikFieldsEnum.wasmFileContent
+                        DeployUpgradeFileFormikFieldsEnum.wasmFileContent
                       ].toString()}
                       className={classNames(globalStyles?.copyButton)}
                       copyIcon={copyIcon as any} // TODO fix fontawesome typing issue
@@ -192,7 +225,7 @@ export const ContractDeployForm = (props: ContractDeployFormUIType) => {
                       globalStyles?.endpointOutputResultsCode
                     )}
                     code={values[
-                      ContractDeployFormikFieldsEnum.wasmFileContent
+                      DeployUpgradeFileFormikFieldsEnum.wasmFileContent
                     ].toString()}
                     showLineNumbers={false}
                     wrapLongLines={true}
