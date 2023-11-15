@@ -44,19 +44,9 @@ export const RecursiveContainer = ({
     });
 
     if (Array.isArray(individualConfig)) {
-      // Backup in case of a malformed initial object
-      if (individualConfig.length === 0) {
-        return (
-          <Input
-            name={`${formattedPrefix}.0`}
-            formik={formik}
-            defaultValue=''
-          />
-        );
-      }
-
       let isComposite = false;
       let upperBound = 1;
+      let lowerBound = 1;
       if (formattedPrefix.includes(':')) {
         const fullEndpointName = formattedPrefix.split(':')?.[0];
         const fieldName = fullEndpointName.split('.')?.[0];
@@ -74,10 +64,36 @@ export const RecursiveContainer = ({
             if (foundType) {
               isComposite = foundType?.getCardinality()?.isComposite();
               upperBound = foundType?.getCardinality()?.getUpperBound();
+              lowerBound = foundType?.getCardinality()?.getLowerBound();
             }
           }
         }
       }
+
+      if (individualConfig.length === 0) {
+        // In case all Arguments are removed
+        return (
+          <>
+            {individualConfig.length <= upperBound && (
+              <button
+                type='button'
+                className={classNames(
+                  globalStyles?.button,
+                  globalStyles?.buttonSecondary,
+                  customClassNames?.buttonClassName,
+                  customClassNames?.buttonSecondaryClassName,
+                  styles?.buttonAddArgument
+                )}
+                onClick={addNewProperty}
+                {...(!formik ? { disabled: true } : {})}
+              >
+                Add Argument <FontAwesomeIcon icon={plusIcon} />
+              </button>
+            )}
+          </>
+        );
+      }
+
       return (
         <>
           <RecursiveContainer
@@ -88,7 +104,8 @@ export const RecursiveContainer = ({
           />
           {Boolean(isComposite && canMutate) && (
             <>
-              {individualConfig.length > 1 &&
+              {individualConfig.length !== 0 &&
+                individualConfig.length >= lowerBound &&
                 individualConfig.length !== upperBound && (
                   <button
                     type='button'
@@ -105,7 +122,7 @@ export const RecursiveContainer = ({
                     Remove Argument <FontAwesomeIcon icon={minusIcon} />
                   </button>
                 )}
-              {individualConfig.length < upperBound && (
+              {individualConfig.length <= upperBound && (
                 <button
                   type='button'
                   className={classNames(

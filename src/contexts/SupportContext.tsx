@@ -55,12 +55,13 @@ export function SupportContextProvider({
   const hasTypes =
     abiRegistry?.customTypes && abiRegistry.customTypes.length > 0;
 
-  const abiConstructor = rawAbi?.['constructor'];
+  const rawAbiConstructor = rawAbi?.['constructor'];
+  const abiConstructor = abiRegistry?.constructorDefinition;
   const hasConstructor =
     abiConstructor &&
-    ((abiConstructor?.inputs && abiConstructor.inputs.length > 0) ||
-      (abiConstructor?.outputs && abiConstructor.outputs.length > 0) ||
-      (abiConstructor?.docs && abiConstructor?.docs.length > 0));
+    ((abiConstructor?.input && abiConstructor.input.length > 0) ||
+      (abiConstructor?.output && abiConstructor.output.length > 0) ||
+      (rawAbiConstructor?.docs && rawAbiConstructor.docs.length > 0));
 
   const value = {
     canUpgrade: Boolean(canUpgrade),

@@ -35,6 +35,7 @@ export const useFormProperty = ({
       newProperties.splice(propertyIndex, 1);
       if (formik) {
         formik.setFieldValue(prefix, newProperties);
+        formik.validateForm();
       }
     }
   };

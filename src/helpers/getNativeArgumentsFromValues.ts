@@ -64,10 +64,22 @@ function prepareArgs(arr: any[]) {
     if (Array.isArray(arr[i]) && arr[i].length === 1) {
       result.push(arr[i][0]);
     } else if (Array.isArray(arr[i])) {
-      result.push(prepareArgs(arr[i]));
+      if (arr[i].length > 0) {
+        result.push(prepareArgs(arr[i]));
+      }
     } else {
-      result.push(arr[i]);
+      if (!isObjectEmpty(arr[i])) {
+        result.push(arr[i]);
+      }
     }
   }
   return result;
+}
+
+function isObjectEmpty(objectName: any) {
+  return (
+    objectName &&
+    Object.keys(objectName).length === 0 &&
+    objectName.constructor === Object
+  );
 }

@@ -63,7 +63,7 @@ export const ContractDeploy = () => {
       )}
     >
       <DeployModal />
-      <PanelHeader>Contract Deploy</PanelHeader>
+      <PanelHeader>Deploy Contract</PanelHeader>
       <Card>
         <DocsPanel />
         <DeployUpgradeFileForm

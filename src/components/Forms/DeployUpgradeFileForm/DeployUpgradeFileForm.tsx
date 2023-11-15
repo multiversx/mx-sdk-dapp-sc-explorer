@@ -135,9 +135,6 @@ export const DeployUpgradeFileForm = (props: DeployUpgradeFileFormUIType) => {
                   input={input}
                   endpoint={abiRegistry?.constructorDefinition}
                   formik={formik}
-                  excludedKeys={[
-                    DeployUpgradeFileFormikFieldsEnum.wasmFileContent
-                  ]}
                 />
                 {(hasOnlyGeneralValidationError || generalError) && (
                   <div

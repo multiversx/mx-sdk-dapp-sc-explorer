@@ -79,7 +79,7 @@ export const ContractUpgrade = () => {
       )}
     >
       <UpgradeModal />
-      <PanelHeader>Contract Upgrade</PanelHeader>
+      <PanelHeader>Upgrade Contract</PanelHeader>
       <Card>
         <DocsPanel />
         <DeployUpgradeFileForm
