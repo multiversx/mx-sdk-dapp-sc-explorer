@@ -16,7 +16,7 @@ export interface ProcessedFormTokenType {
   tokenAmount: string;
   tokenIdentifier: string;
   tokenDecimals: number;
-  tokenType: EsdtEnumType | NftEnumType | 'native' | '';
+  tokenType: EsdtEnumType | NftEnumType | 'native' | string;
   tokenNonce?: number;
 }
 
@@ -50,12 +50,12 @@ export interface PartialTokenType {
 // includes MetaEsdts and egld exception
 export interface PartialEsdtType extends PartialTokenType {
   decimals: number;
-  type: EsdtEnumType | NftEnumType | 'native' | '';
+  type: EsdtEnumType | NftEnumType | 'native' | string;
   price?: string | number;
   nonce?: number;
 }
 
 export interface PartialNftType extends PartialTokenType {
-  type: NftEnumType | '';
+  type: NftEnumType | string;
   nonce?: number;
 }

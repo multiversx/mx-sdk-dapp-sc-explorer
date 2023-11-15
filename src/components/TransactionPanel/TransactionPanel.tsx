@@ -125,32 +125,35 @@ export const TransactionPanel = ({
             )}
           />
         )}
-        {!isLoading && (
-          <div className={classNames(globalStyles?.formPanelText)}>
-            {status === TransactionServerStatusesEnum.success
-              ? panelDescription
-              : ''}
-            {isFailed ? panelErrorDescription : ''}
-            {deployedContractAddress && (
-              <div
-                className={classNames(
-                  globalStyles?.cardContainer,
-                  globalStyles?.cardItemContainer,
-                  customClassNames?.cardItemContainerClassName,
-                  styles?.transactionPanelCardContainer
-                )}
-              >
-                <CardItem title='Contract Address' icon={faCogs}>
-                  <Trim text={deployedContractAddress} />
-                  <CopyButton
-                    text={deployedContractAddress}
-                    copyIcon={copyIcon as any} // TODO fix fontawesome typing issue
-                  />
-                </CardItem>
-              </div>
-            )}
-          </div>
-        )}
+        {!isLoading &&
+          (status === TransactionServerStatusesEnum.success ||
+            isFailed ||
+            deployedContractAddress) && (
+            <div className={classNames(globalStyles?.formPanelText)}>
+              {status === TransactionServerStatusesEnum.success
+                ? panelDescription
+                : ''}
+              {isFailed ? panelErrorDescription : ''}
+              {deployedContractAddress && (
+                <div
+                  className={classNames(
+                    globalStyles?.cardContainer,
+                    globalStyles?.cardItemContainer,
+                    customClassNames?.cardItemContainerClassName,
+                    styles?.transactionPanelCardContainer
+                  )}
+                >
+                  <CardItem title='Contract Address' icon={faCogs}>
+                    <Trim text={deployedContractAddress} />
+                    <CopyButton
+                      text={deployedContractAddress}
+                      copyIcon={copyIcon as any} // TODO fix fontawesome typing issue
+                    />
+                  </CardItem>
+                </div>
+              )}
+            </div>
+          )}
       </div>
       <button
         className={classNames(

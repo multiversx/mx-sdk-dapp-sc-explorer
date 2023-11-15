@@ -5,10 +5,15 @@ import {
   CodeMetadata,
   TokenTransfer
 } from '@multiversx/sdk-core/out';
+import {
+  removeAllSignedTransactions,
+  removeAllTransactionsToSign
+} from '@multiversx/sdk-dapp/services/transactions/clearTransactions';
 import { sendTransactions } from '@multiversx/sdk-dapp/services/transactions/sendTransactions';
+import { refreshAccount } from '@multiversx/sdk-dapp/utils/account/refreshAccount';
 import { getChainID } from '@multiversx/sdk-dapp/utils/network';
 
-import { DeployUpgradeModalForm, TransactionPanel } from 'components';
+import { InteractionModalForm, TransactionPanel } from 'components';
 import { useUserActionDispatch, useSCExplorerContext } from 'contexts';
 import { useTrackTransaction } from 'hooks';
 import {
@@ -54,6 +59,8 @@ export const UpgradeModal = () => {
       setSessionId(undefined);
       const { upgradeable, readable, payable, payableBySc } = values;
       if (code && contractAddress && deployedContractDetails) {
+        removeAllSignedTransactions();
+        removeAllTransactionsToSign();
         const caller = new Address(callerAddress);
         const address = new Address(contractAddress);
         const contract = new SmartContract({
@@ -79,7 +86,7 @@ export const UpgradeModal = () => {
         if (environment === 'mainnet') {
           console.log('Transaction: ', transaction?.toPlainObject());
         }
-
+        await refreshAccount();
         // TODO - temporary - don't send the transactions for now - show them in console on mainnet
         const { error, sessionId: upgradeSessionId } = await sendTransactions({
           ...(environment === 'mainnet' ? { signWithoutSending: true } : {}),
@@ -129,7 +136,7 @@ export const UpgradeModal = () => {
           panelErrorDescription='Could not Upgrade Smart Contract'
         />
       ) : (
-        <DeployUpgradeModalForm
+        <InteractionModalForm
           isUpgrade={true}
           onSubmit={onSubmit}
           generalError={generalError}

@@ -5,10 +5,15 @@ import {
   CodeMetadata,
   TokenTransfer
 } from '@multiversx/sdk-core/out';
+import {
+  removeAllSignedTransactions,
+  removeAllTransactionsToSign
+} from '@multiversx/sdk-dapp/services/transactions/clearTransactions';
 import { sendTransactions } from '@multiversx/sdk-dapp/services/transactions/sendTransactions';
+import { refreshAccount } from '@multiversx/sdk-dapp/utils/account/refreshAccount';
 import { getChainID } from '@multiversx/sdk-dapp/utils/network';
 
-import { DeployUpgradeModalForm, TransactionPanel } from 'components';
+import { InteractionModalForm, TransactionPanel } from 'components';
 import { useUserActionDispatch, useSCExplorerContext } from 'contexts';
 import { useTrackTransaction } from 'hooks';
 import {
@@ -51,13 +56,15 @@ export const DeployModal = () => {
     try {
       setIsLoading(true);
       setSessionId(undefined);
-      const { upgradeable, readable, payable, payableBySc } = values;
+      const { upgradeable, readable, payable, payableBySc, gasLimit } = values;
       const caller = new Address(callerAddress);
       const contract = new SmartContract({
         abi: abiRegistry
       });
 
       if (code) {
+        removeAllSignedTransactions();
+        removeAllTransactionsToSign();
         const codeMetadata = new CodeMetadata(
           upgradeable,
           readable,
@@ -68,7 +75,7 @@ export const DeployModal = () => {
           deployer: caller,
           code,
           codeMetadata,
-          gasLimit: Number(values.gasLimit),
+          gasLimit: Number(gasLimit),
           initArguments: args,
           value: TokenTransfer.egldFromAmount(0),
           chainID: getChainID()
@@ -77,7 +84,7 @@ export const DeployModal = () => {
         if (environment === 'mainnet') {
           console.log('Transaction: ', transaction?.toPlainObject());
         }
-
+        await refreshAccount();
         // TODO - temporary - don't send the transactions for now - show them in console on mainnet
         const { error, sessionId: deploySessionId } = await sendTransactions({
           ...(environment === 'mainnet' ? { signWithoutSending: true } : {}),
@@ -95,6 +102,8 @@ export const DeployModal = () => {
         if (error) {
           setGeneralError(String(error));
         }
+      } else {
+        setGeneralError('Missing WASM Code');
       }
     } catch (error) {
       console.error('Deploy Smart Contract Error:', error);
@@ -124,7 +133,8 @@ export const DeployModal = () => {
           panelErrorDescription='Could not Deploy Smart Contract'
         />
       ) : (
-        <DeployUpgradeModalForm
+        <InteractionModalForm
+          isDeploy={true}
           onSubmit={onSubmit}
           generalError={generalError}
           isLoading={isLoading}

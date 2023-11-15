@@ -1,3 +1,3 @@
 export * from './DeployUpgradeFileForm/types';
-export * from './DeployUpgradeModalForm/types';
+export * from './InteractionModalForm/types';
 export * from './EndpointForm/types';

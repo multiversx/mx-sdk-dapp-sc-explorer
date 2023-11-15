@@ -7,7 +7,8 @@ export const initializer: UserActionStateType = {
   mutateModalState: {
     mutateModalOpen: false,
     args: [],
-    endpoint: undefined
+    endpoint: undefined,
+    code: undefined
   },
   deployModalState: {
     deployModalOpen: false,

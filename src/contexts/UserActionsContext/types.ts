@@ -25,23 +25,19 @@ export type UserActionDispatchType = (
 
 export interface TransactionModalStateBaseType {
   endpoint: EndpointDefinition | undefined;
-  args?: TypedValue[];
-}
-
-export interface DeployUpgradeModalStateBaseType
-  extends TransactionModalStateBaseType {
   code: Code | undefined;
+  args: TypedValue[];
 }
 
 export interface MutateModalStateType extends TransactionModalStateBaseType {
   mutateModalOpen: boolean;
 }
 
-export interface DeployModalStateType extends DeployUpgradeModalStateBaseType {
+export interface DeployModalStateType extends TransactionModalStateBaseType {
   deployModalOpen: boolean;
 }
 
-export interface UpgradeModalStateType extends DeployUpgradeModalStateBaseType {
+export interface UpgradeModalStateType extends TransactionModalStateBaseType {
   upgradeModalOpen: boolean;
 }
 

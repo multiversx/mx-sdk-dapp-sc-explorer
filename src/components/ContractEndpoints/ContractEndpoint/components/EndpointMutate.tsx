@@ -25,7 +25,6 @@ export const EndpointMutate = (props: BaseEndpointUIType) => {
   const onSubmit = async (nativeValues: any[]) => {
     setError(undefined);
     setIsLoading(true);
-
     try {
       const args = NativeSerializer.nativeToTypedValues(
         nativeValues || [],
@@ -39,7 +38,8 @@ export const EndpointMutate = (props: BaseEndpointUIType) => {
         mutateModalState: {
           mutateModalOpen: true,
           args,
-          endpoint
+          endpoint,
+          code: undefined
         }
       });
     } catch (error) {
