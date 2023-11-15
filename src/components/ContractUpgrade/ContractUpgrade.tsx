@@ -24,7 +24,7 @@ export const ContractUpgrade = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string>();
 
-  const onSubmit = async ({
+  const onSubmit = ({
     values,
     wasmFileContent
   }: {
@@ -42,8 +42,8 @@ export const ContractUpgrade = () => {
         : [];
       userActionDispatch({
         type: UserActionDispatchTypeEnum.setUpgradeModalState,
-        deployModalState: {
-          deployModalOpen: true,
+        upgradeModalState: {
+          upgradeModalOpen: true,
           args,
           code: wasmFileContent,
           endpoint: abiRegistry?.constructorDefinition

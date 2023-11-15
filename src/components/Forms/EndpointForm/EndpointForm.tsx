@@ -76,9 +76,10 @@ export const EndpointForm = (props: EndpointFormUIType) => {
   return (
     <Formik
       initialValues={initialValues}
-      onSubmit={async (values) => {
+      onSubmit={async (values, { resetForm }) => {
         const nativeArgs = getNativeArgumentsFromValues(values);
         await onSubmit(nativeArgs);
+        resetForm();
       }}
       validationSchema={validationSchema}
       validateOnChange={false}
@@ -89,6 +90,10 @@ export const EndpointForm = (props: EndpointFormUIType) => {
         const { errors } = formik;
         const hasOnlyGeneralValidationError =
           errors?.general && Object?.keys(errors).length === 1;
+        const isButtonDisabled =
+          isLoading ||
+          !formik.isValid ||
+          (modifiers?.isOnlyOwner() && isLoggedIn && !isOwnerConnected);
 
         return (
           <Form
@@ -135,13 +140,7 @@ export const EndpointForm = (props: EndpointFormUIType) => {
                       customClassNames?.buttonPrimaryClassName
                     )}
                     type='submit'
-                    {...(isLoading ||
-                    !formik.isValid ||
-                    (modifiers?.isOnlyOwner() &&
-                      isLoggedIn &&
-                      !isOwnerConnected)
-                      ? { disabled: true }
-                      : {})}
+                    {...(isButtonDisabled ? { disabled: true } : {})}
                   >
                     {buttonText}
                     {isLoading ? (

@@ -102,13 +102,14 @@ export const DeployUpgradeFileForm = (props: DeployUpgradeFileFormUIType) => {
   return (
     <Formik
       initialValues={initialValues}
-      onSubmit={async (sumbittedValues) => {
+      onSubmit={(sumbittedValues, { resetForm }) => {
         const { wasmFileContent, ...rest } = sumbittedValues;
         const values = getNativeArgumentsFromValues(rest);
-        await onSubmit({
+        onSubmit({
           wasmFileContent: wasmFileContent as Code,
           values
         });
+        resetForm();
       }}
       validationSchema={validationSchema}
       validateOnChange={true}
@@ -118,6 +119,10 @@ export const DeployUpgradeFileForm = (props: DeployUpgradeFileFormUIType) => {
         const { errors, values } = formik;
         const hasOnlyGeneralValidationError =
           errors?.general && Object?.keys(errors).length === 1;
+        const isButtonDisabled =
+          isLoading ||
+          !formik.isValid ||
+          (isUpgrade && !contractAddress && !deployedContractDetails);
 
         return (
           <Form
@@ -174,11 +179,7 @@ export const DeployUpgradeFileForm = (props: DeployUpgradeFileFormUIType) => {
                     styles?.deployUpgradeFileFormButton
                   )}
                   type='submit'
-                  {...(isLoading ||
-                  !formik.isValid ||
-                  (isUpgrade && !contractAddress && !deployedContractDetails)
-                    ? { disabled: true }
-                    : {})}
+                  {...(isButtonDisabled ? { disabled: true } : {})}
                 >
                   {buttonText}
                   {isLoading ? (

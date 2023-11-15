@@ -16,20 +16,21 @@ import { Card, Code, PanelHeader } from 'components';
 import { DropzoneAbi } from 'components/Dropzone/DropzoneAbi';
 import { useSCExplorerContext } from 'contexts';
 import { useUpdateDeployedContractDetails } from 'hooks';
+import { FormikLoadAbiType, ContractLoadAbiFormikFieldsEnum } from 'types';
 import styles from './styles.module.scss';
-import { FormikLoadAbiType, ContractLoadAbiFormikFieldsEnum } from './types';
 
 export const ContractLoadAbiComponent = () => {
   const { support, customClassNames, smartContract, icons } =
     useSCExplorerContext();
   const { canLoadAbi } = support;
-  const { rawAbi, deployedContractDetails } = smartContract;
+  const { rawAbi, deployedContractDetails, contractAddress } = smartContract;
   const { copyIcon = faCopy, loadIcon = faCircleNotch } = icons ?? {};
+
   const { updateDeployedContractDetails, isContractAddressCheckLoading } =
     useUpdateDeployedContractDetails();
 
   const initialValues: FormikLoadAbiType = {
-    [ContractLoadAbiFormikFieldsEnum.contractAddress]: '',
+    [ContractLoadAbiFormikFieldsEnum.contractAddress]: contractAddress ?? '',
     [ContractLoadAbiFormikFieldsEnum.abiFileContent]: undefined
   };
 
@@ -82,6 +83,7 @@ export const ContractLoadAbiComponent = () => {
           onSubmit={() => {}}
           validateOnChange
           validationSchema={validationSchema}
+          enableReinitialize
         >
           {(formik) => {
             const { errors, handleChange, handleBlur } = formik;
@@ -120,7 +122,11 @@ export const ContractLoadAbiComponent = () => {
                       type='text'
                       onChange={async (e: React.FocusEvent<any, Element>) => {
                         handleChange(e);
-                        await updateDeployedContractDetails(e?.target?.value);
+                        if (e?.target?.value !== contractAddress) {
+                          await updateDeployedContractDetails({
+                            address: e?.target?.value
+                          });
+                        }
                       }}
                       onBlur={handleBlur}
                       placeholder='Contract Address'
@@ -181,7 +187,7 @@ export const ContractLoadAbiComponent = () => {
                   <div
                     className={classNames(
                       globalStyles?.codeContainer,
-                      styles?.contractLoadAbiCodeContainer
+                      styles?.contractLoadAbiFormCodeContainer
                     )}
                   >
                     <h6

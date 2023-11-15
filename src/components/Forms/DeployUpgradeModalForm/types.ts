@@ -18,13 +18,10 @@ export interface DeployUpgradeModalInitialValuesType {
 }
 
 export interface DeployUpgradeModalFormUIType extends UserInterfaceType {
-  isUpgrade?: boolean;
   onSubmit: (values: DeployUpgradeModalInitialValuesType) => Promise<void>;
-  onClose: () => void;
-  isLoading?: boolean;
+  isLoading: boolean;
+  isUpgrade?: boolean;
   generalError?: string;
-  successText?: string | React.ReactNode;
   buttonText?: string | React.ReactNode;
   panelDescription?: string | React.ReactNode;
-  sessionId?: string;
 }

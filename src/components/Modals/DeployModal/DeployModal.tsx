@@ -8,8 +8,9 @@ import {
 import { sendTransactions } from '@multiversx/sdk-dapp/services/transactions/sendTransactions';
 import { getChainID } from '@multiversx/sdk-dapp/utils/network';
 
-import { DeployUpgradeModalForm } from 'components';
+import { DeployUpgradeModalForm, TransactionPanel } from 'components';
 import { useUserActionDispatch, useSCExplorerContext } from 'contexts';
+import { useTrackTransaction } from 'hooks';
 import {
   UserActionDispatchTypeEnum,
   DeployUpgradeModalInitialValuesType
@@ -29,6 +30,7 @@ export const DeployModal = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [generalError, setGeneralError] = useState<string>();
   const [sessionId, setSessionId] = useState<string>();
+  const { status, transactions } = useTrackTransaction(sessionId);
 
   const onClose = () => {
     setIsLoading(false);
@@ -72,7 +74,9 @@ export const DeployModal = () => {
           chainID: getChainID()
         });
 
-        console.log('Transaction: ', transaction?.toPlainObject());
+        if (environment === 'mainnet') {
+          console.log('Transaction: ', transaction?.toPlainObject());
+        }
 
         // TODO - temporary - don't send the transactions for now - show them in console on mainnet
         const { error, sessionId: deploySessionId } = await sendTransactions({
@@ -111,21 +115,28 @@ export const DeployModal = () => {
       className={styles?.deployModal}
       title='Deploy Smart Contract'
     >
-      <DeployUpgradeModalForm
-        onSubmit={onSubmit}
-        onClose={onClose}
-        generalError={generalError}
-        isLoading={isLoading}
-        panelDescription={
-          <>
-            You are about to deploy a new Smart Contract. <br />
-            Please make sure that the entered data is valid !
-          </>
-        }
-        buttonText='Deploy Smart Contract'
-        successText='Smart Contract Successfully Deployed'
-        sessionId={sessionId}
-      />
+      {sessionId ? (
+        <TransactionPanel
+          onClose={onClose}
+          transactions={transactions}
+          status={status}
+          panelDescription='Smart Contract Successfully Deployed'
+          panelErrorDescription='Could not Deploy Smart Contract'
+        />
+      ) : (
+        <DeployUpgradeModalForm
+          onSubmit={onSubmit}
+          generalError={generalError}
+          isLoading={isLoading}
+          panelDescription={
+            <>
+              You are about to Deploy a new Smart Contract. <br />
+              Please make sure that the entered data is valid !
+            </>
+          }
+          buttonText='Deploy Smart Contract'
+        />
+      )}
     </Modal>
   );
 };

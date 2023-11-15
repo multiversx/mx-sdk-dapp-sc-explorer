@@ -21,7 +21,7 @@ export const ContractDeploy = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string>();
 
-  const onSubmit = async ({
+  const onSubmit = ({
     values,
     wasmFileContent
   }: {
@@ -30,7 +30,6 @@ export const ContractDeploy = () => {
   }) => {
     setError(undefined);
     setIsLoading(true);
-
     try {
       const args = abiRegistry?.constructorDefinition
         ? NativeSerializer.nativeToTypedValues(

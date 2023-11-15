@@ -96,7 +96,9 @@ export const MutateModal = () => {
         tokens: values.tokens
       });
 
-      console.log('Transaction: ', contractTransaction?.toPlainObject());
+      if (environment === 'mainnet') {
+        console.log('Transaction: ', contractTransaction?.toPlainObject());
+      }
 
       // TODO - temporary - don't send the transactions for now - show them in console on mainnet
       const { error } = await sendTransactions({
@@ -202,19 +204,23 @@ export const MutateModal = () => {
             handleBlur
           } = formik;
           const inputError = getIn(errors, 'gasLimit');
+          const isButtonDisabled = isLoading || !formik.isValid;
 
           return (
             <Form
               onSubmit={formik.handleSubmit}
               className={classNames(styles?.mutateModalForm)}
             >
-              <div className={classNames(globalStyles?.formWarnPanel)}>
+              <div className={classNames(globalStyles?.formPanel)}>
                 <FontAwesomeIcon
                   icon={faTriangleExclamation}
                   size='2x'
-                  className={classNames(globalStyles?.formWarnPanelIcon)}
+                  className={classNames(
+                    globalStyles?.formPanelIcon,
+                    globalStyles?.formPanelIconWarn
+                  )}
                 />
-                <div className={classNames(globalStyles?.formWarnPanelText)}>
+                <div className={classNames(globalStyles?.formPanelText)}>
                   This is a real transaction that will be executed on the Smart
                   Contract. <br />
                   Please make sure that the entered data is valid !
@@ -222,13 +228,16 @@ export const MutateModal = () => {
               </div>
               {/* TODO - temporary - don't send the transactions for now - show them in console on mainnet */}
               {environment === 'mainnet' && (
-                <div className={classNames(globalStyles?.formWarnPanel)}>
+                <div className={classNames(globalStyles?.formPanel)}>
                   <FontAwesomeIcon
                     icon={faTriangleExclamation}
                     size='2x'
-                    className={classNames(globalStyles?.formWarnPanelIcon)}
+                    className={classNames(
+                      globalStyles?.formPanelIcon,
+                      globalStyles?.formPanelIconWarn
+                    )}
                   />
-                  <div className={classNames(globalStyles?.formWarnPanelText)}>
+                  <div className={classNames(globalStyles?.formPanelText)}>
                     Temporary for testing. Transactions will not be sent on{' '}
                     <strong>mainnet</strong>. <br />
                     Check out the Console Panel for the Signed Transaction
@@ -367,7 +376,7 @@ export const MutateModal = () => {
                   styles?.mutateModalFormButton
                 )}
                 type='submit'
-                {...(isLoading || !formik.isValid ? { disabled: true } : {})}
+                {...(isButtonDisabled ? { disabled: true } : {})}
               >
                 Send Transaction
                 {isLoading ? (

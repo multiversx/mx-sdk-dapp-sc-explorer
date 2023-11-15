@@ -8,8 +8,9 @@ import {
 import { sendTransactions } from '@multiversx/sdk-dapp/services/transactions/sendTransactions';
 import { getChainID } from '@multiversx/sdk-dapp/utils/network';
 
-import { DeployUpgradeModalForm } from 'components';
+import { DeployUpgradeModalForm, TransactionPanel } from 'components';
 import { useUserActionDispatch, useSCExplorerContext } from 'contexts';
+import { useTrackTransaction } from 'hooks';
 import {
   UserActionDispatchTypeEnum,
   DeployUpgradeModalInitialValuesType
@@ -25,10 +26,12 @@ export const UpgradeModal = () => {
   const { upgradeModalState } = userActionsState;
   const { upgradeModalOpen = false, args, code } = upgradeModalState ?? {};
   const { isLoggedIn, address: callerAddress } = accountInfo;
-  const { abiRegistry } = smartContract;
+  const { abiRegistry, contractAddress, deployedContractDetails } =
+    smartContract;
   const [isLoading, setIsLoading] = useState(false);
   const [generalError, setGeneralError] = useState<string>();
   const [sessionId, setSessionId] = useState<string>();
+  const { status, transactions } = useTrackTransaction(sessionId);
 
   const onClose = () => {
     setIsLoading(false);
@@ -50,12 +53,13 @@ export const UpgradeModal = () => {
       setIsLoading(true);
       setSessionId(undefined);
       const { upgradeable, readable, payable, payableBySc } = values;
-      const caller = new Address(callerAddress);
-      const contract = new SmartContract({
-        abi: abiRegistry
-      });
-
-      if (code) {
+      if (code && contractAddress && deployedContractDetails) {
+        const caller = new Address(callerAddress);
+        const address = new Address(contractAddress);
+        const contract = new SmartContract({
+          abi: abiRegistry,
+          address
+        });
         const codeMetadata = new CodeMetadata(
           upgradeable,
           readable,
@@ -72,7 +76,9 @@ export const UpgradeModal = () => {
           chainID: getChainID()
         });
 
-        console.log('Transaction: ', transaction?.toPlainObject());
+        if (environment === 'mainnet') {
+          console.log('Transaction: ', transaction?.toPlainObject());
+        }
 
         // TODO - temporary - don't send the transactions for now - show them in console on mainnet
         const { error, sessionId: upgradeSessionId } = await sendTransactions({
@@ -84,13 +90,16 @@ export const UpgradeModal = () => {
             successMessage: 'Upgrade successful'
           }
         });
-
         if (upgradeSessionId) {
           setSessionId(upgradeSessionId);
         }
         if (error) {
           setGeneralError(String(error));
         }
+      } else {
+        setGeneralError(
+          'Smart Contract Address is required and the Contract must be Deployed on the current Network'
+        );
       }
     } catch (error) {
       console.error('Upgrade Smart Contract Error:', error);
@@ -111,22 +120,29 @@ export const UpgradeModal = () => {
       className={styles?.UpgradeModal}
       title='Upgrade Smart Contract'
     >
-      <DeployUpgradeModalForm
-        onClose={onClose}
-        isUpgrade={true}
-        onSubmit={onSubmit}
-        generalError={generalError}
-        isLoading={isLoading}
-        panelDescription={
-          <>
-            You are about to Upgrade a Smart Contract. <br />
-            Please make sure that the entered data is valid !
-          </>
-        }
-        buttonText='Upgrade Smart Contract'
-        successText='Smart Contract Successfully Upgraded'
-        sessionId={sessionId}
-      />
+      {sessionId ? (
+        <TransactionPanel
+          onClose={onClose}
+          transactions={transactions}
+          status={status}
+          panelDescription='Smart Contract Successfully Upgraded'
+          panelErrorDescription='Could not Upgrade Smart Contract'
+        />
+      ) : (
+        <DeployUpgradeModalForm
+          isUpgrade={true}
+          onSubmit={onSubmit}
+          generalError={generalError}
+          isLoading={isLoading}
+          panelDescription={
+            <>
+              You are about to Upgrade a Smart Contract. <br />
+              Please make sure that the entered data is valid !
+            </>
+          }
+          buttonText='Upgrade Smart Contract'
+        />
+      )}
     </Modal>
   );
 };

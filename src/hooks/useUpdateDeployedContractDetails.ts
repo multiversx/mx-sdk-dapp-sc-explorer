@@ -30,20 +30,17 @@ export const useUpdateDeployedContractDetails = () => {
           deployedContractDetails: response.data
         });
         setIsContractAddressCheckLoading(false);
-      } else {
-        smartContractDispatch({
-          type: SmartContractDispatchTypeEnum.setContractAddress,
-          contractAddress: undefined
-        });
-        smartContractDispatch({
-          type: SmartContractDispatchTypeEnum.setDeployedContractDetails,
-          deployedContractDetails: undefined
-        });
-        return response.data;
       }
+    } else {
+      smartContractDispatch({
+        type: SmartContractDispatchTypeEnum.setContractAddress,
+        contractAddress: undefined
+      });
+      smartContractDispatch({
+        type: SmartContractDispatchTypeEnum.setDeployedContractDetails,
+        deployedContractDetails: undefined
+      });
     }
-
-    return;
   };
 
   return { updateDeployedContractDetails, isContractAddressCheckLoading };

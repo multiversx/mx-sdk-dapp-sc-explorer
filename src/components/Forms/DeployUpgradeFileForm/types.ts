@@ -9,7 +9,7 @@ export interface DeployUpgradeFileFormUIType extends UserInterfaceType {
   }: {
     values: any[];
     wasmFileContent: Code;
-  }) => Promise<void>;
+  }) => void;
   isLoading?: boolean;
   generalError?: string;
   buttonText?: string;
