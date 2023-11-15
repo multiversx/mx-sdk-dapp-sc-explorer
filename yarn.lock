@@ -907,10 +907,10 @@
   resolved "https://registry.yarnpkg.com/@multiversx/sdk-bls-wasm/-/sdk-bls-wasm-0.3.5.tgz#2e83308fdc7a0928c6d5a7f910d796fd8eb2d90b"
   integrity sha512-c0tIdQUnbBLSt6NYU+OpeGPYdL0+GV547HeHT8Xc0BKQ7Cj0v82QUoA2QRtWrR1G4MNZmLsIacZSsf6DrIS2Bw==
 
-"@multiversx/sdk-core@12.13.0":
-  version "12.13.0"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-core/-/sdk-core-12.13.0.tgz#d2a54bee1711d0cb2c8043597081d9a6d376ed9f"
-  integrity sha512-9fui12JJ0cpYRXfF+N8rJROBa28QSpx2umdSZgUAFL0qlvQ/PITfET3g2BMtTrJv7qjPhNsDKxJItWj24lEm5w==
+"@multiversx/sdk-core@12.14.0":
+  version "12.14.0"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-core/-/sdk-core-12.14.0.tgz#16f2440c2d92ebf09e97ef119b854f78b957b0f6"
+  integrity sha512-Y5cSD+o//Ngj0VYgQraPWbpRFgD0W3+IeVLGGsPP2PCoojA40m4sjgDMZkNIxuvWuy5BUQyx/pGFASPFLpvpJw==
   dependencies:
     "@multiversx/sdk-transaction-decoder" "1.0.2"
     bech32 "1.1.4"
@@ -935,10 +935,10 @@
     keccak "3.0.2"
     protobufjs "7.2.4"
 
-"@multiversx/sdk-dapp-form@0.8.19":
-  version "0.8.19"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-dapp-form/-/sdk-dapp-form-0.8.19.tgz#7c9471d19b9251ffcee4b2e789777adb238cbe06"
-  integrity sha512-bJDtSgkWfaGbyZRVZFj2+pMxzeqbE2FdSzUH6d5rv5uO9bG3yXIXe+5KQuQTtJBsgNrx9H4tZbLT5NlXEMsB9g==
+"@multiversx/sdk-dapp-form@0.8.20":
+  version "0.8.20"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-dapp-form/-/sdk-dapp-form-0.8.20.tgz#57274ce5df815ecf49675141c4d52e254a2b7a1a"
+  integrity sha512-V1a/hEZ7/4ez0kf4QX2R4RvGP9E33W4zErplsFSYNd0WfLplRj6zQHMHKnoW9sE4aiLrLTwNrxDMyyusGJ41fA==
   dependencies:
     anchorme "2.1.2"
     axios "0.24.0"
