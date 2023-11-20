@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Type } from '@multiversx/sdk-core/out';
 import classNames from 'classnames';
 
 import globalStyles from 'assets/styles/globals.module.scss';
@@ -38,38 +39,38 @@ export const RecursiveContainer = ({
       currentPrefix ? `${currentPrefix}` : ''
     }`;
 
+    let isComposite = false;
+    let upperBound = 1;
+    let lowerBound = 1;
+    let foundType: Type | undefined = undefined;
+    if (formattedPrefix.includes(':')) {
+      const fullEndpointName = formattedPrefix.split(':')?.[0];
+      const fieldName = fullEndpointName.split('.')?.[0];
+
+      if (fieldName) {
+        const currentInput = endpoint?.input?.find(
+          ({ name }) => name === fieldName
+        );
+        if (currentInput && currentPrefix?.includes(':')) {
+          foundType = getNestedType({
+            inputType: currentInput?.type,
+            searchedType: currentPrefix
+          });
+          if (foundType) {
+            isComposite = foundType?.getCardinality()?.isComposite();
+            upperBound = foundType?.getCardinality()?.getUpperBound();
+            lowerBound = foundType?.getCardinality()?.getLowerBound();
+          }
+        }
+      }
+    }
+
     const { addNewProperty, removeProperty } = useFormProperty({
       prefix: formattedPrefix,
       formik
     });
 
     if (Array.isArray(individualConfig)) {
-      let isComposite = false;
-      let upperBound = 1;
-      let lowerBound = 1;
-      if (formattedPrefix.includes(':')) {
-        const fullEndpointName = formattedPrefix.split(':')?.[0];
-        const fieldName = fullEndpointName.split('.')?.[0];
-
-        if (fieldName) {
-          const currentInput = endpoint?.input?.find(
-            ({ name }) => name === fieldName
-          );
-
-          if (currentInput && currentPrefix?.includes(':')) {
-            const foundType = getNestedType({
-              inputType: currentInput?.type,
-              searchedType: currentPrefix
-            });
-            if (foundType) {
-              isComposite = foundType?.getCardinality()?.isComposite();
-              upperBound = foundType?.getCardinality()?.getUpperBound();
-              lowerBound = foundType?.getCardinality()?.getLowerBound();
-            }
-          }
-        }
-      }
-
       if (individualConfig.length === 0) {
         // In case all Arguments are removed
         return (
@@ -159,6 +160,7 @@ export const RecursiveContainer = ({
         <Input
           name={formattedPrefix}
           formik={formik}
+          type={foundType}
           defaultValue={individualConfig !== undefined ? individualConfig : ''}
         />
       );

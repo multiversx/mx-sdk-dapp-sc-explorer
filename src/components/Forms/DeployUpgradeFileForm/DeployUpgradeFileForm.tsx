@@ -78,13 +78,12 @@ export const DeployUpgradeFileForm = (props: DeployUpgradeFileFormUIType) => {
                   message: 'Empty File'
                 });
               }
+            } else {
+              return createError({
+                path: DeployUpgradeFileFormikFieldsEnum.wasmFileContent,
+                message: 'Required'
+              });
             }
-            // } else {
-            //   return createError({
-            //     path: DeployUpgradeFileFormikFieldsEnum.wasmFileContent,
-            //     message: 'Required'
-            //   });
-            // }
           } catch (error) {
             return createError({
               path: 'general',

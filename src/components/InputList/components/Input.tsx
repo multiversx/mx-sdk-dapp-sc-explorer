@@ -7,29 +7,46 @@ import globalStyles from 'assets/styles/globals.module.scss';
 import { DefinitionsTooltip } from 'components';
 import { DOCUMENTED_TYPES } from 'constants/general';
 import { useSCExplorerContext } from 'contexts';
-import { InputUIType, DocumentedTypesExampleType } from 'types';
+import {
+  InputUIType,
+  DocumentedTypesExampleType,
+  ContractTypingsTypeEnum
+} from 'types';
 import { getTypeFromPrefix, validateFieldType } from '../helpers';
 
 export const Input = ({
   name,
   defaultValue,
+  type,
   formik,
   children
 }: InputUIType) => {
   if (!formik) {
     return null;
   }
-  const { customClassNames } = useSCExplorerContext();
+  const { customClassNames, smartContract } = useSCExplorerContext();
+  const { rawAbi, abiRegistry } = smartContract;
   const inputError = getIn(formik.errors, name);
   const prefixParts = name.split('.');
   const curentType =
     prefixParts.length > 0 ? prefixParts[prefixParts.length - 1] : name;
 
-  const inputType = getTypeFromPrefix(curentType);
-  const definitionTypeName = inputType?.toString();
+  const inputType = type ?? getTypeFromPrefix(curentType);
+  const definitionTypeName = inputType?.toString() ?? '';
   const knownInputType = definitionTypeName
     ? DOCUMENTED_TYPES?.[definitionTypeName]
     : ({} as DocumentedTypesExampleType);
+
+  const rawType = rawAbi?.types[definitionTypeName]?.type;
+  const enums =
+    rawType === ContractTypingsTypeEnum.enum
+      ? abiRegistry?.getEnum(definitionTypeName)
+      : undefined;
+  const isSimpleEnum =
+    enums &&
+    enums.variants.every(
+      (variant) => variant?.getFieldsDefinitions().length === 0
+    );
 
   const placeholder = knownInputType?.example ?? definitionTypeName;
   const inputMode =
@@ -38,26 +55,88 @@ export const Input = ({
       ? 'numeric'
       : ''; // UI Only
 
-  const validateField = (value: any, inputType?: Type) => {
-    if (value === undefined) {
+  const isOptional = Boolean(
+    type?.getFullyQualifiedName() &&
+      name.includes(`Optional<${type?.getFullyQualifiedName()}>`)
+  );
+
+  const validateField = ({
+    value,
+    inputType,
+    isOptional
+  }: {
+    value: any;
+    inputType?: Type;
+    isOptional?: boolean;
+  }) => {
+    if (value === undefined && !isOptional) {
       return 'Required';
     }
 
     const formattedValue = value.replace(/\s/g, '');
-    if (inputType) {
+    if (inputType && definitionTypeName) {
       try {
-        const errorMessage = validateFieldType(formattedValue, inputType);
-        if (errorMessage) {
-          return errorMessage;
+        if (enums) {
+          const isValidEnum = enums.variants?.find((en) => {
+            return (
+              en.name === formattedValue &&
+              en.getFieldsDefinitions()?.length === 0
+            );
+          });
+
+          if (!isValidEnum) {
+            return 'Invalid Enum';
+          }
+        } else {
+          const errorMessage = validateFieldType(
+            formattedValue,
+            inputType,
+            isOptional
+          );
+          if (errorMessage) {
+            return errorMessage;
+          }
         }
       } catch (error) {
-        console.warn('Invalid Input: ', error);
+        console.warn('Known Input Error: ', error);
         return 'Invalid Input';
       }
     }
 
     return;
   };
+
+  if (isSimpleEnum) {
+    return (
+      <Field
+        as='select'
+        name={name}
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+        className={classNames(
+          globalStyles?.select,
+          customClassNames?.selectClassName
+        )}
+      >
+        <option value='' selected disabled hidden>
+          Select...
+        </option>
+        {enums.variants.map((variant, index) => (
+          <option
+            value={variant.name}
+            key={variant.name ?? index}
+            {...(defaultValue === variant.name
+              ? {
+                  selected: true
+                }
+              : {})}
+          >
+            {variant.name}
+          </option>
+        ))}
+      </Field>
+    );
+  }
 
   return (
     <div
@@ -68,7 +147,9 @@ export const Input = ({
     >
       <Field
         type='text'
-        validate={(value: any) => validateField(value, inputType)}
+        validate={(value: any) =>
+          validateField({ value, inputType, isOptional })
+        }
         className={classNames(
           globalStyles?.input,
           customClassNames?.inputClassName,
@@ -89,7 +170,7 @@ export const Input = ({
         onBlur={formik.handleBlur}
         {...(defaultValue
           ? {
-              defaultValue: defaultValue
+              defaultValue
             }
           : {})}
         {...(inputMode ? { inputMode } : {})}

@@ -33,10 +33,18 @@ import { addressIsValid } from '@multiversx/sdk-dapp/utils/account/addressIsVali
 
 // based on NativeSerializer, keep basic validation/error details before passing through to the NativeSerializer handler
 // keep them split for now for easier error message maintenance
-export function validateFieldType(native: any, unmappedType: Type) {
+export function validateFieldType(
+  native: any,
+  unmappedType: Type,
+  isOptional?: boolean
+) {
+  if (!native && isOptional) {
+    return;
+  }
   if (!native) {
     return 'Required';
   }
+
   if (!unmappedType) {
     return;
   }

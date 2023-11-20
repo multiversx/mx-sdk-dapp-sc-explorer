@@ -30,6 +30,15 @@ const getTokenTransferInteraction = ({
       )
     );
 
+    const onlyTokens = validTokens.every(
+      (token) => token.tokenType === EsdtEnumType.FungibleESDT
+    );
+    const onlyMetaEsdtTokens = validTokens.every(
+      (token) =>
+        token.tokenNonce !== undefined &&
+        token.tokenType === NftEnumType.MetaESDT
+    );
+
     if (
       validTokens.length === 1 &&
       validTokens.every((token) => token.tokenType === 'native')
@@ -39,28 +48,31 @@ const getTokenTransferInteraction = ({
       );
     }
 
-    if (
-      validTokens.every(
-        (token) =>
-          token.tokenType === EsdtEnumType.FungibleESDT ||
-          token.tokenType === NftEnumType.MetaESDT
-      )
-    ) {
-      const transfers = validTokens.map((token) => {
-        if (token.tokenType === NftEnumType.MetaESDT && token.tokenNonce) {
-          return TokenTransfer.metaEsdtFromAmount(
-            token.tokenIdentifier,
-            token.tokenNonce,
-            token.tokenAmount,
-            token.tokenDecimals
-          );
-        }
-        return TokenTransfer.fungibleFromAmount(
+    if (onlyTokens) {
+      const transfers = validTokens.map((token) =>
+        TokenTransfer.fungibleFromAmount(
           token.tokenIdentifier,
           token.tokenAmount,
           token.tokenDecimals
-        );
-      });
+        )
+      );
+
+      if (transfers.length === 1) {
+        return interaction.withSingleESDTNFTTransfer(transfers[0]);
+      }
+
+      return interaction.withMultiESDTNFTTransfer(transfers);
+    }
+
+    if (onlyMetaEsdtTokens) {
+      const transfers = validTokens.map((token) =>
+        TokenTransfer.metaEsdtFromAmount(
+          token.tokenIdentifier,
+          token.tokenNonce ?? 0,
+          token.tokenAmount,
+          token.tokenDecimals
+        )
+      );
 
       if (transfers.length === 1) {
         return interaction.withSingleESDTNFTTransfer(transfers[0]);

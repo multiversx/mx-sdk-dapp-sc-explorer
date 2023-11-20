@@ -35,6 +35,7 @@ export interface CustomClassNamesType {
   inputGroupClassName?: string;
   inputGroupAppendClassName?: string;
   inputGroupPrependClassName?: string;
+  selectClassName?: string;
   tabClassName?: string;
   activeTabClassName?: string;
 }

@@ -1,5 +1,6 @@
 import {
   Code,
+  Type,
   EndpointDefinition,
   EndpointParameterDefinition
 } from '@multiversx/sdk-core/out';
@@ -26,6 +27,7 @@ export interface InputListUIType extends UserInterfaceType {
 
 export interface InputUIType extends UserInterfaceType {
   name: string;
+  type?: Type;
   formik?: FormikProps<FormikAbiType>;
   defaultValue?: string;
   children?: React.ReactNode;
