@@ -25,10 +25,12 @@ export const DropzoneAbi = ({
 }: DropzoneAbiPropsType) => {
   const smartContractDispatch = useSmartContractDispatch();
   const [file, setFile] = useState<FileType | undefined>();
+  const [parseError, setParseError] = useState<string>();
 
   const onRemove = () => {
     setFile(undefined);
     setFieldValue(fieldName, undefined);
+    setParseError(undefined);
     smartContractDispatch({
       type: SmartContractDispatchTypeEnum.setRawAbi,
       rawAbi: undefined
@@ -41,6 +43,7 @@ export const DropzoneAbi = ({
 
   const onFileDrop = ([newFile]: File[]) => {
     const fileReader = new FileReader();
+    setParseError(undefined);
     setFieldTouched(fieldName, true);
     fileReader.onload = () => {
       if (fileReader.result) {
@@ -59,9 +62,10 @@ export const DropzoneAbi = ({
             type: SmartContractDispatchTypeEnum.setAbiRegistry,
             abiRegistry
           });
-        } catch {
+        } catch (error) {
+          setParseError(String(error));
           setErrors({
-            abiFileContent: 'Invalid ABI File'
+            [fieldName]: 'Invalid ABI File'
           });
         }
       }
@@ -80,7 +84,7 @@ export const DropzoneAbi = ({
       onFileRemove={onRemove}
       files={file ? [file] : []}
       onFileDrop={onFileDrop}
-      errorMessage={getIn(errors, fieldName)}
+      errorMessage={parseError || getIn(errors, fieldName)}
     />
   );
 };
