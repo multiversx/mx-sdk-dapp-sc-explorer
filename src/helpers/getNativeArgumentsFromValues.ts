@@ -6,8 +6,9 @@ export const getNativeArgumentsFromValues = (values: FormikAbiType): any[] => {
     const flattenHelped = flattenValues(values);
     const flattenedArray = flattenNestedResultArray(flattenHelped);
     const nativeArgs = prepareArgs(flattenedArray);
+    const validArgs = nativeArgs.filter((arg) => arg !== undefined);
 
-    return nativeArgs;
+    return validArgs;
   } catch {
     return [];
   }

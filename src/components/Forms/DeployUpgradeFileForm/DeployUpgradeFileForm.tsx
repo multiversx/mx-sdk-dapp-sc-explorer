@@ -58,18 +58,20 @@ export const DeployUpgradeFileForm = (props: DeployUpgradeFileFormUIType) => {
   ]);
 
   const validationSchema = lazy((innerObj) => {
-    if (innerObj !== undefined) {
+    if (innerObj !== undefined && Object.keys(innerObj).length > 0) {
       return object().test(
         'validArguments',
         (existingVal: FormikAbiType, { createError }) => {
           try {
             const { wasmFileContent, ...value } = existingVal;
-            const existingValues = getNativeArgumentsFromValues(value);
-            if (abiRegistry?.constructorDefinition) {
-              NativeSerializer.nativeToTypedValues(
-                existingValues || [],
-                abiRegistry.constructorDefinition
-              );
+            if (value && Object.keys(value).length > 0) {
+              const existingValues = getNativeArgumentsFromValues(value);
+              if (abiRegistry?.constructorDefinition) {
+                NativeSerializer.nativeToTypedValues(
+                  existingValues || [],
+                  abiRegistry.constructorDefinition
+                );
+              }
             }
             if (wasmFileContent) {
               if (wasmFileContent.toString() === '') {
@@ -111,6 +113,7 @@ export const DeployUpgradeFileForm = (props: DeployUpgradeFileFormUIType) => {
         resetForm();
       }}
       validationSchema={validationSchema}
+      validateOnBlur={true}
       validateOnChange={true}
       enableReinitialize
     >

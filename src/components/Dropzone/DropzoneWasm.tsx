@@ -14,7 +14,6 @@ export const DropzoneWasm = ({
   setFieldValue,
   setFieldTouched,
   setFieldError,
-  setErrors,
   errors,
   values
 }: DropzoneWasmPropsType) => {
@@ -33,24 +32,26 @@ export const DropzoneWasm = ({
 
   const onRemove = () => {
     setFile(undefined);
-    setFieldValue(fieldName, undefined);
+    setFieldValue(fieldName, '');
   };
 
   const onFileDrop = ([newFile]: File[]) => {
     const fileReader = new FileReader();
     setFieldTouched(fieldName, true);
+    setFieldError(fieldName, undefined);
+    setFieldValue(fieldName, '');
     fileReader.onload = () => {
       if (fileReader.result) {
         try {
           const buffer = toBuffer(fileReader.result as ArrayBuffer);
           const wasmCode = Code.fromBuffer(buffer);
           setFieldValue(fieldName, wasmCode);
-          setFieldTouched(fieldName, true, true);
           setFieldError(fieldName, undefined);
         } catch (error) {
-          setErrors({
-            wasmFileContent: 'Invalid WASM File'
-          });
+          setFieldError(fieldName, 'Invalid WASM File');
+          console.warn('WASM File Error: ', error);
+        } finally {
+          setFieldTouched(fieldName, false);
         }
       }
     };
@@ -62,9 +63,11 @@ export const DropzoneWasm = ({
   };
 
   useEffect(() => {
-    const value = getIn(values, fieldName);
-    if (value === '') {
-      setFile(undefined);
+    if (values && Object.keys(values).length > 0) {
+      const value = getIn(values, fieldName);
+      if (value) {
+        setFieldError(fieldName, undefined);
+      }
     }
   }, [values]);
 

@@ -118,7 +118,7 @@ export const Input = ({
           customClassNames?.selectClassName
         )}
       >
-        <option value='' selected disabled hidden>
+        <option value='' disabled hidden>
           Select...
         </option>
         {enums.variants.map((variant, index) => (

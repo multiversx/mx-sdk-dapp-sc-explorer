@@ -58,21 +58,25 @@ const getTokenTransferInteraction = ({
       );
 
       if (transfers.length === 1) {
-        return interaction.withSingleESDTNFTTransfer(transfers[0]);
+        return interaction.withSingleESDTTransfer(transfers[0]);
       }
 
       return interaction.withMultiESDTNFTTransfer(transfers);
     }
 
     if (onlyMetaEsdtTokens) {
-      const transfers = validTokens.map((token) =>
-        TokenTransfer.metaEsdtFromAmount(
-          token.tokenIdentifier,
+      const transfers = validTokens.map((token) => {
+        const cleanIdentifier = token.tokenIdentifier.substring(
+          0,
+          token.tokenIdentifier.lastIndexOf('-')
+        );
+        return TokenTransfer.metaEsdtFromAmount(
+          cleanIdentifier,
           token.tokenNonce ?? 0,
           token.tokenAmount,
           token.tokenDecimals
-        )
-      );
+        );
+      });
 
       if (transfers.length === 1) {
         return interaction.withSingleESDTNFTTransfer(transfers[0]);
