@@ -1,20 +1,14 @@
 import React, { useState } from 'react';
 import {
-  Address,
-  SmartContract,
-  CodeMetadata,
-  TokenTransfer
-} from '@multiversx/sdk-core/out';
-import {
   removeAllSignedTransactions,
   removeAllTransactionsToSign
 } from '@multiversx/sdk-dapp/services/transactions/clearTransactions';
 import { sendTransactions } from '@multiversx/sdk-dapp/services/transactions/sendTransactions';
 import { refreshAccount } from '@multiversx/sdk-dapp/utils/account/refreshAccount';
-import { getChainID } from '@multiversx/sdk-dapp/utils/network';
 
 import { InteractionModalForm, TransactionPanel } from 'components';
 import { useUserActionDispatch, useSCExplorerContext } from 'contexts';
+import { getDeployTransaction } from 'helpers';
 import { useTrackTransaction } from 'hooks';
 import {
   UserActionDispatchTypeEnum,
@@ -56,28 +50,21 @@ export const DeployModal = () => {
       setIsLoading(true);
       setSessionId(undefined);
       const { upgradeable, readable, payable, payableBySc, gasLimit } = values;
-      const caller = new Address(callerAddress);
-      const contract = new SmartContract({
-        abi: abiRegistry
-      });
-
+      removeAllSignedTransactions();
+      removeAllTransactionsToSign();
       if (code) {
-        removeAllSignedTransactions();
-        removeAllTransactionsToSign();
-        const codeMetadata = new CodeMetadata(
-          upgradeable,
-          readable,
-          payable,
-          payableBySc
-        );
-        const transaction = contract.deploy({
-          deployer: caller,
+        const transaction = getDeployTransaction({
+          callerAddress,
+          abiRegistry,
+          args,
+          userGasLimit: Number(gasLimit),
           code,
-          codeMetadata,
-          gasLimit: Number(gasLimit),
-          initArguments: args,
-          value: TokenTransfer.egldFromAmount(0),
-          chainID: getChainID()
+          metadata: {
+            upgradeable,
+            readable,
+            payable,
+            payableBySc
+          }
         });
 
         await refreshAccount();

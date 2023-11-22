@@ -6,6 +6,7 @@ import {
   faTriangleExclamation
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Transaction } from '@multiversx/sdk-core/out';
 import { DECIMALS } from '@multiversx/sdk-dapp/constants/index';
 import { parseAmount } from '@multiversx/sdk-dapp/utils/operations/parseAmount';
 import { stringIsFloat } from '@multiversx/sdk-dapp/utils/validation/stringIsFloat';
@@ -23,7 +24,12 @@ import {
   ZERO
 } from 'constants/general';
 import { useSCExplorerContext } from 'contexts';
-import { getSelectOptions, getCallContractTransaction } from 'helpers';
+import {
+  getSelectOptions,
+  getCallContractTransaction,
+  getDeployTransaction,
+  getUpgradeTransaction
+} from 'helpers';
 import { useGetTransactionCost } from 'hooks';
 import {
   MetadataFieldsInitialValuesType,
@@ -31,7 +37,8 @@ import {
   InteractionModalFormikFieldsEnum,
   MutateModalInitialValuesType,
   SelectOptionType,
-  ProcessedFormTokenType
+  ProcessedFormTokenType,
+  MetadataFieldsEnum
 } from 'types';
 import styles from './styles.module.scss';
 
@@ -94,8 +101,7 @@ export const InteractionModalForm = (props: InteractionModalFormUIType) => {
       : {};
 
   const initialValues = {
-    [InteractionModalFormikFieldsEnum.gasLimit]:
-      simulatedTxGasLimit || SC_GAS_LIMIT,
+    [InteractionModalFormikFieldsEnum.gasLimit]: SC_GAS_LIMIT,
     [InteractionModalFormikFieldsEnum.tokens]:
       isMutate && modifiers?.isPayable()
         ? [
@@ -161,9 +167,9 @@ export const InteractionModalForm = (props: InteractionModalFormUIType) => {
   }: {
     tokens?: ProcessedFormTokenType[];
   }) => {
-    setIsTxCostLoading(true);
+    let transaction: Transaction | undefined = undefined;
     if (isMutate) {
-      const contractTransaction = getCallContractTransaction({
+      transaction = getCallContractTransaction({
         contractAddress,
         callerAddress,
         abiRegistry,
@@ -173,15 +179,41 @@ export const InteractionModalForm = (props: InteractionModalFormUIType) => {
         tokens,
         nonce
       });
+    }
+    if (isDeploy && code) {
+      transaction = getDeployTransaction({
+        callerAddress,
+        abiRegistry,
+        args,
+        userGasLimit: SC_SIMULATE_GAS_LIMIT,
+        code,
+        metadata:
+          metadataOptionsInitialValues as unknown as MetadataFieldsInitialValuesType,
+        nonce
+      });
+    }
+    if (isUpgrade && code && contractAddress) {
+      transaction = getUpgradeTransaction({
+        contractAddress,
+        callerAddress,
+        abiRegistry,
+        args,
+        userGasLimit: SC_SIMULATE_GAS_LIMIT,
+        code,
+        metadata:
+          metadataOptionsInitialValues as unknown as MetadataFieldsInitialValuesType,
+        nonce
+      });
+    }
 
-      if (contractTransaction) {
-        const gasLimit = await getTransactionCost(contractTransaction);
-        if (gasLimit) {
-          setSimulatedTxGasLimit(gasLimit);
-        }
+    if (transaction) {
+      const gasLimit = await getTransactionCost(transaction);
+      if (gasLimit) {
+        return gasLimit;
       }
     }
-    setIsTxCostLoading(false);
+
+    return;
   };
 
   if (!isLoggedIn) {
@@ -213,6 +245,11 @@ export const InteractionModalForm = (props: InteractionModalFormUIType) => {
           errors,
           InteractionModalFormikFieldsEnum.gasLimit
         );
+        const isGasValueTouched = getIn(
+          touched,
+          InteractionModalFormikFieldsEnum.gasLimit
+        );
+
         const isButtonDisabled = Boolean(
           isLoading ||
             !formik.isValid ||
@@ -227,6 +264,7 @@ export const InteractionModalForm = (props: InteractionModalFormUIType) => {
 
         useEffect(() => {
           const tokens = getIn(values, InteractionModalFormikFieldsEnum.tokens);
+
           const validTokens =
             tokens && tokens.length > 0
               ? tokens.every((token: ProcessedFormTokenType) =>
@@ -234,10 +272,35 @@ export const InteractionModalForm = (props: InteractionModalFormUIType) => {
                 )
               : true;
 
-          if (validTokens) {
-            getTransactionCostDetails({ tokens: tokens });
+          const fetchData = async () => {
+            setIsTxCostLoading(true);
+            const gasLimit = await getTransactionCostDetails({
+              tokens
+            });
+            if (gasLimit) {
+              setFieldValue(
+                InteractionModalFormikFieldsEnum.gasLimit,
+                gasLimit
+              );
+              setSimulatedTxGasLimit(gasLimit);
+            } else {
+              setFieldValue(
+                InteractionModalFormikFieldsEnum.gasLimit,
+                SC_GAS_LIMIT
+              );
+              setSimulatedTxGasLimit(0);
+            }
+            setIsTxCostLoading(false);
+          };
+
+          if (
+            validTokens &&
+            !isGasValueTouched &&
+            simulatedTxGasLimit === undefined
+          ) {
+            fetchData().catch(console.error);
           }
-        }, [values]);
+        }, [values, simulatedTxGasLimit]);
 
         return (
           <Form
@@ -322,10 +385,13 @@ export const InteractionModalForm = (props: InteractionModalFormUIType) => {
                     }
                   )}
                 />
-                {Boolean(isTxCostLoading || simulatedTxGasLimit) && (
+                {Boolean(
+                  (isTxCostLoading || simulatedTxGasLimit) && !isGasValueTouched
+                ) && (
                   <div
                     className={classNames(
                       globalStyles?.inputGroupAppend,
+                      globalStyles?.inputGroupAppendIcon,
                       customClassNames?.inputGroupAppendClassName
                     )}
                   >

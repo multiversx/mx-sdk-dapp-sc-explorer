@@ -2,6 +2,7 @@ import { Transaction } from '@multiversx/sdk-core/out';
 import { EXTRA_GAS_LIMIT_GUARDED_TX } from '@multiversx/sdk-dapp/constants/index';
 import BigNumber from 'bignumber.js';
 
+import { SC_BASE_GAS_LIMIT } from 'constants/general';
 import { useSCExplorerContext } from 'contexts';
 import { useNetworkProvider } from 'hooks';
 
@@ -19,9 +20,9 @@ export const useGetTransactionCost = () => {
         response.data?.code === 'successful' &&
         response.data?.data?.txGasUnits
       ) {
-        const bNGasLimit = new BigNumber(response.data.data.txGasUnits).plus(
-          guardedAccountGasLimit
-        );
+        const bNGasLimit = new BigNumber(response.data.data.txGasUnits)
+          .plus(SC_BASE_GAS_LIMIT)
+          .plus(guardedAccountGasLimit);
 
         return bNGasLimit.toNumber();
       }

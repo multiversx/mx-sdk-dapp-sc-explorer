@@ -149,6 +149,7 @@ export const ContractLoadAbiComponent = () => {
                       <div
                         className={classNames(
                           globalStyles?.inputGroupAppend,
+                          globalStyles?.inputGroupAppendIcon,
                           customClassNames?.inputGroupAppendClassName
                         )}
                       >

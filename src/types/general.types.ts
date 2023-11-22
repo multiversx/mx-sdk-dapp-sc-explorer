@@ -1,8 +1,9 @@
-import { TypedValue, AbiRegistry } from '@multiversx/sdk-core/out';
+import { TypedValue, AbiRegistry, Code } from '@multiversx/sdk-core/out';
 import {
   EsdtEnumType,
   NftEnumType
 } from '@multiversx/sdk-dapp/types/tokens.types';
+import { MetadataFieldsInitialValuesType } from 'types';
 
 export interface DocumentedTypesExampleType {
   type: string;
@@ -20,15 +21,32 @@ export interface ProcessedFormTokenType {
   tokenNonce?: number;
 }
 
-export interface GetCallContractTransactionType {
-  func?: string;
-  contractAddress?: string;
+export interface GetInteractionBaseTransactionType {
   callerAddress?: string;
   abiRegistry?: AbiRegistry;
   args?: TypedValue[];
   userGasLimit?: string | number;
-  tokens?: ProcessedFormTokenType[];
   nonce?: number;
+}
+
+export interface GetCallContractTransactionType
+  extends GetInteractionBaseTransactionType {
+  contractAddress?: string;
+  func?: string;
+  tokens?: ProcessedFormTokenType[];
+}
+
+export interface GetDeployTransactionType
+  extends GetInteractionBaseTransactionType {
+  code: Code;
+  metadata: MetadataFieldsInitialValuesType;
+}
+
+export interface GetUpgradeTransactionType
+  extends GetInteractionBaseTransactionType {
+  code: Code;
+  metadata: MetadataFieldsInitialValuesType;
+  contractAddress?: string;
 }
 
 export interface AssetsType {

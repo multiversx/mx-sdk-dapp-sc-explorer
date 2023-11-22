@@ -1,20 +1,14 @@
 import React, { useState } from 'react';
 import {
-  Address,
-  SmartContract,
-  CodeMetadata,
-  TokenTransfer
-} from '@multiversx/sdk-core/out';
-import {
   removeAllSignedTransactions,
   removeAllTransactionsToSign
 } from '@multiversx/sdk-dapp/services/transactions/clearTransactions';
 import { sendTransactions } from '@multiversx/sdk-dapp/services/transactions/sendTransactions';
 import { refreshAccount } from '@multiversx/sdk-dapp/utils/account/refreshAccount';
-import { getChainID } from '@multiversx/sdk-dapp/utils/network';
 
 import { InteractionModalForm, TransactionPanel } from 'components';
 import { useUserActionDispatch, useSCExplorerContext } from 'contexts';
+import { getUpgradeTransaction } from 'helpers';
 import { useTrackTransaction } from 'hooks';
 import {
   UserActionDispatchTypeEnum,
@@ -56,30 +50,23 @@ export const UpgradeModal = () => {
     try {
       setIsLoading(true);
       setSessionId(undefined);
-      const { upgradeable, readable, payable, payableBySc } = values;
+      const { upgradeable, readable, payable, payableBySc, gasLimit } = values;
       if (code && contractAddress && deployedContractDetails) {
         removeAllSignedTransactions();
         removeAllTransactionsToSign();
-        const caller = new Address(callerAddress);
-        const address = new Address(contractAddress);
-        const contract = new SmartContract({
-          abi: abiRegistry,
-          address
-        });
-        const codeMetadata = new CodeMetadata(
-          upgradeable,
-          readable,
-          payable,
-          payableBySc
-        );
-        const transaction = contract.upgrade({
-          caller,
+        const transaction = getUpgradeTransaction({
+          callerAddress,
+          contractAddress,
+          abiRegistry,
+          args,
+          userGasLimit: Number(gasLimit),
           code,
-          codeMetadata,
-          gasLimit: Number(values.gasLimit),
-          initArguments: args,
-          value: TokenTransfer.egldFromAmount(0),
-          chainID: getChainID()
+          metadata: {
+            upgradeable,
+            readable,
+            payable,
+            payableBySc
+          }
         });
 
         await refreshAccount();
