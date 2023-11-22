@@ -1,4 +1,4 @@
-name: Publish sdk-dapp-nft
+name: Publish sdk-dapp-sc-explorer
 
 on:
   push:
