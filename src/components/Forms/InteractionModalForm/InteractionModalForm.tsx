@@ -184,25 +184,6 @@ export const InteractionModalForm = (props: InteractionModalFormUIType) => {
             onSubmit={formik.handleSubmit}
             className={classNames(styles?.interactionModalForm)}
           >
-            {/* TODO - temporary - don't send the transactions for now - show them in console on mainnet */}
-            {environment === 'mainnet' && (
-              <div className={classNames(globalStyles?.formPanel)}>
-                <FontAwesomeIcon
-                  icon={faTriangleExclamation}
-                  size='2x'
-                  className={classNames(
-                    globalStyles?.formPanelIcon,
-                    globalStyles?.formPanelIconWarn
-                  )}
-                />
-                <div className={classNames(globalStyles?.formPanelText)}>
-                  Temporary for testing. Transactions will not be sent on{' '}
-                  <strong>mainnet</strong>. <br />
-                  Check out the Console Panel for the Signed Transaction
-                </div>
-              </div>
-            )}
-
             {panelDescription && (
               <div className={classNames(globalStyles?.formPanel)}>
                 <FontAwesomeIcon

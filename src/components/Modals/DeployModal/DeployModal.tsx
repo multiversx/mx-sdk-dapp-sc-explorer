@@ -81,13 +81,8 @@ export const DeployModal = () => {
           chainID: getChainID()
         });
 
-        if (environment === 'mainnet') {
-          console.log('Transaction: ', transaction?.toPlainObject());
-        }
         await refreshAccount();
-        // TODO - temporary - don't send the transactions for now - show them in console on mainnet
         const { error, sessionId: deploySessionId } = await sendTransactions({
-          ...(environment === 'mainnet' ? { signWithoutSending: true } : {}),
           transactions: [transaction],
           transactionsDisplayInfo: {
             processingMessage: 'Deploying Smart Contract',

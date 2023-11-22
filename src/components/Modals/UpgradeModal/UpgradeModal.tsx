@@ -83,13 +83,8 @@ export const UpgradeModal = () => {
           chainID: getChainID()
         });
 
-        if (environment === 'mainnet') {
-          console.log('Transaction: ', transaction?.toPlainObject());
-        }
         await refreshAccount();
-        // TODO - temporary - don't send the transactions for now - show them in console on mainnet
         const { error, sessionId: upgradeSessionId } = await sendTransactions({
-          ...(environment === 'mainnet' ? { signWithoutSending: true } : {}),
           transactions: [transaction],
           transactionsDisplayInfo: {
             processingMessage: 'Upgrading Smart Contract',

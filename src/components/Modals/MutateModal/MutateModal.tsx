@@ -64,13 +64,8 @@ export const MutateModal = () => {
           tokens
         });
 
-        if (environment === 'mainnet') {
-          console.log('Transaction: ', contractTransaction?.toPlainObject());
-        }
         await refreshAccount();
-        // TODO - temporary - don't send the transactions for now - show them in console on mainnet
         const { error, sessionId: mutateSessionId } = await sendTransactions({
-          ...(environment === 'mainnet' ? { signWithoutSending: true } : {}),
           transactions: [contractTransaction],
           transactionsDisplayInfo: {
             processingMessage: `Processing ${endpoint?.name} Transaction`,

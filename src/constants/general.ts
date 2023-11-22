@@ -5,7 +5,7 @@ import {
 } from 'types';
 
 export const TIMEOUT = 10000;
-export const SC_GAS_LIMIT = 10_000_000;
+export const SC_GAS_LIMIT = 50_000_000;
 export const ZERO = 0;
 
 /*-----------------------*/
