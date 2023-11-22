@@ -122,7 +122,6 @@ export const getCallContractTransaction = ({
           .withSender(caller);
 
         if (nonce) {
-          console.log('---nonce', nonce);
           interaction.withNonce(nonce);
         }
         if (tokens && tokens.length > 0) {
