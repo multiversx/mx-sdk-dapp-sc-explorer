@@ -25,9 +25,8 @@ import { Modal } from '../Modal';
 
 export const UpgradeModal = () => {
   const userActionDispatch = useUserActionDispatch();
-  const { networkConfig, accountInfo, smartContract, userActionsState } =
+  const { accountInfo, smartContract, userActionsState } =
     useSCExplorerContext();
-  const { environment } = networkConfig;
   const { upgradeModalState } = userActionsState;
   const { upgradeModalOpen = false, args, code } = upgradeModalState ?? {};
   const { isLoggedIn, address: callerAddress } = accountInfo;

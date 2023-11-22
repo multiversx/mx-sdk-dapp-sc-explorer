@@ -25,9 +25,8 @@ import { Modal } from '../Modal';
 
 export const DeployModal = () => {
   const userActionDispatch = useUserActionDispatch();
-  const { networkConfig, accountInfo, smartContract, userActionsState } =
+  const { accountInfo, smartContract, userActionsState } =
     useSCExplorerContext();
-  const { environment } = networkConfig;
   const { deployModalState } = userActionsState;
   const { deployModalOpen = false, args, code } = deployModalState ?? {};
   const { isLoggedIn, address: callerAddress } = accountInfo;

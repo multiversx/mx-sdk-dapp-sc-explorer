@@ -28,6 +28,7 @@ export interface GetCallContractTransactionType {
   args?: TypedValue[];
   userGasLimit?: string | number;
   tokens?: ProcessedFormTokenType[];
+  nonce?: number;
 }
 
 export interface AssetsType {

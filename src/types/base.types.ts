@@ -40,7 +40,7 @@ export type AccountConsumerHandlersType = {
   };
   useGetAccountInfo: () => {
     address: string;
-    account: { isGuarded: boolean; balance: string };
+    account: { isGuarded: boolean; balance: string; nonce: number };
   };
   onLoginClick?: () => void;
 };

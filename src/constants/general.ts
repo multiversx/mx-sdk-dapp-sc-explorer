@@ -5,8 +5,10 @@ import {
 } from 'types';
 
 export const TIMEOUT = 10000;
-export const SC_GAS_LIMIT = 50_000_000;
+export const SC_GAS_LIMIT = 10_000_000;
+export const SC_SIMULATE_GAS_LIMIT = 600_000_000;
 export const ZERO = 0;
+export const ACCOUNT_TOKENS_SIZE = 200;
 
 /*-----------------------*/
 

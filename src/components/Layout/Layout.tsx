@@ -41,7 +41,7 @@ export const LayoutComponent = (props: SCExplorerType) => {
           Smart Contract Explorer{' '}
           <span className={classNames(styles?.layoutHeaderSubtitle)}>BETA</span>
         </div>
-        {!Boolean(onLoginClick) && <LoginButton />}
+        {!Boolean(onLoginClick) && canMutate && <LoginButton />}
       </div>
       <div className={classNames(styles?.layoutContent)}>
         <Tab.Container

@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   faPlay,
   faCircleNotch,
+  faCircleCheck,
   faTriangleExclamation
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -15,15 +16,22 @@ import { array, object, string } from 'yup';
 
 import globalStyles from 'assets/styles/globals.module.scss';
 import { AmountSelectInput } from 'components';
-import { SC_GAS_LIMIT, METADATA_OPTIONS, ZERO } from 'constants/general';
+import {
+  SC_GAS_LIMIT,
+  SC_SIMULATE_GAS_LIMIT,
+  METADATA_OPTIONS,
+  ZERO
+} from 'constants/general';
 import { useSCExplorerContext } from 'contexts';
-import { getSelectOptions } from 'helpers';
+import { getSelectOptions, getCallContractTransaction } from 'helpers';
+import { useGetTransactionCost } from 'hooks';
 import {
   MetadataFieldsInitialValuesType,
   InteractionModalFormUIType,
   InteractionModalFormikFieldsEnum,
   MutateModalInitialValuesType,
-  SelectOptionType
+  SelectOptionType,
+  ProcessedFormTokenType
 } from 'types';
 import styles from './styles.module.scss';
 
@@ -42,11 +50,12 @@ export const InteractionModalForm = (props: InteractionModalFormUIType) => {
     accountInfo,
     userActionsState,
     smartContract,
-    networkConfig,
     icons,
     customClassNames
   } = useSCExplorerContext();
-  const { deployedContractDetails, contractAddress } = smartContract ?? {};
+  const getTransactionCost = useGetTransactionCost();
+  const { deployedContractDetails, abiRegistry, contractAddress } =
+    smartContract ?? {};
   const {
     deployModalState,
     upgradeModalState,
@@ -59,12 +68,20 @@ export const InteractionModalForm = (props: InteractionModalFormUIType) => {
     (isDeploy && deployModalState ? deployModalState : undefined) ||
     (isMutate && mutateModalState ? mutateModalState : undefined);
 
-  const { code, endpoint } = currentModalState ?? {};
+  const { code, endpoint, args } = currentModalState ?? {};
   const { modifiers } = endpoint ?? {};
   const { playIcon = faPlay, loadIcon = faCircleNotch } = icons ?? {};
-  const { isLoggedIn, balance: egldBalance } = accountInfo;
-  const { environment } = networkConfig;
+  const {
+    isLoggedIn,
+    balance: egldBalance,
+    address: callerAddress,
+    nonce
+  } = accountInfo;
   const [selectedToken, setSelectedToken] = useState<SelectOptionType>();
+  const [isTxCostLoading, setIsTxCostLoading] = useState(false);
+  const [simulatedTxGasLimit, setSimulatedTxGasLimit] = useState<
+    number | undefined
+  >();
 
   const metadataOptionsInitialValues =
     isDeploy || isUpgrade
@@ -77,7 +94,8 @@ export const InteractionModalForm = (props: InteractionModalFormUIType) => {
       : {};
 
   const initialValues = {
-    [InteractionModalFormikFieldsEnum.gasLimit]: SC_GAS_LIMIT,
+    [InteractionModalFormikFieldsEnum.gasLimit]:
+      simulatedTxGasLimit || SC_GAS_LIMIT,
     [InteractionModalFormikFieldsEnum.tokens]:
       isMutate && modifiers?.isPayable()
         ? [
@@ -138,6 +156,34 @@ export const InteractionModalForm = (props: InteractionModalFormUIType) => {
     )
   });
 
+  const getTransactionCostDetails = async ({
+    tokens
+  }: {
+    tokens?: ProcessedFormTokenType[];
+  }) => {
+    setIsTxCostLoading(true);
+    if (isMutate) {
+      const contractTransaction = getCallContractTransaction({
+        contractAddress,
+        callerAddress,
+        abiRegistry,
+        func: endpoint?.name,
+        args,
+        userGasLimit: SC_SIMULATE_GAS_LIMIT,
+        tokens,
+        nonce
+      });
+
+      if (contractTransaction) {
+        const gasLimit = await getTransactionCost(contractTransaction);
+        if (gasLimit) {
+          setSimulatedTxGasLimit(gasLimit);
+        }
+      }
+    }
+    setIsTxCostLoading(false);
+  };
+
   if (!isLoggedIn) {
     return null;
   }
@@ -178,6 +224,20 @@ export const InteractionModalForm = (props: InteractionModalFormUIType) => {
                 !deployedContractDetails
             )
         );
+
+        useEffect(() => {
+          const tokens = getIn(values, InteractionModalFormikFieldsEnum.tokens);
+          const validTokens =
+            tokens && tokens.length > 0
+              ? tokens.every((token: ProcessedFormTokenType) =>
+                  Boolean(token.tokenIdentifier && token.tokenAmount !== '')
+                )
+              : true;
+
+          if (validTokens) {
+            getTransactionCostDetails({ tokens: tokens });
+          }
+        }, [values]);
 
         return (
           <Form
@@ -262,6 +322,27 @@ export const InteractionModalForm = (props: InteractionModalFormUIType) => {
                     }
                   )}
                 />
+                {Boolean(isTxCostLoading || simulatedTxGasLimit) && (
+                  <div
+                    className={classNames(
+                      globalStyles?.inputGroupAppend,
+                      customClassNames?.inputGroupAppendClassName
+                    )}
+                  >
+                    {isTxCostLoading ? (
+                      <FontAwesomeIcon
+                        icon={loadIcon}
+                        className='fa-spin fast-spin'
+                      />
+                    ) : (
+                      <>
+                        {simulatedTxGasLimit && (
+                          <FontAwesomeIcon icon={faCircleCheck} />
+                        )}
+                      </>
+                    )}
+                  </div>
+                )}
                 {inputError && typeof inputError === 'string' && (
                   <div
                     className={classNames(

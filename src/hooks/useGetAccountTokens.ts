@@ -1,3 +1,4 @@
+import { ACCOUNT_TOKENS_SIZE } from 'constants/general';
 import { useSCExplorerContext, useUserActionDispatch } from 'contexts';
 import { useNetworkProvider } from 'hooks';
 import { UserActionDispatchTypeEnum } from 'types';
@@ -23,7 +24,7 @@ export const useGetAccountTokens = () => {
     ].join(',');
     const identifiers = tokens.includes('*') ? '' : tokens.join(',');
     const params = {
-      size: 100,
+      size: ACCOUNT_TOKENS_SIZE,
       includeMetaESDT: true,
       fields,
       ...(identifiers ? { identifiers } : {})

@@ -24,9 +24,10 @@ const getTokenTransferInteraction = ({
   try {
     const validTokens = tokens.filter((token) =>
       Boolean(
-        token.tokenType === 'native' ||
+        (token.tokenType === 'native' ||
           token.tokenType === EsdtEnumType.FungibleESDT ||
-          token.tokenType === NftEnumType.MetaESDT
+          token.tokenType === NftEnumType.MetaESDT) &&
+          token.tokenAmount !== ''
       )
     );
 
@@ -98,7 +99,8 @@ export const getCallContractTransaction = ({
   func,
   args,
   userGasLimit,
-  tokens
+  tokens,
+  nonce
 }: GetCallContractTransactionType) => {
   if (contractAddress && callerAddress && abiRegistry && func && args) {
     try {
@@ -119,6 +121,10 @@ export const getCallContractTransaction = ({
           .withGasLimit(Number(userGasLimit ?? SC_GAS_LIMIT))
           .withSender(caller);
 
+        if (nonce) {
+          console.log('---nonce', nonce);
+          interaction.withNonce(nonce);
+        }
         if (tokens && tokens.length > 0) {
           // Accept only native EGLD, Fungible Tokens and metaESDTs for now
           const tokenTransferInteraction = getTokenTransferInteraction({
