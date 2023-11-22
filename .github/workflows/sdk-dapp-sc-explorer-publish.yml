@@ -29,7 +29,7 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
-       - name: Publish to npmjs
+      - name: Publish to npmjs
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
         run: npm run publish-package
