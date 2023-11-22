@@ -1,0 +1,51 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  &-header {
+    display: flex;
+    align-items: center;
+    &-title {
+      /*Placeholder*/
+    }
+    &-subtitle {
+      /*Placeholder*/
+    }
+  }
+  &-content {
+    display: flex;
+    &-sidebar {
+      display: flex;
+      flex-direction: column;
+    }
+    &-body {
+      display: flex;
+      flex: 1 1 auto;
+      & > .active {
+        display: flex;
+        flex: 1 1 auto;
+      }
+    }
+  }
+}
+
+.tabs {
+  /*Placeholder*/
+  .tab {
+    /*Placeholder*/
+    &-active {
+      /*Placeholder*/
+    }
+    &-load-abi-icon {
+      /*Placeholder*/
+    }
+  }
+}
+
+.tab-panel {
+  width: 100%;
+  display: none;
+  &.active {
+    display: flex;
+    flex-direction: column;
+  }
+}

@@ -1,0 +1,21 @@
+.card-item {
+  display: flex;
+  flex-basis: 25%;
+  flex-shrink: 1;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  &-icon {
+    /*Placeholder*/
+  }
+  &-content {
+    /*Placeholder*/
+  }
+  &-title {
+    /*Placeholder*/
+  }
+  &-value {
+    display: flex;
+    flex-wrap: nowrap;
+  }
+}

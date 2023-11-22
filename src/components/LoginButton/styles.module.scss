@@ -1,0 +1,25 @@
+.button-login {
+  /*Placeholder*/
+}
+.button-logout {
+  /*Placeholder*/
+}
+
+.disconnected-wrapper,
+.login-button-wrapper {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  &-text {
+    /*Placeholder*/
+  }
+}
+
+.login-button-warning-icon {
+  /*Placeholder*/
+}
+
+.connected-wrapper {
+  display: flex;
+  align-items: center;
+}

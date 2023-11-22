@@ -1,0 +1,29 @@
+.dropzone-file {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  &-trim {
+    max-width: 100%;
+    margin: 0;
+  }
+  &-left {
+    display: flex;
+    flex-direction: column;
+  }
+  &-right {
+    /*Placeholder*/
+  }
+  &-remove {
+    /*Placeholder*/
+  }
+  &-success {
+    /*Placeholder*/
+    &-icon {
+      /*Placeholder*/
+    }
+  }
+  &-error {
+    /*Placeholder*/
+  }
+}

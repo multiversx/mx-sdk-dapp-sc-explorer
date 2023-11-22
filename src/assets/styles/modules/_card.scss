@@ -1,0 +1,30 @@
+.card {
+  display: flex;
+  flex: 1 1 auto;
+  .card-header {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    &-title {
+      font-weight: 500;
+    }
+    &-collapse-icon {
+      margin-left: auto;
+    }
+  }
+  .card-body {
+    /*Placeholder*/
+  }
+  .card-container {
+    display: flex;
+  }
+  .card-container-title {
+    /*Placeholder*/
+  }
+  .card-item-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+}
