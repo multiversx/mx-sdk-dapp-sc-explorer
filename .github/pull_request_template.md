@@ -13,7 +13,6 @@ Issue exists on version `` of sdk-dapp-sc-explorer
 ### Contains breaking changes
 
 [x] No
-
 [] Yes
 
 ### Updated CHANGELOG
