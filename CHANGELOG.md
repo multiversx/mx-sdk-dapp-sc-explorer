@@ -7,4 +7,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Enable contract upgrade validation only when the user is logged in ](https://github.com/multiversx/mx-sdk-dapp-sc-explorer/pull/5)
+
 ## [[0.0.1-beta.1]](https://github.com/multiversx/mx-sdk-dapp-sc-explorer/pull/3)] - 2023-11-22
