@@ -18,11 +18,12 @@ import styles from './styles.module.scss';
 
 export const ContractUpgrade = () => {
   const userActionDispatch = useUserActionDispatch();
-  const { smartContract, customClassNames } = useSCExplorerContext();
+  const { smartContract, customClassNames, accountInfo } = useSCExplorerContext();
   const { abiRegistry, contractAddress, deployedContractDetails } =
     smartContract;
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string>();
+  const { isLoggedIn } = accountInfo;
 
   const onSubmit = ({
     values,
@@ -89,7 +90,7 @@ export const ContractUpgrade = () => {
           generalError={error}
           buttonText='Upgrade Contract'
           buttonLoginDescription='to upgrade a contract'
-          buttonDescription={buttonDescription}
+          buttonDescription={isLoggedIn ? buttonDescription : undefined}
         />
       </Card>
     </div>
