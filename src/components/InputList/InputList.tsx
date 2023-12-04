@@ -12,7 +12,8 @@ export const InputList = (props: InputListUIType) => {
     formik,
     input,
     endpoint,
-    excludedKeys = [DeployUpgradeFileFormikFieldsEnum.wasmFileContent]
+    excludedKeys = [DeployUpgradeFileFormikFieldsEnum.wasmFileContent],
+    'data-testid': dataTestId
   } = props;
   if (!(input && input.length > 0)) {
     return null;
@@ -39,6 +40,7 @@ export const InputList = (props: InputListUIType) => {
           config={clone}
           formik={formik}
           endpoint={endpoint}
+          data-testid={dataTestId}
           prefix=''
         />
       </div>
