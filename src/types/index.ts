@@ -1,5 +1,6 @@
 export * from './abi.types';
 export * from './base.types';
+export * from './dataTestIds.enum';
 export * from './general.types';
 export * from './icons.types';
 export * from './network.types';

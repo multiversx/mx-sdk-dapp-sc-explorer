@@ -16,7 +16,11 @@ import { Card, Code, PanelHeader } from 'components';
 import { DropzoneAbi } from 'components/Dropzone/DropzoneAbi';
 import { useSCExplorerContext } from 'contexts';
 import { useUpdateDeployedContractDetails } from 'hooks';
-import { FormikLoadAbiType, ContractLoadAbiFormikFieldsEnum } from 'types';
+import {
+  FormikLoadAbiType,
+  ContractLoadAbiFormikFieldsEnum,
+  DataTestIdsEnum
+} from 'types';
 import styles from './styles.module.scss';
 
 export const ContractLoadAbiComponent = () => {
@@ -130,6 +134,7 @@ export const ContractLoadAbiComponent = () => {
                       }}
                       onBlur={handleBlur}
                       placeholder='Contract Address'
+                      data-testid={DataTestIdsEnum.abiContractAddress}
                       className={classNames(
                         globalStyles?.input,
                         customClassNames?.inputClassName,

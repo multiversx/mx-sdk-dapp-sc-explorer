@@ -38,7 +38,7 @@ import {
   MutateModalInitialValuesType,
   SelectOptionType,
   ProcessedFormTokenType,
-  MetadataFieldsEnum
+  DataTestIdsEnum
 } from 'types';
 import styles from './styles.module.scss';
 
@@ -337,6 +337,7 @@ export const InteractionModalForm = (props: InteractionModalFormUIType) => {
                       <Field
                         type='checkbox'
                         name={key}
+                        data-testid={`${DataTestIdsEnum.prefix}checkbox-${key}`}
                         className={classNames(
                           styles?.interactionModalFormCodeMetadataField
                         )}
@@ -372,6 +373,7 @@ export const InteractionModalForm = (props: InteractionModalFormUIType) => {
                   onBlur={handleBlur}
                   inputMode='numeric'
                   placeholder='Gas Limit'
+                  data-testid={DataTestIdsEnum.interactionFormInput}
                   className={classNames(
                     globalStyles?.input,
                     customClassNames?.inputClassName,
@@ -524,6 +526,7 @@ export const InteractionModalForm = (props: InteractionModalFormUIType) => {
                 styles?.interactionModalFormButton
               )}
               type='submit'
+              data-testid={DataTestIdsEnum.interactionFormBtn}
               {...(isButtonDisabled ? { disabled: true } : {})}
             >
               {buttonText}

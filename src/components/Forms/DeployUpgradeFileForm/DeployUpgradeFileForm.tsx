@@ -23,7 +23,8 @@ import { getInitalFormConfig, getNativeArgumentsFromValues } from 'helpers';
 import {
   FormikAbiType,
   DeployUpgradeFileFormUIType,
-  DeployUpgradeFileFormikFieldsEnum
+  DeployUpgradeFileFormikFieldsEnum,
+  DataTestIdsEnum
 } from 'types';
 import styles from './styles.module.scss';
 
@@ -137,6 +138,11 @@ export const DeployUpgradeFileForm = (props: DeployUpgradeFileFormUIType) => {
                   input={input}
                   endpoint={abiRegistry?.constructorDefinition}
                   formik={formik}
+                  data-testid={
+                    isUpgrade
+                      ? DataTestIdsEnum.upgradeFormInput
+                      : DataTestIdsEnum.deployFormInput
+                  }
                 />
                 {(hasOnlyGeneralValidationError || generalError) && (
                   <div
@@ -158,6 +164,11 @@ export const DeployUpgradeFileForm = (props: DeployUpgradeFileFormUIType) => {
             <DropzoneWasm
               {...formik}
               fieldName={DeployUpgradeFileFormikFieldsEnum.wasmFileContent}
+              data-testid={
+                isUpgrade
+                  ? DataTestIdsEnum.upgradeDropzone
+                  : DataTestIdsEnum.deployDropzone
+              }
             />
 
             <div className={classNames(globalStyles?.formActionWrapper)}>
@@ -167,6 +178,11 @@ export const DeployUpgradeFileForm = (props: DeployUpgradeFileFormUIType) => {
                   buttonLoginDescription && !buttonDescription
                     ? buttonLoginDescription
                     : ''
+                }
+                data-testid={
+                  isUpgrade
+                    ? DataTestIdsEnum.upgradeFormConnectBtn
+                    : DataTestIdsEnum.deployFormConnectBtn
                 }
               >
                 <button
@@ -178,6 +194,11 @@ export const DeployUpgradeFileForm = (props: DeployUpgradeFileFormUIType) => {
                     styles?.deployUpgradeFileFormButton
                   )}
                   type='submit'
+                  data-testid={
+                    isUpgrade
+                      ? DataTestIdsEnum.upgradeFormBtn
+                      : DataTestIdsEnum.deployFormBtn
+                  }
                   {...(isButtonDisabled ? { disabled: true } : {})}
                 >
                   {buttonText}

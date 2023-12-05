@@ -1,4 +1,5 @@
 import { MouseEvent } from 'react';
+import { FormikProps } from 'formik';
 import { DropzoneOptions } from 'react-dropzone';
 
 import { UserInterfaceType } from 'types';
@@ -33,4 +34,10 @@ export interface DropzoneFileUIType
     Required<Pick<DropzoneUIType, 'onFileRemove'>> {
   fileIndex: number;
   disabled?: DropzoneUIType['disabled'];
+}
+
+export interface DropzoneWasmUIType
+  extends FormikProps<any>,
+    UserInterfaceType {
+  fieldName: string;
 }

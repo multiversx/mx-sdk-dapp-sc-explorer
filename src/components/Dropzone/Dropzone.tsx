@@ -113,7 +113,7 @@ export const Dropzone = ({
         )}
       </div>
 
-      <input {...getInputProps()} data-testid={dataTestId} />
+      <input {...getInputProps()} data-testid={dataTestId ?? ''} />
 
       {errorMessage && (
         <div className={classNames(styles?.dropzoneErrorMessage)}>

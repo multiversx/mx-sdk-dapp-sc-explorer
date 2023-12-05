@@ -16,7 +16,8 @@ import {
 import { useSCExplorerContext } from 'contexts';
 import {
   ContractEndpointMutabilityEnum,
-  VerifiedContractTabsEnum
+  VerifiedContractTabsEnum,
+  DataTestIdsEnum
 } from 'types';
 import styles from './styles.module.scss';
 
@@ -41,6 +42,7 @@ export const LayoutPanelsComponent = () => {
       {canLoadAbi && (
         <Tab.Pane
           eventKey={VerifiedContractTabsEnum.loadAbi}
+          data-testid={`${DataTestIdsEnum.prefix}${VerifiedContractTabsEnum.loadAbi}-panel`}
           bsPrefix={styles?.tabPanel}
         >
           <ContractLoadAbi />
@@ -49,6 +51,7 @@ export const LayoutPanelsComponent = () => {
       {hasBuildInfo && (
         <Tab.Pane
           eventKey={VerifiedContractTabsEnum.details}
+          data-testid={`${DataTestIdsEnum.prefix}${VerifiedContractTabsEnum.details}-panel`}
           bsPrefix={styles?.tabPanel}
         >
           <ContractBuild />
@@ -58,6 +61,7 @@ export const LayoutPanelsComponent = () => {
       {hasSourceCode && (
         <Tab.Pane
           eventKey={VerifiedContractTabsEnum.sourceCode}
+          data-testid={`${DataTestIdsEnum.prefix}${VerifiedContractTabsEnum.sourceCode}-panel`}
           bsPrefix={styles?.tabPanel}
         >
           <ContractFiles />
@@ -67,6 +71,7 @@ export const LayoutPanelsComponent = () => {
       {hasReadEndpoints && (
         <Tab.Pane
           eventKey={VerifiedContractTabsEnum.readEndpoints}
+          data-testid={`${DataTestIdsEnum.prefix}${VerifiedContractTabsEnum.readEndpoints}-panel`}
           bsPrefix={styles?.tabPanel}
         >
           <ContractEndpoints
@@ -78,6 +83,7 @@ export const LayoutPanelsComponent = () => {
       {hasWriteEndpoints && (
         <Tab.Pane
           eventKey={VerifiedContractTabsEnum.writeEndpoints}
+          data-testid={`${DataTestIdsEnum.prefix}${VerifiedContractTabsEnum.writeEndpoints}-panel`}
           bsPrefix={styles?.tabPanel}
         >
           <ContractEndpoints
@@ -89,6 +95,7 @@ export const LayoutPanelsComponent = () => {
       {hasEvents && (
         <Tab.Pane
           eventKey={VerifiedContractTabsEnum.events}
+          data-testid={`${DataTestIdsEnum.prefix}${VerifiedContractTabsEnum.events}-panel`}
           bsPrefix={styles?.tabPanel}
         >
           <ContractEvents />
@@ -98,6 +105,7 @@ export const LayoutPanelsComponent = () => {
       {hasTypes && (
         <Tab.Pane
           eventKey={VerifiedContractTabsEnum.types}
+          data-testid={`${DataTestIdsEnum.prefix}${VerifiedContractTabsEnum.types}-panel`}
           bsPrefix={styles?.tabPanel}
         >
           <ContractTypings />
@@ -107,6 +115,7 @@ export const LayoutPanelsComponent = () => {
       {hasConstructor && (
         <Tab.Pane
           eventKey={VerifiedContractTabsEnum.contractConstructor}
+          data-testid={`${DataTestIdsEnum.prefix}${VerifiedContractTabsEnum.contractConstructor}-panel`}
           bsPrefix={styles?.tabPanel}
         >
           <ContractConstructor />
@@ -116,6 +125,7 @@ export const LayoutPanelsComponent = () => {
       {canDeploy && (
         <Tab.Pane
           eventKey={VerifiedContractTabsEnum.deploy}
+          data-testid={`${DataTestIdsEnum.prefix}${VerifiedContractTabsEnum.deploy}-panel`}
           bsPrefix={styles?.tabPanel}
         >
           <ContractDeploy />
@@ -125,6 +135,7 @@ export const LayoutPanelsComponent = () => {
       {canUpgrade && (
         <Tab.Pane
           eventKey={VerifiedContractTabsEnum.upgrade}
+          data-testid={`${DataTestIdsEnum.prefix}${VerifiedContractTabsEnum.upgrade}-panel`}
           bsPrefix={styles?.tabPanel}
         >
           <ContractUpgrade />
