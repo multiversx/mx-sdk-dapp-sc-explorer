@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { Nav } from 'react-bootstrap';
 
 import { useSCExplorerContext } from 'contexts';
-import { VerifiedContractTabsEnum } from 'types';
+import { VerifiedContractTabsEnum, DataTestIdsEnum } from 'types';
 import styles from './styles.module.scss';
 import { LayoutComponentUIType } from './types';
 
@@ -28,13 +28,16 @@ export const LayoutSidebarComponent = (props: LayoutComponentUIType) => {
 
   const NavLink = ({
     navKey,
-    children
+    children,
+    'data-testid': dataTestId
   }: {
     navKey: VerifiedContractTabsEnum;
     children: React.ReactNode;
+    'data-testid'?: string;
   }) => (
     <Nav.Link
       eventKey={navKey}
+      data-testid={dataTestId ?? ''}
       className={classNames(
         styles?.tab,
         customClassNames?.tabClassName,
@@ -108,7 +111,11 @@ export const LayoutSidebarComponent = (props: LayoutComponentUIType) => {
   return (
     <div className={classNames(styles?.layoutContentSidebar, styles?.tabs)}>
       {visibleTabs.map((visibleTab, index) => (
-        <NavLink navKey={visibleTab as VerifiedContractTabsEnum} key={index}>
+        <NavLink
+          navKey={visibleTab as VerifiedContractTabsEnum}
+          key={index}
+          data-testid={`${DataTestIdsEnum.prefix}${visibleTab}-button`}
+        >
           {navLinks[visibleTab as keyof typeof navLinks]?.title ?? ''}
         </NavLink>
       ))}

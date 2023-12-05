@@ -13,7 +13,13 @@ import {
 import styles from './styles.module.scss';
 
 export const LoginButtonWrapper = (props: LoginButtonWrapperUIType) => {
-  const { mutability, children, buttonDescription, className } = props;
+  const {
+    mutability,
+    children,
+    buttonDescription,
+    className,
+    'data-testid': dataTestId
+  } = props;
   const { accountInfo, customClassNames, icons } = useSCExplorerContext();
   const { isLoggedIn, address, onLoginClick } = accountInfo;
   const userActionDispatch = useUserActionDispatch();
@@ -44,6 +50,7 @@ export const LoginButtonWrapper = (props: LoginButtonWrapperUIType) => {
           <button
             type='button'
             onClick={onButtonClick}
+            data-testid={dataTestId ?? ''}
             className={classNames(
               className,
               globalStyles?.button,

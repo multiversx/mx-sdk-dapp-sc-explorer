@@ -9,7 +9,8 @@ import {
   AcceptedFileTypeEnum,
   FormikLoadAbiType,
   FileType,
-  SmartContractDispatchTypeEnum
+  SmartContractDispatchTypeEnum,
+  DataTestIdsEnum
 } from 'types';
 
 export interface DropzoneAbiPropsType extends FormikProps<FormikLoadAbiType> {
@@ -85,6 +86,7 @@ export const DropzoneAbi = ({
       files={file ? [file] : []}
       onFileDrop={onFileDrop}
       errorMessage={parseError || getIn(errors, fieldName)}
+      data-testid={DataTestIdsEnum.abiDropzone}
     />
   );
 };

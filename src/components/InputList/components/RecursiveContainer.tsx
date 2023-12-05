@@ -18,7 +18,8 @@ export const RecursiveContainer = ({
   config,
   formik,
   endpoint,
-  prefix = ''
+  prefix = '',
+  'data-testid': dataTestId
 }: RecursiveContainerUIType) => {
   const { customClassNames, icons, support } = useSCExplorerContext();
   const { canMutate } = support ?? {};
@@ -102,6 +103,7 @@ export const RecursiveContainer = ({
             formik={formik}
             prefix={formattedPrefix}
             endpoint={endpoint}
+            data-testid={dataTestId}
           />
           {Boolean(isComposite && canMutate) && (
             <>
@@ -153,6 +155,7 @@ export const RecursiveContainer = ({
           formik={formik}
           prefix={formattedPrefix}
           endpoint={endpoint}
+          data-testid={dataTestId}
         />
       );
     } else {
@@ -162,6 +165,7 @@ export const RecursiveContainer = ({
           formik={formik}
           type={foundType}
           defaultValue={individualConfig !== undefined ? individualConfig : ''}
+          data-testid={dataTestId}
         />
       );
     }

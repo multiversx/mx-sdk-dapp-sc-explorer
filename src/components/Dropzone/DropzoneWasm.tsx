@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Code } from '@multiversx/sdk-core/out/smartcontracts/code';
-import { FormikProps, getIn } from 'formik';
+import { getIn } from 'formik';
 
 import { Dropzone } from 'components';
-import { AcceptedFileTypeEnum, FileType } from 'types';
-
-export interface DropzoneWasmPropsType extends FormikProps<any> {
-  fieldName: string;
-}
+import { AcceptedFileTypeEnum, FileType, DropzoneWasmUIType } from 'types';
 
 export const DropzoneWasm = ({
   fieldName,
@@ -15,8 +11,9 @@ export const DropzoneWasm = ({
   setFieldTouched,
   setFieldError,
   errors,
-  values
-}: DropzoneWasmPropsType) => {
+  values,
+  'data-testid': dataTestId
+}: DropzoneWasmUIType) => {
   const [file, setFile] = useState<FileType | undefined>();
 
   const toBuffer = (arrayBuffer: ArrayBuffer) => {
@@ -79,6 +76,7 @@ export const DropzoneWasm = ({
       files={file ? [file] : []}
       onFileDrop={onFileDrop}
       errorMessage={getIn(errors, fieldName)}
+      data-testid={dataTestId}
     />
   );
 };

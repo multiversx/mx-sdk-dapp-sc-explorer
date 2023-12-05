@@ -19,7 +19,8 @@ export const Input = ({
   defaultValue,
   type,
   formik,
-  children
+  children,
+  'data-testid': dataTestId
 }: InputUIType) => {
   if (!formik) {
     return null;
@@ -113,6 +114,7 @@ export const Input = ({
         name={name}
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
+        data-testid={dataTestId ?? ''}
         className={classNames(
           globalStyles?.select,
           customClassNames?.selectClassName
@@ -168,6 +170,7 @@ export const Input = ({
         name={name}
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
+        data-testid={dataTestId ?? ''}
         {...(defaultValue
           ? {
               defaultValue
