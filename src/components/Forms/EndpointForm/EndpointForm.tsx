@@ -31,6 +31,7 @@ export const EndpointForm = (props: EndpointFormUIType) => {
     result,
     isLoading,
     generalError,
+    resetForm = true,
     className
   } = props;
   const { address: callerAddress, isLoggedIn } = accountInfo;
@@ -76,10 +77,12 @@ export const EndpointForm = (props: EndpointFormUIType) => {
   return (
     <Formik
       initialValues={initialValues}
-      onSubmit={async (values, { resetForm }) => {
+      onSubmit={async (values, { resetForm: formikResetForm }) => {
         const nativeArgs = getNativeArgumentsFromValues(values);
         await onSubmit(nativeArgs);
-        resetForm();
+        if (resetForm) {
+          formikResetForm();
+        }
       }}
       validationSchema={validationSchema}
       validateOnChange={false}
