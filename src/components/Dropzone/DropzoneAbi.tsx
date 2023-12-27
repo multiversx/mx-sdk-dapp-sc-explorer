@@ -95,6 +95,7 @@ export const DropzoneAbi = ({
 
   return (
     <Dropzone
+      defaultMessage='Drag and drop your ABI file here or'
       successMessage='ABI Loaded'
       acceptedFileTypes={[AcceptedFileTypeEnum.json]}
       onFileRemove={onRemove}

@@ -8,12 +8,14 @@ export interface GetDropzoneStatusDataType {
   filesUploadedSuccessfully: boolean;
   errorsExist: boolean;
   successMessage: string;
+  defaultMessage?: string;
 }
 
 export const getDropzoneStatusData = ({
   errorsExist,
   filesUploadedSuccessfully,
-  successMessage
+  successMessage,
+  defaultMessage = 'Drag and drop your file here or'
 }: GetDropzoneStatusDataType) => {
   if (errorsExist) {
     return {
@@ -31,6 +33,6 @@ export const getDropzoneStatusData = ({
 
   return {
     statusIcon: faFileArrowUp,
-    statusLabel: 'Drag and drop your file here or'
+    statusLabel: defaultMessage
   };
 };

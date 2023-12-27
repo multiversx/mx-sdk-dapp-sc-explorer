@@ -74,6 +74,7 @@ export const DropzoneWasm = ({
 
   return (
     <Dropzone
+      defaultMessage='Drag and drop your .wasm file here or'
       successMessage='WASM File Loaded'
       acceptedFileTypes={[AcceptedFileTypeEnum.wasm]}
       onFileRemove={onRemove}
