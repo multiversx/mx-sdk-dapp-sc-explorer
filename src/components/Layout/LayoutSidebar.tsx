@@ -4,10 +4,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import { Nav } from 'react-bootstrap';
 
+import { Badge } from 'components';
+import { CONTRACT_WRITE_ENDPOINT_HIDE_LIST } from 'constants/general';
 import { useSCExplorerContext } from 'contexts';
-import { VerifiedContractTabsEnum, DataTestIdsEnum } from 'types';
+import {
+  VerifiedContractTabsEnum,
+  DataTestIdsEnum,
+  ContractEndpointMutabilityEnum
+} from 'types';
 import styles from './styles.module.scss';
-import { LayoutComponentUIType } from './types';
+import { LayoutComponentUIType, LayoutSidebarNavLinksType } from './types';
 
 export const LayoutSidebarComponent = (props: LayoutComponentUIType) => {
   const { activeSection } = props;
@@ -25,6 +31,22 @@ export const LayoutSidebarComponent = (props: LayoutComponentUIType) => {
     canDeploy,
     canUpgrade
   } = support;
+
+  const readEndpointsCount = (
+    abiRegistry?.endpoints?.filter(
+      (endpoint) =>
+        endpoint?.modifiers?.mutability ===
+        ContractEndpointMutabilityEnum.readonly
+    ) || []
+  ).length;
+  const writeEndpointsCount = (
+    abiRegistry?.endpoints?.filter(
+      (endpoint) =>
+        endpoint?.modifiers?.mutability ===
+          ContractEndpointMutabilityEnum.mutable &&
+        !CONTRACT_WRITE_ENDPOINT_HIDE_LIST.includes(endpoint?.name)
+    ) || []
+  ).length;
 
   const NavLink = ({
     navKey,
@@ -57,7 +79,7 @@ export const LayoutSidebarComponent = (props: LayoutComponentUIType) => {
     </Nav.Link>
   );
 
-  const navLinks = {
+  const navLinks: LayoutSidebarNavLinksType = {
     [VerifiedContractTabsEnum.loadAbi]: {
       isActive: canLoadAbi,
       title: (
@@ -82,11 +104,13 @@ export const LayoutSidebarComponent = (props: LayoutComponentUIType) => {
     },
     [VerifiedContractTabsEnum.readEndpoints]: {
       isActive: hasReadEndpoints,
-      title: 'Read Endpoints'
+      title: 'Read Endpoints',
+      badge: readEndpointsCount
     },
     [VerifiedContractTabsEnum.writeEndpoints]: {
       isActive: hasWriteEndpoints,
-      title: 'Write Endpoints'
+      title: 'Write Endpoints',
+      badge: writeEndpointsCount
     },
     [VerifiedContractTabsEnum.events]: { isActive: hasEvents, title: 'Events' },
     [VerifiedContractTabsEnum.types]: { isActive: hasTypes, title: 'Types' },
@@ -110,15 +134,25 @@ export const LayoutSidebarComponent = (props: LayoutComponentUIType) => {
 
   return (
     <div className={classNames(styles?.layoutContentSidebar, styles?.tabs)}>
-      {visibleTabs.map((visibleTab, index) => (
-        <NavLink
-          navKey={visibleTab as VerifiedContractTabsEnum}
-          key={index}
-          data-testid={`${DataTestIdsEnum.prefix}${visibleTab}-button`}
-        >
-          {navLinks[visibleTab as keyof typeof navLinks]?.title ?? ''}
-        </NavLink>
-      ))}
+      {visibleTabs.map((visibleTab, index) => {
+        const currentNavLink = navLinks[visibleTab as keyof typeof navLinks];
+
+        return (
+          <NavLink
+            navKey={visibleTab as VerifiedContractTabsEnum}
+            key={index}
+            data-testid={`${DataTestIdsEnum.prefix}${visibleTab}-button`}
+          >
+            {currentNavLink?.title ?? ''}
+            {currentNavLink?.badge && (
+              <Badge
+                badgeValue={currentNavLink.badge}
+                className={classNames(customClassNames?.badgeFilledClassName)}
+              />
+            )}
+          </NavLink>
+        );
+      })}
     </div>
   );
 };
