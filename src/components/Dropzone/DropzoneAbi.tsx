@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AbiRegistry } from '@multiversx/sdk-core/out';
 import { FormikProps, getIn } from 'formik';
 
@@ -21,8 +21,10 @@ export const DropzoneAbi = ({
   fieldName,
   setFieldValue,
   setFieldTouched,
+  setFieldError,
   setErrors,
-  errors
+  errors,
+  values
 }: DropzoneAbiPropsType) => {
   const smartContractDispatch = useSmartContractDispatch();
   const [file, setFile] = useState<FileType | undefined>();
@@ -77,6 +79,19 @@ export const DropzoneAbi = ({
       fileReader.readAsText(newFile);
     }
   };
+
+  useEffect(() => {
+    if (values && Object.keys(values).length > 0) {
+      const value = getIn(values, fieldName);
+      if (value) {
+        setFieldError(fieldName, undefined);
+      } else {
+        if (file) {
+          setFile(undefined);
+        }
+      }
+    }
+  }, [values]);
 
   return (
     <Dropzone

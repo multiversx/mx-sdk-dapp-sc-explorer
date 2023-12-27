@@ -29,14 +29,14 @@ export const DropzoneWasm = ({
 
   const onRemove = () => {
     setFile(undefined);
-    setFieldValue(fieldName, '');
+    setFieldValue(fieldName, undefined);
   };
 
   const onFileDrop = ([newFile]: File[]) => {
     const fileReader = new FileReader();
     setFieldTouched(fieldName, true);
     setFieldError(fieldName, undefined);
-    setFieldValue(fieldName, '');
+    setFieldValue(fieldName, undefined);
     fileReader.onload = () => {
       if (fileReader.result) {
         try {
@@ -64,6 +64,10 @@ export const DropzoneWasm = ({
       const value = getIn(values, fieldName);
       if (value) {
         setFieldError(fieldName, undefined);
+      } else {
+        if (file) {
+          setFile(undefined);
+        }
       }
     }
   }, [values]);
