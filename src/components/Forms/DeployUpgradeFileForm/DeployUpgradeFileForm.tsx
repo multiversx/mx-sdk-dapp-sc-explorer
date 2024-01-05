@@ -55,7 +55,7 @@ export const DeployUpgradeFileForm = (props: DeployUpgradeFileFormUIType) => {
     ...input.map((input) => {
       return [input.name, getInitalFormConfig({ type: input.type })];
     }),
-    [DeployUpgradeFileFormikFieldsEnum.wasmFileContent, '']
+    [DeployUpgradeFileFormikFieldsEnum.wasmFileContent, undefined]
   ]);
 
   const validationSchema = lazy((innerObj) => {

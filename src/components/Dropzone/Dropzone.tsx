@@ -16,6 +16,7 @@ export const Dropzone = ({
   onFileDrop,
   onFileRemove,
   files = [],
+  defaultMessage,
   successMessage,
   errorMessage,
   disabled
@@ -26,7 +27,8 @@ export const Dropzone = ({
   const { statusIcon, statusLabel } = getDropzoneStatusData({
     errorsExist,
     filesUploadedSuccessfully,
-    successMessage
+    successMessage,
+    defaultMessage
   });
 
   const { getInputProps, getRootProps, open } = useDropzone({

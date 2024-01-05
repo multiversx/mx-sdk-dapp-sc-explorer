@@ -1,6 +1,7 @@
 import React from 'react';
 import { faCopy } from '@fortawesome/free-solid-svg-icons';
 import { CopyButton } from '@multiversx/sdk-dapp/UI/CopyButton';
+import BigNumber from 'bignumber.js';
 import classNames from 'classnames';
 
 import globalStyles from 'assets/styles/globals.module.scss';
@@ -41,7 +42,26 @@ export const EndpointOutput = (props: EndpointOutputUIType) => {
                       (typeof displayValue === 'object' ||
                         Array.isArray(displayValue))
                     ) {
-                      const code = JSON.stringify(displayValue, null, 2);
+                      const code = JSON.stringify(
+                        displayValue,
+                        (key, val) => {
+                          try {
+                            if (
+                              typeof val === 'number' ||
+                              !isNaN(Number(val)) ||
+                              BigNumber.isBigNumber(val)
+                            ) {
+                              return new BigNumber(val).toFixed();
+                            }
+
+                            return val;
+                          } catch (error) {
+                            return val;
+                          }
+                        },
+                        2
+                      );
+
                       return (
                         <div
                           className={classNames(globalStyles?.codeBlock)}
