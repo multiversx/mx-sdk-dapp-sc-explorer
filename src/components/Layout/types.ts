@@ -6,9 +6,9 @@ export interface LayoutComponentUIType extends UserInterfaceType {
 }
 
 export interface LayoutSidebarNavLinksUIType {
-  title: string | React.ReactNode;
+  title: React.ReactNode;
   isActive: boolean;
-  badge?: string | React.ReactNode;
+  badge?: React.ReactNode;
 }
 
 export interface LayoutSidebarNavLinksType {
