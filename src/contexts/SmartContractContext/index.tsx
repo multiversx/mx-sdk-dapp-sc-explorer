@@ -5,9 +5,9 @@ import React, {
   useContext,
   ReactNode
 } from 'react';
-import { AbiRegistry } from '@multiversx/sdk-core/out';
 
 import { INTERFACE_NAME_PLACEHOLDER } from 'constants/general';
+import { getAbiRegistry } from 'helpers';
 import { SmartContractInitialType } from 'types';
 import { reducer } from './reducer';
 import { initializer } from './state';
@@ -101,7 +101,7 @@ const SmartContractContextProvider = (
           if (!verifiedContractAbi.name) {
             verifiedContractAbi.name = INTERFACE_NAME_PLACEHOLDER;
           }
-          const abiRegistry = AbiRegistry.create(verifiedContractAbi);
+          const abiRegistry = getAbiRegistry(verifiedContractAbi);
           dispatch({
             type: SmartContractDispatchTypeEnum.setAbiRegistry,
             abiRegistry
@@ -123,7 +123,7 @@ const SmartContractContextProvider = (
         if (!abi.name) {
           abi.name = INTERFACE_NAME_PLACEHOLDER;
         }
-        const abiRegistry = AbiRegistry.create(abi);
+        const abiRegistry = getAbiRegistry(abi);
         dispatch({
           type: SmartContractDispatchTypeEnum.setAbiRegistry,
           abiRegistry

@@ -133,3 +133,19 @@ export const DOCUMENTED_TYPES: { [key: string]: DocumentedTypesExampleType } = {
     type: 'nothing'
   }
 };
+
+export const OperationCompletionStatus = {
+  type: 'explicit-enum',
+  variants: [
+    {
+      docs: ['indicates that operation was completed'],
+      name: 'completed'
+    },
+    {
+      docs: [
+        'indicates that operation was interrupted prematurely, due to low gas'
+      ],
+      name: 'interrupted'
+    }
+  ]
+};

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { AbiRegistry } from '@multiversx/sdk-core/out';
 import { FormikProps, getIn } from 'formik';
 
 import { Dropzone } from 'components';
 import { INTERFACE_NAME_PLACEHOLDER } from 'constants/general';
 import { useSmartContractDispatch } from 'contexts';
+import { getAbiRegistry } from 'helpers';
 import {
   AcceptedFileTypeEnum,
   FormikLoadAbiType,
@@ -60,7 +60,7 @@ export const DropzoneAbi = ({
             type: SmartContractDispatchTypeEnum.setRawAbi,
             rawAbi: abi
           });
-          const abiRegistry = AbiRegistry.create(abi);
+          const abiRegistry = getAbiRegistry(abi);
           smartContractDispatch({
             type: SmartContractDispatchTypeEnum.setAbiRegistry,
             abiRegistry
