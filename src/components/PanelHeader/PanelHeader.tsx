@@ -17,7 +17,7 @@ export const PanelHeader = ({
       {children && (
         <div className={classNames(styles?.panelHeaderTitle)}>{children}</div>
       )}
-      {showButtons && (
+      {showButtons && onAllExpanded !== undefined && (
         <div className={classNames(styles?.panelHeaderButtons)}>
           <button
             type='button'
@@ -27,9 +27,7 @@ export const PanelHeader = ({
               customClassNames?.buttonClassName
             )}
             onClick={() => {
-              if (onAllExpanded) {
-                onAllExpanded(true);
-              }
+              onAllExpanded(true);
             }}
           >
             Expand All
@@ -42,9 +40,7 @@ export const PanelHeader = ({
               customClassNames?.buttonClassName
             )}
             onClick={() => {
-              if (onAllExpanded) {
-                onAllExpanded(false);
-              }
+              onAllExpanded(false);
             }}
           >
             Reset

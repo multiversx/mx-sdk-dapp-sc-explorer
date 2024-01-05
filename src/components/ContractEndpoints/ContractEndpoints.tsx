@@ -3,6 +3,7 @@ import classNames from 'classnames';
 
 import globalStyles from 'assets/styles/globals.module.scss';
 import { Card, PanelHeader, MutateModal } from 'components';
+import { CONTRACT_WRITE_ENDPOINT_HIDE_LIST } from 'constants/general';
 import { useSCExplorerContext } from 'contexts';
 import { ContractEndpointMutabilityEnum } from 'types';
 import { ContractEndpoint } from './ContractEndpoint';
@@ -24,7 +25,13 @@ export const ContractEndpoints = ({ mutability }: ContractEndpointsUIType) => {
   let filteredEndpoints = endpoints;
   if (mutability) {
     filteredEndpoints = endpoints.filter(
-      (endpoint) => endpoint?.modifiers?.mutability === mutability
+      (endpoint) =>
+        endpoint?.modifiers?.mutability === mutability &&
+        !(
+          endpoint?.modifiers?.mutability ===
+            ContractEndpointMutabilityEnum.mutable &&
+          CONTRACT_WRITE_ENDPOINT_HIDE_LIST.includes(endpoint?.name)
+        )
     );
   }
 

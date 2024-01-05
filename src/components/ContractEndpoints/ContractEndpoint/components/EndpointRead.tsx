@@ -55,6 +55,7 @@ export const EndpointRead = (props: BaseEndpointUIType) => {
       result={result}
       isLoading={isLoading}
       generalError={error}
+      resetForm={false}
       buttonText='Query'
       {...props}
     />

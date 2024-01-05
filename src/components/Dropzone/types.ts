@@ -21,12 +21,13 @@ export interface DropzoneUIType extends UserInterfaceType {
   acceptedFileTypes: AcceptedFileTypeEnum[];
   acceptMultipleFiles?: DropzoneOptions['multiple'];
   files?: FileType[];
+  defaultMessage?: string;
   successMessage: string;
+  errorMessage?: string;
+  disabled?: boolean;
   onFileDrop: DropzoneOptions['onDrop'];
   onFileRemoveAll?: (event: MouseEvent<HTMLDivElement>) => void;
   onFileRemove?: (fileIndex: number, event: MouseEvent<HTMLDivElement>) => void;
-  errorMessage?: string;
-  disabled?: boolean;
 }
 
 export interface DropzoneFileUIType

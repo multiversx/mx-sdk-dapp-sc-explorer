@@ -15,6 +15,7 @@ export interface EndpointInteractionUIType extends UserInterfaceType {
   formik?: FormikProps<FormikAbiType>;
   result?: QueryContractResponse;
   mutability?: string | ContractEndpointMutabilityEnum;
+  resetForm?: boolean;
 }
 
 export interface EndpointFormUIType extends EndpointInteractionUIType {

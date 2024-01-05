@@ -17,6 +17,7 @@ export const CONTRACT_FILE_TEST_PATH = '/tests';
 export const CONTRACT_FILE_EXTENSION = '.rs';
 export const INTERFACE_NAME_PLACEHOLDER = '?';
 export const INTERFACE_DESCRIPTION_PLACEHOLDER = 'N / A';
+export const CONTRACT_WRITE_ENDPOINT_HIDE_LIST = ['upgrade'];
 export const TYPE_PREFIX = 'multiversx:types:';
 export const CUSTOM_TYPE_PREFIX = 'customType:';
 export const TYPE_REGEX =

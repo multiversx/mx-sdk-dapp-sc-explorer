@@ -35,7 +35,7 @@ export const ContractLoadAbiComponent = () => {
 
   const initialValues: FormikLoadAbiType = {
     [ContractLoadAbiFormikFieldsEnum.contractAddress]: contractAddress ?? '',
-    [ContractLoadAbiFormikFieldsEnum.abiFileContent]: undefined
+    [ContractLoadAbiFormikFieldsEnum.abiFileContent]: rawAbi
   };
 
   const isObject = (obj: Record<string, string>) =>
@@ -53,9 +53,12 @@ export const ContractLoadAbiComponent = () => {
       }
     ),
     [ContractLoadAbiFormikFieldsEnum.abiFileContent]: mixed()
-      .required('Required')
       .test('isValidObject', 'Required', (value) => {
-        return isObject(value) && Object.keys(value).length > 0;
+        if (value === undefined) {
+          return true;
+        }
+
+        return value && isObject(value) && Object.keys(value).length > 0;
       })
       .test('isValidFile', 'Invalid file type', (value: any) => {
         const type: string = value?.type;
