@@ -19,6 +19,7 @@ import globalStyles from 'assets/styles/globals.module.scss';
 import { AmountSelectInput } from 'components';
 import {
   SC_GAS_LIMIT,
+  SC_DEPLOY_GAS_LIMIT,
   SC_SIMULATE_GAS_LIMIT,
   METADATA_OPTIONS,
   ZERO
@@ -100,8 +101,10 @@ export const InteractionModalForm = (props: InteractionModalFormUIType) => {
         )
       : {};
 
+  const defaultGasLimit = isMutate ? SC_GAS_LIMIT : SC_DEPLOY_GAS_LIMIT;
+
   const initialValues = {
-    [InteractionModalFormikFieldsEnum.gasLimit]: SC_GAS_LIMIT,
+    [InteractionModalFormikFieldsEnum.gasLimit]: defaultGasLimit,
     [InteractionModalFormikFieldsEnum.tokens]:
       isMutate && modifiers?.isPayable()
         ? [
@@ -286,7 +289,7 @@ export const InteractionModalForm = (props: InteractionModalFormUIType) => {
             } else {
               setFieldValue(
                 InteractionModalFormikFieldsEnum.gasLimit,
-                SC_GAS_LIMIT
+                defaultGasLimit
               );
               setSimulatedTxGasLimit(0);
             }
