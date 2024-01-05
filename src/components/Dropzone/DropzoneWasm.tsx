@@ -62,13 +62,14 @@ export const DropzoneWasm = ({
   useEffect(() => {
     if (values && Object.keys(values).length > 0) {
       const value = getIn(values, fieldName);
-      if (value) {
-        setFieldError(fieldName, undefined);
-      } else {
+      if (!value) {
         if (file) {
           setFile(undefined);
         }
+        return;
       }
+
+      setFieldError(fieldName, undefined);
     }
   }, [values]);
 
