@@ -26,13 +26,12 @@ export const ContractType = (props: ContractTypingUIType) => {
       ? abiRegistry?.getStruct(typeName)
       : undefined;
 
-  const enums =
-    rawType === ContractTypingsTypeEnum.enum
-      ? abiRegistry?.getEnum(typeName)
-      : undefined;
+  const isEnum =
+    rawType === ContractTypingsTypeEnum.enum ||
+    rawType === ContractTypingsTypeEnum.explicitEnum;
+  const enums = isEnum ? abiRegistry?.getEnum(typeName) : undefined;
 
-  const badgeIcon =
-    rawType === ContractTypingsTypeEnum.enum ? enumTypeIcon : structTypeIcon;
+  const badgeIcon = isEnum ? enumTypeIcon : structTypeIcon;
 
   return (
     <CollapsibleCard

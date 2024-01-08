@@ -40,7 +40,8 @@ export const Input = ({
 
   const rawType = rawAbi?.types[definitionTypeName]?.type;
   const enums =
-    rawType === ContractTypingsTypeEnum.enum
+    rawType === ContractTypingsTypeEnum.enum ||
+    rawType === ContractTypingsTypeEnum.explicitEnum
       ? abiRegistry?.getEnum(definitionTypeName)
       : undefined;
   const isSimpleEnum =

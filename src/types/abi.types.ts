@@ -72,7 +72,8 @@ export interface ContractTypingsType {
 }
 export enum ContractTypingsTypeEnum {
   struct = 'struct',
-  enum = 'enum'
+  enum = 'enum',
+  explicitEnum = 'explicit-enum'
 }
 
 export interface ContractTypingType {

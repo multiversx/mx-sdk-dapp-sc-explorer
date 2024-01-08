@@ -6,7 +6,7 @@ import {
 } from '@multiversx/sdk-core/out';
 import { getChainID } from '@multiversx/sdk-dapp/utils/network';
 
-import { SC_GAS_LIMIT } from 'constants/general';
+import { SC_DEPLOY_GAS_LIMIT } from 'constants/general';
 import { GetDeployTransactionType } from 'types';
 
 export const getDeployTransaction = ({
@@ -36,7 +36,7 @@ export const getDeployTransaction = ({
           deployer: caller,
           code,
           codeMetadata,
-          gasLimit: Number(userGasLimit ?? SC_GAS_LIMIT),
+          gasLimit: Number(userGasLimit ?? SC_DEPLOY_GAS_LIMIT),
           initArguments: args,
           value: TokenTransfer.egldFromAmount(0),
           chainID: getChainID()

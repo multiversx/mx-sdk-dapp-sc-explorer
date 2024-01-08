@@ -5,8 +5,8 @@ export interface TransactionPanelUIType extends UserInterfaceType {
   onClose: () => void;
   status?: string;
   transactions?: SignedTransactionType[];
-  panelDescription?: string | React.ReactNode;
-  panelErrorDescription?: string | React.ReactNode;
+  panelDescription?: React.ReactNode;
+  panelErrorDescription?: React.ReactNode;
 }
 
 export enum TransactionEventIdentifierEnum {
