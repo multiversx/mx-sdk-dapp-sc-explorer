@@ -66,7 +66,8 @@ export const DefinitionsTooltip = (props: DefinitionsTooltipUIType) => {
             : undefined;
 
         const enums =
-          rawType === ContractTypingsTypeEnum.enum
+          rawType === ContractTypingsTypeEnum.enum ||
+          rawType === ContractTypingsTypeEnum.explicitEnum
             ? abiRegistry?.getEnum(typeName)
             : undefined;
 

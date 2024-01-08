@@ -13,8 +13,8 @@ export interface DeployUpgradeFileFormUIType extends UserInterfaceType {
   isLoading?: boolean;
   generalError?: string;
   buttonText?: string;
-  buttonLoginDescription?: string | React.ReactNode;
-  buttonDescription?: string | React.ReactNode;
+  buttonLoginDescription?: React.ReactNode;
+  buttonDescription?: React.ReactNode;
 }
 
 export enum DeployUpgradeFileFormikFieldsEnum {

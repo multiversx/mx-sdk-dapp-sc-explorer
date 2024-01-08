@@ -43,6 +43,6 @@ export interface InteractionModalFormUIType extends UserInterfaceType {
   isDeploy?: boolean;
   isMutate?: boolean;
   generalError?: string;
-  buttonText?: string | React.ReactNode;
-  panelDescription?: string | React.ReactNode;
+  buttonText?: React.ReactNode;
+  panelDescription?: React.ReactNode;
 }
