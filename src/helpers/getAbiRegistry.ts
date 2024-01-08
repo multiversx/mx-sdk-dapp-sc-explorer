@@ -17,7 +17,7 @@ export const getAbiRegistry = (abi: any) => {
   // add the OperationCompletionStatus explicit-enum in case it is missing from the abi types but required in endpoints
   if (
     abi?.types &&
-    !abi?.types?.OperationCompletionStatus &&
+    !abi.types?.OperationCompletionStatus &&
     isValueInObject(abi, 'type', 'OperationCompletionStatus')
   ) {
     abi.types = { ...abi.types, OperationCompletionStatus };
