@@ -42,13 +42,13 @@ The [`@multiversx/sdk-dapp-sc-explorer`](https://www.npmjs.com/package/@multiver
 
 The current state of the deployed SC can be checked without any need to login, the output is already decoded and processed for an easy overview.
 
-### Modify SC Statte
+### Modify SC State
 
 The Smart Contract State can be changed with a transaction, therefore, in order to change the state the user must login with one of the login providers in order to sign the transaction.
 
 ### Load ABI
 
-An ABI file can be loaded in order to have have an overview of the structure, check the endpoints, events, types, etc.
+An ABI file can be loaded in order to have an overview of the structure, check the endpoints, events, types, etc.
 
 ### Deploy SC
 
@@ -121,21 +121,21 @@ import { ScExplorerContainer } from '@multiversx/sdk-dapp-sc-explorer/containers
 - `canUpgrade` - show the Upgrade Contract Panel in the Layout
 - `contractAddress` - `optional` - provide the Address where the Contract is already Deployed
 - `abi` - `optional` - provide the ABI beforehand
-- `verifiedContract` - `optional` - Verified Contract Details that include the ABI, Files, etc - as retrieved from api ([example](https://devnet-api.multiversx.com/accounts/erd1qqqqqqqqqqqqqpgq2ddn0gave73udf0rrwaepu2gafzlr56n396q9nqpx7/verification))
+- `verifiedContract` - `optional` - Verified Contract Details that include the ABI, Files, etc - as retrieved from API ([example](https://devnet-api.multiversx.com/accounts/erd1qqqqqqqqqqqqqpgq2ddn0gave73udf0rrwaepu2gafzlr56n396q9nqpx7/verification))
 
 `accountConsumerHandlers`
 
-- `useGetLoginInfo` - an async function that returns the Login state ( cand be used from sdk-dapp )
-- `useGetAccountInfo` - an async function that returns the Account details ( cand be used from sdk-dapp )
+- `useGetLoginInfo` - an async function that returns the Login state ( can be used from sdk-dapp )
+- `useGetAccountInfo` - an async function that returns the Account details ( can be used from sdk-dapp )
   is an async function that returns the accessToken mandatory for authorizing the requests.
 - `onLoginClick` - `optional` - in case an external Login action/modal must be triggered on interaction with the `Connect Wallet` buttons
 
 `networkConfig`
 
 - `environment` - devnet | testnet | mainnet
-- `apiAddress` - `optional` - use a different api addres on calls
+- `apiAddress` - `optional` - use a different API address on calls
 
-`customClassNames` - `optional` - an object that provides existing css classes tor an easier styling configuration
+`customClassNames` - `optional` - an object that provides existing css classes for an easier styling configuration
 
 `icons` - `optional` - an object that provides FontawesomeIcons used on different components
 
@@ -147,7 +147,7 @@ See the [open issues](https://github.com/multiversx/mx-sdk-dapp-sc-explorer/issu
 
 ## Contributing
 
-Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+Contributions are what make the open-source community such an amazing place to be, learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
 One can contribute by creating _pull requests_, or by opening _issues_ for discovered bugs or desired features.
 
