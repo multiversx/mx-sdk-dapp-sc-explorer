@@ -2,11 +2,13 @@ import React, { ReactNode } from 'react';
 import {
   AccountConsumerHandlersType,
   CustomClassNamesType,
+  ConfigType,
   InterfaceIconsType,
   NetworkType,
   SmartContractInitialType
 } from 'types';
 import { AccountContextProvider } from './AccountContext';
+import { ConfigContextProvider } from './ConfigContext';
 import { CustomClassNamesContextProvider } from './CustomClassNamesContext';
 import { IconsContextProvider } from './IconsContext';
 import { NetworkContextProvider } from './NetworkContext';
@@ -21,6 +23,7 @@ interface AppContextProviderPropsType {
   smartContract?: SmartContractInitialType;
   customClassNames?: CustomClassNamesType;
   icons?: InterfaceIconsType;
+  config?: ConfigType;
   children: ReactNode;
 }
 export function AppContextProvider({
@@ -29,6 +32,7 @@ export function AppContextProvider({
   smartContract = {},
   customClassNames = {},
   icons = {},
+  config = {},
   children
 }: AppContextProviderPropsType) {
   return (
@@ -37,13 +41,15 @@ export function AppContextProvider({
         <NetworkContextProvider value={networkConfig}>
           <SmartContractContextProvider value={smartContract}>
             <AccountContextProvider value={accountConsumerHandlers}>
-              <SupportContextProvider>
-                <UserActionsContextProvider>
-                  <SCExplorerContextProvider>
-                    {children}
-                  </SCExplorerContextProvider>
-                </UserActionsContextProvider>
-              </SupportContextProvider>
+              <ConfigContextProvider value={config}>
+                <SupportContextProvider>
+                  <UserActionsContextProvider>
+                    <SCExplorerContextProvider>
+                      {children}
+                    </SCExplorerContextProvider>
+                  </UserActionsContextProvider>
+                </SupportContextProvider>
+              </ConfigContextProvider>
             </AccountContextProvider>
           </SmartContractContextProvider>
         </NetworkContextProvider>

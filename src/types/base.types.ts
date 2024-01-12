@@ -1,6 +1,13 @@
 import React from 'react';
 import { AccountType } from '@multiversx/sdk-dapp/types/account.types';
 import {
+  ExtensionLoginButtonPropsType,
+  LedgerLoginButtonPropsType,
+  WalletConnectLoginButtonPropsType,
+  WebWalletLoginButtonPropsType,
+  OperaWalletLoginButtonPropsType
+} from '@multiversx/sdk-dapp/UI';
+import {
   RawAbiType,
   VerifiedContractType,
   NetworkType,
@@ -11,10 +18,11 @@ import {
 
 export interface SCExplorerType extends UserInterfaceType {
   accountConsumerHandlers: AccountConsumerHandlersType;
-  smartContract: SmartContractInitialType;
   networkConfig: NetworkType;
-  icons?: InterfaceIconsType;
+  smartContract: SmartContractInitialType;
   customClassNames?: CustomClassNamesType;
+  icons?: InterfaceIconsType;
+  config?: ConfigType;
   loaderComponent?: React.ReactNode;
   children?: React.ReactNode;
   activeSection?: VerifiedContractTabsEnum;
@@ -34,6 +42,10 @@ export interface SmartContractInitialType {
   deployedContractDetails?: AccountType;
 }
 
+export interface ConfigType {
+  loginParams?: LoginParamsType;
+}
+
 export type AccountConsumerHandlersType = {
   useGetLoginInfo: () => {
     isLoggedIn: boolean;
@@ -44,6 +56,13 @@ export type AccountConsumerHandlersType = {
   };
   onLoginClick?: () => void;
 };
+
+export type LoginParamsType =
+  | ExtensionLoginButtonPropsType
+  | LedgerLoginButtonPropsType
+  | WalletConnectLoginButtonPropsType
+  | WebWalletLoginButtonPropsType
+  | OperaWalletLoginButtonPropsType;
 
 export enum VerifiedContractTabsEnum {
   details = 'details',
