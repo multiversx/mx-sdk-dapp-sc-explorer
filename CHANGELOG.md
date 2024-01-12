@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Updated packages](https://github.com/multiversx/mx-sdk-dapp-sc-explorer/pull/13)
+
 ## [[0.0.1-beta.5]](https://github.com/multiversx/mx-sdk-dapp-sc-explorer/pull/12)] - 2024-01-08
 
 - [Added support for Explicit Enums](https://github.com/multiversx/mx-sdk-dapp-sc-explorer/pull/11)
