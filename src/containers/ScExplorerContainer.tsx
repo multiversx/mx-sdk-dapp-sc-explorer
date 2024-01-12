@@ -6,21 +6,23 @@ import { SCExplorerType } from 'types';
 
 export function ScExplorerContainer(props: SCExplorerType) {
   const {
-    children,
+    accountConsumerHandlers,
     networkConfig,
+    smartContract,
     customClassNames,
     icons,
-    smartContract,
-    accountConsumerHandlers
+    config,
+    children
   } = props;
 
   return (
     <AppContextProvider
+      accountConsumerHandlers={accountConsumerHandlers}
       networkConfig={networkConfig}
       smartContract={smartContract}
       customClassNames={customClassNames ?? {}}
       icons={icons ?? {}}
-      accountConsumerHandlers={accountConsumerHandlers}
+      config={config ?? {}}
     >
       {children ? children : <Layout {...props} />}
     </AppContextProvider>

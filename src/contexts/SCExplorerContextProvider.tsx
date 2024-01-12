@@ -6,9 +6,11 @@ import {
   NetworkType,
   SupportType,
   SmartContractStateType,
-  UserActionStateType
+  UserActionStateType,
+  ConfigType
 } from 'types';
 import { useAccountContext, AccountContextPropsType } from './AccountContext';
+import { useConfigContext } from './ConfigContext';
 import { useCustomClassNamesContext } from './CustomClassNamesContext';
 import { useIconsContext } from './IconsContext';
 import { useNetworkConfigContext } from './NetworkContext';
@@ -24,6 +26,7 @@ export interface SCExplorerContextPropsType {
   smartContract: SmartContractStateType;
   support: SupportType;
   userActionsState: UserActionStateType;
+  config: ConfigType;
 }
 
 interface SCExplorerContextProviderPropsType {
@@ -37,24 +40,26 @@ export const SCExplorerContext = createContext(
 export function SCExplorerContextProvider({
   children
 }: SCExplorerContextProviderPropsType) {
+  const support = useSupportContext();
   const accountInfo = useAccountContext();
-  const customClassNames = useCustomClassNamesContext();
-  const icons = useIconsContext();
   const networkConfig = useNetworkConfigContext();
   const smartContract = useSmartContractContext();
-  const support = useSupportContext();
   const userActionsState = useUserActionsContext();
+  const customClassNames = useCustomClassNamesContext();
+  const icons = useIconsContext();
+  const config = useConfigContext();
 
   return (
     <SCExplorerContext.Provider
       value={{
+        support,
         accountInfo,
-        customClassNames,
-        icons,
         networkConfig,
         smartContract,
-        support,
-        userActionsState
+        userActionsState,
+        customClassNames,
+        icons,
+        config
       }}
     >
       {children}
