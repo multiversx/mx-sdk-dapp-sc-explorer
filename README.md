@@ -42,13 +42,13 @@ The [`@multiversx/sdk-dapp-sc-explorer`](https://www.npmjs.com/package/@multiver
 
 The current state of the deployed SC can be checked without any need to login, the output is already decoded and processed for an easy overview.
 
-### Modify SC Statte
+### Modify SC State
 
 The Smart Contract State can be changed with a transaction, therefore, in order to change the state the user must login with one of the login providers in order to sign the transaction.
 
 ### Load ABI
 
-An ABI file can be loaded in order to have have an overview of the structure, check the endpoints, events, types, etc.
+An ABI file can be loaded in order to have an overview of the structure, check the endpoints, events, types, etc.
 
 ### Deploy SC
 
@@ -147,7 +147,7 @@ See the [open issues](https://github.com/multiversx/mx-sdk-dapp-sc-explorer/issu
 
 ## Contributing
 
-Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+Contributions are what make the open source community such an amazing place to be, learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
 One can contribute by creating _pull requests_, or by opening _issues_ for discovered bugs or desired features.
 
