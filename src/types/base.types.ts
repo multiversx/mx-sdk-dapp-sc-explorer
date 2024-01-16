@@ -1,12 +1,6 @@
 import React from 'react';
 import { AccountType } from '@multiversx/sdk-dapp/types/account.types';
-import {
-  ExtensionLoginButtonPropsType,
-  LedgerLoginButtonPropsType,
-  WalletConnectLoginButtonPropsType,
-  WebWalletLoginButtonPropsType,
-  OperaWalletLoginButtonPropsType
-} from '@multiversx/sdk-dapp/UI';
+import { OnProviderLoginType } from '@multiversx/sdk-dapp/types/login.types';
 import {
   RawAbiType,
   VerifiedContractType,
@@ -19,7 +13,7 @@ import {
 export interface SCExplorerType extends UserInterfaceType {
   accountConsumerHandlers: AccountConsumerHandlersType;
   networkConfig: NetworkType;
-  smartContract: SmartContractInitialType;
+  smartContract: SmartContractConfigType;
   customClassNames?: CustomClassNamesType;
   icons?: InterfaceIconsType;
   config?: ConfigType;
@@ -31,11 +25,7 @@ export interface SCExplorerType extends UserInterfaceType {
   >;
 }
 
-export interface SmartContractInitialType {
-  canMutate?: boolean;
-  canLoadAbi?: boolean;
-  canDeploy?: boolean;
-  canUpgrade?: boolean;
+export interface SmartContractConfigType {
   contractAddress?: string;
   abi?: RawAbiType;
   verifiedContract?: VerifiedContractType;
@@ -43,7 +33,12 @@ export interface SmartContractInitialType {
 }
 
 export interface ConfigType {
-  loginParams?: LoginParamsType;
+  canMutate?: boolean;
+  canLoadAbi?: boolean;
+  canDeploy?: boolean;
+  canUpgrade?: boolean;
+  canDisplayContractDetails?: boolean;
+  loginParams?: OnProviderLoginType;
 }
 
 export type AccountConsumerHandlersType = {
@@ -57,15 +52,9 @@ export type AccountConsumerHandlersType = {
   onLoginClick?: () => void;
 };
 
-export type LoginParamsType =
-  | ExtensionLoginButtonPropsType
-  | LedgerLoginButtonPropsType
-  | WalletConnectLoginButtonPropsType
-  | WebWalletLoginButtonPropsType
-  | OperaWalletLoginButtonPropsType;
-
 export enum VerifiedContractTabsEnum {
   details = 'details',
+  contractDetails = 'contract-details',
   sourceCode = 'source',
   endpoints = 'endpoints',
   readEndpoints = 'endpoints-read',

@@ -34,7 +34,8 @@ export const LayoutPanelsComponent = () => {
     hasConstructor,
     canLoadAbi,
     canDeploy,
-    canUpgrade
+    canUpgrade,
+    canDisplayContractDetails
   } = support;
 
   return (
@@ -48,10 +49,21 @@ export const LayoutPanelsComponent = () => {
           <ContractLoadAbi />
         </Tab.Pane>
       )}
+
       {hasBuildInfo && (
         <Tab.Pane
           eventKey={VerifiedContractTabsEnum.details}
           data-testid={`${DataTestIdsEnum.prefix}${VerifiedContractTabsEnum.details}-panel`}
+          bsPrefix={styles?.tabPanel}
+        >
+          <ContractBuild />
+        </Tab.Pane>
+      )}
+
+      {canDisplayContractDetails && (
+        <Tab.Pane
+          eventKey={VerifiedContractTabsEnum.contractDetails}
+          data-testid={`${DataTestIdsEnum.prefix}${VerifiedContractTabsEnum.contractDetails}-panel`}
           bsPrefix={styles?.tabPanel}
         >
           <ContractBuild />

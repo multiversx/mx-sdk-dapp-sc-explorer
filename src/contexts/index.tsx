@@ -5,7 +5,7 @@ import {
   ConfigType,
   InterfaceIconsType,
   NetworkType,
-  SmartContractInitialType
+  SmartContractConfigType
 } from 'types';
 import { AccountContextProvider } from './AccountContext';
 import { ConfigContextProvider } from './ConfigContext';
@@ -20,28 +20,28 @@ import { UserActionsContextProvider } from './UserActionsContext';
 interface AppContextProviderPropsType {
   accountConsumerHandlers: AccountConsumerHandlersType;
   networkConfig: NetworkType;
-  smartContract?: SmartContractInitialType;
+  smartContract?: SmartContractConfigType;
+  config?: ConfigType;
   customClassNames?: CustomClassNamesType;
   icons?: InterfaceIconsType;
-  config?: ConfigType;
   children: ReactNode;
 }
 export function AppContextProvider({
   networkConfig,
   accountConsumerHandlers,
   smartContract = {},
+  config = {},
   customClassNames = {},
   icons = {},
-  config = {},
   children
 }: AppContextProviderPropsType) {
   return (
     <CustomClassNamesContextProvider value={customClassNames}>
       <IconsContextProvider value={icons}>
         <NetworkContextProvider value={networkConfig}>
-          <SmartContractContextProvider value={smartContract}>
-            <AccountContextProvider value={accountConsumerHandlers}>
-              <ConfigContextProvider value={config}>
+          <ConfigContextProvider value={config}>
+            <SmartContractContextProvider value={smartContract}>
+              <AccountContextProvider value={accountConsumerHandlers}>
                 <SupportContextProvider>
                   <UserActionsContextProvider>
                     <SCExplorerContextProvider>
@@ -49,9 +49,9 @@ export function AppContextProvider({
                     </SCExplorerContextProvider>
                   </UserActionsContextProvider>
                 </SupportContextProvider>
-              </ConfigContextProvider>
-            </AccountContextProvider>
-          </SmartContractContextProvider>
+              </AccountContextProvider>
+            </SmartContractContextProvider>
+          </ConfigContextProvider>
         </NetworkContextProvider>
       </IconsContextProvider>
     </CustomClassNamesContextProvider>

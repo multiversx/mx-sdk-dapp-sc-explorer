@@ -8,7 +8,7 @@ import React, {
 
 import { INTERFACE_NAME_PLACEHOLDER } from 'constants/general';
 import { getAbiRegistry } from 'helpers';
-import { SmartContractInitialType } from 'types';
+import { SmartContractConfigType } from 'types';
 import { reducer } from './reducer';
 import { initializer } from './state';
 import {
@@ -19,7 +19,7 @@ import {
 
 export interface SmartContractContextProviderPropsType {
   children: ReactNode;
-  value: SmartContractInitialType;
+  value: SmartContractConfigType;
 }
 
 const Context = createContext<SmartContractStateType | undefined>(undefined);
@@ -27,49 +27,13 @@ const Dispatch = createContext<SmartContractDispatchType | undefined>(
   undefined
 );
 
-const SmartContractContextProvider = (
-  props: SmartContractContextProviderPropsType
-) => {
-  const { children, value } = props;
-  const {
-    abi,
-    verifiedContract,
-    deployedContractDetails,
-    canLoadAbi = false,
-    canMutate = false,
-    canDeploy = false,
-    canUpgrade = false
-  } = value;
+const SmartContractContextProvider = ({
+  children,
+  value
+}: SmartContractContextProviderPropsType) => {
+  const { abi, verifiedContract, deployedContractDetails } = value;
 
   const [state, dispatch] = useReducer(reducer, initializer);
-
-  useEffect(() => {
-    dispatch({
-      type: SmartContractDispatchTypeEnum.setCanLoadAbi,
-      canLoadAbi
-    });
-  }, [canLoadAbi]);
-
-  useEffect(() => {
-    dispatch({
-      type: SmartContractDispatchTypeEnum.setCanMutate,
-      canMutate
-    });
-  }, [canMutate]);
-
-  useEffect(() => {
-    dispatch({
-      type: SmartContractDispatchTypeEnum.setCanDeploy,
-      canDeploy
-    });
-  }, [canDeploy]);
-
-  useEffect(() => {
-    dispatch({
-      type: SmartContractDispatchTypeEnum.setCanUpgrade,
-      canUpgrade
-    });
-  }, [canUpgrade]);
 
   useEffect(() => {
     if (deployedContractDetails) {

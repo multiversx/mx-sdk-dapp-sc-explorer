@@ -29,7 +29,8 @@ export const LayoutSidebarComponent = (props: LayoutComponentUIType) => {
     hasConstructor,
     canLoadAbi,
     canDeploy,
-    canUpgrade
+    canUpgrade,
+    canDisplayContractDetails
   } = support;
 
   const readEndpointsCount = (
@@ -97,6 +98,10 @@ export const LayoutSidebarComponent = (props: LayoutComponentUIType) => {
     [VerifiedContractTabsEnum.details]: {
       isActive: hasBuildInfo,
       title: 'Build Info'
+    },
+    [VerifiedContractTabsEnum.contractDetails]: {
+      isActive: canDisplayContractDetails,
+      title: 'Contract Details'
     },
     [VerifiedContractTabsEnum.sourceCode]: {
       isActive: hasSourceCode,
