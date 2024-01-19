@@ -12,6 +12,7 @@ export { Layout } from './Layout';
 export { LoginButton, LoginButtonWrapper } from './LoginButton';
 export { Overlay } from './Overlay';
 export { PanelHeader } from './PanelHeader';
+export { PropertyPill } from './PropertyPill';
 export { TransactionPanel } from './TransactionPanel';
 export { DocsTooltip } from './DocsTooltip';
 export { EndpointDefinitionList } from './EndpointDefinitionList';

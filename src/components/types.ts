@@ -21,4 +21,5 @@ export * from 'components/InputList/types';
 export * from 'components/LoginButton/types';
 export * from 'components/Modals/types';
 export * from 'components/Overlay/types';
+export * from 'components/PropertyPill/types';
 export * from 'components/TransactionPanel/types';
