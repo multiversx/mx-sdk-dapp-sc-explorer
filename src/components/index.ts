@@ -22,6 +22,7 @@ export * from './Forms';
 export * from './Modals';
 
 export * from './ContractBuild';
+export * from './ContractDetails';
 export * from './ContractConstructor';
 export * from './ContractDeploy';
 export * from './ContractEndpoints';

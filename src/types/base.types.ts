@@ -76,3 +76,10 @@ export enum MetadataFieldsEnum {
 export type MetadataOptionsType = {
   [key in MetadataFieldsEnum]: { label: string; checked: boolean };
 };
+
+export enum ContractPropertiesEnum {
+  upgradeable = 'Upgradeable',
+  readable = 'Readable',
+  payable = 'Payable',
+  payableBySc = 'Payable by Smart Contract'
+}

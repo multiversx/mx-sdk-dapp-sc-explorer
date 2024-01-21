@@ -1,7 +1,8 @@
 import {
   DocumentedTypesExampleType,
   MetadataFieldsEnum,
-  MetadataOptionsType
+  MetadataOptionsType,
+  ContractPropertiesEnum
 } from 'types';
 
 export const TIMEOUT = 10000;
@@ -28,19 +29,19 @@ export const TYPE_PREFIX_REGEX =
 
 export const METADATA_OPTIONS: MetadataOptionsType = {
   [MetadataFieldsEnum.upgradeable]: {
-    label: 'Upgradeable',
+    label: ContractPropertiesEnum.upgradeable,
     checked: true
   },
   [MetadataFieldsEnum.readable]: {
-    label: 'Readable',
+    label: ContractPropertiesEnum.readable,
     checked: true
   },
   [MetadataFieldsEnum.payable]: {
-    label: 'Payable',
+    label: ContractPropertiesEnum.payable,
     checked: false
   },
   [MetadataFieldsEnum.payableBySc]: {
-    label: 'Payable By Smart Contract',
+    label: ContractPropertiesEnum.payableBySc,
     checked: true
   }
 };
