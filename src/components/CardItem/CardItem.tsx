@@ -6,7 +6,12 @@ import { useSCExplorerContext } from 'contexts';
 import styles from './styles.module.scss';
 import { CardItemUIType } from './types';
 
-export const CardItem = ({ title, icon, children }: CardItemUIType) => {
+export const CardItem = ({
+  title,
+  icon,
+  customIcon,
+  children
+}: CardItemUIType) => {
   const { customClassNames } = useSCExplorerContext();
   return (
     <div
@@ -15,14 +20,15 @@ export const CardItem = ({ title, icon, children }: CardItemUIType) => {
         customClassNames?.cardItemClassName
       )}
     >
-      {icon && (
+      {(icon || customIcon) && (
         <div
           className={classNames(
             styles?.cardItemIcon,
             customClassNames?.cardItemIconClassName
           )}
         >
-          <FontAwesomeIcon icon={icon} />
+          {icon && <FontAwesomeIcon icon={icon} />}
+          {customIcon}
         </div>
       )}
       <div className={classNames(styles?.cardItemContent)}>
