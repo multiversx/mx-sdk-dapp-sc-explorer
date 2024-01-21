@@ -82,7 +82,7 @@ export const ContractDetailsComponent = () => {
               <Trim text={deployedContractDetails.address} />
               <CopyButton
                 text={deployedContractDetails.address}
-                copyIcon={copyIcon as any} // TODO fix fontawesome typing issue
+                copyIcon={copyIcon}
               />
             </CardItem>
           )}
@@ -130,7 +130,7 @@ export const ContractDetailsComponent = () => {
                 <Trim text={deployedContractDetails.ownerAddress} />
                 <CopyButton
                   text={deployedContractDetails.ownerAddress}
-                  copyIcon={copyIcon} // TODO fix fontawesome typing issue
+                  copyIcon={copyIcon}
                 />
                 <ExplorerLink
                   page={explorerUrlBuilder.accountDetails(

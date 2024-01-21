@@ -147,7 +147,7 @@ export const TransactionPanel = ({
                     <Trim text={deployedContractAddress} />
                     <CopyButton
                       text={deployedContractAddress}
-                      copyIcon={copyIcon as any} // TODO fix fontawesome typing issue
+                      copyIcon={copyIcon}
                     />
                   </CardItem>
                 </div>

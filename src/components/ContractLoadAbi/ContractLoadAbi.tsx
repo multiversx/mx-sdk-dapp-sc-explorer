@@ -209,7 +209,7 @@ export const ContractLoadAbiComponent = () => {
                         <CopyButton
                           text={formattedContent}
                           className={classNames(globalStyles?.copyButton)}
-                          copyIcon={copyIcon as any} // TODO fix fontawesome typing issue
+                          copyIcon={copyIcon}
                         />
                       </div>
                       <Code

@@ -238,7 +238,7 @@ export const DeployUpgradeFileForm = (props: DeployUpgradeFileFormUIType) => {
                         DeployUpgradeFileFormikFieldsEnum.wasmFileContent
                       ].toString()}
                       className={classNames(globalStyles?.copyButton)}
-                      copyIcon={copyIcon as any} // TODO fix fontawesome typing issue
+                      copyIcon={copyIcon}
                     />
                   </div>
                   <CodeComponent
