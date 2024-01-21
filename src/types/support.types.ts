@@ -7,6 +7,7 @@ export interface SupportType {
   hasEvents: boolean;
   hasTypes: boolean;
   hasConstructor: boolean;
+  hasContractDetails: boolean;
   canUpgrade: boolean;
   canDeploy: boolean;
   canLoadAbi: boolean;

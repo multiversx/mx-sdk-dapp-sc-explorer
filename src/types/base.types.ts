@@ -13,7 +13,7 @@ import {
 export interface SCExplorerType extends UserInterfaceType {
   accountConsumerHandlers: AccountConsumerHandlersType;
   networkConfig: NetworkType;
-  smartContract: SmartContractConfigType;
+  smartContract?: SmartContractConfigType;
   customClassNames?: CustomClassNamesType;
   icons?: InterfaceIconsType;
   config?: ConfigType;

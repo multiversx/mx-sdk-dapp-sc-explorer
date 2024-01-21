@@ -83,7 +83,10 @@ export function SupportContextProvider({
     hasWriteEndpoints: Boolean(hasWriteEndpoints),
     hasEvents: Boolean(hasEvents),
     hasTypes: Boolean(hasTypes),
-    hasConstructor: Boolean(hasConstructor)
+    hasConstructor: Boolean(hasConstructor),
+    hasContractDetails: Boolean(
+      canDisplayContractDetails && deployedContractDetails?.code
+    )
   };
 
   return (
