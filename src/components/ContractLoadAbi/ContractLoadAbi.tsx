@@ -7,6 +7,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CopyButton } from '@multiversx/sdk-dapp/UI/CopyButton';
 import { addressIsValid } from '@multiversx/sdk-dapp/utils/account/addressIsValid';
+import { isContract } from '@multiversx/sdk-dapp/utils/smartContracts';
 import classNames from 'classnames';
 import { Formik, Form, Field, getIn } from 'formik';
 import { mixed, object, string } from 'yup';
@@ -42,16 +43,19 @@ export const ContractLoadAbiComponent = () => {
     typeof obj === 'object' && obj !== null;
 
   const validationSchema = object({
-    [ContractLoadAbiFormikFieldsEnum.contractAddress]: string().test(
-      'validAddress',
-      'Invalid Address',
-      (value) => {
+    [ContractLoadAbiFormikFieldsEnum.contractAddress]: string()
+      .test('validAddress', 'Invalid Address', (value) => {
         if (value === undefined) {
           return true;
         }
         return addressIsValid(value);
-      }
-    ),
+      })
+      .test('validContract', 'Not a Smart Contract Address', (value) => {
+        if (value === undefined) {
+          return true;
+        }
+        return isContract(value);
+      }),
     [ContractLoadAbiFormikFieldsEnum.abiFileContent]: mixed()
       .test('isValidObject', 'Required', (value) => {
         if (value === undefined) {
@@ -129,9 +133,12 @@ export const ContractLoadAbiComponent = () => {
                       type='text'
                       onChange={async (e: React.FocusEvent<any, Element>) => {
                         handleChange(e);
-                        if (e?.target?.value !== contractAddress) {
+                        if (
+                          e?.target?.value &&
+                          e.target.value !== contractAddress
+                        ) {
                           await updateDeployedContractDetails({
-                            address: e?.target?.value
+                            address: e.target.value
                           });
                         }
                       }}
@@ -209,7 +216,7 @@ export const ContractLoadAbiComponent = () => {
                         <CopyButton
                           text={formattedContent}
                           className={classNames(globalStyles?.copyButton)}
-                          copyIcon={copyIcon as any} // TODO fix fontawesome typing issue
+                          copyIcon={copyIcon}
                         />
                       </div>
                       <Code

@@ -2,11 +2,13 @@ import React, { ReactNode } from 'react';
 import {
   AccountConsumerHandlersType,
   CustomClassNamesType,
+  ConfigType,
   InterfaceIconsType,
   NetworkType,
-  SmartContractInitialType
+  SmartContractConfigType
 } from 'types';
 import { AccountContextProvider } from './AccountContext';
+import { ConfigContextProvider } from './ConfigContext';
 import { CustomClassNamesContextProvider } from './CustomClassNamesContext';
 import { IconsContextProvider } from './IconsContext';
 import { NetworkContextProvider } from './NetworkContext';
@@ -18,7 +20,8 @@ import { UserActionsContextProvider } from './UserActionsContext';
 interface AppContextProviderPropsType {
   accountConsumerHandlers: AccountConsumerHandlersType;
   networkConfig: NetworkType;
-  smartContract?: SmartContractInitialType;
+  smartContract?: SmartContractConfigType;
+  config?: ConfigType;
   customClassNames?: CustomClassNamesType;
   icons?: InterfaceIconsType;
   children: ReactNode;
@@ -27,6 +30,7 @@ export function AppContextProvider({
   networkConfig,
   accountConsumerHandlers,
   smartContract = {},
+  config = {},
   customClassNames = {},
   icons = {},
   children
@@ -35,17 +39,19 @@ export function AppContextProvider({
     <CustomClassNamesContextProvider value={customClassNames}>
       <IconsContextProvider value={icons}>
         <NetworkContextProvider value={networkConfig}>
-          <SmartContractContextProvider value={smartContract}>
-            <AccountContextProvider value={accountConsumerHandlers}>
-              <SupportContextProvider>
-                <UserActionsContextProvider>
-                  <SCExplorerContextProvider>
-                    {children}
-                  </SCExplorerContextProvider>
-                </UserActionsContextProvider>
-              </SupportContextProvider>
-            </AccountContextProvider>
-          </SmartContractContextProvider>
+          <ConfigContextProvider value={config}>
+            <SmartContractContextProvider value={smartContract}>
+              <AccountContextProvider value={accountConsumerHandlers}>
+                <SupportContextProvider>
+                  <UserActionsContextProvider>
+                    <SCExplorerContextProvider>
+                      {children}
+                    </SCExplorerContextProvider>
+                  </UserActionsContextProvider>
+                </SupportContextProvider>
+              </AccountContextProvider>
+            </SmartContractContextProvider>
+          </ConfigContextProvider>
         </NetworkContextProvider>
       </IconsContextProvider>
     </CustomClassNamesContextProvider>

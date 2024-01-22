@@ -4,35 +4,11 @@ import {
   SmartContractDispatchActionType
 } from './types';
 
-const reducer = (
+export const reducer = (
   state: SmartContractStateType,
   action: SmartContractDispatchActionType
 ) => {
   switch (action.type) {
-    case SmartContractDispatchTypeEnum.setCanMutate: {
-      return {
-        ...state,
-        canMutate: action.canMutate
-      };
-    }
-    case SmartContractDispatchTypeEnum.setCanLoadAbi: {
-      return {
-        ...state,
-        canLoadAbi: action.canLoadAbi
-      };
-    }
-    case SmartContractDispatchTypeEnum.setCanDeploy: {
-      return {
-        ...state,
-        canDeploy: action.canDeploy
-      };
-    }
-    case SmartContractDispatchTypeEnum.setCanUpgrade: {
-      return {
-        ...state,
-        canUpgrade: action.canUpgrade
-      };
-    }
     case SmartContractDispatchTypeEnum.setAbiRegistry: {
       return {
         ...state,
@@ -69,5 +45,3 @@ const reducer = (
     }
   }
 };
-
-export { reducer };

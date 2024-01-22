@@ -87,7 +87,7 @@ export const ContractBuildComponent = () => {
                   <Trim text={rawAbi.buildInfo.rustc.commitHash} />
                   <CopyButton
                     text={rawAbi.buildInfo.rustc.commitHash}
-                    copyIcon={copyIcon as any} // TODO fix fontawesome typing issue
+                    copyIcon={copyIcon}
                   />
                 </CardItem>
               )}

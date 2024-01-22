@@ -1,5 +1,6 @@
 import React from 'react';
 import { AccountType } from '@multiversx/sdk-dapp/types/account.types';
+import { OnProviderLoginType } from '@multiversx/sdk-dapp/types/login.types';
 import {
   RawAbiType,
   VerifiedContractType,
@@ -11,10 +12,11 @@ import {
 
 export interface SCExplorerType extends UserInterfaceType {
   accountConsumerHandlers: AccountConsumerHandlersType;
-  smartContract: SmartContractInitialType;
   networkConfig: NetworkType;
-  icons?: InterfaceIconsType;
+  smartContract?: SmartContractConfigType;
   customClassNames?: CustomClassNamesType;
+  icons?: InterfaceIconsType;
+  config?: ConfigType;
   loaderComponent?: React.ReactNode;
   children?: React.ReactNode;
   activeSection?: VerifiedContractTabsEnum;
@@ -23,15 +25,20 @@ export interface SCExplorerType extends UserInterfaceType {
   >;
 }
 
-export interface SmartContractInitialType {
-  canMutate?: boolean;
-  canLoadAbi?: boolean;
-  canDeploy?: boolean;
-  canUpgrade?: boolean;
+export interface SmartContractConfigType {
   contractAddress?: string;
   abi?: RawAbiType;
   verifiedContract?: VerifiedContractType;
   deployedContractDetails?: AccountType;
+}
+
+export interface ConfigType {
+  canMutate?: boolean;
+  canLoadAbi?: boolean;
+  canDeploy?: boolean;
+  canUpgrade?: boolean;
+  canDisplayContractDetails?: boolean;
+  loginParams?: OnProviderLoginType;
 }
 
 export type AccountConsumerHandlersType = {
@@ -47,6 +54,7 @@ export type AccountConsumerHandlersType = {
 
 export enum VerifiedContractTabsEnum {
   details = 'details',
+  contractDetails = 'contract-details',
   sourceCode = 'source',
   endpoints = 'endpoints',
   readEndpoints = 'endpoints-read',
@@ -68,3 +76,10 @@ export enum MetadataFieldsEnum {
 export type MetadataOptionsType = {
   [key in MetadataFieldsEnum]: { label: string; checked: boolean };
 };
+
+export enum ContractPropertiesEnum {
+  upgradeable = 'Upgradeable',
+  readable = 'Readable',
+  payable = 'Payable',
+  payableBySc = 'Payable by Smart Contract'
+}

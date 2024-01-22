@@ -47,7 +47,7 @@ export const UnlockTitle = (
 
 export const LoginModal = () => {
   const userActionDispatch = useUserActionDispatch();
-  const { userActionsState } = useSCExplorerContext();
+  const { userActionsState, config } = useSCExplorerContext();
   const { loginModalState } = userActionsState;
   const { loginModalOpen } = loginModalState ?? {};
   const [openedLoginContainerType, setOpenedContainerType] = useState(
@@ -72,7 +72,8 @@ export const LoginModal = () => {
     nativeAuth: true,
     onLoginRedirect: () => {
       onClose();
-    }
+    },
+    ...config.loginParams
   };
 
   function handleOpenWalletConnect() {

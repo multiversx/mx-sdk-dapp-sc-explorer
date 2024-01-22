@@ -4,7 +4,7 @@ import {
   UserActionDispatchActionType
 } from './types';
 
-const reducer = (
+export const reducer = (
   state: UserActionStateType,
   action: UserActionDispatchActionType
 ) => {
@@ -49,5 +49,3 @@ const reducer = (
     }
   }
 };
-
-export { reducer };

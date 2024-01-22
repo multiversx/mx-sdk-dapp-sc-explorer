@@ -19,7 +19,7 @@ export const getUpgradeTransaction = ({
   metadata,
   nonce
 }: GetUpgradeTransactionType) => {
-  if (callerAddress && contractAddress && abiRegistry && args) {
+  if (callerAddress && contractAddress) {
     try {
       const caller = new Address(callerAddress);
       const address = new Address(contractAddress);

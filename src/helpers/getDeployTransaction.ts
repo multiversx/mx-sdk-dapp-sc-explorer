@@ -18,7 +18,7 @@ export const getDeployTransaction = ({
   metadata,
   nonce
 }: GetDeployTransactionType) => {
-  if (callerAddress && abiRegistry && args) {
+  if (callerAddress) {
     try {
       const caller = new Address(callerAddress);
       const contract = new SmartContract({
