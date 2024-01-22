@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { addressIsValid } from '@multiversx/sdk-dapp/utils/account/addressIsValid';
+import { isContract } from '@multiversx/sdk-dapp/utils/smartContracts';
 
 import { useSmartContractDispatch } from 'contexts';
 import { useNetworkProvider } from 'hooks';
@@ -16,7 +17,7 @@ export const useUpdateDeployedContractDetails = () => {
   }: {
     address: string;
   }) => {
-    if (address && addressIsValid(address)) {
+    if (address && addressIsValid(address) && isContract(address)) {
       setIsContractAddressCheckLoading(true);
       const url = `accounts/${address}`;
       const response = await get({ url });
