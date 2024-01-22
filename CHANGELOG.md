@@ -7,8 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[0.0.1-beta.6]](https://github.com/multiversx/mx-sdk-dapp-sc-explorer/pull/18)] - 2024-01-22
+
 - [Added Contract Details Panel](https://github.com/multiversx/mx-sdk-dapp-sc-explorer/pull/17)
-- [Added a new Config Context, added support for loginParams](https://github.com/multiversx/mx-sdk-dapp-sc-explorer/pull/14)
+- [Fix readme spelling and grammar by @michavie](https://github.com/multiversx/mx-sdk-dapp-sc-explorer/pull/16)
+- [Added a new Config Context, added support for loginParams](https://github.com/multiversx/mx-sdk-dapp-sc-explorer/pull/15)
 - [Updated packages](https://github.com/multiversx/mx-sdk-dapp-sc-explorer/pull/13)
 
 ## [[0.0.1-beta.5]](https://github.com/multiversx/mx-sdk-dapp-sc-explorer/pull/12)] - 2024-01-08
