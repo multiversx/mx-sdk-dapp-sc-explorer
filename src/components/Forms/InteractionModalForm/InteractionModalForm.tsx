@@ -512,7 +512,10 @@ export const InteractionModalForm = (props: InteractionModalFormUIType) => {
             )}
             {(isUpgrade || isDeploy) && !abiRegistry && (
               <div className={classNames(globalStyles?.generalWarning)}>
-                <p>Missing or Invalid ABI File</p>
+                <p>
+                  Missing or Invalid ABI File: The deploy transaction will not
+                  include parameters!
+                </p>
               </div>
             )}
             {Boolean(
