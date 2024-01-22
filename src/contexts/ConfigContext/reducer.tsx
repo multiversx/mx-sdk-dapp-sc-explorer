@@ -4,7 +4,10 @@ import {
   ConfigDispatchActionType
 } from './types';
 
-const reducer = (state: ConfigStateType, action: ConfigDispatchActionType) => {
+export const reducer = (
+  state: ConfigStateType,
+  action: ConfigDispatchActionType
+) => {
   switch (action.type) {
     case ConfigDispatchTypeEnum.setCanMutate: {
       return {
@@ -48,5 +51,3 @@ const reducer = (state: ConfigStateType, action: ConfigDispatchActionType) => {
     }
   }
 };
-
-export { reducer };

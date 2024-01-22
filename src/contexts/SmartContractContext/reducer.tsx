@@ -4,7 +4,7 @@ import {
   SmartContractDispatchActionType
 } from './types';
 
-const reducer = (
+export const reducer = (
   state: SmartContractStateType,
   action: SmartContractDispatchActionType
 ) => {
@@ -45,5 +45,3 @@ const reducer = (
     }
   }
 };
-
-export { reducer };
