@@ -9,6 +9,7 @@ import { PanelHeaderUIType } from './types';
 export const PanelHeader = ({
   children,
   showButtons = false,
+  extraButtons = null,
   onAllExpanded
 }: PanelHeaderUIType) => {
   const { customClassNames } = useSCExplorerContext();
@@ -17,34 +18,39 @@ export const PanelHeader = ({
       {children && (
         <div className={classNames(styles?.panelHeaderTitle)}>{children}</div>
       )}
-      {showButtons && onAllExpanded !== undefined && (
+      {(showButtons || extraButtons) && (
         <div className={classNames(styles?.panelHeaderButtons)}>
-          <button
-            type='button'
-            className={classNames(
-              globalStyles?.button,
-              globalStyles?.buttonUnstyled,
-              customClassNames?.buttonClassName
-            )}
-            onClick={() => {
-              onAllExpanded(true);
-            }}
-          >
-            Expand All
-          </button>
-          <button
-            type='button'
-            className={classNames(
-              globalStyles?.button,
-              globalStyles?.buttonUnstyled,
-              customClassNames?.buttonClassName
-            )}
-            onClick={() => {
-              onAllExpanded(false);
-            }}
-          >
-            Reset
-          </button>
+          {showButtons && onAllExpanded !== undefined && (
+            <>
+              <button
+                type='button'
+                className={classNames(
+                  globalStyles?.button,
+                  globalStyles?.buttonUnstyled,
+                  customClassNames?.buttonClassName
+                )}
+                onClick={() => {
+                  onAllExpanded(true);
+                }}
+              >
+                Expand All
+              </button>
+              <button
+                type='button'
+                className={classNames(
+                  globalStyles?.button,
+                  globalStyles?.buttonUnstyled,
+                  customClassNames?.buttonClassName
+                )}
+                onClick={() => {
+                  onAllExpanded(false);
+                }}
+              >
+                Reset
+              </button>
+            </>
+          )}
+          {extraButtons}
         </div>
       )}
     </div>

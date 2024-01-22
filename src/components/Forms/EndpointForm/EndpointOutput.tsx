@@ -73,7 +73,7 @@ export const EndpointOutput = (props: EndpointOutputUIType) => {
                             <CopyButton
                               text={code}
                               className={classNames(globalStyles?.copyButton)}
-                              copyIcon={copyIcon as any} // TODO fix fontawesome typing issue
+                              copyIcon={copyIcon}
                             />
                           </div>
                           <Code

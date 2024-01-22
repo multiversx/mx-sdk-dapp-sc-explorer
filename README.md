@@ -28,7 +28,9 @@ To interact with a Smart Contract it is essential to understand its inputs and o
 
 For this reason, blockchain smart contracts have so-called ABIs, expressed in a platform-agnostic language - JSON in our case.
 
-Read more about the MultiversX ABI Format here: https://docs.multiversx.com/developers/data/abi
+Read more about the MultiversX ABI Format here: [https://docs.multiversx.com/developers/data/abi](https://docs.multiversx.com/developers/data/abi)
+
+The ABI interaction functionality is built upon [https://github.com/multiversx/mx-sdk-js-core](https://github.com/multiversx/mx-sdk-js-core).
 
 ---
 
@@ -96,10 +98,6 @@ import { ScExplorerContainer } from '@multiversx/sdk-dapp-sc-explorer/containers
 ```jsx
 <ScExplorerContainer
   smartContract={{
-    canMutate: true,
-    canLoadAbi: true,
-    canDeploy: true,
-    canUpgrade: true,
     verifiedContract: contract,
     deployedContractDetails: account
   }}
@@ -108,6 +106,13 @@ import { ScExplorerContainer } from '@multiversx/sdk-dapp-sc-explorer/containers
     useGetAccountInfo
   }}
   networkConfig={{ environment, apiAddress }}
+  config={{
+    canMutate: true,
+    canLoadAbi: true,
+    canDeploy: true,
+    canUpgrade: true,
+    canDisplayContractDetails: true
+  }}
   customClassNames={customClassNames}
   icons={icons}
 />
@@ -115,10 +120,6 @@ import { ScExplorerContainer } from '@multiversx/sdk-dapp-sc-explorer/containers
 
 `smartContract`
 
-- `canMutate` - allow Smart Contract state changes, the user must be logged in order to sign the transactions
-- `canLoadAbi` - show the Load ABI Panel in the Layout
-- `canDeploy` - show the Deploy Contract Panel in the Layout
-- `canUpgrade` - show the Upgrade Contract Panel in the Layout
 - `contractAddress` - `optional` - provide the Address where the Contract is already Deployed
 - `abi` - `optional` - provide the ABI beforehand
 - `verifiedContract` - `optional` - Verified Contract Details that include the ABI, Files, etc - as retrieved from API ([example](https://devnet-api.multiversx.com/accounts/erd1qqqqqqqqqqqqqpgq2ddn0gave73udf0rrwaepu2gafzlr56n396q9nqpx7/verification))
@@ -134,6 +135,15 @@ import { ScExplorerContainer } from '@multiversx/sdk-dapp-sc-explorer/containers
 
 - `environment` - devnet | testnet | mainnet
 - `apiAddress` - `optional` - use a different API address on calls
+
+`config`
+
+- `canMutate` - allow Smart Contract state changes, the user must be logged in order to sign the transactions
+- `canLoadAbi` - show the Load ABI Panel in the Layout
+- `canDeploy` - show the Deploy Contract Panel in the Layout
+- `canUpgrade` - show the Upgrade Contract Panel in the Layout
+- `canDisplayContractDetails` - show the Contract Details Panel in the Layout ( if a valid contract address is used )
+- `loginParams` - `optional` - custom login actions based on sdk-dapps OnProviderLoginType
 
 `customClassNames` - `optional` - an object that provides existing css classes for an easier styling configuration
 

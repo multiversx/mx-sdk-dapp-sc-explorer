@@ -40,10 +40,7 @@ export const LoginButton = (props: LoginButtonUIType) => {
       {Boolean(address && isLoggedIn) ? (
         <div className={classNames(styles?.connectedWrapper)}>
           <Trim text={address} />
-          <CopyButton
-            text={address}
-            copyIcon={copyIcon as any} // TODO fix fontawesome typing issue
-          />
+          <CopyButton text={address} copyIcon={copyIcon} />
           <button
             type='button'
             className={classNames(globalStyles?.button, styles?.buttonLogout)}

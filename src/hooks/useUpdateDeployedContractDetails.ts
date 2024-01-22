@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { addressIsValid } from '@multiversx/sdk-dapp/utils/account/addressIsValid';
+import { isContract } from '@multiversx/sdk-dapp/utils/smartContracts';
 
 import { useSmartContractDispatch } from 'contexts';
 import { useNetworkProvider } from 'hooks';
@@ -16,11 +17,12 @@ export const useUpdateDeployedContractDetails = () => {
   }: {
     address: string;
   }) => {
-    if (address && addressIsValid(address)) {
+    if (address && addressIsValid(address) && isContract(address)) {
+      setIsContractAddressCheckLoading(true);
       const url = `accounts/${address}`;
       const response = await get({ url });
-      if (response?.success && response?.data) {
-        setIsContractAddressCheckLoading(true);
+      setIsContractAddressCheckLoading(false);
+      if (response?.success && response?.data?.code) {
         smartContractDispatch({
           type: SmartContractDispatchTypeEnum.setContractAddress,
           contractAddress: address
@@ -29,18 +31,19 @@ export const useUpdateDeployedContractDetails = () => {
           type: SmartContractDispatchTypeEnum.setDeployedContractDetails,
           deployedContractDetails: response.data
         });
-        setIsContractAddressCheckLoading(false);
+
+        return;
       }
-    } else {
-      smartContractDispatch({
-        type: SmartContractDispatchTypeEnum.setContractAddress,
-        contractAddress: undefined
-      });
-      smartContractDispatch({
-        type: SmartContractDispatchTypeEnum.setDeployedContractDetails,
-        deployedContractDetails: undefined
-      });
     }
+
+    smartContractDispatch({
+      type: SmartContractDispatchTypeEnum.setContractAddress,
+      contractAddress: undefined
+    });
+    smartContractDispatch({
+      type: SmartContractDispatchTypeEnum.setDeployedContractDetails,
+      deployedContractDetails: undefined
+    });
   };
 
   return { updateDeployedContractDetails, isContractAddressCheckLoading };

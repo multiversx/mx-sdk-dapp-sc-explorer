@@ -20,6 +20,8 @@ export interface CustomClassNamesType {
   badgeClassName?: string;
   badgePrimaryClassName?: string;
   badgeSecondaryClassName?: string;
+  badgeActiveClassName?: string;
+  badgeInactiveClassName?: string;
   badgeFilledClassName?: string;
   badgeIconClassName?: string;
   cardItemClassName?: string;

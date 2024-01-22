@@ -55,12 +55,12 @@ export const ContractFile = (props: ContractFileUIType) => {
           <CopyButton
             text={codeString}
             className={classNames(globalStyles?.copyButton)}
-            copyIcon={copyIcon as any} // TODO fix fontawesome typing issue
+            copyIcon={copyIcon}
           />
           <CopyButton
             text={`${fullPath}#${path}`}
             className={classNames(globalStyles?.linkButton)}
-            copyIcon={linkIcon as any} // TODO fix fontawesome typing issue
+            copyIcon={linkIcon}
           />
         </div>
         <SyntaxHighlighter

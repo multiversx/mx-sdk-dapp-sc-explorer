@@ -67,6 +67,9 @@ export const DeployModal = () => {
           }
         });
 
+        if (!transaction) {
+          return;
+        }
         await refreshAccount();
         const { error, sessionId: deploySessionId } = await sendTransactions({
           transactions: [transaction],

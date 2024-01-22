@@ -1,6 +1,7 @@
 import React, { useContext, ReactNode, createContext } from 'react';
 
 import { ContractEndpointMutabilityEnum, SupportType } from 'types';
+import { useConfigContext } from './ConfigContext';
 import { useNetworkConfigContext } from './NetworkContext';
 import { useSmartContractContext } from './SmartContractContext';
 
@@ -15,16 +16,16 @@ export function SupportContextProvider({
 }: SupportContextProviderPropsType) {
   const networkConfig = useNetworkConfigContext();
   const smartContract = useSmartContractContext();
+  const config = useConfigContext();
+  const { rawAbi, verifiedContract, abiRegistry, deployedContractDetails } =
+    smartContract;
   const {
-    rawAbi,
-    verifiedContract,
-    abiRegistry,
-    deployedContractDetails,
     canMutate,
     canLoadAbi,
     canDeploy,
-    canUpgrade
-  } = smartContract;
+    canUpgrade,
+    canDisplayContractDetails
+  } = config;
 
   const hasBuildInfo = rawAbi?.buildInfo || rawAbi?.name;
 
@@ -68,6 +69,7 @@ export function SupportContextProvider({
     canDeploy: Boolean(canDeploy),
     canLoadAbi: Boolean(canLoadAbi),
     canView: Boolean(abiRegistry),
+    canDisplayContractDetails: Boolean(canDisplayContractDetails),
     canRead: Boolean(
       abiRegistry && networkConfig && deployedContractDetails?.code
     ),
@@ -81,7 +83,10 @@ export function SupportContextProvider({
     hasWriteEndpoints: Boolean(hasWriteEndpoints),
     hasEvents: Boolean(hasEvents),
     hasTypes: Boolean(hasTypes),
-    hasConstructor: Boolean(hasConstructor)
+    hasConstructor: Boolean(hasConstructor),
+    hasContractDetails: Boolean(
+      canDisplayContractDetails && deployedContractDetails?.code
+    )
   };
 
   return (

@@ -510,6 +510,14 @@ export const InteractionModalForm = (props: InteractionModalFormUIType) => {
                 <p>Missing WASM File Code</p>
               </div>
             )}
+            {(isUpgrade || isDeploy) && !abiRegistry && (
+              <div className={classNames(globalStyles?.generalWarning)}>
+                <p>
+                  Missing or Invalid ABI File: The deploy transaction will not
+                  include parameters!
+                </p>
+              </div>
+            )}
             {Boolean(
               (isUpgrade || isMutate) &&
                 !contractAddress &&

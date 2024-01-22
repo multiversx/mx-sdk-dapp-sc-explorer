@@ -184,10 +184,7 @@ export const EndpointForm = (props: EndpointFormUIType) => {
                       className={classNames(globalStyles?.formWarningAddress)}
                     >
                       <Trim text={ownerAddress} />
-                      <CopyButton
-                        text={ownerAddress}
-                        copyIcon={copyIcon as any} // TODO fix fontawesome typing issue
-                      />
+                      <CopyButton text={ownerAddress} copyIcon={copyIcon} />
                     </div>
                     <span className={classNames(globalStyles?.formWarningText)}>
                       to call this endpoint.

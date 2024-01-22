@@ -16,6 +16,8 @@ export interface InterfaceIconsType {
   payableEndpointIcon?: IconProp;
   plusIcon?: IconProp;
   minusIcon?: IconProp;
+  checkIcon?: IconProp;
+  crossIcon?: IconProp;
   playIcon?: IconProp;
   loadIcon?: IconProp;
   connectIcon?: IconProp;

@@ -1,6 +1,7 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { isWindowAvailable } from '@multiversx/sdk-dapp/utils/isWindowAvailable';
 import classNames from 'classnames';
 import { Nav } from 'react-bootstrap';
 
@@ -27,6 +28,7 @@ export const LayoutSidebarComponent = (props: LayoutComponentUIType) => {
     hasEvents,
     hasTypes,
     hasConstructor,
+    hasContractDetails,
     canLoadAbi,
     canDeploy,
     canUpgrade
@@ -98,6 +100,10 @@ export const LayoutSidebarComponent = (props: LayoutComponentUIType) => {
       isActive: hasBuildInfo,
       title: 'Build Info'
     },
+    [VerifiedContractTabsEnum.contractDetails]: {
+      isActive: hasContractDetails,
+      title: 'Contract Details'
+    },
     [VerifiedContractTabsEnum.sourceCode]: {
       isActive: hasSourceCode,
       title: 'Source Code'
@@ -131,6 +137,15 @@ export const LayoutSidebarComponent = (props: LayoutComponentUIType) => {
   const visibleTabs = Object.keys(navLinks).filter((key: string) =>
     Boolean((navLinks as any)?.[key]?.isActive)
   );
+
+  // Fixes Trim re-render bug
+  useEffect(() => {
+    setTimeout(() => {
+      if (isWindowAvailable()) {
+        window.dispatchEvent(new Event('resize'));
+      }
+    }, 0);
+  }, [visibleTabs]);
 
   return (
     <div className={classNames(styles?.layoutContentSidebar, styles?.tabs)}>
