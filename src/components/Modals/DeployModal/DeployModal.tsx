@@ -68,8 +68,9 @@ export const DeployModal = () => {
         });
 
         if (!transaction) {
-          return;
+          throw new Error('Unable to build Deploy Transaction');
         }
+
         await refreshAccount();
         const { error, sessionId: deploySessionId } = await sendTransactions({
           transactions: [transaction],

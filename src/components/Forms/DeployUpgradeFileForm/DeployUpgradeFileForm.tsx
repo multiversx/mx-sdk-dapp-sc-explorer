@@ -5,7 +5,7 @@ import {
   faCircleNotch
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { NativeSerializer, Code } from '@multiversx/sdk-core/out';
+import { Code, NativeSerializer } from '@multiversx/sdk-core/out';
 import { CopyButton } from '@multiversx/sdk-dapp/UI/CopyButton';
 import classNames from 'classnames';
 import { Formik, Form } from 'formik';
@@ -19,7 +19,11 @@ import {
 } from 'components';
 import { DropzoneWasm } from 'components/Dropzone/DropzoneWasm';
 import { useSCExplorerContext } from 'contexts';
-import { getInitalFormConfig, getNativeArgumentsFromValues } from 'helpers';
+import {
+  getInitalFormConfig,
+  getNativeArgumentsFromValues,
+  getDefinition
+} from 'helpers';
 import {
   FormikAbiType,
   DeployUpgradeFileFormUIType,
@@ -41,9 +45,9 @@ export const DeployUpgradeFileForm = (props: DeployUpgradeFileFormUIType) => {
   const { smartContract, customClassNames, icons } = useSCExplorerContext();
   const { abiRegistry, deployedContractDetails, contractAddress } =
     smartContract ?? {};
-  const { input } = abiRegistry?.constructorDefinition ?? {
-    input: []
-  };
+
+  const endpointDefinition = getDefinition({ abiRegistry, isUpgrade });
+  const { input } = endpointDefinition ?? { input: [] };
 
   const {
     playIcon = faPlay,
@@ -67,10 +71,10 @@ export const DeployUpgradeFileForm = (props: DeployUpgradeFileFormUIType) => {
             const { wasmFileContent, ...value } = existingVal;
             if (value && Object.keys(value).length > 0) {
               const existingValues = getNativeArgumentsFromValues(value);
-              if (abiRegistry?.constructorDefinition) {
+              if (endpointDefinition) {
                 NativeSerializer.nativeToTypedValues(
                   existingValues || [],
-                  abiRegistry.constructorDefinition
+                  endpointDefinition
                 );
               }
             }
@@ -132,11 +136,11 @@ export const DeployUpgradeFileForm = (props: DeployUpgradeFileFormUIType) => {
             onSubmit={formik.handleSubmit}
             className={classNames(styles?.deployUpgradeFileForm)}
           >
-            {abiRegistry?.constructorDefinition && (
+            {endpointDefinition && (
               <div className={classNames(styles?.deployUpgradeFileFormFields)}>
                 <InputList
                   input={input}
-                  endpoint={abiRegistry?.constructorDefinition}
+                  endpoint={endpointDefinition}
                   formik={formik}
                   data-testid={
                     isUpgrade

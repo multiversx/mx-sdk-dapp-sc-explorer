@@ -13,17 +13,20 @@ import {
   UpgradeModal
 } from 'components';
 import { useSCExplorerContext, useUserActionDispatch } from 'contexts';
+import { getDefinition } from 'helpers';
 import { UserActionDispatchTypeEnum } from 'types';
 import styles from './styles.module.scss';
 
 export const ContractUpgrade = () => {
   const userActionDispatch = useUserActionDispatch();
-  const { smartContract, customClassNames, accountInfo } = useSCExplorerContext();
+  const { smartContract, customClassNames, accountInfo } =
+    useSCExplorerContext();
   const { abiRegistry, contractAddress, deployedContractDetails } =
     smartContract;
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string>();
   const { isLoggedIn } = accountInfo;
+  const upgradeDefinition = getDefinition({ abiRegistry, isUpgrade: true });
 
   const onSubmit = ({
     values,
@@ -35,11 +38,8 @@ export const ContractUpgrade = () => {
     setError(undefined);
     setIsLoading(true);
     try {
-      const args = abiRegistry?.constructorDefinition
-        ? NativeSerializer.nativeToTypedValues(
-            values || [],
-            abiRegistry.constructorDefinition
-          )
+      const args = upgradeDefinition
+        ? NativeSerializer.nativeToTypedValues(values || [], upgradeDefinition)
         : [];
       userActionDispatch({
         type: UserActionDispatchTypeEnum.setUpgradeModalState,
@@ -47,7 +47,7 @@ export const ContractUpgrade = () => {
           upgradeModalOpen: true,
           args,
           code: wasmFileContent,
-          endpoint: abiRegistry?.constructorDefinition
+          endpoint: upgradeDefinition
         }
       });
     } catch (error) {

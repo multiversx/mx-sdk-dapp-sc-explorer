@@ -1,6 +1,7 @@
 export * from './getAbiRegistry';
 export * from './getAmountSelectOptions';
 export * from './getCallContractTransaction';
+export * from './getDefinition';
 export * from './getDeployTransaction';
 export * from './getInitalFormConfig';
 export * from './getNativeArgumentsFromValues';

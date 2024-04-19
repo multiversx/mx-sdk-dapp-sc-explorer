@@ -63,6 +63,10 @@ export const MutateModal = () => {
           tokens
         });
 
+        if (!contractTransaction) {
+          throw new Error(`Unable to build ${endpoint?.name} Transaction`);
+        }
+
         await refreshAccount();
         const { error, sessionId: mutateSessionId } = await sendTransactions({
           transactions: [contractTransaction],
