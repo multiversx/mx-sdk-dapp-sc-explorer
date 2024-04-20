@@ -61,7 +61,7 @@ export const InteractionModalForm = (props: InteractionModalFormUIType) => {
     icons,
     customClassNames
   } = useSCExplorerContext();
-  const getTransactionCost = useGetTransactionCost();
+  const getTransactionCost = useGetTransactionCost({ isDeploy });
   const { deployedContractDetails, abiRegistry, contractAddress } =
     smartContract ?? {};
   const {
@@ -87,8 +87,8 @@ export const InteractionModalForm = (props: InteractionModalFormUIType) => {
   } = accountInfo;
   const [selectedToken, setSelectedToken] = useState<SelectOptionType>();
   const [isTxCostLoading, setIsTxCostLoading] = useState(false);
-  const [simulatedTxGasLimit, setSimulatedTxGasLimit] = useState<
-    number | undefined
+  const [hasVerifiedGasLimit, setHasVerifiedTxGasLimit] = useState<
+    boolean | undefined
   >();
 
   const metadataOptionsInitialValues =
@@ -210,10 +210,8 @@ export const InteractionModalForm = (props: InteractionModalFormUIType) => {
     }
 
     if (transaction) {
-      const gasLimit = await getTransactionCost(transaction);
-      if (gasLimit) {
-        return gasLimit;
-      }
+      const transactionGasLimit = await getTransactionCost(transaction);
+      return transactionGasLimit;
     }
 
     return;
@@ -277,21 +275,22 @@ export const InteractionModalForm = (props: InteractionModalFormUIType) => {
 
           const fetchData = async () => {
             setIsTxCostLoading(true);
-            const gasLimit = await getTransactionCostDetails({
+            const transactionGasLimit = await getTransactionCostDetails({
               tokens
             });
-            if (gasLimit) {
+            if (transactionGasLimit) {
+              const { gasLimit, isVerified } = transactionGasLimit;
               setFieldValue(
                 InteractionModalFormikFieldsEnum.gasLimit,
                 gasLimit
               );
-              setSimulatedTxGasLimit(gasLimit);
+              setHasVerifiedTxGasLimit(isVerified);
             } else {
               setFieldValue(
                 InteractionModalFormikFieldsEnum.gasLimit,
                 defaultGasLimit
               );
-              setSimulatedTxGasLimit(0);
+              setHasVerifiedTxGasLimit(false);
             }
             setIsTxCostLoading(false);
           };
@@ -299,11 +298,11 @@ export const InteractionModalForm = (props: InteractionModalFormUIType) => {
           if (
             validTokens &&
             !isGasValueTouched &&
-            simulatedTxGasLimit === undefined
+            hasVerifiedGasLimit === undefined
           ) {
             fetchData().catch(console.error);
           }
-        }, [values, simulatedTxGasLimit]);
+        }, [values, hasVerifiedGasLimit]);
 
         return (
           <Form
@@ -391,7 +390,7 @@ export const InteractionModalForm = (props: InteractionModalFormUIType) => {
                   )}
                 />
                 {Boolean(
-                  (isTxCostLoading || simulatedTxGasLimit) && !isGasValueTouched
+                  (isTxCostLoading || hasVerifiedGasLimit) && !isGasValueTouched
                 ) && (
                   <div
                     className={classNames(
@@ -407,7 +406,7 @@ export const InteractionModalForm = (props: InteractionModalFormUIType) => {
                       />
                     ) : (
                       <>
-                        {simulatedTxGasLimit && (
+                        {hasVerifiedGasLimit && (
                           <FontAwesomeIcon icon={faCircleCheck} />
                         )}
                       </>
