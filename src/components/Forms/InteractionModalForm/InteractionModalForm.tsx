@@ -8,6 +8,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Transaction } from '@multiversx/sdk-core/out';
 import { DECIMALS } from '@multiversx/sdk-dapp/constants/index';
+import { getEgldLabel } from '@multiversx/sdk-dapp/utils/network/getEgldLabel';
 import { parseAmount } from '@multiversx/sdk-dapp/utils/operations/parseAmount';
 import { stringIsFloat } from '@multiversx/sdk-dapp/utils/validation/stringIsFloat';
 import BigNumber from 'bignumber.js';
@@ -126,6 +127,8 @@ export const InteractionModalForm = (props: InteractionModalFormUIType) => {
     egldBalance
   });
 
+  const egldLabel = getEgldLabel();
+
   const validationSchema = object({
     gasLimit: string()
       .required('Required')
@@ -150,6 +153,16 @@ export const InteractionModalForm = (props: InteractionModalFormUIType) => {
                 selectedToken.token.balance ?? '0'
               );
               return bnBalance.comparedTo(bnAmount) >= 0;
+            }
+            return true;
+          })
+          .test('hasValidValue', 'ESDToken amount cannot be 0', (value) => {
+            if (
+              value &&
+              selectedToken?.token?.identifier &&
+              selectedToken.token.identifier !== egldLabel
+            ) {
+              return new BigNumber(value.toString()).isGreaterThan(0);
             }
             return true;
           }),
