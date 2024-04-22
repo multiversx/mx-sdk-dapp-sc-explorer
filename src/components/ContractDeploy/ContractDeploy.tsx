@@ -11,6 +11,7 @@ import {
   DeployModal
 } from 'components';
 import { useSCExplorerContext, useUserActionDispatch } from 'contexts';
+import { getDefinition } from 'helpers';
 import { UserActionDispatchTypeEnum } from 'types';
 import styles from './styles.module.scss';
 
@@ -20,6 +21,7 @@ export const ContractDeploy = () => {
   const { abiRegistry } = smartContract;
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string>();
+  const deployDefinition = getDefinition({ abiRegistry, isUpgrade: false });
 
   const onSubmit = ({
     values,
@@ -31,11 +33,8 @@ export const ContractDeploy = () => {
     setError(undefined);
     setIsLoading(true);
     try {
-      const args = abiRegistry?.constructorDefinition
-        ? NativeSerializer.nativeToTypedValues(
-            values || [],
-            abiRegistry.constructorDefinition
-          )
+      const args = deployDefinition
+        ? NativeSerializer.nativeToTypedValues(values || [], deployDefinition)
         : [];
       userActionDispatch({
         type: UserActionDispatchTypeEnum.setDeployModalState,
@@ -43,7 +42,7 @@ export const ContractDeploy = () => {
           deployModalOpen: true,
           args,
           code: wasmFileContent,
-          endpoint: abiRegistry?.constructorDefinition
+          endpoint: deployDefinition
         }
       });
     } catch (error) {

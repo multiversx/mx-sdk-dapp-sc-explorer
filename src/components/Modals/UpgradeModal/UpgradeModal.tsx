@@ -69,6 +69,10 @@ export const UpgradeModal = () => {
           }
         });
 
+        if (!transaction) {
+          throw new Error('Unable to build Upgrade Transaction');
+        }
+
         await refreshAccount();
         const { error, sessionId: upgradeSessionId } = await sendTransactions({
           transactions: [transaction],

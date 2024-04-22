@@ -22,7 +22,7 @@ export const RecursiveContainer = ({
   'data-testid': dataTestId
 }: RecursiveContainerUIType) => {
   const { customClassNames, icons, support } = useSCExplorerContext();
-  const { canMutate } = support ?? {};
+  const { canMutate, canDeploy, canUpgrade } = support ?? {};
   const { plusIcon = faPlus, minusIcon = faMinus } = icons ?? {};
 
   const builder = ({
@@ -105,7 +105,7 @@ export const RecursiveContainer = ({
             endpoint={endpoint}
             data-testid={dataTestId}
           />
-          {Boolean(isComposite && canMutate) && (
+          {Boolean(isComposite && (canMutate || canDeploy || canUpgrade)) && (
             <>
               {individualConfig.length !== 0 &&
                 individualConfig.length >= lowerBound &&
