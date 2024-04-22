@@ -5,7 +5,7 @@ import {
   ExtensionLoginButton,
   LedgerLoginButton,
   WalletConnectLoginButton,
-  WebWalletLoginButton
+  CrossWindowLoginButton
 } from '@multiversx/sdk-dapp/UI';
 import { isWindowAvailable } from '@multiversx/sdk-dapp/utils/isWindowAvailable';
 import classNames from 'classnames';
@@ -187,7 +187,7 @@ export const LoginModal = () => {
         )}
 
         {renderLoginButton(
-          <WebWalletLoginButton {...loginParams}>
+          <CrossWindowLoginButton {...loginParams}>
             <div className={classNames(styles?.buttonLoginProviderMethod)}>
               <div className={classNames(styles?.buttonLoginProviderTitle)}>
                 <WebWallet height='20' style={{ width: '1.8rem' }} />
@@ -195,7 +195,7 @@ export const LoginModal = () => {
               </div>
             </div>
             <FontAwesomeIcon icon={faArrowRight} className='arrow' />
-          </WebWalletLoginButton>
+          </CrossWindowLoginButton>
         )}
       </div>
     </Modal>

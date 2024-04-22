@@ -2,11 +2,21 @@ import { Transaction } from '@multiversx/sdk-core/out';
 import { EXTRA_GAS_LIMIT_GUARDED_TX } from '@multiversx/sdk-dapp/constants/index';
 import BigNumber from 'bignumber.js';
 
-import { SC_BASE_GAS_LIMIT } from 'constants/general';
+import { SC_GAS_LIMIT, SC_DEPLOY_GAS_LIMIT } from 'constants/general';
 import { useSCExplorerContext } from 'contexts';
+import { getComputedGasLimit } from 'helpers';
 import { useNetworkProvider } from 'hooks';
 
-export const useGetTransactionCost = () => {
+export interface TransactionCostResponseType {
+  gasLimit?: number;
+  isVerified?: boolean;
+}
+
+export const useGetTransactionCost = ({
+  isDeploy = false
+}: {
+  isDeploy?: boolean;
+}) => {
   const { post } = useNetworkProvider();
   const { accountInfo } = useSCExplorerContext();
   const { isGuarded } = accountInfo;
@@ -21,14 +31,33 @@ export const useGetTransactionCost = () => {
         response.data?.data?.txGasUnits
       ) {
         const bNGasLimit = new BigNumber(response.data.data.txGasUnits)
-          .plus(SC_BASE_GAS_LIMIT)
+          .plus(SC_GAS_LIMIT)
           .plus(guardedAccountGasLimit);
 
-        return bNGasLimit.toNumber();
+        return { gasLimit: bNGasLimit.toNumber(), isVerified: true };
       }
     }
 
-    return;
+    const computedGasLimit = getComputedGasLimit({ transaction });
+    if (computedGasLimit) {
+      const computedbNGasLimit = new BigNumber(computedGasLimit)
+        .plus(SC_GAS_LIMIT)
+        .plus(guardedAccountGasLimit);
+
+      const minGasLimit = new BigNumber(
+        isDeploy ? SC_DEPLOY_GAS_LIMIT : SC_GAS_LIMIT
+      );
+      const returnGasLimit = computedbNGasLimit.isLessThan(minGasLimit)
+        ? minGasLimit.toNumber()
+        : computedbNGasLimit.toNumber();
+
+      return { gasLimit: returnGasLimit, isVerified: false };
+    }
+
+    return {
+      gasLimit: isDeploy ? SC_DEPLOY_GAS_LIMIT : SC_GAS_LIMIT,
+      isVerified: false
+    };
   };
 
   return getTransactionConst;

@@ -6,10 +6,9 @@ import {
 } from 'types';
 
 export const TIMEOUT = 10000;
-export const SC_BASE_GAS_LIMIT = 100_000;
 export const SC_GAS_LIMIT = 10_000_000;
-export const SC_DEPLOY_GAS_LIMIT = 60_000_000;
-export const SC_SIMULATE_GAS_LIMIT = 600_000_000;
+export const SC_DEPLOY_GAS_LIMIT = 600_000_000;
+export const SC_SIMULATE_GAS_LIMIT = 1_000_000_000;
 export const ZERO = 0;
 export const ACCOUNT_TOKENS_SIZE = 200;
 

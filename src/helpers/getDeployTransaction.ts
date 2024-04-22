@@ -50,7 +50,7 @@ export const getDeployTransaction = ({
         }
       }
     } catch (error) {
-      console.error('Unable to prepare SC Call Transaction: ', error);
+      console.error('Unable to prepare Deploy Transaction: ', error);
     }
   }
 
