@@ -34,16 +34,15 @@ export const useUpdateDeployedContractDetails = () => {
           deployedContractDetails: response.data
         });
 
-        if (
-          response.data.isVerified &&
-          (!smartContract.rawAbi ||
-            smartContract.rawAbi?.isFromVerifiedContract)
-        ) {
+        const isVerified = response.data.isVerified;
+        const rawAbi = smartContract.rawAbi;
+
+        if (isVerified && (!rawAbi || rawAbi?.isFromVerifiedContract)) {
           const url = `accounts/${address}/verification`;
           const response = await get({ url });
-          if (response?.success && response?.data?.source?.abi) {
-            const verifiedContractAbi = response.data.source.abi;
+          const verifiedContractAbi = response?.data?.source?.abi;
 
+          if (response?.success && verifiedContractAbi) {
             try {
               if (!verifiedContractAbi.name) {
                 verifiedContractAbi.name = INTERFACE_NAME_PLACEHOLDER;
@@ -75,7 +74,7 @@ export const useUpdateDeployedContractDetails = () => {
           type: SmartContractDispatchTypeEnum.setVerifiedContract,
           verifiedContract: undefined
         });
-        if (smartContract.rawAbi?.isFromVerifiedContract) {
+        if (rawAbi?.isFromVerifiedContract) {
           smartContractDispatch({
             type: SmartContractDispatchTypeEnum.setRawAbi,
             rawAbi: undefined
