@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[0.0.1-beta.9]](https://github.com/multiversx/mx-sdk-dapp-sc-explorer/pull/23)] - 2024-09-05
+
+- [Updated dependencies, Use ABI from the /verification endpoint if contract is verified](https://github.com/multiversx/mx-sdk-dapp-sc-explorer/pull/22)
+
 ## [[0.0.1-beta.8]](https://github.com/multiversx/mx-sdk-dapp-sc-explorer/pull/21)] - 2024-04-22
 
 - [Updated dependencies, Use upgrade endpoint, WebWallet login using CrossWindow](https://github.com/multiversx/mx-sdk-dapp-sc-explorer/pull/20)
