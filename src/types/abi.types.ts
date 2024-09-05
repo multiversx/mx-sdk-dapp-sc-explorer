@@ -22,6 +22,7 @@ export interface RawAbiType {
   endpoints?: ContractEndpointType[];
   events?: ContractEventType[];
   ['constructor']?: ContractConstructorType;
+  isFromVerifiedContract?: boolean;
 }
 
 export interface ContractEndpointType {

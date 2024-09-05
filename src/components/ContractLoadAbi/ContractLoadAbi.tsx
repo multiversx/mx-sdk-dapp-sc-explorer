@@ -133,10 +133,7 @@ export const ContractLoadAbiComponent = () => {
                       type='text'
                       onChange={async (e: React.FocusEvent<any, Element>) => {
                         handleChange(e);
-                        if (
-                          e?.target?.value &&
-                          e.target.value !== contractAddress
-                        ) {
+                        if (e?.target?.value !== contractAddress) {
                           await updateDeployedContractDetails({
                             address: e.target.value
                           });
@@ -193,6 +190,12 @@ export const ContractLoadAbiComponent = () => {
                       </div>
                     )}
                   </div>
+                  {smartContract.rawAbi?.isFromVerifiedContract && (
+                    <div className={classNames(globalStyles?.inputInfo)}>
+                      <FontAwesomeIcon icon={faCircleCheck} /> Contract ABI set
+                      from Verified Contract
+                    </div>
+                  )}
                 </div>
                 <DropzoneAbi
                   {...formik}

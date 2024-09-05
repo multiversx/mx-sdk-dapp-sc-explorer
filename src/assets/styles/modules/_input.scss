@@ -13,6 +13,12 @@
 .input-invalid-feedback {
   /*Placeholder*/
 }
+.input-info {
+  /*Placeholder*/
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
 .input-group {
   /*Placeholder*/
   &-prepend,

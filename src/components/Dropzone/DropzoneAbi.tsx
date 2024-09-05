@@ -57,6 +57,10 @@ export const DropzoneAbi = ({
             abi.name = INTERFACE_NAME_PLACEHOLDER;
           }
           smartContractDispatch({
+            type: SmartContractDispatchTypeEnum.setVerifiedContract,
+            verifiedContract: undefined
+          });
+          smartContractDispatch({
             type: SmartContractDispatchTypeEnum.setRawAbi,
             rawAbi: abi
           });

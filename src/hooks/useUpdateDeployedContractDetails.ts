@@ -2,12 +2,15 @@ import { useState } from 'react';
 import { addressIsValid } from '@multiversx/sdk-dapp/utils/account/addressIsValid';
 import { isContract } from '@multiversx/sdk-dapp/utils/smartContracts';
 
-import { useSmartContractDispatch } from 'contexts';
+import { INTERFACE_NAME_PLACEHOLDER } from 'constants/general';
+import { useSmartContractDispatch, useSCExplorerContext } from 'contexts';
+import { getAbiRegistry } from 'helpers';
 import { useNetworkProvider } from 'hooks';
 import { SmartContractDispatchTypeEnum } from 'types';
 
 export const useUpdateDeployedContractDetails = () => {
   const smartContractDispatch = useSmartContractDispatch();
+  const { smartContract } = useSCExplorerContext();
   const { get } = useNetworkProvider();
   const [isContractAddressCheckLoading, setIsContractAddressCheckLoading] =
     useState(false);
@@ -21,7 +24,6 @@ export const useUpdateDeployedContractDetails = () => {
       setIsContractAddressCheckLoading(true);
       const url = `accounts/${address}`;
       const response = await get({ url });
-      setIsContractAddressCheckLoading(false);
       if (response?.success && response?.data?.code) {
         smartContractDispatch({
           type: SmartContractDispatchTypeEnum.setContractAddress,
@@ -32,10 +34,67 @@ export const useUpdateDeployedContractDetails = () => {
           deployedContractDetails: response.data
         });
 
+        if (
+          response.data.isVerified &&
+          (!smartContract.rawAbi ||
+            smartContract.rawAbi?.isFromVerifiedContract)
+        ) {
+          const url = `accounts/${address}/verification`;
+          const response = await get({ url });
+          if (response?.success && response?.data?.source?.abi) {
+            const verifiedContractAbi = response.data.source.abi;
+
+            try {
+              if (!verifiedContractAbi.name) {
+                verifiedContractAbi.name = INTERFACE_NAME_PLACEHOLDER;
+              }
+              smartContractDispatch({
+                type: SmartContractDispatchTypeEnum.setVerifiedContract,
+                verifiedContract: response.data
+              });
+              smartContractDispatch({
+                type: SmartContractDispatchTypeEnum.setRawAbi,
+                rawAbi: { ...verifiedContractAbi, isFromVerifiedContract: true }
+              });
+
+              const abiRegistry = getAbiRegistry(verifiedContractAbi);
+              smartContractDispatch({
+                type: SmartContractDispatchTypeEnum.setAbiRegistry,
+                abiRegistry
+              });
+            } catch (error) {
+              console.error('Unable to parse Verified Contract ABI: ', error);
+            }
+            setIsContractAddressCheckLoading(false);
+
+            return;
+          }
+        }
+
+        smartContractDispatch({
+          type: SmartContractDispatchTypeEnum.setVerifiedContract,
+          verifiedContract: undefined
+        });
+        if (smartContract.rawAbi?.isFromVerifiedContract) {
+          smartContractDispatch({
+            type: SmartContractDispatchTypeEnum.setRawAbi,
+            rawAbi: undefined
+          });
+          smartContractDispatch({
+            type: SmartContractDispatchTypeEnum.setAbiRegistry,
+            abiRegistry: undefined
+          });
+        }
+        setIsContractAddressCheckLoading(false);
+
         return;
       }
     }
 
+    smartContractDispatch({
+      type: SmartContractDispatchTypeEnum.setVerifiedContract,
+      verifiedContract: undefined
+    });
     smartContractDispatch({
       type: SmartContractDispatchTypeEnum.setContractAddress,
       contractAddress: undefined
@@ -44,7 +103,12 @@ export const useUpdateDeployedContractDetails = () => {
       type: SmartContractDispatchTypeEnum.setDeployedContractDetails,
       deployedContractDetails: undefined
     });
+
+    setIsContractAddressCheckLoading(false);
   };
 
-  return { updateDeployedContractDetails, isContractAddressCheckLoading };
+  return {
+    updateDeployedContractDetails,
+    isContractAddressCheckLoading
+  };
 };
