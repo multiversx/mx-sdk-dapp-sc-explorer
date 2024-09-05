@@ -191,7 +191,7 @@ export const ContractLoadAbiComponent = () => {
                     )}
                   </div>
                   {smartContract.rawAbi?.isFromVerifiedContract && (
-                    <div className={classNames(globalStyles?.inputInfo)}>
+                    <div className={globalStyles?.inputInfo}>
                       <FontAwesomeIcon icon={faCircleCheck} /> Contract ABI set
                       from Verified Contract
                     </div>
