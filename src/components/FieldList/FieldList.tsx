@@ -44,7 +44,4 @@ export const FieldListComponent = ({
   );
 };
 
-export const FieldList = withStyles(FieldListComponent, {
-  ssrStyles: () => import('components/FieldList/styles.module.scss'),
-  clientStyles: () => require('components/FieldList/styles.module.scss').default
-});
+export const FieldList = withStyles(FieldListComponent, {});

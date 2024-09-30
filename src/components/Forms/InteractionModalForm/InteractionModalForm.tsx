@@ -573,7 +573,8 @@ export const InteractionModalFormComponent = (
 };
 
 export const InteractionModalForm = withStyles(InteractionModalFormComponent, {
-  ssrStyles: () => import('components/InteractionModalForm/styles.module.scss'),
+  ssrStyles: () =>
+    import('components/Forms/InteractionModalForm/styles.module.scss'),
   clientStyles: () =>
-    require('components/InteractionModalForm/styles.module.scss').default
+    require('components/Forms/InteractionModalForm/styles.module.scss').default
 });
