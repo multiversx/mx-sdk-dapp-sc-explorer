@@ -12,19 +12,21 @@ import classNames from 'classnames';
 import { Formik, Form, Field, getIn } from 'formik';
 import { mixed, object, string } from 'yup';
 
-import globalStyles from 'assets/styles/globals.module.scss';
 import { Card, Code, PanelHeader } from 'components';
 import { DropzoneAbi } from 'components/Dropzone/DropzoneAbi';
 import { useSCExplorerContext } from 'contexts';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { useUpdateDeployedContractDetails } from 'hooks';
 import {
   FormikLoadAbiType,
   ContractLoadAbiFormikFieldsEnum,
   DataTestIdsEnum
 } from 'types';
-import styles from './styles.module.scss';
 
-export const ContractLoadAbiComponent = () => {
+export const ContractLoadAbiComponent = ({
+  globalStyles,
+  styles
+}: WithStylesImportType) => {
   const { support, customClassNames, smartContract, icons } =
     useSCExplorerContext();
   const { canLoadAbi } = support;
@@ -242,4 +244,10 @@ export const ContractLoadAbiComponent = () => {
   );
 };
 
-export const ContractLoadAbi = memo(ContractLoadAbiComponent);
+export const MemoizedContractLoadAbi = memo(ContractLoadAbiComponent);
+
+export const ContractLoadAbi = withStyles(MemoizedContractLoadAbi, {
+  ssrStyles: () => import('components/ContractLoadAbi/styles.module.scss'),
+  clientStyles: () =>
+    require('components/ContractLoadAbi/styles.module.scss').default
+});

@@ -1,17 +1,21 @@
 import React, { useState } from 'react';
 import classNames from 'classnames';
 
-import globalStyles from 'assets/styles/globals.module.scss';
 import { Card, PanelHeader, MutateModal } from 'components';
 import { CONTRACT_WRITE_ENDPOINT_HIDE_LIST } from 'constants/general';
 import { useSCExplorerContext } from 'contexts';
+import { withStyles } from 'hocs/withStyles';
 import { ContractEndpointMutabilityEnum } from 'types';
+
 import { ContractEndpoint } from './ContractEndpoint';
 import { EndpointTitle } from './ContractEndpoint/components/EndpointTitle';
-import styles from './styles.module.scss';
 import { ContractEndpointsUIType } from './types';
 
-export const ContractEndpoints = ({ mutability }: ContractEndpointsUIType) => {
+export const ContractEndpointsComponent = ({
+  mutability,
+  globalStyles,
+  styles
+}: ContractEndpointsUIType) => {
   const { smartContract, support, customClassNames } = useSCExplorerContext();
   const { abiRegistry } = smartContract;
   const { hasEndpoints, canMutate, canView } = support;
@@ -99,3 +103,9 @@ export const ContractEndpoints = ({ mutability }: ContractEndpointsUIType) => {
     </div>
   );
 };
+
+export const ContractEndpoints = withStyles(ContractEndpointsComponent, {
+  ssrStyles: () => import('components/ContractEndpoints/styles.module.scss'),
+  clientStyles: () =>
+    require('components/ContractEndpoints/styles.module.scss').default
+});

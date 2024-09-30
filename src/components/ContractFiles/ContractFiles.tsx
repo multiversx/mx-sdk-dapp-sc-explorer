@@ -1,19 +1,21 @@
 import React, { memo, Fragment, useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 
-import globalStyles from 'assets/styles/globals.module.scss';
 import { PanelHeader } from 'components';
 import {
   CONTRACT_FILE_EXTENSION,
   CONTRACT_FILE_TEST_PATH
 } from 'constants/general';
 import { useSCExplorerContext } from 'contexts';
+import { withStyles } from 'hocs/withStyles';
+
 import { ContractFile } from './ContractFile';
-import styles from './styles.module.scss';
 import type { ContractFilesUIType } from './types';
 
 export const ContractFilesComponent = ({
-  highlightFileHash
+  highlightFileHash,
+  globalStyles,
+  styles
 }: ContractFilesUIType) => {
   const ref = useRef<HTMLDivElement>(null);
   const { smartContract, support, customClassNames } = useSCExplorerContext();
@@ -96,4 +98,10 @@ export const ContractFilesComponent = ({
   );
 };
 
-export const ContractFiles = memo(ContractFilesComponent);
+export const MemoizedContractFiles = memo(ContractFilesComponent);
+
+export const ContractFiles = withStyles(MemoizedContractFiles, {
+  ssrStyles: () => import('components/ContractFiles/styles.module.scss'),
+  clientStyles: () =>
+    require('components/ContractFiles/styles.module.scss').default
+});

@@ -1,11 +1,15 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import globalStyles from 'assets/styles/globals.module.scss';
 import { DefinitionsTooltip, DocsTooltip } from 'components';
+import { withStyles } from 'hocs/withStyles';
+
 import { FieldListUIType } from './types';
 
-export const FieldList = ({ fields }: FieldListUIType) => {
+export const FieldListComponent = ({
+  fields,
+  globalStyles
+}: FieldListUIType) => {
   return (
     <>
       {fields && fields.length > 0 && (
@@ -39,3 +43,8 @@ export const FieldList = ({ fields }: FieldListUIType) => {
     </>
   );
 };
+
+export const FieldList = withStyles(FieldListComponent, {
+  ssrStyles: () => import('components/FieldList/styles.module.scss'),
+  clientStyles: () => require('components/FieldList/styles.module.scss').default
+});

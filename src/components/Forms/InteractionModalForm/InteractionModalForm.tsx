@@ -16,7 +16,6 @@ import classNames from 'classnames';
 import { Formik, Form, Field, getIn } from 'formik';
 import { array, object, string } from 'yup';
 
-import globalStyles from 'assets/styles/globals.module.scss';
 import { AmountSelectInput } from 'components';
 import {
   SC_GAS_LIMIT,
@@ -32,6 +31,7 @@ import {
   getDeployTransaction,
   getUpgradeTransaction
 } from 'helpers';
+import { withStyles } from 'hocs/withStyles';
 import { useGetTransactionCost } from 'hooks';
 import {
   MetadataFieldsInitialValuesType,
@@ -42,9 +42,10 @@ import {
   ProcessedFormTokenType,
   DataTestIdsEnum
 } from 'types';
-import styles from './styles.module.scss';
 
-export const InteractionModalForm = (props: InteractionModalFormUIType) => {
+export const InteractionModalFormComponent = (
+  props: InteractionModalFormUIType
+) => {
   const {
     onSubmit,
     isUpgrade = false,
@@ -53,7 +54,9 @@ export const InteractionModalForm = (props: InteractionModalFormUIType) => {
     isLoading,
     generalError,
     buttonText,
-    panelDescription
+    panelDescription,
+    globalStyles,
+    styles
   } = props;
   const {
     accountInfo,
@@ -568,3 +571,9 @@ export const InteractionModalForm = (props: InteractionModalFormUIType) => {
     </Formik>
   );
 };
+
+export const InteractionModalForm = withStyles(InteractionModalFormComponent, {
+  ssrStyles: () => import('components/InteractionModalForm/styles.module.scss'),
+  clientStyles: () =>
+    require('components/InteractionModalForm/styles.module.scss').default
+});

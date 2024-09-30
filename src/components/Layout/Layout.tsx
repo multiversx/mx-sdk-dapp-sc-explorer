@@ -5,13 +5,20 @@ import { Tab } from 'react-bootstrap';
 
 import { LoginModal, LoginButton } from 'components';
 import { useSCExplorerContext } from 'contexts';
+import { withStyles } from 'hocs/withStyles';
 import { SCExplorerType, VerifiedContractTabsEnum } from 'types';
+
 import { LayoutPanels } from './LayoutPanels';
 import { LayoutSidebar } from './LayoutSidebar';
-import styles from './styles.module.scss';
 
 export const LayoutComponent = (props: SCExplorerType) => {
-  const { className, loaderComponent, activeSection, setActiveSection } = props;
+  const {
+    className,
+    loaderComponent,
+    activeSection,
+    setActiveSection,
+    styles
+  } = props;
   const { support, accountInfo } = useSCExplorerContext();
   const { canView, canMutate, canLoadAbi } = support;
   const { onLoginClick } = accountInfo;
@@ -65,4 +72,9 @@ export const LayoutComponent = (props: SCExplorerType) => {
   );
 };
 
-export const Layout = memo(LayoutComponent);
+export const MemoizedLayout = memo(LayoutComponent);
+
+export const Layout = withStyles(MemoizedLayout, {
+  ssrStyles: () => import('components/Layout/styles.module.scss'),
+  clientStyles: () => require('components/Layout/styles.module.scss').default
+});

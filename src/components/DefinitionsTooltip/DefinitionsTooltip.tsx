@@ -4,12 +4,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FieldDefinition } from '@multiversx/sdk-core/out';
 import classNames from 'classnames';
 
-import globalStyles from 'assets/styles/globals.module.scss';
 import { Code, Overlay, EndpointDefinitionList } from 'components';
 import { DOCUMENTED_TYPES } from 'constants/general';
 import { useSCExplorerContext } from 'contexts';
+import { withStyles } from 'hocs/withStyles';
 import { ContractTypingsTypeEnum } from 'types';
-import styles from './styles.module.scss';
+
 import { DefinitionsTooltipUIType } from './types';
 
 const formatDefinitionsForDisplay = (definitions: FieldDefinition[]) => {
@@ -31,10 +31,12 @@ const formatDefinitionsForDisplay = (definitions: FieldDefinition[]) => {
     .replaceAll(': ,', ',');
 };
 
-export const DefinitionsTooltip = (props: DefinitionsTooltipUIType) => {
+export const DefinitionsTooltipComponent = (
+  props: DefinitionsTooltipUIType
+) => {
   const { smartContract, icons } = useSCExplorerContext();
   const { abiRegistry, rawAbi } = smartContract;
-  const { typeName, ...rest } = props;
+  const { typeName, globalStyles, styles, ...rest } = props;
   const { hintIcon = faQuestionCircle } = icons ?? {};
   let docs: React.ReactNode = null;
 
@@ -130,3 +132,9 @@ export const DefinitionsTooltip = (props: DefinitionsTooltipUIType) => {
     </Overlay>
   );
 };
+
+export const DefinitionsTooltip = withStyles(DefinitionsTooltipComponent, {
+  ssrStyles: () => import('components/DefinitionsTooltip/styles.module.scss'),
+  clientStyles: () =>
+    require('components/DefinitionsTooltip/styles.module.scss').default
+});

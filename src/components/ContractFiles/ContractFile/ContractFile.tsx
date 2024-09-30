@@ -7,16 +7,18 @@ import { Light as SyntaxHighlighter } from 'react-syntax-highlighter';
 import rust from 'react-syntax-highlighter/dist/esm/languages/hljs/rust';
 import androidstudio from 'react-syntax-highlighter/dist/esm/styles/hljs/androidstudio';
 
-import globalStyles from 'assets/styles/globals.module.scss';
 import { CollapsibleCard } from 'components';
 import { useSCExplorerContext } from 'contexts';
+import { withStyles } from 'hocs/withStyles';
+
 import { ContractFileUIType } from '../types';
 
 SyntaxHighlighter.registerLanguage('rust', rust);
 
-export const ContractFile = (props: ContractFileUIType) => {
+export const ContractFileComponent = (props: ContractFileUIType) => {
   const { icons } = useSCExplorerContext();
-  const { file, title, entryNumber, totalEntries, className } = props;
+  const { file, title, entryNumber, totalEntries, className, globalStyles } =
+    props;
   const { content, path } = file;
   const {
     contractFileIcon = faFileAlt,
@@ -74,3 +76,5 @@ export const ContractFile = (props: ContractFileUIType) => {
     </CollapsibleCard>
   );
 };
+
+export const ContractFile = withStyles(ContractFileComponent, {});

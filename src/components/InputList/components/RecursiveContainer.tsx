@@ -4,22 +4,24 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Type } from '@multiversx/sdk-core/out';
 import classNames from 'classnames';
 
-import globalStyles from 'assets/styles/globals.module.scss';
 import { DefinitionsTooltip } from 'components';
 import { TYPE_PREFIX_REGEX } from 'constants/general';
 import { useSCExplorerContext } from 'contexts';
+import { withStyles } from 'hocs/withStyles';
 import { RecursiveContainerUIType, FormikAbiType } from 'types';
+
 import { Input } from './Input';
 import { getTypeFromPrefix, getNestedType } from '../helpers';
 import { useFormProperty } from '../hooks';
-import styles from '../styles.module.scss';
 
-export const RecursiveContainer = ({
+export const RecursiveContainerComponent = ({
   config,
   formik,
   endpoint,
   prefix = '',
-  'data-testid': dataTestId
+  'data-testid': dataTestId,
+  globalStyles,
+  styles
 }: RecursiveContainerUIType) => {
   const { customClassNames, icons, support } = useSCExplorerContext();
   const { canMutate, canDeploy, canUpgrade } = support ?? {};
@@ -98,12 +100,14 @@ export const RecursiveContainer = ({
 
       return (
         <>
-          <RecursiveContainer
+          <RecursiveContainerComponent
             config={individualConfig}
             formik={formik}
             prefix={formattedPrefix}
             endpoint={endpoint}
             data-testid={dataTestId}
+            globalStyles={globalStyles}
+            styles={styles}
           />
           {Boolean(isComposite && (canMutate || canDeploy || canUpgrade)) && (
             <>
@@ -150,12 +154,14 @@ export const RecursiveContainer = ({
       individualConfig !== null
     ) {
       return (
-        <RecursiveContainer
+        <RecursiveContainerComponent
           config={individualConfig}
           formik={formik}
           prefix={formattedPrefix}
           endpoint={endpoint}
           data-testid={dataTestId}
+          globalStyles={globalStyles}
+          styles={styles}
         />
       );
     } else {
@@ -166,6 +172,8 @@ export const RecursiveContainer = ({
           type={foundType}
           defaultValue={individualConfig !== undefined ? individualConfig : ''}
           data-testid={dataTestId}
+          globalStyles={globalStyles}
+          styles={styles}
         />
       );
     }
@@ -207,7 +215,11 @@ export const RecursiveContainer = ({
                       <code className={classNames(globalStyles?.fieldValue)}>
                         {currentType?.toString()}
                       </code>
-                      <DefinitionsTooltip typeName={currentType?.toString()} />
+                      <DefinitionsTooltip
+                        typeName={currentType?.toString()}
+                        globalStyles={globalStyles}
+                        styles={styles}
+                      />
                     </div>
                   </div>
                 )}
@@ -223,3 +235,8 @@ export const RecursiveContainer = ({
     return null;
   }
 };
+
+export const RecursiveContainer = withStyles(RecursiveContainerComponent, {
+  ssrStyles: () => import('components/InputList/styles.module.scss'),
+  clientStyles: () => require('components/InputList/styles.module.scss').default
+});

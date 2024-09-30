@@ -13,15 +13,14 @@ import classNames from 'classnames';
 import { Formik, Form } from 'formik';
 import { lazy, mixed, object } from 'yup';
 
-import globalStyles from 'assets/styles/globals.module.scss';
 import { LoginButtonWrapper } from 'components';
 import { useSCExplorerContext } from 'contexts';
 import { getInitalFormConfig, getNativeArgumentsFromValues } from 'helpers';
+import { withStyles } from 'hocs/withStyles';
 import { EndpointFormUIType, FormikAbiType } from 'types';
 import { EndpointInteraction } from './EndpointInteraction';
-import styles from './styles.module.scss';
 
-export const EndpointForm = (props: EndpointFormUIType) => {
+export const EndpointFormComponent = (props: EndpointFormUIType) => {
   const { smartContract, accountInfo, customClassNames, icons } =
     useSCExplorerContext();
   const {
@@ -32,7 +31,9 @@ export const EndpointForm = (props: EndpointFormUIType) => {
     isLoading,
     generalError,
     resetForm = true,
-    className
+    className,
+    globalStyles,
+    styles
   } = props;
   const { address: callerAddress, isLoggedIn } = accountInfo;
   const { deployedContractDetails } = smartContract;
@@ -198,3 +199,9 @@ export const EndpointForm = (props: EndpointFormUIType) => {
     </Formik>
   );
 };
+
+export const EndpointForm = withStyles(EndpointFormComponent, {
+  ssrStyles: () => import('components/Forms/EndpointForm/styles.module.scss'),
+  clientStyles: () =>
+    require('components/Forms/EndpointForm/styles.module.scss').default
+});

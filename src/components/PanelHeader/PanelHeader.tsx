@@ -1,16 +1,18 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import globalStyles from 'assets/styles/globals.module.scss';
 import { useSCExplorerContext } from 'contexts';
-import styles from './styles.module.scss';
+import { withStyles } from 'hocs/withStyles';
+
 import { PanelHeaderUIType } from './types';
 
-export const PanelHeader = ({
+export const PanelHeaderComponent = ({
   children,
   showButtons = false,
   extraButtons = null,
-  onAllExpanded
+  onAllExpanded,
+  globalStyles,
+  styles
 }: PanelHeaderUIType) => {
   const { customClassNames } = useSCExplorerContext();
   return (
@@ -56,3 +58,9 @@ export const PanelHeader = ({
     </div>
   );
 };
+
+export const PanelHeader = withStyles(PanelHeaderComponent, {
+  ssrStyles: () => import('components/PanelHeader/styles.module.scss'),
+  clientStyles: () =>
+    require('components/PanelHeader/styles.module.scss').default
+});

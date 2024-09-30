@@ -3,24 +3,26 @@ import { Type } from '@multiversx/sdk-core/out';
 import classNames from 'classnames';
 import { Field, getIn } from 'formik';
 
-import globalStyles from 'assets/styles/globals.module.scss';
 import { DefinitionsTooltip } from 'components';
 import { DOCUMENTED_TYPES } from 'constants/general';
 import { useSCExplorerContext } from 'contexts';
+import { withStyles } from 'hocs/withStyles';
 import {
   InputUIType,
   DocumentedTypesExampleType,
   ContractTypingsTypeEnum
 } from 'types';
+
 import { getTypeFromPrefix, validateFieldType } from '../helpers';
 
-export const Input = ({
+export const InputComponent = ({
   name,
   defaultValue,
   type,
   formik,
   children,
-  'data-testid': dataTestId
+  'data-testid': dataTestId,
+  globalStyles
 }: InputUIType) => {
   if (!formik) {
     return null;
@@ -209,3 +211,5 @@ export const Input = ({
     </div>
   );
 };
+
+export const Input = withStyles(InputComponent, {});

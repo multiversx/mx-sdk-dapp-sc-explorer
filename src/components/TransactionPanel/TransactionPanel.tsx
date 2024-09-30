@@ -13,19 +13,20 @@ import { Trim } from '@multiversx/sdk-dapp/UI/Trim';
 import { TransactionEvent } from '@multiversx/sdk-network-providers/out/transactionEvents';
 import classNames from 'classnames';
 
-import globalStyles from 'assets/styles/globals.module.scss';
 import { CardItem } from 'components';
 import { useSCExplorerContext } from 'contexts';
+import { withStyles } from 'hocs/withStyles';
 import { useGetTransaction, useUpdateDeployedContractDetails } from 'hooks';
 import { TransactionPanelUIType, TransactionEventIdentifierEnum } from 'types';
-import styles from './styles.module.scss';
 
-export const TransactionPanel = ({
+export const TransactionPanelComponent = ({
   onClose,
   status,
   transactions,
   panelDescription,
-  panelErrorDescription
+  panelErrorDescription,
+  globalStyles,
+  styles
 }: TransactionPanelUIType) => {
   const { customClassNames, icons } = useSCExplorerContext();
   const { loadIcon = faCircleNotch, copyIcon = faCopy } = icons ?? {};
@@ -172,3 +173,9 @@ export const TransactionPanel = ({
     </div>
   );
 };
+
+export const TransactionPanel = withStyles(TransactionPanelComponent, {
+  ssrStyles: () => import('components/TransactionPanel/styles.module.scss'),
+  clientStyles: () =>
+    require('components/TransactionPanel/styles.module.scss').default
+});

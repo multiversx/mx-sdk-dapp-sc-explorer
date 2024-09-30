@@ -1,10 +1,10 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import globalStyles from 'assets/styles/globals.module.scss';
 import { useSCExplorerContext } from 'contexts';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 
-export const DocsPanel = () => {
+export const DocsPanelComponent = ({ globalStyles }: WithStylesImportType) => {
   const { smartContract } = useSCExplorerContext();
   const { rawAbi } = smartContract;
   const docs = rawAbi?.['constructor']?.docs ? rawAbi['constructor'].docs : [];
@@ -29,3 +29,5 @@ export const DocsPanel = () => {
     </div>
   );
 };
+
+export const DocsPanel = withStyles(DocsPanelComponent, {});

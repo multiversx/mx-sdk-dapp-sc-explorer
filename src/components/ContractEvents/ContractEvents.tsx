@@ -1,13 +1,16 @@
 import React, { memo, useState } from 'react';
 import classNames from 'classnames';
 
-import globalStyles from 'assets/styles/globals.module.scss';
 import { PanelHeader } from 'components';
 import { useSCExplorerContext } from 'contexts';
-import { ContractEvent } from './ContractEvent';
-import styles from './styles.module.scss';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 
-export const ContractEventsComponent = () => {
+import { ContractEvent } from './ContractEvent';
+
+export const ContractEventsComponent = ({
+  globalStyles,
+  styles
+}: WithStylesImportType) => {
   const { smartContract, support, customClassNames } = useSCExplorerContext();
   const { rawAbi } = smartContract;
   const { hasEvents } = support;
@@ -57,4 +60,10 @@ export const ContractEventsComponent = () => {
   );
 };
 
-export const ContractEvents = memo(ContractEventsComponent);
+export const MemoizedContractEvents = memo(ContractEventsComponent);
+
+export const ContractEvents = withStyles(MemoizedContractEvents, {
+  ssrStyles: () => import('components/ContractEvents/styles.module.scss'),
+  clientStyles: () =>
+    require('components/ContractEvents/styles.module.scss').default
+});

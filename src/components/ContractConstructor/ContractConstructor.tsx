@@ -1,7 +1,6 @@
 import React, { memo } from 'react';
 import classNames from 'classnames';
 
-import globalStyles from 'assets/styles/globals.module.scss';
 import {
   Card,
   EndpointDefinitionList,
@@ -9,9 +8,12 @@ import {
   DocsPanel
 } from 'components';
 import { useSCExplorerContext } from 'contexts';
-import styles from './styles.module.scss';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 
-export const ContractConstructorComponent = () => {
+export const ContractConstructorComponent = ({
+  globalStyles,
+  styles
+}: WithStylesImportType) => {
   const { smartContract, support, customClassNames } = useSCExplorerContext();
   const { abiRegistry } = smartContract;
   const { hasConstructor } = support;
@@ -54,4 +56,10 @@ export const ContractConstructorComponent = () => {
   );
 };
 
-export const ContractConstructor = memo(ContractConstructorComponent);
+export const MemoizedContractConstructor = memo(ContractConstructorComponent);
+
+export const ContractConstructor = withStyles(MemoizedContractConstructor, {
+  ssrStyles: () => import('components/ContractConstructor/styles.module.scss'),
+  clientStyles: () =>
+    require('components/ContractConstructor/styles.module.scss').default
+});

@@ -5,17 +5,18 @@ import properties from 'react-syntax-highlighter/dist/esm/languages/hljs/propert
 import rust from 'react-syntax-highlighter/dist/esm/languages/hljs/rust';
 import androidstudio from 'react-syntax-highlighter/dist/esm/styles/hljs/androidstudio';
 
-import styles from './styles.module.scss';
+import { withStyles } from 'hocs/withStyles';
 import type { CodeUIType } from './types';
 
 SyntaxHighlighter.registerLanguage('rust', rust);
 SyntaxHighlighter.registerLanguage('properties', properties);
 
-export const Code = ({
+export const CodeComponent = ({
   code,
   language = 'rust',
   showLineNumbers = false,
-  wrapLongLines = true
+  wrapLongLines = true,
+  styles
 }: CodeUIType) => {
   return (
     <SyntaxHighlighter
@@ -29,3 +30,8 @@ export const Code = ({
     </SyntaxHighlighter>
   );
 };
+
+export const Code = withStyles(CodeComponent, {
+  ssrStyles: () => import('components/Code/styles.module.scss'),
+  clientStyles: () => require('components/Code/styles.module.scss').default
+});

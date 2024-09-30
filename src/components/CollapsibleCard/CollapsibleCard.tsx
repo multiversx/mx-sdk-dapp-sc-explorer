@@ -3,20 +3,22 @@ import { isWindowAvailable } from '@multiversx/sdk-dapp/utils/isWindowAvailable'
 import classNames from 'classnames';
 import { Collapse } from 'react-bootstrap';
 
-import globalStyles from 'assets/styles/globals.module.scss';
 import { Badge } from 'components';
 import { useSCExplorerContext } from 'contexts';
+import { withStyles } from 'hocs/withStyles';
+
 import { CollapsibleArrows } from './CollapsibleArrows';
-import styles from './styles.module.scss';
 import type { CollapsibleCardUIType } from './types';
 
-export const CollapsibleCard = (props: CollapsibleCardUIType) => {
+export const CollapsibleCardComponent = (props: CollapsibleCardUIType) => {
   const {
     isOpen = false,
     title = 'default',
     titleContent,
     children,
-    className
+    className,
+    globalStyles,
+    styles
   } = props;
   const { customClassNames } = useSCExplorerContext();
   const [open, setOpen] = useState<boolean>(isOpen);
@@ -83,3 +85,9 @@ export const CollapsibleCard = (props: CollapsibleCardUIType) => {
     </div>
   );
 };
+
+export const CollapsibleCard = withStyles(CollapsibleCardComponent, {
+  ssrStyles: () => import('components/CollapsibleCard/styles.module.scss'),
+  clientStyles: () =>
+    require('components/CollapsibleCard/styles.module.scss').default
+});

@@ -11,15 +11,15 @@ import { isWindowAvailable } from '@multiversx/sdk-dapp/utils/isWindowAvailable'
 import classNames from 'classnames';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
-import globalStyles from 'assets/styles/globals.module.scss';
 import { useUserActionDispatch, useSCExplorerContext } from 'contexts';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { UserActionDispatchTypeEnum } from 'types';
+
 import DeFiWallet from './assets/extension-defi-wallet.svg';
 import LedgerWallet from './assets/ledger-wallet.svg';
 import MobileWallet from './assets/mobile-wallet.svg';
 import WebWallet from './assets/web-wallet.svg';
 
-import styles from './styles.module.scss';
 import { Modal } from '../Modal';
 
 enum LoginContainersTypesEnum {
@@ -28,7 +28,7 @@ enum LoginContainersTypesEnum {
   none = 'none'
 }
 
-export const UnlockTitle = (
+export const UnlockTitle = ({ styles }: WithStylesImportType) => (
   <div className={classNames(styles?.unlockTitle)}>
     Connect to a wallet
     <OverlayTrigger
@@ -45,7 +45,10 @@ export const UnlockTitle = (
   </div>
 );
 
-export const LoginModal = () => {
+export const LoginModalComponent = ({
+  globalStyles,
+  styles
+}: WithStylesImportType) => {
   const userActionDispatch = useUserActionDispatch();
   const { userActionsState, config } = useSCExplorerContext();
   const { loginModalState } = userActionsState;
@@ -91,7 +94,7 @@ export const LoginModal = () => {
       case LoginContainersTypesEnum.ledger:
         return 'Login with Ledger';
       default:
-        return UnlockTitle;
+        return <UnlockTitle styles={styles} />;
     }
   }
 
@@ -109,10 +112,10 @@ export const LoginModal = () => {
     <Modal
       show={loginModalOpen}
       onClose={onClose}
-      className={styles.loginModal}
+      className={styles?.loginModal}
       title={getLoginTitle()}
     >
-      <div className={styles.loginModal}>
+      <div className={styles?.loginModal}>
         {renderLoginButton(
           <ExtensionLoginButton {...loginParams}>
             <div className={classNames(styles?.buttonLoginProviderMethod)}>
@@ -201,3 +204,9 @@ export const LoginModal = () => {
     </Modal>
   );
 };
+
+export const LoginModal = withStyles(LoginModalComponent, {
+  ssrStyles: () => import('components/Modals/LoginModal/styles.module.scss'),
+  clientStyles: () =>
+    require('components/Modals/LoginModal/styles.module.scss').default
+});

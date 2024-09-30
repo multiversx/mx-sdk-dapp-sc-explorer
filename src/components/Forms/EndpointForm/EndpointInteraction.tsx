@@ -2,12 +2,14 @@ import React from 'react';
 import classNames from 'classnames';
 
 import { InputList } from 'components';
+import { withStyles } from 'hocs/withStyles';
 import { EndpointInteractionUIType, DataTestIdsEnum } from 'types';
-import { EndpointOutput } from './EndpointOutput';
-import styles from './styles.module.scss';
 
-export const EndpointInteraction = ({
+import { EndpointOutput } from './EndpointOutput';
+
+export const EndpointInteractionComponent = ({
   endpoint,
+  styles,
   ...rest
 }: EndpointInteractionUIType) => {
   const { input, output } = endpoint;
@@ -24,3 +26,9 @@ export const EndpointInteraction = ({
     </div>
   );
 };
+
+export const EndpointInteraction = withStyles(EndpointInteractionComponent, {
+  ssrStyles: () => import('components/Forms/EndpointForm/styles.module.scss'),
+  clientStyles: () =>
+    require('components/Forms/EndpointForm/styles.module.scss').default
+});

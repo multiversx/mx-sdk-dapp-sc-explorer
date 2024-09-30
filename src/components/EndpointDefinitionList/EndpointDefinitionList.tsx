@@ -1,16 +1,16 @@
 import React from 'react';
-import { FieldDefinition } from '@multiversx/sdk-core/out';
 import classNames from 'classnames';
 
-import globalStyles from 'assets/styles/globals.module.scss';
 import { DefinitionsTooltip } from 'components';
 import { INTERFACE_NAME_PLACEHOLDER } from 'constants/general';
+import { withStyles } from 'hocs/withStyles';
 
-export const EndpointDefinitionList = ({
-  definitions
-}: {
-  definitions: FieldDefinition[];
-}) => {
+import { EndpointDefinitionListType } from './types';
+
+export const EndpointDefinitionListComponent = ({
+  definitions,
+  globalStyles
+}: EndpointDefinitionListType) => {
   return (
     <div className={classNames(globalStyles?.fieldWrapper)}>
       {definitions.map((definition, index) => {
@@ -34,3 +34,8 @@ export const EndpointDefinitionList = ({
     </div>
   );
 };
+
+export const EndpointDefinitionList = withStyles(
+  EndpointDefinitionListComponent,
+  {}
+);

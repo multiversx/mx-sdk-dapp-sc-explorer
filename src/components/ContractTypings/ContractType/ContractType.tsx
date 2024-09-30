@@ -2,14 +2,15 @@ import React from 'react';
 import { faKeyboard } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
 
-import globalStyles from 'assets/styles/globals.module.scss';
 import { CollapsibleCard, EndpointDefinitionList } from 'components';
 import { useSCExplorerContext } from 'contexts';
+import { withStyles } from 'hocs/withStyles';
 import { ContractTypingsTypeEnum } from 'types';
+
 import { ContractTypingUIType } from '../types';
 
-export const ContractType = (props: ContractTypingUIType) => {
-  const { type, className } = props;
+export const ContractTypeComponent = (props: ContractTypingUIType) => {
+  const { type, className, globalStyles } = props;
   const { smartContract, customClassNames, icons } = useSCExplorerContext();
   const { abiRegistry, rawAbi } = smartContract;
   const { structTypeIcon, enumTypeIcon } = icons ?? {};
@@ -77,3 +78,5 @@ export const ContractType = (props: ContractTypingUIType) => {
     </CollapsibleCard>
   );
 };
+
+export const ContractType = withStyles(ContractTypeComponent, {});

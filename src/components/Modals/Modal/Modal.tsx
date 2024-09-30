@@ -1,11 +1,20 @@
 import React from 'react';
 import classNames from 'classnames';
 import { Modal as BsModal } from 'react-bootstrap';
-import { ModalUIType } from 'types';
-import styles from './styles.module.scss';
 
-export const Modal = (props: ModalUIType) => {
-  const { show = false, onClose, children, title, footer, className } = props;
+import { withStyles } from 'hocs/withStyles';
+import { ModalUIType } from 'types';
+
+export const ModalComponent = (props: ModalUIType) => {
+  const {
+    show = false,
+    onClose,
+    children,
+    title,
+    footer,
+    className,
+    styles
+  } = props;
 
   return (
     <BsModal
@@ -38,3 +47,9 @@ export const Modal = (props: ModalUIType) => {
     </BsModal>
   );
 };
+
+export const Modal = withStyles(ModalComponent, {
+  ssrStyles: () => import('components/Modals/Modal/styles.module.scss'),
+  clientStyles: () =>
+    require('components/Modals/Modal/styles.module.scss').default
+});

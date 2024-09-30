@@ -8,16 +8,17 @@ import { Nav } from 'react-bootstrap';
 import { Badge } from 'components';
 import { CONTRACT_WRITE_ENDPOINT_HIDE_LIST } from 'constants/general';
 import { useSCExplorerContext } from 'contexts';
+import { withStyles } from 'hocs/withStyles';
 import {
   VerifiedContractTabsEnum,
   DataTestIdsEnum,
   ContractEndpointMutabilityEnum
 } from 'types';
-import styles from './styles.module.scss';
+
 import { LayoutComponentUIType, LayoutSidebarNavLinksType } from './types';
 
 export const LayoutSidebarComponent = (props: LayoutComponentUIType) => {
-  const { activeSection } = props;
+  const { activeSection, styles } = props;
   const { support, customClassNames, smartContract } = useSCExplorerContext();
   const { abiRegistry } = smartContract;
   const {
@@ -172,4 +173,9 @@ export const LayoutSidebarComponent = (props: LayoutComponentUIType) => {
   );
 };
 
-export const LayoutSidebar = memo(LayoutSidebarComponent);
+export const MemoizedLayoutSidebar = memo(LayoutSidebarComponent);
+
+export const LayoutSidebar = withStyles(MemoizedLayoutSidebar, {
+  ssrStyles: () => import('components/Layout/styles.module.scss'),
+  clientStyles: () => require('components/Layout/styles.module.scss').default
+});
