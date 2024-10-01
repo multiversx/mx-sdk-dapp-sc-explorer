@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import classNames from 'classnames';
 
 import { Card, PanelHeader, MutateModal } from 'components';
-import { CONTRACT_WRITE_ENDPOINT_HIDE_LIST } from 'constants/general';
 import { useSCExplorerContext } from 'contexts';
 import { withStyles } from 'hocs/withStyles';
+import { useGetEndpoints } from 'hooks';
 import { ContractEndpointMutabilityEnum } from 'types';
 
 import { ContractEndpoint } from './ContractEndpoint';
@@ -16,28 +16,11 @@ export const ContractEndpointsComponent = ({
   globalStyles,
   styles
 }: ContractEndpointsUIType) => {
-  const { smartContract, support, customClassNames } = useSCExplorerContext();
-  const { abiRegistry } = smartContract;
-  const { hasEndpoints, canMutate, canView } = support;
+  const { support, customClassNames } = useSCExplorerContext();
+  const { canMutate, canView } = support;
   const [allExpanded, setAllExpanded] = useState(false);
 
-  if (!hasEndpoints) {
-    return null;
-  }
-
-  const endpoints = abiRegistry?.endpoints ?? [];
-  let filteredEndpoints = endpoints;
-  if (mutability) {
-    filteredEndpoints = endpoints.filter(
-      (endpoint) =>
-        endpoint?.modifiers?.mutability === mutability &&
-        !(
-          endpoint?.modifiers?.mutability ===
-            ContractEndpointMutabilityEnum.mutable &&
-          CONTRACT_WRITE_ENDPOINT_HIDE_LIST.includes(endpoint?.name)
-        )
-    );
-  }
+  const filteredEndpoints = useGetEndpoints({ mutability });
 
   if (filteredEndpoints.length === 0) {
     return null;

@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { PanelHeader } from 'components';
 import { useSCExplorerContext } from 'contexts';
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
+import { useGetEvents } from 'hooks';
 
 import { ContractEvent } from './ContractEvent';
 
@@ -11,16 +12,14 @@ export const ContractEventsComponent = ({
   globalStyles,
   styles
 }: WithStylesImportType) => {
-  const { smartContract, support, customClassNames } = useSCExplorerContext();
-  const { rawAbi } = smartContract;
-  const { hasEvents } = support;
+  const { customClassNames } = useSCExplorerContext();
+  const events = useGetEvents();
+
   const [allExpanded, setAllExpanded] = useState(false);
 
-  if (!hasEvents) {
+  if (events.length === 0) {
     return null;
   }
-
-  const events = rawAbi?.events ?? [];
 
   return (
     <div
