@@ -1,6 +1,6 @@
 {
   "name": "@multiversx/sdk-dapp-sc-explorer",
-  "version": "0.0.1-beta.9",
+  "version": "0.0.2-alpha.0",
   "description": "A library to hold the main logic for Smart Contract Interactions on the MultiversX blockchain",
   "author": "MultiversX",
   "license": "GPL-3.0-or-later",
@@ -93,7 +93,7 @@
     "classnames": "2.3.2"
   },
   "dependencies": {
-    "@multiversx/sdk-dapp-form": "0.10.11",
+    "@multiversx/sdk-dapp-form": "0.11.0-alpha.7",
     "@multiversx/sdk-network-providers": "2.7.1",
     "bignumber.js": "9.x",
     "formik": "2.4.4",
