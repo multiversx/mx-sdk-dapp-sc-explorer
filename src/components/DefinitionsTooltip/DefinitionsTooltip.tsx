@@ -1,35 +1,16 @@
 import React from 'react';
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { FieldDefinition } from '@multiversx/sdk-core/out';
 import classNames from 'classnames';
 
 import { Code, Overlay, EndpointDefinitionList } from 'components';
 import { DOCUMENTED_TYPES } from 'constants/general';
 import { useSCExplorerContext } from 'contexts';
+import { formatDefinitionsForDisplay } from 'helpers';
 import { withStyles } from 'hocs/withStyles';
 import { ContractTypingsTypeEnum } from 'types';
 
 import { DefinitionsTooltipUIType } from './types';
-
-const formatDefinitionsForDisplay = (definitions: FieldDefinition[]) => {
-  if (definitions.length === 0) {
-    return '';
-  }
-
-  const formattedDefinitions =
-    Object.fromEntries(
-      definitions.map((definition) => [
-        definition?.name,
-        definition?.type?.getName()
-      ])
-    ) ?? {};
-
-  return JSON.stringify(formattedDefinitions, null, 2)
-    .replaceAll(': ""', '')
-    .replaceAll('"', '')
-    .replaceAll(': ,', ',');
-};
 
 export const DefinitionsTooltipComponent = (
   props: DefinitionsTooltipUIType

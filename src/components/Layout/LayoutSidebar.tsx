@@ -6,20 +6,18 @@ import classNames from 'classnames';
 import { Nav } from 'react-bootstrap';
 
 import { Badge } from 'components';
-import { CONTRACT_WRITE_ENDPOINT_HIDE_LIST } from 'constants/general';
 import { useSCExplorerContext } from 'contexts';
 import { withStyles } from 'hocs/withStyles';
-import {
-  VerifiedContractTabsEnum,
-  DataTestIdsEnum,
-  ContractEndpointMutabilityEnum
-} from 'types';
+import { useGetContractEndpointCount } from 'hooks';
+import { VerifiedContractTabsEnum, DataTestIdsEnum } from 'types';
 
 import { LayoutComponentUIType, LayoutSidebarNavLinksType } from './types';
 
 export const LayoutSidebarComponent = (props: LayoutComponentUIType) => {
   const { activeSection, styles } = props;
   const { support, customClassNames, smartContract } = useSCExplorerContext();
+  const { readEndpointsCount, writeEndpointsCount } =
+    useGetContractEndpointCount();
   const { abiRegistry } = smartContract;
   const {
     hasBuildInfo,
@@ -34,22 +32,6 @@ export const LayoutSidebarComponent = (props: LayoutComponentUIType) => {
     canDeploy,
     canUpgrade
   } = support;
-
-  const readEndpointsCount = (
-    abiRegistry?.endpoints?.filter(
-      (endpoint) =>
-        endpoint?.modifiers?.mutability ===
-        ContractEndpointMutabilityEnum.readonly
-    ) || []
-  ).length;
-  const writeEndpointsCount = (
-    abiRegistry?.endpoints?.filter(
-      (endpoint) =>
-        endpoint?.modifiers?.mutability ===
-          ContractEndpointMutabilityEnum.mutable &&
-        !CONTRACT_WRITE_ENDPOINT_HIDE_LIST.includes(endpoint?.name)
-    ) || []
-  ).length;
 
   const NavLink = ({
     navKey,
