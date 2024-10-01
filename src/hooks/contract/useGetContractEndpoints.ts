@@ -2,7 +2,7 @@ import { CONTRACT_WRITE_ENDPOINT_HIDE_LIST } from 'constants/general';
 import { useSCExplorerContext } from 'contexts';
 import { ContractEndpointMutabilityEnum } from 'types';
 
-export const useGetEndpoints = ({
+export const useGetContractEndpoints = ({
   mutability
 }: {
   mutability?: ContractEndpointMutabilityEnum;

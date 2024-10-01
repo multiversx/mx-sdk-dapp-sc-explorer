@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { PanelHeader } from 'components';
 import { useSCExplorerContext } from 'contexts';
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
+import { useGetContractTypings } from 'hooks';
 
 import { ContractType } from './ContractType';
 
@@ -11,16 +12,10 @@ export const ContractTypingsComponent = ({
   globalStyles,
   styles
 }: WithStylesImportType) => {
-  const { smartContract, support, customClassNames } = useSCExplorerContext();
-  const { abiRegistry } = smartContract;
-  const { hasTypes } = support;
+  const { customClassNames } = useSCExplorerContext();
+  const customTypes = useGetContractTypings();
+
   const [allExpanded, setAllExpanded] = useState(false);
-
-  if (!hasTypes) {
-    return null;
-  }
-
-  const customTypes = abiRegistry?.customTypes ?? [];
 
   return (
     <div

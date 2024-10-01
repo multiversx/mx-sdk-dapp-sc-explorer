@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { Card, PanelHeader, MutateModal } from 'components';
 import { useSCExplorerContext } from 'contexts';
 import { withStyles } from 'hocs/withStyles';
-import { useGetEndpoints } from 'hooks';
+import { useGetContractEndpoints } from 'hooks';
 import { ContractEndpointMutabilityEnum } from 'types';
 
 import { ContractEndpoint } from './ContractEndpoint';
@@ -20,7 +20,7 @@ export const ContractEndpointsComponent = ({
   const { canMutate, canView } = support;
   const [allExpanded, setAllExpanded] = useState(false);
 
-  const filteredEndpoints = useGetEndpoints({ mutability });
+  const filteredEndpoints = useGetContractEndpoints({ mutability });
 
   if (filteredEndpoints.length === 0) {
     return null;

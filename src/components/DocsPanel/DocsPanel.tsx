@@ -1,13 +1,11 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import { useSCExplorerContext } from 'contexts';
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
+import { useGetContractDocs } from 'hooks';
 
 export const DocsPanelComponent = ({ globalStyles }: WithStylesImportType) => {
-  const { smartContract } = useSCExplorerContext();
-  const { rawAbi } = smartContract;
-  const docs = rawAbi?.['constructor']?.docs ? rawAbi['constructor'].docs : [];
+  const docs = useGetContractDocs();
 
   if (docs.length === 0) {
     return null;

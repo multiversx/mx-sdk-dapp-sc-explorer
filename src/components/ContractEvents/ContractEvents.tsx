@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { PanelHeader } from 'components';
 import { useSCExplorerContext } from 'contexts';
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
-import { useGetEvents } from 'hooks';
+import { useGetContractEvents } from 'hooks';
 
 import { ContractEvent } from './ContractEvent';
 
@@ -13,7 +13,7 @@ export const ContractEventsComponent = ({
   styles
 }: WithStylesImportType) => {
   const { customClassNames } = useSCExplorerContext();
-  const events = useGetEvents();
+  const events = useGetContractEvents();
 
   const [allExpanded, setAllExpanded] = useState(false);
 

@@ -1,6 +1,6 @@
 import { useSCExplorerContext } from 'contexts';
 
-export const useGetEvents = () => {
+export const useGetContractEvents = () => {
   const { smartContract, support } = useSCExplorerContext();
   const { rawAbi } = smartContract;
   const { hasEvents } = support;

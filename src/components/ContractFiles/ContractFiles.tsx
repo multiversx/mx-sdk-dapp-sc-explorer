@@ -2,12 +2,9 @@ import React, { memo, Fragment, useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 
 import { PanelHeader } from 'components';
-import {
-  CONTRACT_FILE_EXTENSION,
-  CONTRACT_FILE_TEST_PATH
-} from 'constants/general';
 import { useSCExplorerContext } from 'contexts';
 import { withStyles } from 'hocs/withStyles';
+import { useGetContractFiles } from 'hooks';
 
 import { ContractFile } from './ContractFile';
 import type { ContractFilesUIType } from './types';
@@ -18,9 +15,7 @@ export const ContractFilesComponent = ({
   styles
 }: ContractFilesUIType) => {
   const ref = useRef<HTMLDivElement>(null);
-  const { smartContract, support, customClassNames } = useSCExplorerContext();
-  const { verifiedContract } = smartContract;
-  const { hasSourceCode } = support;
+  const { customClassNames } = useSCExplorerContext();
   const [allExpanded, setAllExpanded] = useState(false);
 
   useEffect(() => {
@@ -34,18 +29,7 @@ export const ContractFilesComponent = ({
     }, 200);
   }, [highlightFileHash]);
 
-  if (!hasSourceCode) {
-    return null;
-  }
-
-  const files = verifiedContract?.source?.contract?.entries ?? [];
-
-  const filteredEntries = files.filter(
-    ({ path, isTestFile }) =>
-      path.endsWith(CONTRACT_FILE_EXTENSION) &&
-      !path.includes(CONTRACT_FILE_TEST_PATH) &&
-      !isTestFile
-  );
+  const filteredEntries = useGetContractFiles();
 
   return (
     <div
