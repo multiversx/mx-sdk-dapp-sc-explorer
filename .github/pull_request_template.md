@@ -12,15 +12,15 @@ Issue exists on version `` of sdk-dapp-sc-explorer
 
 ### Contains breaking changes
 
-[ ] No
-[ ] Yes
+- [x] No
+- [ ] Yes
 
 ### Updated CHANGELOG
 
-[ ] Yes
-[ ] No
+- [x] Yes
+- [ ] No
 
 ### Testing
 
-[ ] User tesing
-[ ] Unit tests
+- [x] User tesing
+- [ ] Unit tests
