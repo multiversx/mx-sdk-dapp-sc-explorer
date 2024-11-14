@@ -3,6 +3,10 @@ import { ContractFileType } from 'types';
 export const getContractFileContent = (file: ContractFileType) => {
   const { content } = file;
 
+  if (!content) {
+    return '';
+  }
+
   try {
     const base64Buffer = Buffer.from(content, 'base64');
     const codeString = base64Buffer.toString();
