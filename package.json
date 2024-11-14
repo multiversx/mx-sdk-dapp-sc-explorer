@@ -1,6 +1,6 @@
 {
   "name": "@multiversx/sdk-dapp-sc-explorer",
-  "version": "0.0.2-alpha.4",
+  "version": "0.0.2-beta.0",
   "description": "A library to hold the main logic for Smart Contract Interactions on the MultiversX blockchain",
   "author": "MultiversX",
   "license": "GPL-3.0-or-later",
