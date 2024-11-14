@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NativeSerializer, Code } from '@multiversx/sdk-core/out';
 import classNames from 'classnames';
 
-import globalStyles from 'assets/styles/globals.module.scss';
 import {
   Card,
   DeployUpgradeFileForm,
@@ -14,10 +13,13 @@ import {
 } from 'components';
 import { useSCExplorerContext, useUserActionDispatch } from 'contexts';
 import { getDefinition } from 'helpers';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { UserActionDispatchTypeEnum } from 'types';
-import styles from './styles.module.scss';
 
-export const ContractUpgrade = () => {
+export const ContractUpgradeComponent = ({
+  globalStyles,
+  styles
+}: WithStylesImportType) => {
   const userActionDispatch = useUserActionDispatch();
   const { smartContract, customClassNames, accountInfo } =
     useSCExplorerContext();
@@ -96,3 +98,9 @@ export const ContractUpgrade = () => {
     </div>
   );
 };
+
+export const ContractUpgrade = withStyles(ContractUpgradeComponent, {
+  ssrStyles: () => import('components/ContractUpgrade/styles.module.scss'),
+  clientStyles: () =>
+    require('components/ContractUpgrade/styles.module.scss').default
+});

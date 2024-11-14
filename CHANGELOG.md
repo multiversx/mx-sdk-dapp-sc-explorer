@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[0.0.2-beta.0]](https://github.com/multiversx/mx-sdk-dapp-sc-explorer/pull/25)] - 2024-11-14
+
+- [SSR Support on components, SDK dApp v3, split functionality from Components](https://github.com/multiversx/mx-sdk-dapp-sc-explorer/pull/24)
+
 ## [[0.0.1-beta.9]](https://github.com/multiversx/mx-sdk-dapp-sc-explorer/pull/23)] - 2024-09-05
 
 - [Updated dependencies, Use ABI from the /verification endpoint if contract is verified](https://github.com/multiversx/mx-sdk-dapp-sc-explorer/pull/22)

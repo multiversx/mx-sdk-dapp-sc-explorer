@@ -2,15 +2,16 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
-import globalStyles from 'assets/styles/globals.module.scss';
 import { useSCExplorerContext } from 'contexts';
+import { withStyles } from 'hocs/withStyles';
 import { BadgeUIType } from 'types';
 
-export const Badge = ({
+export const BadgeComponent = ({
   badgeValue = '',
   badgeIcon,
   className,
-  badgeClassName
+  badgeClassName,
+  globalStyles
 }: BadgeUIType) => {
   if (!badgeValue) {
     return null;
@@ -39,3 +40,5 @@ export const Badge = ({
     </span>
   );
 };
+
+export const Badge = withStyles(BadgeComponent, {});

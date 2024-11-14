@@ -1,13 +1,14 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import globalStyles from 'assets/styles/globals.module.scss';
 import { Badge } from 'components';
 import { useSCExplorerContext } from 'contexts';
+import { withStyles } from 'hocs/withStyles';
+
 import { CardUIType } from './types';
 
-export const Card = (props: CardUIType) => {
-  const { title, children, className, titleContent } = props;
+export const CardComponent = (props: CardUIType) => {
+  const { title, children, className, titleContent, globalStyles } = props;
   const { customClassNames } = useSCExplorerContext();
   return (
     <div
@@ -49,3 +50,5 @@ export const Card = (props: CardUIType) => {
     </div>
   );
 };
+
+export const Card = withStyles(CardComponent, {});

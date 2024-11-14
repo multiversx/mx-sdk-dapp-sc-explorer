@@ -7,15 +7,14 @@ import { isWindowAvailable } from '@multiversx/sdk-dapp/utils/isWindowAvailable'
 import { logout } from '@multiversx/sdk-dapp/utils/logout';
 import classNames from 'classnames';
 
-import globalStyles from 'assets/styles/globals.module.scss';
 import { useSCExplorerContext, useUserActionDispatch } from 'contexts';
+import { withStyles } from 'hocs/withStyles';
 import { UserActionDispatchTypeEnum, LoginButtonUIType } from 'types';
-import styles from './styles.module.scss';
 
-export const LoginButton = (props: LoginButtonUIType) => {
+export const LoginButtonComponent = (props: LoginButtonUIType) => {
   const { customClassNames, icons, accountInfo } = useSCExplorerContext();
   const { isLoggedIn, address } = accountInfo;
-  const { className } = props;
+  const { className, globalStyles, styles } = props;
   const userActionDispatch = useUserActionDispatch();
 
   const {
@@ -74,3 +73,9 @@ export const LoginButton = (props: LoginButtonUIType) => {
     </>
   );
 };
+
+export const LoginButton = withStyles(LoginButtonComponent, {
+  ssrStyles: () => import('components/LoginButton/styles.module.scss'),
+  clientStyles: () =>
+    require('components/LoginButton/styles.module.scss').default
+});

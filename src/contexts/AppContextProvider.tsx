@@ -57,7 +57,3 @@ export function AppContextProvider({
     </CustomClassNamesContextProvider>
   );
 }
-
-export * from './UserActionsContext';
-export * from './SmartContractContext';
-export * from './SCExplorerContextProvider';

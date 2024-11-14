@@ -1,23 +1,21 @@
 import React, { memo, useState } from 'react';
 import classNames from 'classnames';
 
-import globalStyles from 'assets/styles/globals.module.scss';
 import { PanelHeader } from 'components';
 import { useSCExplorerContext } from 'contexts';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
+import { useGetContractTypings } from 'hooks';
+
 import { ContractType } from './ContractType';
-import styles from './styles.module.scss';
 
-export const ContractTypingsComponent = () => {
-  const { smartContract, support, customClassNames } = useSCExplorerContext();
-  const { abiRegistry } = smartContract;
-  const { hasTypes } = support;
+export const ContractTypingsComponent = ({
+  globalStyles,
+  styles
+}: WithStylesImportType) => {
+  const { customClassNames } = useSCExplorerContext();
+  const customTypes = useGetContractTypings();
+
   const [allExpanded, setAllExpanded] = useState(false);
-
-  if (!hasTypes) {
-    return null;
-  }
-
-  const customTypes = abiRegistry?.customTypes ?? [];
 
   return (
     <div
@@ -57,4 +55,10 @@ export const ContractTypingsComponent = () => {
   );
 };
 
-export const ContractTypings = memo(ContractTypingsComponent);
+export const MemoizedContractTypings = memo(ContractTypingsComponent);
+
+export const ContractTypings = withStyles(MemoizedContractTypings, {
+  ssrStyles: () => import('components/ContractTypings/styles.module.scss'),
+  clientStyles: () =>
+    require('components/ContractTypings/styles.module.scss').default
+});

@@ -4,14 +4,13 @@ import { CopyButton } from '@multiversx/sdk-dapp/UI/CopyButton';
 import BigNumber from 'bignumber.js';
 import classNames from 'classnames';
 
-import globalStyles from 'assets/styles/globals.module.scss';
 import { EndpointDefinitionList, Code } from 'components';
 import { useSCExplorerContext } from 'contexts';
+import { withStyles } from 'hocs/withStyles';
 import { EndpointOutputUIType } from 'types';
-import styles from './styles.module.scss';
 
-export const EndpointOutput = (props: EndpointOutputUIType) => {
-  const { output, result } = props;
+export const EndpointOutputComponent = (props: EndpointOutputUIType) => {
+  const { output, result, globalStyles, styles } = props;
   const { icons } = useSCExplorerContext();
   const { copyIcon = faCopy } = icons ?? {};
 
@@ -109,3 +108,9 @@ export const EndpointOutput = (props: EndpointOutputUIType) => {
     </div>
   );
 };
+
+export const EndpointOutput = withStyles(EndpointOutputComponent, {
+  ssrStyles: () => import('components/Forms/EndpointForm/styles.module.scss'),
+  clientStyles: () =>
+    require('components/Forms/EndpointForm/styles.module.scss').default
+});

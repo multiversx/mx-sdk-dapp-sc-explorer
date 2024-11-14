@@ -3,20 +3,20 @@ import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
-import globalStyles from 'assets/styles/globals.module.scss';
 import { CollapsibleCard, EndpointInteraction } from 'components';
 import { useSCExplorerContext } from 'contexts';
+import { withStyles } from 'hocs/withStyles';
 import { ContractEndpointMutabilityEnum, ContractEndpointUIType } from 'types';
+
 import { EndpointMutate } from './components/EndpointMutate';
 import { EndpointRead } from './components/EndpointRead';
 import { EndpointTitle } from './components/EndpointTitle';
-import styles from '../styles.module.scss';
 
-export const ContractEndpoint = (props: ContractEndpointUIType) => {
+export const ContractEndpointComponent = (props: ContractEndpointUIType) => {
   const { support, smartContract } = useSCExplorerContext();
   const { canRead, canMutate, canView } = support;
   const { deployedContractDetails } = smartContract;
-  const { endpoint, className } = props;
+  const { endpoint, className, globalStyles, styles } = props;
   const { modifiers } = endpoint;
   const { mutability } = modifiers;
 
@@ -82,3 +82,9 @@ export const ContractEndpoint = (props: ContractEndpointUIType) => {
     </CollapsibleCard>
   );
 };
+
+export const ContractEndpoint = withStyles(ContractEndpointComponent, {
+  ssrStyles: () => import('components/ContractEndpoints/styles.module.scss'),
+  clientStyles: () =>
+    require('components/ContractEndpoints/styles.module.scss').default
+});

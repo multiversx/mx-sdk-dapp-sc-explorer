@@ -1,7 +1,10 @@
+import { EndpointDefinition, TypedValue, Code } from '@multiversx/sdk-core/out';
+import { FormikProps } from 'formik';
 import {
   UserInterfaceType,
   MetadataFieldsEnum,
-  ProcessedFormTokenType
+  ProcessedFormTokenType,
+  PartialEsdtType
 } from 'types';
 
 export enum InteractionModalFormikFieldsEnum {
@@ -45,4 +48,15 @@ export interface InteractionModalFormUIType extends UserInterfaceType {
   generalError?: string;
   buttonText?: React.ReactNode;
   panelDescription?: React.ReactNode;
+}
+
+export interface InteractionFormUIType extends InteractionModalFormUIType {
+  tokens?: PartialEsdtType[];
+  endpoint?: EndpointDefinition;
+  code?: Code;
+  args?: TypedValue[];
+}
+
+export interface InteractionFormContentUIType extends InteractionFormUIType {
+  formik: FormikProps<InteractionModalInitialValuesType>;
 }

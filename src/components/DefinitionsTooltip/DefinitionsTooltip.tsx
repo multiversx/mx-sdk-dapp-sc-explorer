@@ -1,40 +1,23 @@
 import React from 'react';
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { FieldDefinition } from '@multiversx/sdk-core/out';
 import classNames from 'classnames';
 
-import globalStyles from 'assets/styles/globals.module.scss';
 import { Code, Overlay, EndpointDefinitionList } from 'components';
 import { DOCUMENTED_TYPES } from 'constants/general';
 import { useSCExplorerContext } from 'contexts';
+import { formatDefinitionsForDisplay } from 'helpers';
+import { withStyles } from 'hocs/withStyles';
 import { ContractTypingsTypeEnum } from 'types';
-import styles from './styles.module.scss';
+
 import { DefinitionsTooltipUIType } from './types';
 
-const formatDefinitionsForDisplay = (definitions: FieldDefinition[]) => {
-  if (definitions.length === 0) {
-    return '';
-  }
-
-  const formattedDefinitions =
-    Object.fromEntries(
-      definitions.map((definition) => [
-        definition?.name,
-        definition?.type?.getName()
-      ])
-    ) ?? {};
-
-  return JSON.stringify(formattedDefinitions, null, 2)
-    .replaceAll(': ""', '')
-    .replaceAll('"', '')
-    .replaceAll(': ,', ',');
-};
-
-export const DefinitionsTooltip = (props: DefinitionsTooltipUIType) => {
+export const DefinitionsTooltipComponent = (
+  props: DefinitionsTooltipUIType
+) => {
   const { smartContract, icons } = useSCExplorerContext();
   const { abiRegistry, rawAbi } = smartContract;
-  const { typeName, ...rest } = props;
+  const { typeName, globalStyles, styles, ...rest } = props;
   const { hintIcon = faQuestionCircle } = icons ?? {};
   let docs: React.ReactNode = null;
 
@@ -130,3 +113,9 @@ export const DefinitionsTooltip = (props: DefinitionsTooltipUIType) => {
     </Overlay>
   );
 };
+
+export const DefinitionsTooltip = withStyles(DefinitionsTooltipComponent, {
+  ssrStyles: () => import('components/DefinitionsTooltip/styles.module.scss'),
+  clientStyles: () =>
+    require('components/DefinitionsTooltip/styles.module.scss').default
+});

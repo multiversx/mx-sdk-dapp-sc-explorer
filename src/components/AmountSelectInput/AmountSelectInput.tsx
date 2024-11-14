@@ -14,13 +14,12 @@ import {
 import { AmountInputPropsType } from '@multiversx/sdk-dapp-form/UI/Fields/AmountSelect/components/AmountInput';
 import classNames from 'classnames';
 
-import globalStyles from 'assets/styles/globals.module.scss';
 import { ZERO } from 'constants/general';
 import { useSCExplorerContext } from 'contexts';
-import styles from './styles.module.scss';
+import { withStyles } from 'hocs/withStyles';
 import { AmountSelectInputUIType } from './types';
 
-export const AmountSelectInput = ({
+export const AmountSelectInputComponent = ({
   inputName,
   selectName,
   title,
@@ -42,7 +41,9 @@ export const AmountSelectInput = ({
   inputPlaceholder = 'Amount',
   disabledOption,
   handleDisabledOptionClick,
-  onMaxBtnClick
+  onMaxBtnClick,
+  globalStyles,
+  styles
 }: AmountSelectInputUIType) => {
   const { customClassNames } = useSCExplorerContext();
 
@@ -144,3 +145,9 @@ export const AmountSelectInput = ({
     />
   );
 };
+
+export const AmountSelectInput = withStyles(AmountSelectInputComponent, {
+  ssrStyles: () => import('components/AmountSelectInput/styles.module.scss'),
+  clientStyles: () =>
+    require('components/AmountSelectInput/styles.module.scss').default
+});

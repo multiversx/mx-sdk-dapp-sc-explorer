@@ -3,14 +3,16 @@ import classNames from 'classnames';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { OverlayInjectedProps } from 'react-bootstrap/Overlay';
 
-import globalStyles from 'assets/styles/globals.module.scss';
+import { withStyles } from 'hocs/withStyles';
+
 import { OverlayUIType } from './types';
 
-export const Overlay = ({
+export const OverlayComponent = ({
   children,
   title,
   className,
-  tooltipClassName
+  tooltipClassName,
+  globalStyles
 }: OverlayUIType) => (
   <OverlayTrigger
     placement='top'
@@ -28,3 +30,5 @@ export const Overlay = ({
     <div className={classNames(className)}>{children}</div>
   </OverlayTrigger>
 );
+
+export const Overlay = withStyles(OverlayComponent, {});
