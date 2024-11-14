@@ -9,15 +9,16 @@ import { refreshAccount } from '@multiversx/sdk-dapp/utils/account/refreshAccoun
 import { InteractionModalForm, TransactionPanel } from 'components';
 import { useUserActionDispatch, useSCExplorerContext } from 'contexts';
 import { getDeployTransaction } from 'helpers';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { useTrackTransaction } from 'hooks';
 import {
   UserActionDispatchTypeEnum,
   DeployUpgradeModalInitialValuesType
 } from 'types';
-import styles from './styles.module.scss';
+
 import { Modal } from '../Modal';
 
-export const DeployModal = () => {
+export const DeployModalComponent = ({ styles }: WithStylesImportType) => {
   const userActionDispatch = useUserActionDispatch();
   const { accountInfo, smartContract, userActionsState } =
     useSCExplorerContext();
@@ -135,3 +136,9 @@ export const DeployModal = () => {
     </Modal>
   );
 };
+
+export const DeployModal = withStyles(DeployModalComponent, {
+  ssrStyles: () => import('components/Modals/DeployModal/styles.module.scss'),
+  clientStyles: () =>
+    require('components/Modals/DeployModal/styles.module.scss').default
+});

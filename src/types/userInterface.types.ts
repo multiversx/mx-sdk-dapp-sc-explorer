@@ -1,6 +1,7 @@
+import { WithStylesImportType } from 'hocs/withStyles';
 import { InterfaceIconsType } from './icons.types';
 
-export interface UserInterfaceType {
+export interface UserInterfaceType extends WithStylesImportType {
   className?: string;
   'data-testid'?: string;
 }

@@ -5,12 +5,13 @@ import classNames from 'classnames';
 
 import { Overlay } from 'components';
 import { useSCExplorerContext } from 'contexts';
-import styles from './styles.module.scss';
+import { withStyles } from 'hocs/withStyles';
+
 import { DocsTooltipUIType } from './types';
 
-export const DocsTooltip = (props: DocsTooltipUIType) => {
+export const DocsTooltipComponent = (props: DocsTooltipUIType) => {
   const { icons } = useSCExplorerContext();
-  const { docs, ...rest } = props;
+  const { docs, styles, ...rest } = props;
   const { hintIcon = faQuestionCircle } = icons ?? {};
 
   if (!docs || docs.length === 0) {
@@ -18,7 +19,7 @@ export const DocsTooltip = (props: DocsTooltipUIType) => {
   }
 
   const DocsContent = () => (
-    <div className={classNames(styles.docsTooltip)}>
+    <div className={classNames(styles?.docsTooltip)}>
       {docs.map((row, key) => (
         <p key={key}>
           <code>{row}</code>
@@ -33,3 +34,9 @@ export const DocsTooltip = (props: DocsTooltipUIType) => {
     </Overlay>
   );
 };
+
+export const DocsTooltip = withStyles(DocsTooltipComponent, {
+  ssrStyles: () => import('components/DocsTooltip/styles.module.scss'),
+  clientStyles: () =>
+    require('components/DocsTooltip/styles.module.scss').default
+});

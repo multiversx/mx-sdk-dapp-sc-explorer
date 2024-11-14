@@ -7,17 +7,20 @@ import { Light as SyntaxHighlighter } from 'react-syntax-highlighter';
 import rust from 'react-syntax-highlighter/dist/esm/languages/hljs/rust';
 import androidstudio from 'react-syntax-highlighter/dist/esm/styles/hljs/androidstudio';
 
-import globalStyles from 'assets/styles/globals.module.scss';
 import { CollapsibleCard } from 'components';
 import { useSCExplorerContext } from 'contexts';
+import { getContractFileContent } from 'helpers';
+import { withStyles } from 'hocs/withStyles';
+
 import { ContractFileUIType } from '../types';
 
 SyntaxHighlighter.registerLanguage('rust', rust);
 
-export const ContractFile = (props: ContractFileUIType) => {
+export const ContractFileComponent = (props: ContractFileUIType) => {
   const { icons } = useSCExplorerContext();
-  const { file, title, entryNumber, totalEntries, className } = props;
-  const { content, path } = file;
+  const { file, title, entryNumber, totalEntries, className, globalStyles } =
+    props;
+  const { path } = file;
   const {
     contractFileIcon = faFileAlt,
     copyIcon = faCopy,
@@ -25,9 +28,7 @@ export const ContractFile = (props: ContractFileUIType) => {
   } = icons ?? {};
 
   const fullPath = window.location.href;
-
-  const base64Buffer = Buffer.from(content, 'base64');
-  const codeString = base64Buffer.toString();
+  const codeString = getContractFileContent(file);
 
   const TitleContent = () => (
     <>
@@ -74,3 +75,5 @@ export const ContractFile = (props: ContractFileUIType) => {
     </CollapsibleCard>
   );
 };
+
+export const ContractFile = withStyles(ContractFileComponent, {});

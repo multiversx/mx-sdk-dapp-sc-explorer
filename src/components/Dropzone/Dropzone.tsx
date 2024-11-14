@@ -3,12 +3,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import { DropEvent, FileRejection, useDropzone } from 'react-dropzone';
 
+import { withStyles } from 'hocs/withStyles';
+
 import { DropzoneFile } from './components/DropzoneFile';
 import { getDropzoneStatusData, handleDropzoneHover } from './helpers';
-import styles from './styles.module.scss';
 import { DropzoneUIType } from './types';
 
-export const Dropzone = ({
+export const DropzoneComponent = ({
   className,
   acceptedFileTypes,
   acceptMultipleFiles,
@@ -19,7 +20,8 @@ export const Dropzone = ({
   defaultMessage,
   successMessage,
   errorMessage,
-  disabled
+  disabled,
+  styles
 }: DropzoneUIType) => {
   const errorsExist = files.some((file) => file.fileError);
   const filesUploadedSuccessfully = !errorsExist && files.length > 0;
@@ -125,3 +127,8 @@ export const Dropzone = ({
     </div>
   );
 };
+
+export const Dropzone = withStyles(DropzoneComponent, {
+  ssrStyles: () => import('components/Dropzone/styles.module.scss'),
+  clientStyles: () => require('components/Dropzone/styles.module.scss').default
+});

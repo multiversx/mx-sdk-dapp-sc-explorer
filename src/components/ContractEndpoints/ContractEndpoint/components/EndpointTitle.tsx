@@ -8,15 +8,15 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
 
-import globalStyles from 'assets/styles/globals.module.scss';
 import { Badge, DocsTooltip } from 'components';
 import { useSCExplorerContext } from 'contexts';
+import { withStyles } from 'hocs/withStyles';
 import { ContractEndpointMutabilityEnum, ContractEndpointUIType } from 'types';
 
-export const EndpointTitle = (props: ContractEndpointUIType) => {
+export const EndpointTitleComponent = (props: ContractEndpointUIType) => {
   const { smartContract, customClassNames, icons } = useSCExplorerContext();
   const { rawAbi } = smartContract;
-  const { endpoint } = props;
+  const { endpoint, globalStyles } = props;
   const {
     mutableEndpointIcon = faSquarePen,
     readonlyEndpointIcon = faSquareMinus,
@@ -83,3 +83,5 @@ export const EndpointTitle = (props: ContractEndpointUIType) => {
     </>
   );
 };
+
+export const EndpointTitle = withStyles(EndpointTitleComponent, {});

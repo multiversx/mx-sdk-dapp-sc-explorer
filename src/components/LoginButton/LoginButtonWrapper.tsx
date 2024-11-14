@@ -3,22 +3,25 @@ import { faBolt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
-import globalStyles from 'assets/styles/globals.module.scss';
 import { useSCExplorerContext, useUserActionDispatch } from 'contexts';
+import { withStyles } from 'hocs/withStyles';
 import {
   UserActionDispatchTypeEnum,
   LoginButtonWrapperUIType,
   ContractEndpointMutabilityEnum
 } from 'types';
-import styles from './styles.module.scss';
 
-export const LoginButtonWrapper = (props: LoginButtonWrapperUIType) => {
+export const LoginButtonWrapperComponent = (
+  props: LoginButtonWrapperUIType
+) => {
   const {
     mutability,
     children,
     buttonDescription,
     className,
-    'data-testid': dataTestId
+    'data-testid': dataTestId,
+    globalStyles,
+    styles
   } = props;
   const { accountInfo, customClassNames, icons } = useSCExplorerContext();
   const { isLoggedIn, address, onLoginClick } = accountInfo;
@@ -80,3 +83,9 @@ export const LoginButtonWrapper = (props: LoginButtonWrapperUIType) => {
     </>
   );
 };
+
+export const LoginButtonWrapper = withStyles(LoginButtonWrapperComponent, {
+  ssrStyles: () => import('components/LoginButton/styles.module.scss'),
+  clientStyles: () =>
+    require('components/LoginButton/styles.module.scss').default
+});

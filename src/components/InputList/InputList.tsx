@@ -1,19 +1,21 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import globalStyles from 'assets/styles/globals.module.scss';
 import { getInitalFormConfig } from 'helpers';
+import { withStyles } from 'hocs/withStyles';
 import { InputListUIType, DeployUpgradeFileFormikFieldsEnum } from 'types';
-import { RecursiveContainer } from './components/RecursiveContainer';
-import styles from './styles.module.scss';
 
-export const InputList = (props: InputListUIType) => {
+import { RecursiveContainer } from './components/RecursiveContainer';
+
+export const InputListComponent = (props: InputListUIType) => {
   const {
     formik,
     input,
     endpoint,
     excludedKeys = [DeployUpgradeFileFormikFieldsEnum.wasmFileContent],
-    'data-testid': dataTestId
+    'data-testid': dataTestId,
+    globalStyles,
+    styles
   } = props;
   if (!(input && input.length > 0)) {
     return null;
@@ -47,3 +49,8 @@ export const InputList = (props: InputListUIType) => {
     </div>
   );
 };
+
+export const InputList = withStyles(InputListComponent, {
+  ssrStyles: () => import('components/InputList/styles.module.scss'),
+  clientStyles: () => require('components/InputList/styles.module.scss').default
+});

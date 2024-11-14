@@ -11,7 +11,6 @@ import classNames from 'classnames';
 import { Formik, Form } from 'formik';
 import { lazy, mixed, object } from 'yup';
 
-import globalStyles from 'assets/styles/globals.module.scss';
 import {
   LoginButtonWrapper,
   Code as CodeComponent,
@@ -24,15 +23,17 @@ import {
   getNativeArgumentsFromValues,
   getDefinition
 } from 'helpers';
+import { withStyles } from 'hocs/withStyles';
 import {
   FormikAbiType,
   DeployUpgradeFileFormUIType,
   DeployUpgradeFileFormikFieldsEnum,
   DataTestIdsEnum
 } from 'types';
-import styles from './styles.module.scss';
 
-export const DeployUpgradeFileForm = (props: DeployUpgradeFileFormUIType) => {
+export const DeployUpgradeFileFormComponent = (
+  props: DeployUpgradeFileFormUIType
+) => {
   const {
     isUpgrade = false,
     onSubmit,
@@ -40,7 +41,9 @@ export const DeployUpgradeFileForm = (props: DeployUpgradeFileFormUIType) => {
     generalError,
     buttonText,
     buttonLoginDescription,
-    buttonDescription
+    buttonDescription,
+    globalStyles,
+    styles
   } = props;
   const { smartContract, customClassNames, icons } = useSCExplorerContext();
   const { abiRegistry, deployedContractDetails, contractAddress } =
@@ -265,3 +268,14 @@ export const DeployUpgradeFileForm = (props: DeployUpgradeFileFormUIType) => {
     </Formik>
   );
 };
+
+export const DeployUpgradeFileForm = withStyles(
+  DeployUpgradeFileFormComponent,
+  {
+    ssrStyles: () =>
+      import('components/Forms/DeployUpgradeFileForm/styles.module.scss'),
+    clientStyles: () =>
+      require('components/Forms/DeployUpgradeFileForm/styles.module.scss')
+        .default
+  }
+);

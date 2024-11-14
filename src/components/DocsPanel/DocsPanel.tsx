@@ -1,13 +1,11 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import globalStyles from 'assets/styles/globals.module.scss';
-import { useSCExplorerContext } from 'contexts';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
+import { useGetContractDocs } from 'hooks';
 
-export const DocsPanel = () => {
-  const { smartContract } = useSCExplorerContext();
-  const { rawAbi } = smartContract;
-  const docs = rawAbi?.['constructor']?.docs ? rawAbi['constructor'].docs : [];
+export const DocsPanelComponent = ({ globalStyles }: WithStylesImportType) => {
+  const docs = useGetContractDocs();
 
   if (docs.length === 0) {
     return null;
@@ -29,3 +27,5 @@ export const DocsPanel = () => {
     </div>
   );
 };
+
+export const DocsPanel = withStyles(DocsPanelComponent, {});

@@ -3,14 +3,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
 import { useSCExplorerContext } from 'contexts';
-import styles from './styles.module.scss';
+import { withStyles } from 'hocs/withStyles';
 import { CardItemUIType } from './types';
 
-export const CardItem = ({
+export const CardItemComponent = ({
   title,
   icon,
   customIcon,
-  children
+  children,
+  styles
 }: CardItemUIType) => {
   const { customClassNames } = useSCExplorerContext();
   return (
@@ -54,3 +55,8 @@ export const CardItem = ({
     </div>
   );
 };
+
+export const CardItem = withStyles(CardItemComponent, {
+  ssrStyles: () => import('components/CardItem/styles.module.scss'),
+  clientStyles: () => require('components/CardItem/styles.module.scss').default
+});

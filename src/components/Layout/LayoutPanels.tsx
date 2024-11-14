@@ -15,14 +15,14 @@ import {
   ContractDetails
 } from 'components';
 import { useSCExplorerContext } from 'contexts';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import {
   ContractEndpointMutabilityEnum,
   VerifiedContractTabsEnum,
   DataTestIdsEnum
 } from 'types';
-import styles from './styles.module.scss';
 
-export const LayoutPanelsComponent = () => {
+export const LayoutPanelsComponent = ({ styles }: WithStylesImportType) => {
   const { support } = useSCExplorerContext();
 
   const {
@@ -158,4 +158,9 @@ export const LayoutPanelsComponent = () => {
   );
 };
 
-export const LayoutPanels = memo(LayoutPanelsComponent);
+export const MemoizedLayoutPanels = memo(LayoutPanelsComponent);
+
+export const LayoutPanels = withStyles(MemoizedLayoutPanels, {
+  ssrStyles: () => import('components/Layout/styles.module.scss'),
+  clientStyles: () => require('components/Layout/styles.module.scss').default
+});

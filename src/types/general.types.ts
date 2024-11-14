@@ -18,7 +18,7 @@ export interface ProcessedFormTokenType {
   tokenIdentifier: string;
   tokenDecimals: number;
   tokenType: EsdtEnumType | NftEnumType | 'native' | string;
-  tokenNonce?: number;
+  tokenNonce: number;
 }
 
 export interface GetInteractionBaseTransactionType {

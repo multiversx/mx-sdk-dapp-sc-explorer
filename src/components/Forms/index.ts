@@ -1,3 +1,4 @@
 export * from './DeployUpgradeFileForm';
-export * from './InteractionModalForm';
 export * from './EndpointForm';
+export * from './InteractionForm';
+export * from './InteractionModalForm';

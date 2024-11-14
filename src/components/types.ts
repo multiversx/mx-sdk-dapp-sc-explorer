@@ -15,6 +15,7 @@ export * from 'components/ContractTypings/types';
 export * from 'components/ContractUpgrade/types';
 export * from 'components/DocsTooltip/types';
 export * from 'components/Dropzone/types';
+export * from 'components/EndpointDefinitionList/types';
 export * from 'components/FieldList/types';
 export * from 'components/Forms/types';
 export * from 'components/InputList/types';

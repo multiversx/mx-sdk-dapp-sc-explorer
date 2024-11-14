@@ -24,13 +24,15 @@ import BigNumber from 'bignumber.js';
 import classNames from 'classnames';
 
 import MultiversXSymbol from 'assets/img/symbol.svg';
-import globalStyles from 'assets/styles/globals.module.scss';
 import { CardItem, PanelHeader, PropertyPill } from 'components';
 import { useSCExplorerContext } from 'contexts';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { ContractPropertiesEnum } from 'types';
-import styles from './styles.module.scss';
 
-export const ContractDetailsComponent = () => {
+export const ContractDetailsComponent = ({
+  globalStyles,
+  styles
+}: WithStylesImportType) => {
   const { smartContract, support, icons, customClassNames } =
     useSCExplorerContext();
   const { deployedContractDetails } = smartContract;
@@ -197,4 +199,10 @@ export const ContractDetailsComponent = () => {
   );
 };
 
-export const ContractDetails = memo(ContractDetailsComponent);
+export const MemoizedContractDetails = memo(ContractDetailsComponent);
+
+export const ContractDetails = withStyles(MemoizedContractDetails, {
+  ssrStyles: () => import('components/ContractDetails/styles.module.scss'),
+  clientStyles: () =>
+    require('components/ContractDetails/styles.module.scss').default
+});

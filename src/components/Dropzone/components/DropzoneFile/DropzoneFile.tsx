@@ -4,16 +4,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Trim } from '@multiversx/sdk-dapp/UI/Trim';
 import classNames from 'classnames';
 
-import styles from './styles.module.scss';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
+
 import { DropzoneFileUIType } from '../../types';
 
-export const DropzoneFile = ({
+export const DropzoneFileComponent = ({
   onFileRemove,
   fileName,
   fileIndex,
   fileError,
-  disabled
-}: DropzoneFileUIType) => (
+  disabled,
+  styles
+}: DropzoneFileUIType & WithStylesImportType) => (
   <div
     key={fileName}
     onClick={(event) => event.stopPropagation()}
@@ -53,3 +55,11 @@ export const DropzoneFile = ({
     )}
   </div>
 );
+
+export const DropzoneFile = withStyles(DropzoneFileComponent, {
+  ssrStyles: () =>
+    import('components/Dropzone/components/DropzoneFile/styles.module.scss'),
+  clientStyles: () =>
+    require('components/Dropzone/components/DropzoneFile/styles.module.scss')
+      .default
+});

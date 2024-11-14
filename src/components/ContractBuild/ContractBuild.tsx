@@ -5,12 +5,14 @@ import { CopyButton } from '@multiversx/sdk-dapp/UI/CopyButton';
 import { Trim } from '@multiversx/sdk-dapp/UI/Trim';
 import classNames from 'classnames';
 
-import globalStyles from 'assets/styles/globals.module.scss';
 import { CardItem, PanelHeader } from 'components';
 import { useSCExplorerContext } from 'contexts';
-import styles from './styles.module.scss';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 
-export const ContractBuildComponent = () => {
+export const ContractBuildComponent = ({
+  globalStyles,
+  styles
+}: WithStylesImportType) => {
   const { smartContract, support, icons, customClassNames } =
     useSCExplorerContext();
   const { rawAbi, verifiedContract } = smartContract;
@@ -114,4 +116,10 @@ export const ContractBuildComponent = () => {
   );
 };
 
-export const ContractBuild = memo(ContractBuildComponent);
+export const MemoizedContractBuild = memo(ContractBuildComponent);
+
+export const ContractBuild = withStyles(MemoizedContractBuild, {
+  ssrStyles: () => import('components/ContractBuild/styles.module.scss'),
+  clientStyles: () =>
+    require('components/ContractBuild/styles.module.scss').default
+});

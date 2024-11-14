@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { NativeSerializer, Code } from '@multiversx/sdk-core/out';
 import classNames from 'classnames';
 
-import globalStyles from 'assets/styles/globals.module.scss';
 import {
   Card,
   DeployUpgradeFileForm,
@@ -12,10 +11,13 @@ import {
 } from 'components';
 import { useSCExplorerContext, useUserActionDispatch } from 'contexts';
 import { getDefinition } from 'helpers';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { UserActionDispatchTypeEnum } from 'types';
-import styles from './styles.module.scss';
 
-export const ContractDeploy = () => {
+export const ContractDeployComponent = ({
+  globalStyles,
+  styles
+}: WithStylesImportType) => {
   const userActionDispatch = useUserActionDispatch();
   const { smartContract, customClassNames } = useSCExplorerContext();
   const { abiRegistry } = smartContract;
@@ -76,3 +78,9 @@ export const ContractDeploy = () => {
     </div>
   );
 };
+
+export const ContractDeploy = withStyles(ContractDeployComponent, {
+  ssrStyles: () => import('components/ContractDeploy/styles.module.scss'),
+  clientStyles: () =>
+    require('components/ContractDeploy/styles.module.scss').default
+});
