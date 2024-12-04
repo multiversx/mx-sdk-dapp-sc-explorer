@@ -1,4 +1,4 @@
-import { AbiRegistry } from '@multiversx/sdk-core/out';
+import { AbiRegistry } from '@multiversx/sdk-core';
 import {
   INTERFACE_NAME_PLACEHOLDER,
   OperationCompletionStatus
@@ -23,5 +23,12 @@ export const getAbiRegistry = (abi: any) => {
     abi.types = { ...abi.types, OperationCompletionStatus };
   }
 
-  return AbiRegistry.create(abi);
+  try {
+    const registry = AbiRegistry.create(abi);
+
+    return registry;
+  } catch (error) {
+    console.warn('Unable to parse ABI file ', error);
+    return;
+  }
 };
