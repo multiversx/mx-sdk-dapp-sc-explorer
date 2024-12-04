@@ -27,12 +27,15 @@ export const ContractTypeComponent = (props: ContractTypingUIType) => {
       ? abiRegistry?.getStruct(typeName)
       : undefined;
 
-  const isEnum =
-    rawType === ContractTypingsTypeEnum.enum ||
-    rawType === ContractTypingsTypeEnum.explicitEnum;
-  const enums = isEnum ? abiRegistry?.getEnum(typeName) : undefined;
+  const isEnum = rawType === ContractTypingsTypeEnum.enum;
+  const isExplicitEnum = rawType === ContractTypingsTypeEnum.explicitEnum;
 
-  const badgeIcon = isEnum ? enumTypeIcon : structTypeIcon;
+  const enums = isEnum ? abiRegistry?.getEnum(typeName) : undefined;
+  const explicitEnums = isExplicitEnum
+    ? abiRegistry?.getExplicitEnum(typeName)
+    : undefined;
+
+  const badgeIcon = isEnum || explicitEnums ? enumTypeIcon : structTypeIcon;
 
   return (
     <CollapsibleCard
@@ -52,9 +55,9 @@ export const ContractTypeComponent = (props: ContractTypingUIType) => {
             definitions={struct?.getFieldsDefinitions()}
           />
         )}
-        {enums && (
+        {(enums || explicitEnums) && (
           <div className={classNames(globalStyles?.fieldWrapper)}>
-            {enums?.variants?.map((variant, index) => {
+            {(enums?.variants || []).map((variant, index) => {
               const fieldsDefinitions = variant?.getFieldsDefinitions() ?? [];
               return (
                 <div
@@ -69,6 +72,18 @@ export const ContractTypeComponent = (props: ContractTypingUIType) => {
                       definitions={variant?.getFieldsDefinitions()}
                     />
                   )}
+                </div>
+              );
+            })}
+            {(explicitEnums?.variants || []).map((variant, index) => {
+              return (
+                <div
+                  className={classNames(globalStyles?.field)}
+                  key={`${variant?.name}-${index}`}
+                >
+                  <code className={classNames(globalStyles?.fieldName)}>
+                    {variant?.name}
+                  </code>
                 </div>
               );
             })}
