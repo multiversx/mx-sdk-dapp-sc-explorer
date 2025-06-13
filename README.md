@@ -2,7 +2,7 @@
 
 > A library to hold the main logic for Smart Contract Interactions on the MultiversX blockchain
 
-[![NPM](https://img.shields.io/npm/v/@multiversx/sdk-dapp-sc-explorer.svg)](https://www.npmjs.com/package/@multiversx/sdk-dapp-sc-explorer) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM](https://img.shields.io/npm/v/@multiversx/sdk-dapp-sc-explorer.svg)](https://www.npmjs.com/package/@multiversx/sdk-dapp-sc-explorer) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/multiversx/mx-sdk-dapp-sc-explorer)
 
 ![sdk-dapp-sc-explorer](https://github.com/multiversx/mx-sdk-dapp-sc-explorer/blob/main/preview.jpg)
 
