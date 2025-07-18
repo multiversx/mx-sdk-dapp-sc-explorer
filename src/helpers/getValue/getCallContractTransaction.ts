@@ -118,7 +118,7 @@ export const getCallContractTransaction = ({
           args
         )
           .withChainID(getChainID())
-          .withGasLimit(Number(userGasLimit ?? SC_GAS_LIMIT))
+          .withGasLimit(BigInt(userGasLimit ?? SC_GAS_LIMIT))
           .withSender(caller);
 
         if (nonce) {

@@ -1,4 +1,8 @@
-import { EndpointDefinition, TypedValue, Code } from '@multiversx/sdk-core/out';
+import {
+  EndpointDefinition,
+  TypedValue,
+  ICode
+} from '@multiversx/sdk-core/out';
 
 import { PartialEsdtType, PartialNftType } from 'types';
 
@@ -25,7 +29,7 @@ export type UserActionDispatchType = (
 
 export interface TransactionModalStateBaseType {
   endpoint: EndpointDefinition | undefined;
-  code: Code | undefined;
+  code: ICode | undefined;
   args: TypedValue[];
 }
 

@@ -1,6 +1,6 @@
 import {
   EndpointDefinition,
-  Code,
+  ICode,
   Transaction,
   TypedValue
 } from '@multiversx/sdk-core/out';
@@ -25,7 +25,7 @@ export interface TransactionCostDetailsType {
   isMutate?: boolean;
   args?: TypedValue[];
   endpoint?: EndpointDefinition;
-  code?: Code;
+  code?: ICode;
 }
 
 export const useGetTransactionCostDetails = ({
