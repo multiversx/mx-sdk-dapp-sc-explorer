@@ -3,7 +3,8 @@ import {
   SmartContract,
   Interaction,
   ContractFunction,
-  TokenTransfer
+  TokenTransfer,
+  Token
 } from '@multiversx/sdk-core/out';
 import {
   EsdtEnumType,
@@ -44,18 +45,16 @@ const getTokenTransferInteraction = ({
       validTokens.length === 1 &&
       validTokens.every((token) => token.tokenType === 'native')
     ) {
-      return interaction.withValue(
-        TokenTransfer.egldFromAmount(validTokens[0].tokenAmount)
-      );
+      return interaction.withValue(BigInt(validTokens[0].tokenAmount));
     }
 
     if (onlyTokens) {
-      const transfers = validTokens.map((token) =>
-        TokenTransfer.fungibleFromAmount(
-          token.tokenIdentifier,
-          token.tokenAmount,
-          token.tokenDecimals
-        )
+      const transfers = validTokens.map(
+        (token) =>
+          new TokenTransfer({
+            token: new Token({ identifier: token.tokenIdentifier }),
+            amount: BigInt(token.tokenAmount)
+          })
       );
 
       if (transfers.length === 1) {
@@ -71,12 +70,13 @@ const getTokenTransferInteraction = ({
           0,
           token.tokenIdentifier.lastIndexOf('-')
         );
-        return TokenTransfer.metaEsdtFromAmount(
-          cleanIdentifier,
-          token.tokenNonce ?? 0,
-          token.tokenAmount,
-          token.tokenDecimals
-        );
+        return new TokenTransfer({
+          token: new Token({
+            identifier: cleanIdentifier,
+            nonce: BigInt(token.tokenNonce)
+          }),
+          amount: BigInt(token.tokenAmount)
+        });
       });
 
       if (transfers.length === 1) {

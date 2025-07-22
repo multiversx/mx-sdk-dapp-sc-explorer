@@ -1,9 +1,4 @@
-import {
-  Address,
-  SmartContract,
-  TokenTransfer,
-  CodeMetadata
-} from '@multiversx/sdk-core/out';
+import { Address, SmartContract, CodeMetadata } from '@multiversx/sdk-core/out';
 import { getChainID } from '@multiversx/sdk-dapp/utils/network';
 
 import { SC_DEPLOY_GAS_LIMIT } from 'constants/general';
@@ -36,13 +31,13 @@ export const getDeployTransaction = ({
           deployer: caller,
           code,
           codeMetadata,
-          gasLimit: Number(userGasLimit ?? SC_DEPLOY_GAS_LIMIT),
+          gasLimit: BigInt(userGasLimit ?? SC_DEPLOY_GAS_LIMIT),
           initArguments: args,
-          value: TokenTransfer.egldFromAmount(0),
+          value: BigInt(0),
           chainID: getChainID()
         });
         if (nonce) {
-          transaction.setNonce(nonce);
+          transaction.nonce = nonce;
         }
 
         if (transaction) {
