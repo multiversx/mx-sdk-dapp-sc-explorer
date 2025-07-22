@@ -41,7 +41,7 @@ export const DropzoneWasm = ({
       if (fileReader.result) {
         try {
           const buffer = toBuffer(fileReader.result as ArrayBuffer);
-          const wasmCode = buffer.toString();
+          const wasmCode = buffer.toString('hex');
           setFieldValue(fieldName, wasmCode);
           setFieldError(fieldName, undefined);
         } catch (error) {

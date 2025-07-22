@@ -109,7 +109,7 @@ export const InteractionForm = (props: InteractionFormUIType) => {
                   const bnBalance = new BigNumber(
                     selectedToken.token.balance ?? '0'
                   );
-                  return bnBalance.comparedTo(bnAmount) >= 0;
+                  return bnBalance.isGreaterThanOrEqualTo(bnAmount);
                 }
               }
 
