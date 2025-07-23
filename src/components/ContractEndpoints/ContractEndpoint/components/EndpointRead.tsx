@@ -30,12 +30,12 @@ export const EndpointRead = (props: BaseEndpointUIType) => {
         nativeValues || [],
         endpoint
       );
-      const result = await queryContract({ func: endpoint.name, args });
-      if (result.success && result?.data) {
-        setResult(result.data);
+      const queryResult = await queryContract({ func: endpoint.name, args });
+      if (queryResult.success && queryResult?.data) {
+        setResult(queryResult.data);
       } else {
-        if (result?.error) {
-          setError(result.error);
+        if (queryResult?.error) {
+          setError(queryResult.error);
         }
       }
       setIsLoading(false);

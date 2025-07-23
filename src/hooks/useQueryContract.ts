@@ -1,44 +1,44 @@
 import {
   Address,
-  SmartContract,
   QueryArguments,
   SmartContractQueryResponse
 } from '@multiversx/sdk-core/out';
-import { ContractQueryRequest } from '@multiversx/sdk-network-providers/out/contractQueryRequest';
+import { ContractQueryRequest } from '@multiversx/sdk-core/out/networkProviders/contractQueryRequest';
 
 import { useSCExplorerContext } from 'contexts';
-import { useNetworkProvider } from 'hooks';
+import { useGetEntrypoint, useNetworkProvider } from 'hooks';
 
 export const useQueryContract = () => {
-  const { smartContract, networkConfig } = useSCExplorerContext();
+  const { smartContract } = useSCExplorerContext();
   const { abiRegistry, contractAddress } = smartContract;
+  const entrypoint = useGetEntrypoint();
   const { post } = useNetworkProvider();
 
   const queryContract = async (props: QueryArguments) => {
+    const { func, args = [], value } = props;
     if (abiRegistry && contractAddress) {
       try {
         const address = new Address(contractAddress);
-        const contract = new SmartContract({
-          address,
-          abi: abiRegistry
-        });
+        const controller =
+          entrypoint.createSmartContractController(abiRegistry);
 
-        if (contract) {
-          const query = contract?.createQuery(props);
-          const request = new ContractQueryRequest(query).toHttpRequest();
-          const response = await post({ request });
+        if (controller) {
+          const query = controller.createQuery({
+            contract: address,
+            function: func.toString(),
+            arguments: args,
+            value
+          });
+          const requestnew = new ContractQueryRequest(query).toHttpRequest();
+          const response = await post({ request: requestnew });
 
           if (response?.data) {
             try {
               const contractQueryResponse =
                 SmartContractQueryResponse.fromHttpResponse(
                   response.data,
-                  query.func.toString()
+                  func.toString()
                 );
-
-              const endpoint = networkConfig.networkEntrypoint;
-              const controller =
-                endpoint.createSmartContractController(abiRegistry);
               const parsedResponse = controller.parseQueryResponse(
                 contractQueryResponse
               );
