@@ -34,14 +34,15 @@ export const EndpointOutputComponent = (props: EndpointOutputUIType) => {
                   Query Result:{' '}
                 </span>
                 {result.parsedResponse.map((value, index) => {
-                  const displayValue = value?.valueOf();
+                  const displayResponse = value?.valueOf();
+                  let output = displayResponse;
                   if (
-                    displayValue !== null &&
-                    (typeof displayValue === 'object' ||
-                      Array.isArray(displayValue))
+                    displayResponse !== null &&
+                    (typeof displayResponse === 'object' ||
+                      Array.isArray(displayResponse))
                   ) {
-                    const code = JSON.stringify(
-                      displayValue,
+                    output = JSON.stringify(
+                      displayResponse,
                       (key, val) => {
                         try {
                           if (
@@ -59,43 +60,38 @@ export const EndpointOutputComponent = (props: EndpointOutputUIType) => {
                       },
                       2
                     );
+                  } else {
+                    try {
+                      output = displayResponse.toString();
+                    } catch {}
+                  }
 
-                    return (
-                      <div
-                        className={classNames(globalStyles?.codeBlock)}
-                        key={index}
-                      >
-                        <div className={classNames(globalStyles?.buttonHolder)}>
-                          <CopyButton
-                            text={code}
-                            className={classNames(globalStyles?.copyButton)}
-                            copyIcon={copyIcon}
-                          />
-                        </div>
+                  return (
+                    <div
+                      className={classNames(globalStyles?.codeBlock)}
+                      key={index}
+                    >
+                      <div className={classNames(globalStyles?.buttonHolder)}>
+                        <CopyButton
+                          text={String(output)}
+                          className={classNames(globalStyles?.copyButton)}
+                          copyIcon={copyIcon}
+                        />
+                      </div>
+                      {output === '' ? (
+                        '<empty string>'
+                      ) : (
                         <Code
                           className={classNames(
                             globalStyles?.endpointOutputResultsCode
                           )}
-                          code={code}
+                          code={String(output)}
                           showLineNumbers={false}
                           language='properties'
                         />
-                      </div>
-                    );
-                  } else {
-                    return (
-                      <code
-                        key={index}
-                        className={classNames(
-                          styles?.endpointOutputResultsString
-                        )}
-                      >
-                        {displayValue === ''
-                          ? '<empty string>'
-                          : String(displayValue)}
-                      </code>
-                    );
-                  }
+                      )}
+                    </div>
+                  );
                 })}
               </div>
             )}
