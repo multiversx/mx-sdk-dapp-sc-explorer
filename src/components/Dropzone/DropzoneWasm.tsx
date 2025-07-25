@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Code } from '@multiversx/sdk-core/out/smartcontracts/code';
+
 import { getIn } from 'formik';
 
 import { Dropzone } from 'components';
@@ -41,7 +41,7 @@ export const DropzoneWasm = ({
       if (fileReader.result) {
         try {
           const buffer = toBuffer(fileReader.result as ArrayBuffer);
-          const wasmCode = Code.fromBuffer(buffer);
+          const wasmCode = buffer.toString('hex');
           setFieldValue(fieldName, wasmCode);
           setFieldError(fieldName, undefined);
         } catch (error) {

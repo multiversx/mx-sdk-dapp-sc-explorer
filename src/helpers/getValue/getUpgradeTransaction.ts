@@ -1,8 +1,8 @@
 import {
   Address,
-  SmartContract,
-  TokenTransfer,
-  CodeMetadata
+  TransactionsFactoryConfig,
+  SmartContractTransactionsFactory,
+  ContractUpgradeInput
 } from '@multiversx/sdk-core/out';
 import { getChainID } from '@multiversx/sdk-dapp/utils/network';
 
@@ -21,31 +21,35 @@ export const getUpgradeTransaction = ({
 }: GetUpgradeTransactionType) => {
   if (callerAddress && contractAddress) {
     try {
+      const contract = new Address(contractAddress);
       const caller = new Address(callerAddress);
-      const address = new Address(contractAddress);
-      const contract = new SmartContract({
-        abi: abiRegistry,
-        address
+      const config = new TransactionsFactoryConfig({
+        chainID: getChainID()
+      });
+      const factory = new SmartContractTransactionsFactory({
+        config: config,
+        abi: abiRegistry
       });
 
-      if (contract) {
-        const codeMetadata = new CodeMetadata(
-          metadata.upgradeable,
-          metadata.readable,
-          metadata.payable,
-          metadata.payableBySc
-        );
-        const transaction = contract.upgrade({
+      if (factory) {
+        const options = {
+          contract,
+          bytecode: Buffer.from(code.toString(), 'hex'),
+          gasLimit: BigInt(userGasLimit ?? SC_DEPLOY_GAS_LIMIT),
+          arguments: args,
+          nativeTransferAmount: BigInt(0),
+          isUpgradeable: metadata.upgradeable,
+          isReadable: metadata.readable,
+          isPayable: metadata.payable,
+          isPayableBySmartContract: metadata.payableBySc
+        } as ContractUpgradeInput;
+        const transaction = factory.createTransactionForUpgrade(
           caller,
-          code,
-          codeMetadata,
-          gasLimit: Number(userGasLimit ?? SC_DEPLOY_GAS_LIMIT),
-          initArguments: args,
-          value: TokenTransfer.egldFromAmount(0),
-          chainID: getChainID()
-        });
+          options
+        );
+
         if (nonce) {
-          transaction.setNonce(nonce);
+          transaction.nonce = nonce;
         }
 
         if (transaction) {

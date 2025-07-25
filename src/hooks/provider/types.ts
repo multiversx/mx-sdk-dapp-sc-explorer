@@ -1,4 +1,3 @@
-import { TypedOutcomeBundle } from '@multiversx/sdk-core/out';
 import { ContractQueryResponse } from '@multiversx/sdk-network-providers/out/contractQueryResponse';
 
 export interface BasicPropsType {
@@ -26,7 +25,7 @@ export interface ProviderPropsType {
 }
 
 export interface QueryContractResponse extends ContractQueryResponse {
-  parsedResponse?: TypedOutcomeBundle;
+  parsedResponse?: any[];
 }
 
 export type ApiProviderResponseType =

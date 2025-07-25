@@ -1,5 +1,6 @@
 import React, { useContext, ReactNode, createContext } from 'react';
 import { fallbackNetworkConfigurations } from '@multiversx/sdk-dapp/constants/index';
+import { getNetworkEntrypoint } from 'helpers';
 import { NetworkType } from 'types';
 
 export interface NetworkContextPropsType {
@@ -18,10 +19,12 @@ export function NetworkContextProvider({
   value
 }: NetworkContextProviderPropsType) {
   const fallback = fallbackNetworkConfigurations[value.environment];
+  const networkEntrypoint = getNetworkEntrypoint({ network: value });
   const networkConfig = {
     environment: value.environment,
     provider: value?.provider ?? 'api',
     apiAddress: value?.apiAddress ?? fallback?.apiAddress,
+    networkEntrypoint,
     ...(value?.proxyUrl ? { proxyUrl: value.proxyUrl } : {})
   };
 

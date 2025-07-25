@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { NativeSerializer, Code } from '@multiversx/sdk-core/out';
+import { NativeSerializer, ICode } from '@multiversx/sdk-core/out';
 import classNames from 'classnames';
 
 import {
@@ -35,7 +35,7 @@ export const ContractUpgradeComponent = ({
     wasmFileContent
   }: {
     values: any[];
-    wasmFileContent: Code;
+    wasmFileContent: ICode;
   }) => {
     setError(undefined);
     setIsLoading(true);

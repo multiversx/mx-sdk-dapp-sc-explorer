@@ -1,42 +1,46 @@
 import {
   Address,
-  SmartContract,
   QueryArguments,
-  ResultsParser
+  SmartContractQueryResponse
 } from '@multiversx/sdk-core/out';
-import { ContractQueryRequest } from '@multiversx/sdk-network-providers/out/contractQueryRequest';
-import { ContractQueryResponse } from '@multiversx/sdk-network-providers/out/contractQueryResponse';
+import { ContractQueryRequest } from '@multiversx/sdk-core/out/networkProviders/contractQueryRequest';
 
 import { useSCExplorerContext } from 'contexts';
-import { useNetworkProvider } from 'hooks';
+import { useGetEntrypoint, useNetworkProvider } from 'hooks';
 
 export const useQueryContract = () => {
   const { smartContract } = useSCExplorerContext();
   const { abiRegistry, contractAddress } = smartContract;
+  const entrypoint = useGetEntrypoint();
   const { post } = useNetworkProvider();
 
   const queryContract = async (props: QueryArguments) => {
+    const { func, args = [], value } = props;
     if (abiRegistry && contractAddress) {
       try {
         const address = new Address(contractAddress);
-        const contract = new SmartContract({
-          address,
-          abi: abiRegistry
-        });
+        const controller =
+          entrypoint.createSmartContractController(abiRegistry);
 
-        if (contract) {
-          const query = contract?.createQuery(props);
-          const request = new ContractQueryRequest(query).toHttpRequest();
-          const response = await post({ request });
+        if (controller) {
+          const query = controller.createQuery({
+            contract: address,
+            function: func.toString(),
+            arguments: args,
+            value
+          });
+          const requestnew = new ContractQueryRequest(query).toHttpRequest();
+          const response = await post({ request: requestnew });
 
           if (response?.data) {
             try {
               const contractQueryResponse =
-                ContractQueryResponse.fromHttpResponse(response.data);
-              const endpoint = abiRegistry.getEndpoint(props?.func?.toString());
-              const parsedResponse = new ResultsParser().parseQueryResponse(
-                contractQueryResponse,
-                endpoint
+                SmartContractQueryResponse.fromHttpResponse(
+                  response.data,
+                  func.toString()
+                );
+              const parsedResponse = controller.parseQueryResponse(
+                contractQueryResponse
               );
               response.data['parsedResponse'] = parsedResponse;
             } catch {

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { NativeSerializer, Code } from '@multiversx/sdk-core/out';
+import { NativeSerializer, ICode } from '@multiversx/sdk-core/out';
 import classNames from 'classnames';
 
 import {
@@ -30,7 +30,7 @@ export const ContractDeployComponent = ({
     wasmFileContent
   }: {
     values: any[];
-    wasmFileContent: Code;
+    wasmFileContent: ICode;
   }) => {
     setError(undefined);
     setIsLoading(true);

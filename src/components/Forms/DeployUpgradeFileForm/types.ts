@@ -1,4 +1,4 @@
-import { Code } from '@multiversx/sdk-core/out';
+import { ICode } from '@multiversx/sdk-core/out';
 import { UserInterfaceType } from 'types';
 
 export interface DeployUpgradeFileFormUIType extends UserInterfaceType {
@@ -8,7 +8,7 @@ export interface DeployUpgradeFileFormUIType extends UserInterfaceType {
     wasmFileContent
   }: {
     values: any[];
-    wasmFileContent: Code;
+    wasmFileContent: ICode;
   }) => void;
   isLoading?: boolean;
   generalError?: string;

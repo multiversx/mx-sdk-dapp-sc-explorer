@@ -1,8 +1,8 @@
 import {
   Address,
-  SmartContract,
-  TokenTransfer,
-  CodeMetadata
+  SmartContractTransactionsFactory,
+  TransactionsFactoryConfig,
+  ContractDeployInput
 } from '@multiversx/sdk-core/out';
 import { getChainID } from '@multiversx/sdk-dapp/utils/network';
 
@@ -21,28 +21,29 @@ export const getDeployTransaction = ({
   if (callerAddress) {
     try {
       const caller = new Address(callerAddress);
-      const contract = new SmartContract({
+      const config = new TransactionsFactoryConfig({
+        chainID: getChainID()
+      });
+      const factory = new SmartContractTransactionsFactory({
+        config: config,
         abi: abiRegistry
       });
 
-      if (contract) {
-        const codeMetadata = new CodeMetadata(
-          metadata.upgradeable,
-          metadata.readable,
-          metadata.payable,
-          metadata.payableBySc
-        );
-        const transaction = contract.deploy({
-          deployer: caller,
-          code,
-          codeMetadata,
-          gasLimit: Number(userGasLimit ?? SC_DEPLOY_GAS_LIMIT),
-          initArguments: args,
-          value: TokenTransfer.egldFromAmount(0),
-          chainID: getChainID()
-        });
+      if (factory) {
+        const options = {
+          bytecode: Buffer.from(code.toString(), 'hex'),
+          gasLimit: BigInt(userGasLimit ?? SC_DEPLOY_GAS_LIMIT),
+          arguments: args,
+          nativeTransferAmount: BigInt(0),
+          isUpgradeable: metadata.upgradeable,
+          isReadable: metadata.readable,
+          isPayable: metadata.payable,
+          isPayableBySmartContract: metadata.payableBySc
+        } as ContractDeployInput;
+        const transaction = factory.createTransactionForDeploy(caller, options);
+
         if (nonce) {
-          transaction.setNonce(nonce);
+          transaction.nonce = nonce;
         }
 
         if (transaction) {

@@ -1,5 +1,5 @@
 import {
-  Code,
+  ICode,
   Type,
   EndpointDefinition,
   EndpointParameterDefinition
@@ -8,7 +8,7 @@ import { FormikProps } from 'formik';
 import { UserInterfaceType } from 'types';
 
 export interface FormikAbiType {
-  [key: string]: FormikAbiType | FormikAbiType[] | string[] | string | Code;
+  [key: string]: FormikAbiType | FormikAbiType[] | string[] | string | ICode;
 }
 
 export interface RecursiveContainerUIType extends UserInterfaceType {

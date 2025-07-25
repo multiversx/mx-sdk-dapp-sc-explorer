@@ -7,7 +7,7 @@ export const getComputedGasLimit = ({
 }: {
   transaction: Transaction;
 }) => {
-  const data = transaction.getData().toString();
+  const data = transaction.data.toString();
   const bNconfigGasLimit = new BigNumber(GAS_LIMIT);
   const bNgasPerDataByte = new BigNumber(GAS_PER_DATA_BYTE);
   const bNgasValue = data
