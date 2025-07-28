@@ -7,16 +7,18 @@ import {
   faTimes
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { TransactionServerStatusesEnum } from '@multiversx/sdk-dapp/types/enums.types';
-import { CopyButton } from '@multiversx/sdk-dapp/UI/CopyButton';
-import { Trim } from '@multiversx/sdk-dapp/UI/Trim';
-import { TransactionEvent } from '@multiversx/sdk-network-providers/out/transactionEvents';
 import classNames from 'classnames';
 
 import { CardItem } from 'components';
 import { useSCExplorerContext } from 'contexts';
 import { withStyles } from 'hocs/withStyles';
 import { useGetTransaction, useUpdateDeployedContractDetails } from 'hooks';
+import {
+  MvxCopyButton,
+  MvxTrim,
+  TransactionServerStatusesEnum,
+  TransactionEvent
+} from 'lib';
 import { TransactionPanelUIType, TransactionEventIdentifierEnum } from 'types';
 
 export const TransactionPanelComponent = ({
@@ -145,8 +147,8 @@ export const TransactionPanelComponent = ({
                   )}
                 >
                   <CardItem title='Contract Address' icon={faCogs}>
-                    <Trim text={deployedContractAddress} />
-                    <CopyButton
+                    <MvxTrim text={deployedContractAddress} />
+                    <MvxCopyButton
                       text={deployedContractAddress}
                       copyIcon={copyIcon}
                     />
