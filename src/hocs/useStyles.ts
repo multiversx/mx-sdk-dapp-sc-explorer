@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import { isWindowAvailable } from '@multiversx/sdk-dapp-utils/out';
+
+import { isWindowAvailable } from 'lib';
 
 type StylesType = typeof import('*.scss');
 

@@ -1,12 +1,12 @@
+import { SC_DEPLOY_GAS_LIMIT } from 'constants/general';
+import { getChainId } from 'helpers';
 import {
   Address,
   SmartContractTransactionsFactory,
   TransactionsFactoryConfig,
   ContractDeployInput
 } from 'lib/sdkCore';
-import { getChainID } from '@multiversx/sdk-dapp/utils/network';
 
-import { SC_DEPLOY_GAS_LIMIT } from 'constants/general';
 import { GetDeployTransactionType } from 'types';
 
 export const getDeployTransaction = ({
@@ -22,7 +22,7 @@ export const getDeployTransaction = ({
     try {
       const caller = new Address(callerAddress);
       const config = new TransactionsFactoryConfig({
-        chainID: getChainID()
+        chainID: getChainId()
       });
       const factory = new SmartContractTransactionsFactory({
         config: config,

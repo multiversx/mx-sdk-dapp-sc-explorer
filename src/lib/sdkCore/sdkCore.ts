@@ -5,6 +5,7 @@ export {
   TestnetEntrypoint,
   MainnetEntrypoint,
   ContractDeployInput,
+  ContractUpgradeInput,
   EndpointDefinition,
   EndpointParameterDefinition,
   FieldDefinition,
@@ -15,6 +16,7 @@ export {
   SmartContractTransactionsFactory,
   Token,
   TokenTransfer,
+  Transaction,
   TransactionsFactoryConfig,
   TypedValue,
   TypeExpressionParser

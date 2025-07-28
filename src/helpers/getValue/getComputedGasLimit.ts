@@ -1,6 +1,7 @@
-import { Transaction } from 'lib/sdkCore';
-import { GAS_LIMIT, GAS_PER_DATA_BYTE } from '@multiversx/sdk-dapp/constants';
 import BigNumber from 'bignumber.js';
+import { GAS_LIMIT, GAS_PER_DATA_BYTE } from 'lib';
+
+import { Transaction } from 'lib/sdkCore';
 
 export const getComputedGasLimit = ({
   transaction

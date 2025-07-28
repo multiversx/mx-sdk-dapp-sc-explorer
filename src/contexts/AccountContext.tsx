@@ -1,6 +1,6 @@
 import React, { useContext, ReactNode, createContext } from 'react';
-import { AccountType } from '@multiversx/sdk-dapp/types/account.types';
 
+import { AccountType } from 'lib';
 import { AccountConsumerHandlersType } from 'types';
 
 export interface AccountContextPropsType {

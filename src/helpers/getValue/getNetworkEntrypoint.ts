@@ -1,9 +1,9 @@
+import { EnvironmentsEnum } from 'lib';
 import {
   DevnetEntrypoint,
   MainnetEntrypoint,
   TestnetEntrypoint
 } from 'lib/sdkCore';
-import { EnvironmentsEnum } from '@multiversx/sdk-dapp/types';
 import { NetworkType } from 'types';
 
 export const getNetworkEntrypoint = ({

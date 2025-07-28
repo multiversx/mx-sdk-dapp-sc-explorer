@@ -1,3 +1,6 @@
+import { SC_GAS_LIMIT } from 'constants/general';
+import { getChainId } from 'helpers';
+import { EsdtEnumType, NftEnumType, parseAmount } from 'lib';
 import {
   Address,
   TokenTransfer,
@@ -5,14 +8,6 @@ import {
   TransactionsFactoryConfig,
   SmartContractTransactionsFactory
 } from 'lib/sdkCore';
-import {
-  EsdtEnumType,
-  NftEnumType
-} from '@multiversx/sdk-dapp/types/tokens.types';
-import { getChainID } from '@multiversx/sdk-dapp/utils/network';
-import { parseAmount } from '@multiversx/sdk-dapp/utils/operations/parseAmount';
-
-import { SC_GAS_LIMIT } from 'constants/general';
 import { GetCallContractTransactionType, ProcessedFormTokenType } from 'types';
 
 const getTokenTransfers = ({
@@ -72,7 +67,7 @@ export const getCallContractTransaction = ({
       const caller = new Address(callerAddress);
 
       const config = new TransactionsFactoryConfig({
-        chainID: getChainID()
+        chainID: getChainId()
       });
       const factory = new SmartContractTransactionsFactory({
         config: config,

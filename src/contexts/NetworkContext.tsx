@@ -1,6 +1,7 @@
 import React, { useContext, ReactNode, createContext } from 'react';
-import { fallbackNetworkConfigurations } from '@multiversx/sdk-dapp/constants/index';
+
 import { getNetworkEntrypoint } from 'helpers';
+import { fallbackNetworkConfigurations } from 'lib';
 import { NetworkType } from 'types';
 
 export interface NetworkContextPropsType {
