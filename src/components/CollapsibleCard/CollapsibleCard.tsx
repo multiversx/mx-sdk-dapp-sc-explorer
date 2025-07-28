@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { isWindowAvailable } from '@multiversx/sdk-dapp/utils/isWindowAvailable';
+
 import classNames from 'classnames';
 import { Collapse } from 'react-bootstrap';
 
 import { Badge } from 'components';
 import { useSCExplorerContext } from 'contexts';
 import { withStyles } from 'hocs/withStyles';
+import { isWindowAvailable } from 'lib';
 
 import { CollapsibleArrows } from './CollapsibleArrows';
 import type { CollapsibleCardUIType } from './types';

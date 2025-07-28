@@ -1,8 +1,10 @@
 import React from 'react';
-import { getChainID } from '@multiversx/sdk-dapp/utils/network';
-import { getEgldLabel } from '@multiversx/sdk-dapp/utils/network/getEgldLabel';
-import { formatAmount } from '@multiversx/sdk-dapp/utils/operations/formatAmount';
-import { stringIsInteger } from '@multiversx/sdk-dapp/utils/validation/stringIsInteger';
+import classNames from 'classnames';
+
+import { ZERO } from 'constants/general';
+import { useSCExplorerContext } from 'contexts';
+import { getChainId } from 'helpers';
+import { withStyles } from 'hocs/withStyles';
 import {
   AmountSelect,
   AmountInputPropsType,
@@ -10,13 +12,11 @@ import {
   MaxButtonPropsType,
   OptionType,
   TokenBalancePropsType,
-  TokenSelectPropsType
+  TokenSelectPropsType,
+  formatAmount,
+  stringIsInteger,
+  getEgldLabel
 } from 'lib';
-import classNames from 'classnames';
-
-import { ZERO } from 'constants/general';
-import { useSCExplorerContext } from 'contexts';
-import { withStyles } from 'hocs/withStyles';
 import { AmountSelectInputUIType } from './types';
 
 export const AmountSelectInputComponent = ({
@@ -75,7 +75,7 @@ export const AmountSelectInputComponent = ({
     error: errorMessage,
     isInvalid: hasErrors,
     egldLabel: getEgldLabel(),
-    chainId: getChainID(),
+    chainId: getChainId(),
     className: '',
     showTokenPrice: false,
     showBalanceUsdValue: true,

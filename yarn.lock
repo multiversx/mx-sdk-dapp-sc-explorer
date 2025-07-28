@@ -365,12 +365,12 @@
   dependencies:
     "@fortawesome/fontawesome-common-types" "7.0.0"
 
-"@fortawesome/free-brands-svg-icons@6.5.1":
-  version "6.5.1"
-  resolved "https://registry.yarnpkg.com/@fortawesome/free-brands-svg-icons/-/free-brands-svg-icons-6.5.1.tgz#e948cc02404277cb8ad40fe3573ca75f2830e876"
-  integrity sha512-093l7DAkx0aEtBq66Sf19MgoZewv1zeY9/4C7vSKPO4qMwEsW/2VYTUTpBtLwfb9T2R73tXaRDPmE4UqLCYHfg==
+"@fortawesome/free-brands-svg-icons@>=6.7.2":
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/@fortawesome/free-brands-svg-icons/-/free-brands-svg-icons-7.0.0.tgz#2510ed99f4406bb8e6459316a7d9b2432fa41b55"
+  integrity sha512-C8oY28gq/Qx/cHReJa2AunKJUHvUZDVoPlSTHtAvjriaNfi+5nugW4cx7yA/xN3f/nYkElw11gFBoJ2xUDDFgg==
   dependencies:
-    "@fortawesome/fontawesome-common-types" "6.5.1"
+    "@fortawesome/fontawesome-common-types" "7.0.0"
 
 "@fortawesome/free-solid-svg-icons@6.5.1":
   version "6.5.1"
@@ -724,7 +724,7 @@
     classnames "2.3.2"
     react-select "5.4.0"
 
-"@multiversx/sdk-dapp-ui@>=0.0.20":
+"@multiversx/sdk-dapp-ui@>=0.0.20", "@multiversx/sdk-dapp-ui@^0.x":
   version "0.0.20"
   resolved "https://registry.yarnpkg.com/@multiversx/sdk-dapp-ui/-/sdk-dapp-ui-0.0.20.tgz#5c3756e0a4a1c54e8bf9c140781a7b3097166d70"
   integrity sha512-LfvnNva3ZTdYIolPtlfIJbfWpwzOMkdRbx4sH3cUO5jrAfu7dG7RF3V9iBTjFKuRgph1Kg8WoZ2rzDrM5ESwnA==

@@ -1,9 +1,9 @@
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { UserInterfaceType } from 'types';
 
 export interface CardItemUIType extends UserInterfaceType {
   title: string;
   children?: React.ReactNode;
-  icon?: IconProp;
+  icon?: IconDefinition;
   customIcon?: React.ReactNode;
 }

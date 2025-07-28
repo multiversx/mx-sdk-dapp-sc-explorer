@@ -1,13 +1,12 @@
 import React, { memo } from 'react';
 import { faDocker, faRust } from '@fortawesome/free-brands-svg-icons';
 import { faCogs, faCopy } from '@fortawesome/free-solid-svg-icons';
-import { CopyButton } from '@multiversx/sdk-dapp/UI/CopyButton';
-import { Trim } from '@multiversx/sdk-dapp/UI/Trim';
 import classNames from 'classnames';
 
 import { CardItem, PanelHeader } from 'components';
 import { useSCExplorerContext } from 'contexts';
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
+import { MvxCopyButton, MvxTrim } from 'lib';
 
 export const ContractBuildComponent = ({
   globalStyles,
@@ -86,8 +85,8 @@ export const ContractBuildComponent = ({
               )}
               {rawAbi.buildInfo.rustc?.commitHash && (
                 <CardItem title='Commit Hash' icon={faRust}>
-                  <Trim text={rawAbi.buildInfo.rustc.commitHash} />
-                  <CopyButton
+                  <MvxTrim text={rawAbi.buildInfo.rustc.commitHash} />
+                  <MvxCopyButton
                     text={rawAbi.buildInfo.rustc.commitHash}
                     copyIcon={copyIcon}
                   />

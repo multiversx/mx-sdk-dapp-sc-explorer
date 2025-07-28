@@ -27,6 +27,7 @@
   "devDependencies": {
     "@multiversx/sdk-core": "^14.x",
     "@multiversx/sdk-dapp": "^5.x",
+    "@multiversx/sdk-dapp-ui": "^0.x",
     "@multiversx/sdk-dapp-utils": "^2.x",
     "@types/react": "19.1.8",
     "@types/react-dom": "19.1.6",
@@ -75,21 +76,22 @@
     "transaction"
   ],
   "peerDependencies": {
-    "@multiversx/sdk-core": ">=13.12.0",
-    "@multiversx/sdk-dapp": ">=3.0.0",
+    "@multiversx/sdk-core": "^14.x",
+    "@multiversx/sdk-dapp": "^5.x",
     "axios": "^1.10.0",
     "react": ">=18",
     "react-dom": ">=18"
   },
   "optionalDependencies": {
-    "@fortawesome/fontawesome-svg-core": "6.5.1",
-    "@fortawesome/free-brands-svg-icons": "6.5.1",
-    "@fortawesome/free-solid-svg-icons": "6.5.1",
+    "@fortawesome/fontawesome-svg-core": ">=6.7.2",
+    "@fortawesome/free-brands-svg-icons": ">=6.7.2",
+    "@fortawesome/free-solid-svg-icons": ">=6.7.2",
     "@fortawesome/react-fontawesome": "0.2.0",
     "classnames": "2.3.2"
   },
   "dependencies": {
     "@multiversx/sdk-dapp-form": "3.x",
+    "@multiversx/sdk-dapp-ui": "^0.x",
     "@multiversx/sdk-network-providers": "2.9.3",
     "bignumber.js": "9.x",
     "formik": "2.4.6",

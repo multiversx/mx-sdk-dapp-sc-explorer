@@ -3,3 +3,4 @@ export { formatAmount } from '@multiversx/sdk-dapp-utils/out/helpers/formatAmoun
 export { parseAmount } from '@multiversx/sdk-dapp-utils/out/helpers/parseAmount';
 export { stringIsFloat } from '@multiversx/sdk-dapp-utils/out/helpers/stringIsFloat';
 export { stringIsInteger } from '@multiversx/sdk-dapp-utils/out/helpers/stringIsInteger';
+export { isWindowAvailable } from '@multiversx/sdk-dapp-utils/out/helpers/isWindowAvailable';
