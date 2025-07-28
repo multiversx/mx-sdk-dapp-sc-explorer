@@ -3,15 +3,15 @@ import { getChainID } from '@multiversx/sdk-dapp/utils/network';
 import { getEgldLabel } from '@multiversx/sdk-dapp/utils/network/getEgldLabel';
 import { formatAmount } from '@multiversx/sdk-dapp/utils/operations/formatAmount';
 import { stringIsInteger } from '@multiversx/sdk-dapp/utils/validation/stringIsInteger';
-import { AmountSelect } from '@multiversx/sdk-dapp-form/UI/Fields/AmountSelect';
 import {
+  AmountSelect,
+  AmountInputPropsType,
   AmountErrorPropsType,
   MaxButtonPropsType,
   OptionType,
   TokenBalancePropsType,
   TokenSelectPropsType
-} from '@multiversx/sdk-dapp-form/UI/Fields/AmountSelect/components';
-import { AmountInputPropsType } from '@multiversx/sdk-dapp-form/UI/Fields/AmountSelect/components/AmountInput';
+} from 'lib';
 import classNames from 'classnames';
 
 import { ZERO } from 'constants/general';
