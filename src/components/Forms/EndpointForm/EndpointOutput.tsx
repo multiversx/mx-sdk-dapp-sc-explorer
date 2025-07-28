@@ -1,12 +1,12 @@
 import React from 'react';
 import { faCopy } from '@fortawesome/free-solid-svg-icons';
-import { CopyButton } from '@multiversx/sdk-dapp/UI/CopyButton';
 import BigNumber from 'bignumber.js';
 import classNames from 'classnames';
 
 import { EndpointDefinitionList, Code } from 'components';
 import { useSCExplorerContext } from 'contexts';
 import { withStyles } from 'hocs/withStyles';
+import { MvxCopyButton } from 'lib';
 import { EndpointOutputUIType } from 'types';
 
 export const EndpointOutputComponent = (props: EndpointOutputUIType) => {
@@ -72,7 +72,7 @@ export const EndpointOutputComponent = (props: EndpointOutputUIType) => {
                       key={index}
                     >
                       <div className={classNames(globalStyles?.buttonHolder)}>
-                        <CopyButton
+                        <MvxCopyButton
                           text={String(output)}
                           className={classNames(globalStyles?.copyButton)}
                           copyIcon={copyIcon}

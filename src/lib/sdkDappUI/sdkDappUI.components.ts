@@ -4,5 +4,6 @@ export {
   MvxFormatAmount,
   MvxTransactionsTable,
   MvxUnlockButton,
-  MvxTrim
+  MvxTrim,
+  MvxTransactionAge
 } from '@multiversx/sdk-dapp-ui/react';

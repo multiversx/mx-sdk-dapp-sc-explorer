@@ -1,11 +1,10 @@
 import { useState } from 'react';
-import { addressIsValid } from '@multiversx/sdk-dapp/utils/account/addressIsValid';
-import { isContract } from '@multiversx/sdk-dapp/utils/smartContracts';
 
 import { INTERFACE_NAME_PLACEHOLDER } from 'constants/general';
 import { useSmartContractDispatch, useSCExplorerContext } from 'contexts';
 import { getAbiRegistry } from 'helpers';
 import { useNetworkProvider } from 'hooks';
+import { addressIsValid, isContract } from 'lib';
 import { SmartContractDispatchTypeEnum } from 'types';
 
 export const useUpdateDeployedContractDetails = () => {

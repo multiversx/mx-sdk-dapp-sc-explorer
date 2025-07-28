@@ -5,8 +5,6 @@ import {
   faCircleNotch
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ICode, NativeSerializer } from 'lib/sdkCore';
-import { CopyButton } from '@multiversx/sdk-dapp/UI/CopyButton';
 import classNames from 'classnames';
 import { Formik, Form } from 'formik';
 import { lazy, mixed, object } from 'yup';
@@ -24,6 +22,8 @@ import {
   getDefinition
 } from 'helpers';
 import { withStyles } from 'hocs/withStyles';
+import { MvxCopyButton } from 'lib';
+import { ICode, NativeSerializer } from 'lib/sdkCore';
 import {
   FormikAbiType,
   DeployUpgradeFileFormUIType,
@@ -240,7 +240,7 @@ export const DeployUpgradeFileFormComponent = (
                 </h6>
                 <div className={classNames(globalStyles?.codeBlock)}>
                   <div className={classNames(globalStyles?.buttonHolder)}>
-                    <CopyButton
+                    <MvxCopyButton
                       text={values[
                         DeployUpgradeFileFormikFieldsEnum.wasmFileContent
                       ].toString()}

@@ -1,2 +1,8 @@
+export { isContract } from '@multiversx/sdk-dapp/out/utils/validation/isContract';
 export { isStringBase64 } from '@multiversx/sdk-dapp/out/utils/decoders/base64Utils';
+export { addressIsValid } from '@multiversx/sdk-dapp/out/utils/validation/addressIsValid';
+export { explorerUrlBuilder } from '@multiversx/sdk-dapp/out/utils/transactions/explorerUrlBuilder';
+export { getHumanReadableTimeFormat } from '@multiversx/sdk-dapp/out/utils/transactions/getHumanReadableTimeFormat';
 export { getEgldLabel } from '@multiversx/sdk-dapp/out/methods/network/getEgldLabel';
+export { getAccountProvider } from '@multiversx/sdk-dapp/out/providers/helpers/accountProvider';
+export { getShardText } from '@multiversx/sdk-dapp/out/utils/transactions/getInterpretedTransaction/helpers/getShardText';

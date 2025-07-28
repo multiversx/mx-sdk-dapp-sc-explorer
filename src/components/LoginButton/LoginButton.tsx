@@ -1,14 +1,11 @@
 import React from 'react';
 import { faCopy, faBolt, faPowerOff } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { CopyButton } from '@multiversx/sdk-dapp/UI/CopyButton';
-import { Trim } from '@multiversx/sdk-dapp/UI/Trim';
-import { isWindowAvailable } from '@multiversx/sdk-dapp/utils/isWindowAvailable';
-import { logout } from '@multiversx/sdk-dapp/utils/logout';
 import classNames from 'classnames';
 
 import { useSCExplorerContext, useUserActionDispatch } from 'contexts';
 import { withStyles } from 'hocs/withStyles';
+import { getAccountProvider, MvxCopyButton, MvxTrim } from 'lib';
 import { UserActionDispatchTypeEnum, LoginButtonUIType } from 'types';
 
 export const LoginButtonComponent = (props: LoginButtonUIType) => {
@@ -16,6 +13,8 @@ export const LoginButtonComponent = (props: LoginButtonUIType) => {
   const { isLoggedIn, address } = accountInfo;
   const { className, globalStyles, styles } = props;
   const userActionDispatch = useUserActionDispatch();
+
+  const provider = getAccountProvider();
 
   const {
     copyIcon = faCopy,
@@ -30,16 +29,16 @@ export const LoginButtonComponent = (props: LoginButtonUIType) => {
     });
   };
 
-  const onDisconnectClick = () => {
-    logout(isWindowAvailable() ? window.location.href : '/');
+  const onDisconnectClick = async () => {
+    await provider.logout();
   };
 
   return (
     <>
       {Boolean(address && isLoggedIn) ? (
         <div className={classNames(styles?.connectedWrapper)}>
-          <Trim text={address} />
-          <CopyButton text={address} copyIcon={copyIcon} />
+          <MvxTrim text={address} />
+          <MvxCopyButton text={address} copyIcon={copyIcon} />
           <button
             type='button'
             className={classNames(globalStyles?.button, styles?.buttonLogout)}
