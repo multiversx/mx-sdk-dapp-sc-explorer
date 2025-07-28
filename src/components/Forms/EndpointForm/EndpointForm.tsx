@@ -6,7 +6,7 @@ import {
   faTriangleExclamation
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { NativeSerializer } from '@multiversx/sdk-core/out';
+import { NativeSerializer } from 'lib/sdkCore';
 import { CopyButton } from '@multiversx/sdk-dapp/UI/CopyButton';
 import { Trim } from '@multiversx/sdk-dapp/UI/Trim';
 import classNames from 'classnames';

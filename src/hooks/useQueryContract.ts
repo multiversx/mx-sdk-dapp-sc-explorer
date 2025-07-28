@@ -2,7 +2,7 @@ import {
   Address,
   QueryArguments,
   SmartContractQueryResponse
-} from '@multiversx/sdk-core/out';
+} from 'lib/sdkCore';
 import { ContractQueryRequest } from '@multiversx/sdk-core/out/networkProviders/contractQueryRequest';
 
 import { useSCExplorerContext } from 'contexts';

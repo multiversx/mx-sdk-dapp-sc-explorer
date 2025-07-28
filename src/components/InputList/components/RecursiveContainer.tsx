@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Type } from '@multiversx/sdk-core/out';
+import { Type } from 'lib/sdkCore';
 import classNames from 'classnames';
 
 import { DefinitionsTooltip } from 'components';

@@ -1,4 +1,4 @@
-import { CustomType } from '@multiversx/sdk-core/out';
+import { CustomType } from 'lib/sdkCore';
 import { UserInterfaceType } from 'types';
 
 export interface ContractTypingsUIType extends UserInterfaceType {}

@@ -1,8 +1,4 @@
-import {
-  EndpointDefinition,
-  TypedValue,
-  ICode
-} from '@multiversx/sdk-core/out';
+import { EndpointDefinition, TypedValue, ICode } from 'lib/sdkCore';
 import { FormikProps } from 'formik';
 import {
   UserInterfaceType,

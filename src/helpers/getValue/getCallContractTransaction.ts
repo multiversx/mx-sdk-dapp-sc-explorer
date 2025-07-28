@@ -4,7 +4,7 @@ import {
   Token,
   TransactionsFactoryConfig,
   SmartContractTransactionsFactory
-} from '@multiversx/sdk-core/out';
+} from 'lib/sdkCore';
 import {
   EsdtEnumType,
   NftEnumType

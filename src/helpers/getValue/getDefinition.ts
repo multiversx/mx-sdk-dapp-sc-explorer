@@ -1,4 +1,4 @@
-import { AbiRegistry } from '@multiversx/sdk-core/out';
+import { AbiRegistry } from 'lib/sdkCore';
 
 export const getDefinition = ({
   abiRegistry,

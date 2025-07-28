@@ -1,4 +1,4 @@
-import { Transaction } from '@multiversx/sdk-core/out';
+import { Transaction } from 'lib/sdkCore';
 import { EXTRA_GAS_LIMIT_GUARDED_TX } from '@multiversx/sdk-dapp/constants/index';
 import BigNumber from 'bignumber.js';
 

@@ -3,7 +3,7 @@ import {
   SmartContractTransactionsFactory,
   TransactionsFactoryConfig,
   ContractDeployInput
-} from '@multiversx/sdk-core/out';
+} from 'lib/sdkCore';
 import { getChainID } from '@multiversx/sdk-dapp/utils/network';
 
 import { SC_DEPLOY_GAS_LIMIT } from 'constants/general';

@@ -28,7 +28,7 @@ import {
   U8Type,
   U8Value,
   TypeMapper
-} from '@multiversx/sdk-core/out';
+} from 'lib/sdkCore';
 import { addressIsValid } from '@multiversx/sdk-dapp/utils/account/addressIsValid';
 
 // based on NativeSerializer, keep basic validation/error details before passing through to the NativeSerializer handler

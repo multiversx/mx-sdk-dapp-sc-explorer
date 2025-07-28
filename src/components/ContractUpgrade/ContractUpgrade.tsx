@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { NativeSerializer, ICode } from '@multiversx/sdk-core/out';
+import { NativeSerializer, ICode } from 'lib/sdkCore';
 import classNames from 'classnames';
 
 import {

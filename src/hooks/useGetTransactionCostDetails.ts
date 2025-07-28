@@ -3,7 +3,7 @@ import {
   ICode,
   Transaction,
   TypedValue
-} from '@multiversx/sdk-core/out';
+} from 'lib/sdkCore';
 import {
   SC_GAS_LIMIT,
   SC_DEPLOY_GAS_LIMIT,

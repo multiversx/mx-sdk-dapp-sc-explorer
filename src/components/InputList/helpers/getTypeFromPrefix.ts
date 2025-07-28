@@ -1,4 +1,4 @@
-import { TypeExpressionParser, Type } from '@multiversx/sdk-core/out';
+import { TypeExpressionParser, Type } from 'lib/sdkCore';
 import { TYPE_REGEX } from 'constants/general';
 
 export const getTypeFromPrefix = (

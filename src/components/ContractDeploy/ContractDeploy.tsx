@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { NativeSerializer, ICode } from '@multiversx/sdk-core/out';
+import { NativeSerializer, ICode } from 'lib/sdkCore';
 import classNames from 'classnames';
 
 import {

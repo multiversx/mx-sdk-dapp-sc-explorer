@@ -1,4 +1,4 @@
-import { ICode } from '@multiversx/sdk-core/out';
+import { ICode } from 'lib/sdkCore';
 import { UserInterfaceType } from 'types';
 
 export interface DeployUpgradeFileFormUIType extends UserInterfaceType {

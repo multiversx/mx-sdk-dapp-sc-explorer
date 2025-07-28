@@ -2,7 +2,7 @@ import {
   DevnetEntrypoint,
   MainnetEntrypoint,
   TestnetEntrypoint
-} from '@multiversx/sdk-core/out';
+} from 'lib/sdkCore';
 import { EnvironmentsEnum } from '@multiversx/sdk-dapp/types';
 import { NetworkType } from 'types';
 

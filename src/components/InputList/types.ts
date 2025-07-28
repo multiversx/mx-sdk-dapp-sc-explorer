@@ -3,7 +3,7 @@ import {
   Type,
   EndpointDefinition,
   EndpointParameterDefinition
-} from '@multiversx/sdk-core/out';
+} from 'lib/sdkCore';
 import { FormikProps } from 'formik';
 import { UserInterfaceType } from 'types';
 

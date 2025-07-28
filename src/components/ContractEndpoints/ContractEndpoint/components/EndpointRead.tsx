@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { NativeSerializer } from '@multiversx/sdk-core/out';
+import { NativeSerializer } from 'lib/sdkCore';
 
 import { EndpointForm } from 'components';
 import { useSCExplorerContext } from 'contexts';

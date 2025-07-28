@@ -1,4 +1,4 @@
-import { TypedValue, AbiRegistry, ICode } from '@multiversx/sdk-core/out';
+import { TypedValue, AbiRegistry, ICode } from 'lib/sdkCore';
 import {
   EsdtEnumType,
   NftEnumType

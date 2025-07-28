@@ -5,7 +5,7 @@ import {
   faCircleNotch
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ICode, NativeSerializer } from '@multiversx/sdk-core/out';
+import { ICode, NativeSerializer } from 'lib/sdkCore';
 import { CopyButton } from '@multiversx/sdk-dapp/UI/CopyButton';
 import classNames from 'classnames';
 import { Formik, Form } from 'formik';

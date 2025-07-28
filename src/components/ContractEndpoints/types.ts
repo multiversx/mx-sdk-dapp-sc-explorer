@@ -1,4 +1,4 @@
-import { EndpointDefinition } from '@multiversx/sdk-core/out';
+import { EndpointDefinition } from 'lib/sdkCore';
 import { UserInterfaceType, ContractEndpointMutabilityEnum } from 'types';
 
 export interface ContractEndpointsUIType extends UserInterfaceType {
