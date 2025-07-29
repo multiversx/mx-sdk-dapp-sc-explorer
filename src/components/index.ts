@@ -7,6 +7,7 @@ export { CollapsibleCard, CollapsibleArrows } from './CollapsibleCard';
 export { DocsPanel } from './DocsPanel';
 export { Dropzone } from './Dropzone';
 export { FieldList } from './FieldList';
+export { FormatAmount } from './FormatAmount';
 export { InputList } from './InputList';
 export { Layout } from './Layout';
 export { LoginButton, LoginButtonWrapper } from './LoginButton';

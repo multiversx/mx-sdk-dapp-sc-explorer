@@ -4,14 +4,10 @@ export {
   DevnetEntrypoint,
   TestnetEntrypoint,
   MainnetEntrypoint,
-  ContractDeployInput,
-  ContractUpgradeInput,
   EndpointDefinition,
   EndpointParameterDefinition,
   FieldDefinition,
-  ICode,
   NativeSerializer,
-  QueryArguments,
   SmartContractQueryResponse,
   SmartContractTransactionsFactory,
   Token,
@@ -20,4 +16,11 @@ export {
   TransactionsFactoryConfig,
   TypedValue,
   TypeExpressionParser
+} from '@multiversx/sdk-core/out';
+
+export type {
+  ContractDeployInput,
+  ContractUpgradeInput,
+  ICode,
+  QueryArguments
 } from '@multiversx/sdk-core/out';

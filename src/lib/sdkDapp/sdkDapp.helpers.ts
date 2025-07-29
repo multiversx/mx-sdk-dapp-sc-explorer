@@ -8,6 +8,10 @@ export { getAccountProvider } from '@multiversx/sdk-dapp/out/providers/helpers/a
 export { getShardText } from '@multiversx/sdk-dapp/out/utils/transactions/getInterpretedTransaction/helpers/getShardText';
 export { initApp } from '@multiversx/sdk-dapp/out/methods/initApp/initApp';
 export { refreshAccount } from '@multiversx/sdk-dapp/out/utils/account/refreshAccount';
+
+export { useGetNetworkConfig } from '@multiversx/sdk-dapp/out/react/network/useGetNetworkConfig';
+
+export { FormatAmountController } from '@multiversx/sdk-dapp/out/controllers/FormatAmountController';
 export { TransactionManager } from '@multiversx/sdk-dapp/out/managers/TransactionManager';
 export { UnlockPanelManager } from '@multiversx/sdk-dapp/out/managers/UnlockPanelManager';
 export { LogoutManager } from '@multiversx/sdk-dapp/out/managers/LogoutManager/LogoutManager';

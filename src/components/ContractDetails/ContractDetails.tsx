@@ -17,6 +17,7 @@ import classNames from 'classnames';
 import MultiversXSymbol from 'assets/img/symbol.svg';
 import {
   CardItem,
+  FormatAmount,
   PanelHeader,
   PropertyPill,
   ScAddressIcon,
@@ -29,7 +30,6 @@ import {
   getHumanReadableTimeFormat,
   MvxCopyButton,
   MvxExplorerLink,
-  MvxFormatAmount,
   MvxTransactionAge,
   MvxTrim
 } from 'lib';
@@ -61,7 +61,7 @@ export const ContractDetailsComponent = ({
       <PanelHeader
         extraButtons={
           <MvxExplorerLink
-            page={explorerUrlBuilder.accountDetails(
+            link={explorerUrlBuilder.accountDetails(
               deployedContractDetails?.address ?? ''
             )}
             className={classNames(
@@ -101,7 +101,7 @@ export const ContractDetailsComponent = ({
           )}
           {deployedContractDetails?.balance !== undefined && (
             <CardItem title='Balance' customIcon={<MultiversXSymbol />}>
-              <MvxFormatAmount value={deployedContractDetails.balance} />
+              <FormatAmount value={deployedContractDetails.balance} />
             </CardItem>
           )}
           {deployedContractDetails?.shard !== undefined && (
@@ -127,9 +127,7 @@ export const ContractDetailsComponent = ({
             )}
             {deployedContractDetails?.developerReward !== undefined && (
               <CardItem title='Rewards' icon={faDollarSign}>
-                <MvxFormatAmount
-                  value={deployedContractDetails.developerReward}
-                />
+                <FormatAmount value={deployedContractDetails.developerReward} />
               </CardItem>
             )}
             {deployedContractDetails?.ownerAddress && (
@@ -143,7 +141,7 @@ export const ContractDetailsComponent = ({
                   copyIcon={copyIcon}
                 />
                 <MvxExplorerLink
-                  page={explorerUrlBuilder.accountDetails(
+                  link={explorerUrlBuilder.accountDetails(
                     deployedContractDetails.ownerAddress
                   )}
                 />
@@ -155,7 +153,9 @@ export const ContractDetailsComponent = ({
                 icon={faClock}
                 className={classNames(styles?.contractDetailsWrapContainer)}
               >
-                <MvxTransactionAge value={deployedContractDetails.deployedAt} />
+                <MvxTransactionAge
+                  age={String(deployedContractDetails.deployedAt)}
+                />
                 &nbsp;ago &nbsp;
                 <span>
                   (
