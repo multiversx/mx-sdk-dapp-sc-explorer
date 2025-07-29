@@ -1,11 +1,11 @@
 import React, { memo, useEffect, useState } from 'react';
-import { Loader } from '@multiversx/sdk-dapp/UI/Loader';
 import classNames from 'classnames';
 import { Tab } from 'react-bootstrap';
 
 import { LoginModal, LoginButton } from 'components';
 import { useSCExplorerContext } from 'contexts';
 import { withStyles } from 'hocs/withStyles';
+import { MvxPreloader } from 'lib';
 import { SCExplorerType, VerifiedContractTabsEnum } from 'types';
 
 import { LayoutPanels } from './LayoutPanels';
@@ -37,7 +37,7 @@ export const LayoutComponent = (props: SCExplorerType) => {
     activeSection && setActiveSection ? activeSection : activeKey;
 
   if (!(canView || canLoadAbi)) {
-    return loaderComponent ? <>{loaderComponent}</> : <Loader />;
+    return loaderComponent ? <>{loaderComponent}</> : <MvxPreloader />;
   }
 
   return (
