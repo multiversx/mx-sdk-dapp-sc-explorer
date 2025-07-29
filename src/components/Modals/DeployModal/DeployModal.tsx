@@ -1,16 +1,11 @@
 import React, { useState } from 'react';
-import {
-  removeAllSignedTransactions,
-  removeAllTransactionsToSign
-} from '@multiversx/sdk-dapp/services/transactions/clearTransactions';
-import { sendTransactions } from '@multiversx/sdk-dapp/services/transactions/sendTransactions';
-import { refreshAccount } from '@multiversx/sdk-dapp/utils/account/refreshAccount';
 
 import { InteractionModalForm, TransactionPanel } from 'components';
 import { useUserActionDispatch, useSCExplorerContext } from 'contexts';
-import { getDeployTransaction } from 'helpers';
+import { getDeployTransaction, sendAndTrackTransactions } from 'helpers';
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { useTrackTransaction } from 'hooks';
+import { refreshAccount } from 'lib';
 import {
   UserActionDispatchTypeEnum,
   DeployUpgradeModalInitialValuesType
@@ -51,8 +46,7 @@ export const DeployModalComponent = ({ styles }: WithStylesImportType) => {
       setIsLoading(true);
       setSessionId(undefined);
       const { upgradeable, readable, payable, payableBySc, gasLimit } = values;
-      removeAllSignedTransactions();
-      removeAllTransactionsToSign();
+
       if (code) {
         const transaction = getDeployTransaction({
           callerAddress,
@@ -73,20 +67,25 @@ export const DeployModalComponent = ({ styles }: WithStylesImportType) => {
         }
 
         await refreshAccount();
-        const { error, sessionId: deploySessionId } = await sendTransactions({
-          transactions: [transaction],
-          transactionsDisplayInfo: {
-            processingMessage: 'Deploying Smart Contract',
-            errorMessage:
-              'An error has occured during Smart Contract Deployment',
-            successMessage: 'Deployment successful'
+        try {
+          const deploySessionId = await sendAndTrackTransactions({
+            transactions: [transaction],
+            options: {
+              transactionsDisplayInfo: {
+                processingMessage: 'Deploying Smart Contract',
+                errorMessage:
+                  'An error has occured during Smart Contract Deployment',
+                successMessage: 'Deployment successful'
+              }
+            }
+          });
+          if (deploySessionId) {
+            setSessionId(deploySessionId);
           }
-        });
-        if (deploySessionId) {
-          setSessionId(deploySessionId);
-        }
-        if (error) {
-          setGeneralError(String(error));
+        } catch (error) {
+          if (typeof error === 'string' || error instanceof String) {
+            setGeneralError(String(error));
+          }
         }
       } else {
         setGeneralError('Missing WASM Code');

@@ -1,16 +1,11 @@
 import React, { useState } from 'react';
-import {
-  removeAllSignedTransactions,
-  removeAllTransactionsToSign
-} from '@multiversx/sdk-dapp/services/transactions/clearTransactions';
-import { sendTransactions } from '@multiversx/sdk-dapp/services/transactions/sendTransactions';
-import { refreshAccount } from '@multiversx/sdk-dapp/utils/account/refreshAccount';
 
 import { InteractionModalForm, TransactionPanel } from 'components';
 import { useUserActionDispatch, useSCExplorerContext } from 'contexts';
-import { getUpgradeTransaction } from 'helpers';
+import { getUpgradeTransaction, sendAndTrackTransactions } from 'helpers';
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { useTrackTransaction } from 'hooks';
+import { refreshAccount } from 'lib';
 import {
   UserActionDispatchTypeEnum,
   DeployUpgradeModalInitialValuesType
@@ -53,8 +48,6 @@ export const UpgradeModalComponent = ({ styles }: WithStylesImportType) => {
       setSessionId(undefined);
       const { upgradeable, readable, payable, payableBySc, gasLimit } = values;
       if (code && contractAddress && deployedContractDetails) {
-        removeAllSignedTransactions();
-        removeAllTransactionsToSign();
         const transaction = getUpgradeTransaction({
           callerAddress,
           contractAddress,
@@ -75,19 +68,25 @@ export const UpgradeModalComponent = ({ styles }: WithStylesImportType) => {
         }
 
         await refreshAccount();
-        const { error, sessionId: upgradeSessionId } = await sendTransactions({
-          transactions: [transaction],
-          transactionsDisplayInfo: {
-            processingMessage: 'Upgrading Smart Contract',
-            errorMessage: 'An error has occured during Smart Contract Upgrade',
-            successMessage: 'Upgrade successful'
+        try {
+          const upgradeSessionId = await sendAndTrackTransactions({
+            transactions: [transaction],
+            options: {
+              transactionsDisplayInfo: {
+                processingMessage: 'Upgrading Smart Contract',
+                errorMessage:
+                  'An error has occured during Smart Contract Upgrade',
+                successMessage: 'Upgrade successful'
+              }
+            }
+          });
+          if (upgradeSessionId) {
+            setSessionId(upgradeSessionId);
           }
-        });
-        if (upgradeSessionId) {
-          setSessionId(upgradeSessionId);
-        }
-        if (error) {
-          setGeneralError(String(error));
+        } catch (error) {
+          if (typeof error === 'string' || error instanceof String) {
+            setGeneralError(String(error));
+          }
         }
       } else {
         setGeneralError(

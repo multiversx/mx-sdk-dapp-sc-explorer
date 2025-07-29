@@ -2,8 +2,9 @@ export {
   MvxCopyButton,
   MvxExplorerLink,
   MvxFormatAmount,
+  MvxPreloader,
+  MvxTransactionAge,
   MvxTransactionsTable,
-  MvxUnlockButton,
   MvxTrim,
-  MvxTransactionAge
+  MvxUnlockButton
 } from '@multiversx/sdk-dapp-ui/react';

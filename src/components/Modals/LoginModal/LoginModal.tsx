@@ -7,12 +7,13 @@ import {
   WalletConnectLoginButton,
   CrossWindowLoginButton
 } from '@multiversx/sdk-dapp/UI';
-import { isWindowAvailable } from '@multiversx/sdk-dapp/utils/isWindowAvailable';
+
 import classNames from 'classnames';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 import { useUserActionDispatch, useSCExplorerContext } from 'contexts';
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
+import { isWindowAvailable } from 'lib';
 import { UserActionDispatchTypeEnum } from 'types';
 
 import DeFiWallet from './assets/extension-defi-wallet.svg';

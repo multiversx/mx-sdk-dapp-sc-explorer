@@ -1,11 +1,12 @@
-export {
+export type {
   EnvironmentsEnum,
   TransactionServerStatusesEnum
 } from '@multiversx/sdk-dapp/out/types/enums.types';
-export { AccountType } from '@multiversx/sdk-dapp/out/types/account.types';
-export { OnProviderLoginType } from '@multiversx/sdk-dapp/out/types/login.types';
-export {
+export type { AccountType } from '@multiversx/sdk-dapp/out/types/account.types';
+export type { OnProviderLoginType } from '@multiversx/sdk-dapp/out/types/login.types';
+export type {
   EsdtEnumType,
   NftEnumType
 } from '@multiversx/sdk-dapp/out/types/tokens.types';
-export { SignedTransactionType } from '@multiversx/sdk-dapp/out/types/transactions.types';
+export type { SignedTransactionType } from '@multiversx/sdk-dapp/out/types/transactions.types';
+export type { TransactionsDisplayInfoType } from '@multiversx/sdk-dapp/out/types/transactions.types';

@@ -6,3 +6,6 @@ export { getHumanReadableTimeFormat } from '@multiversx/sdk-dapp/out/utils/trans
 export { getEgldLabel } from '@multiversx/sdk-dapp/out/methods/network/getEgldLabel';
 export { getAccountProvider } from '@multiversx/sdk-dapp/out/providers/helpers/accountProvider';
 export { getShardText } from '@multiversx/sdk-dapp/out/utils/transactions/getInterpretedTransaction/helpers/getShardText';
+export { initApp } from '@multiversx/sdk-dapp/out/methods/initApp/initApp';
+export { refreshAccount } from '@multiversx/sdk-dapp/out/utils/account/refreshAccount';
+export { TransactionManager } from '@multiversx/sdk-dapp/out/managers/TransactionManager';
