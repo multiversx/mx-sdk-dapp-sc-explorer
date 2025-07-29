@@ -3,16 +3,21 @@ import { faCopy, faBolt, faPowerOff } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
-import { useSCExplorerContext, useUserActionDispatch } from 'contexts';
+import { useSCExplorerContext } from 'contexts';
 import { withStyles } from 'hocs/withStyles';
-import { getAccountProvider, MvxCopyButton, MvxTrim } from 'lib';
-import { UserActionDispatchTypeEnum, LoginButtonUIType } from 'types';
+import {
+  getAccountProvider,
+  MvxCopyButton,
+  MvxTrim,
+  ProviderTypeEnum,
+  UnlockPanelManager
+} from 'lib';
+import { LoginButtonUIType } from 'types';
 
 export const LoginButtonComponent = (props: LoginButtonUIType) => {
   const { customClassNames, icons, accountInfo } = useSCExplorerContext();
   const { isLoggedIn, address } = accountInfo;
   const { className, globalStyles, styles } = props;
-  const userActionDispatch = useUserActionDispatch();
 
   const provider = getAccountProvider();
 
@@ -22,11 +27,26 @@ export const LoginButtonComponent = (props: LoginButtonUIType) => {
     disconnectIcon = faPowerOff
   } = icons ?? {};
 
-  const onOpenModalClick = () => {
-    userActionDispatch({
-      type: UserActionDispatchTypeEnum.setLoginModalState,
-      loginModalState: { loginModalOpen: true }
-    });
+  const loginHandler = () => {
+    // NOT USED. disable autologout
+    // LogoutManager.getInstance().stop();
+  };
+
+  const allowedProviders = [
+    ProviderTypeEnum.ledger,
+    ProviderTypeEnum.webview,
+    ProviderTypeEnum.extension,
+    ProviderTypeEnum.crossWindow,
+    ProviderTypeEnum.walletConnect
+  ];
+  const unlockPanelManager = UnlockPanelManager.init({
+    loginHandler,
+    allowedProviders
+  });
+
+  const handleOnClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    unlockPanelManager.openUnlockPanel();
   };
 
   const onDisconnectClick = async () => {
@@ -54,7 +74,7 @@ export const LoginButtonComponent = (props: LoginButtonUIType) => {
           </div>
           <button
             type='button'
-            onClick={onOpenModalClick}
+            onClick={handleOnClick}
             className={classNames(
               className,
               globalStyles?.button,

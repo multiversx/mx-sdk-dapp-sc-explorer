@@ -2,7 +2,7 @@ import React, { memo, useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { Tab } from 'react-bootstrap';
 
-import { LoginModal, LoginButton } from 'components';
+import { LoginButton } from 'components';
 import { useSCExplorerContext } from 'contexts';
 import { withStyles } from 'hocs/withStyles';
 import { MvxPreloader } from 'lib';
@@ -42,7 +42,6 @@ export const LayoutComponent = (props: SCExplorerType) => {
 
   return (
     <div className={classNames(className, styles?.layout)}>
-      {canMutate && <LoginModal />}
       <div className={classNames(styles?.layoutHeader)}>
         <div className={classNames(styles?.layoutHeaderTitle)}>
           Smart Contract Explorer{' '}

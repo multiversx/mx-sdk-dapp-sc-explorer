@@ -1,7 +1,9 @@
-export type {
+export {
   EnvironmentsEnum,
   TransactionServerStatusesEnum
 } from '@multiversx/sdk-dapp/out/types/enums.types';
+export { ProviderTypeEnum } from '@multiversx/sdk-dapp/out/providers/types/providerFactory.types';
+
 export type { AccountType } from '@multiversx/sdk-dapp/out/types/account.types';
 export type { OnProviderLoginType } from '@multiversx/sdk-dapp/out/types/login.types';
 export type {

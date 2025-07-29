@@ -9,3 +9,5 @@ export { getShardText } from '@multiversx/sdk-dapp/out/utils/transactions/getInt
 export { initApp } from '@multiversx/sdk-dapp/out/methods/initApp/initApp';
 export { refreshAccount } from '@multiversx/sdk-dapp/out/utils/account/refreshAccount';
 export { TransactionManager } from '@multiversx/sdk-dapp/out/managers/TransactionManager';
+export { UnlockPanelManager } from '@multiversx/sdk-dapp/out/managers/UnlockPanelManager';
+export { LogoutManager } from '@multiversx/sdk-dapp/out/managers/LogoutManager/LogoutManager';
