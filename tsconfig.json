@@ -12,7 +12,7 @@
     "forceConsistentCasingInFileNames": true,
     "rootDir": "./src",
     "baseUrl": "./src",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "noFallthroughCasesInSwitch": true,
     "esModuleInterop": true,
     "noImplicitReturns": true,

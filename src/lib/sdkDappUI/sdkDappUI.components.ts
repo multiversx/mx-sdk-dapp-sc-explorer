@@ -7,4 +7,4 @@ export {
   MvxTransactionsTable,
   MvxTrim,
   MvxUnlockButton
-} from '@multiversx/sdk-dapp-ui/dist/react/components';
+} from '@multiversx/sdk-dapp-ui/react';
