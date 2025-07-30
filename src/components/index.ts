@@ -6,6 +6,7 @@ export { Card } from './Card';
 export { CollapsibleCard, CollapsibleArrows } from './CollapsibleCard';
 export { DocsPanel } from './DocsPanel';
 export { Dropzone } from './Dropzone';
+export { ExplorerLink } from './ExplorerLink';
 export { FieldList } from './FieldList';
 export { FormatAmount } from './FormatAmount';
 export { InputList } from './InputList';
