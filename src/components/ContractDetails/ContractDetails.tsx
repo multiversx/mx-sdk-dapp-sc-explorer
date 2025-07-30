@@ -17,6 +17,7 @@ import classNames from 'classnames';
 import MultiversXSymbol from 'assets/img/symbol.svg';
 import {
   CardItem,
+  ExplorerLink,
   FormatAmount,
   PanelHeader,
   PropertyPill,
@@ -29,7 +30,6 @@ import {
   explorerUrlBuilder,
   getHumanReadableTimeFormat,
   MvxCopyButton,
-  MvxExplorerLink,
   MvxTransactionAge,
   MvxTrim
 } from 'lib';
@@ -60,8 +60,8 @@ export const ContractDetailsComponent = ({
     >
       <PanelHeader
         extraButtons={
-          <MvxExplorerLink
-            link={explorerUrlBuilder.accountDetails(
+          <ExplorerLink
+            page={explorerUrlBuilder.accountDetails(
               deployedContractDetails?.address ?? ''
             )}
             className={classNames(
@@ -71,7 +71,7 @@ export const ContractDetailsComponent = ({
             )}
           >
             View in Explorer <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
-          </MvxExplorerLink>
+          </ExplorerLink>
         }
       >
         Contract Details
@@ -140,8 +140,8 @@ export const ContractDetailsComponent = ({
                   text={deployedContractDetails.ownerAddress}
                   copyIcon={copyIcon}
                 />
-                <MvxExplorerLink
-                  link={explorerUrlBuilder.accountDetails(
+                <ExplorerLink
+                  page={explorerUrlBuilder.accountDetails(
                     deployedContractDetails.ownerAddress
                   )}
                 />
