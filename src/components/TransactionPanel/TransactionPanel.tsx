@@ -17,8 +17,10 @@ import {
   MvxCopyButton,
   MvxTrim,
   TransactionServerStatusesEnum,
-  TransactionEvent
+  TransactionEvent,
+  isContract
 } from 'lib';
+import { Address } from 'lib/sdkCore';
 import { TransactionPanelUIType, TransactionEventIdentifierEnum } from 'types';
 
 export const TransactionPanelComponent = ({
@@ -65,8 +67,24 @@ export const TransactionPanelComponent = ({
               (event) =>
                 event?.identifier === TransactionEventIdentifierEnum.SCDeploy
             );
+
+            const topicAddress = scDeployEvent?.topics?.[0];
+            if (topicAddress) {
+              const formattedTopicAddress = new Address(
+                topicAddress.hex()
+              ).toBech32();
+              if (isContract(formattedTopicAddress)) {
+                setDeployedContractAddress(formattedTopicAddress);
+                await updateDeployedContractDetails({
+                  address: formattedTopicAddress
+                });
+                setIsTxStatusLoading(false);
+                return;
+              }
+            }
+
             const deployAddress = scDeployEvent?.address?.bech32();
-            if (deployAddress) {
+            if (deployAddress && isContract(deployAddress)) {
               setDeployedContractAddress(deployAddress);
               await updateDeployedContractDetails({
                 address: deployAddress
