@@ -9,7 +9,7 @@ import {
 
 import { GetDeployTransactionType } from 'types';
 
-export const getDeployTransaction = ({
+export const getDeployTransaction = async ({
   callerAddress,
   abiRegistry,
   args,
@@ -40,7 +40,10 @@ export const getDeployTransaction = ({
           isPayable: metadata.payable,
           isPayableBySmartContract: metadata.payableBySc
         } as ContractDeployInput;
-        const transaction = factory.createTransactionForDeploy(caller, options);
+        const transaction = await factory.createTransactionForDeploy(
+          caller,
+          options
+        );
 
         if (nonce) {
           transaction.nonce = nonce;

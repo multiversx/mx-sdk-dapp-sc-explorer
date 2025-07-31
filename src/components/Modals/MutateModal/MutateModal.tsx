@@ -47,7 +47,7 @@ export const MutateModalComponent = ({ styles }: WithStylesImportType) => {
       setSessionId(undefined);
       const { tokens, gasLimit } = values;
       if (contractAddress && deployedContractDetails) {
-        const contractTransaction = getCallContractTransaction({
+        const contractTransaction = await getCallContractTransaction({
           contractAddress,
           callerAddress,
           abiRegistry,

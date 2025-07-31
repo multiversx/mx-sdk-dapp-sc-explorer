@@ -8,7 +8,7 @@ import {
 } from 'lib/sdkCore';
 import { GetUpgradeTransactionType } from 'types';
 
-export const getUpgradeTransaction = ({
+export const getUpgradeTransaction = async ({
   callerAddress,
   contractAddress,
   abiRegistry,
@@ -42,7 +42,7 @@ export const getUpgradeTransaction = ({
           isPayable: metadata.payable,
           isPayableBySmartContract: metadata.payableBySc
         } as ContractUpgradeInput;
-        const transaction = factory.createTransactionForUpgrade(
+        const transaction = await factory.createTransactionForUpgrade(
           caller,
           options
         );

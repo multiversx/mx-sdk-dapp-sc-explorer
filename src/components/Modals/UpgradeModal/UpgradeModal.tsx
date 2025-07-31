@@ -48,7 +48,7 @@ export const UpgradeModalComponent = ({ styles }: WithStylesImportType) => {
       setSessionId(undefined);
       const { upgradeable, readable, payable, payableBySc, gasLimit } = values;
       if (code && contractAddress && deployedContractDetails) {
-        const transaction = getUpgradeTransaction({
+        const transaction = await getUpgradeTransaction({
           callerAddress,
           contractAddress,
           abiRegistry,

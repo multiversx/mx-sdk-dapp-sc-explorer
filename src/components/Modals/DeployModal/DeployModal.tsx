@@ -48,7 +48,7 @@ export const DeployModalComponent = ({ styles }: WithStylesImportType) => {
       const { upgradeable, readable, payable, payableBySc, gasLimit } = values;
 
       if (code) {
-        const transaction = getDeployTransaction({
+        const transaction = await getDeployTransaction({
           callerAddress,
           abiRegistry,
           args,

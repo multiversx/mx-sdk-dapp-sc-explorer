@@ -52,7 +52,7 @@ const getTokenTransfers = ({
   return [];
 };
 
-export const getCallContractTransaction = ({
+export const getCallContractTransaction = async ({
   contractAddress,
   callerAddress,
   abiRegistry,
@@ -77,7 +77,7 @@ export const getCallContractTransaction = ({
       if (factory) {
         // Accept only native EGLD, Fungible Tokens and metaESDTs for now
         const tokenTransfers = getTokenTransfers({ tokens });
-        const transaction = factory.createTransactionForExecute(caller, {
+        const transaction = await factory.createTransactionForExecute(caller, {
           contract: owner,
           gasLimit: BigInt(userGasLimit ?? SC_GAS_LIMIT),
           function: func?.toString() ?? '',
