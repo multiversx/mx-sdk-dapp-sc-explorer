@@ -8,10 +8,8 @@ import { withStyles } from 'hocs/withStyles';
 import {
   AmountSelect,
   AmountInputPropsType,
-  AmountErrorPropsType,
   MaxButtonPropsType,
   OptionType,
-  TokenBalancePropsType,
   TokenSelectPropsType,
   formatAmount,
   stringIsInteger,
@@ -99,19 +97,17 @@ export const AmountSelectInputComponent = ({
     disabled: isInputDisabled
   };
 
-  const amountErrorProps: AmountErrorPropsType = {
+  const amountErrorProps = {
     hasErrors: amountInputProps.isInvalid || tokenSelectProps.isInvalid,
-    error: amountInputProps.error || tokenSelectProps.error
-    // TODO: Check type extend WithClassNameType issues
-    // className: generatedClasses.error,
-    // 'data-testid': amountInputProps.error
-    //   ? `${inputName}Error`
-    //   : `${selectName}Error`
+    error: amountInputProps.error || tokenSelectProps.error,
+    className: generatedClasses.error,
+    'data-testid': amountInputProps.error
+      ? `${inputName}Error`
+      : `${selectName}Error`
   };
 
-  const tokenBalanceProps: TokenBalancePropsType = {
-    // TODO: Check type extend WithClassNameType issues
-    // 'data-testid': `available-${token?.value}`,
+  const tokenBalanceProps = {
+    'data-testid': `available-${token?.value}`,
     'data-value': `${token?.token.balance} ${token?.value}`,
     label: balanceText,
     token: token?.token as OptionType['token'],
@@ -137,7 +133,6 @@ export const AmountSelectInputComponent = ({
     <AmountSelect
       name={inputName}
       label={title}
-      // TODO: Check type extend WithClassNameType issues
       // className={generatedClasses.group}
       wrapperControlsClassName={generatedClasses.wrapper}
       amountErrorProps={amountErrorProps}

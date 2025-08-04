@@ -34,7 +34,7 @@
     "@types/react-syntax-highlighter": "15.5.13",
     "@typescript-eslint/eslint-plugin": "8.38.0",
     "@typescript-eslint/parser": "8.38.0",
-    "axios": "^1.10.0",
+    "axios": "^1.11.0",
     "esbuild": "0.25.8",
     "esbuild-node-externals": "1.18.0",
     "esbuild-plugin-svgr": "1.0.1",
@@ -77,7 +77,7 @@
   "peerDependencies": {
     "@multiversx/sdk-core": "^15.x",
     "@multiversx/sdk-dapp": "^5.x",
-    "axios": "^1.10.0",
+    "axios": "^1.11.0",
     "react": ">=18",
     "react-dom": ">=18"
   },
@@ -89,7 +89,7 @@
     "classnames": "2.3.2"
   },
   "dependencies": {
-    "@multiversx/sdk-dapp-form": "3.x",
+    "@multiversx/sdk-dapp-form": "^3.x",
     "@multiversx/sdk-dapp-ui": "^0.x",
     "@multiversx/sdk-network-providers": "2.9.3",
     "bignumber.js": "9.x",
