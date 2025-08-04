@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[0.0.3-beta.0]](https://github.com/multiversx/mx-sdk-dapp-sc-explorer/pull/27)] - 2025-08-04
+
 - [Migrate to @multiversx/sdk-core v14](https://github.com/multiversx/mx-sdk-dapp-sc-explorer/pull/28)
 
 ## [[0.0.2-beta.2]](https://github.com/multiversx/mx-sdk-dapp-sc-explorer/pull/26)] - 2024-12-04
