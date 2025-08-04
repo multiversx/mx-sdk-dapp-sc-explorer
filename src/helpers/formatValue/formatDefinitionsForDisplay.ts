@@ -1,4 +1,4 @@
-import { FieldDefinition } from '@multiversx/sdk-core/out/smartcontracts';
+import { FieldDefinition } from '@multiversx/sdk-core/out';
 
 export const formatDefinitionsForDisplay = (definitions: FieldDefinition[]) => {
   if (definitions.length === 0) {

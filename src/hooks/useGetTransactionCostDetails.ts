@@ -1,6 +1,6 @@
 import {
   EndpointDefinition,
-  Code,
+  ICode,
   Transaction,
   TypedValue
 } from '@multiversx/sdk-core/out';
@@ -25,7 +25,7 @@ export interface TransactionCostDetailsType {
   isMutate?: boolean;
   args?: TypedValue[];
   endpoint?: EndpointDefinition;
-  code?: Code;
+  code?: ICode;
 }
 
 export const useGetTransactionCostDetails = ({
@@ -38,7 +38,7 @@ export const useGetTransactionCostDetails = ({
 }: TransactionCostDetailsType) => {
   const { accountInfo, smartContract } = useSCExplorerContext();
   const { abiRegistry, contractAddress } = smartContract ?? {};
-  const { address: callerAddress, nonce } = accountInfo;
+  const { address: callerAddress, nonce: accountNonce } = accountInfo;
 
   const getTransactionCost = useGetTransactionCost({ isDeploy });
 
@@ -53,6 +53,7 @@ export const useGetTransactionCostDetails = ({
       : {};
 
   const defaultGasLimit = isMutate ? SC_GAS_LIMIT : SC_DEPLOY_GAS_LIMIT;
+  const nonce = BigInt(accountNonce);
 
   const getTransactionCostDetails = async ({
     tokens

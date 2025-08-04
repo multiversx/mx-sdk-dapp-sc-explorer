@@ -1,4 +1,4 @@
-import { TypedValue, AbiRegistry, Code } from '@multiversx/sdk-core/out';
+import { TypedValue, AbiRegistry, ICode } from '@multiversx/sdk-core/out';
 import {
   EsdtEnumType,
   NftEnumType
@@ -26,7 +26,7 @@ export interface GetInteractionBaseTransactionType {
   abiRegistry?: AbiRegistry;
   args?: TypedValue[];
   userGasLimit?: string | number;
-  nonce?: number;
+  nonce?: bigint;
 }
 
 export interface GetCallContractTransactionType
@@ -38,13 +38,13 @@ export interface GetCallContractTransactionType
 
 export interface GetDeployTransactionType
   extends GetInteractionBaseTransactionType {
-  code: Code;
+  code: ICode;
   metadata: MetadataFieldsInitialValuesType;
 }
 
 export interface GetUpgradeTransactionType
   extends GetInteractionBaseTransactionType {
-  code: Code;
+  code: ICode;
   metadata: MetadataFieldsInitialValuesType;
   contractAddress?: string;
 }

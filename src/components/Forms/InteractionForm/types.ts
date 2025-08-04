@@ -1,4 +1,8 @@
-import { EndpointDefinition, TypedValue, Code } from '@multiversx/sdk-core/out';
+import {
+  EndpointDefinition,
+  TypedValue,
+  ICode
+} from '@multiversx/sdk-core/out';
 import { FormikProps } from 'formik';
 import {
   UserInterfaceType,
@@ -53,7 +57,7 @@ export interface InteractionModalFormUIType extends UserInterfaceType {
 export interface InteractionFormUIType extends InteractionModalFormUIType {
   tokens?: PartialEsdtType[];
   endpoint?: EndpointDefinition;
-  code?: Code;
+  code?: ICode;
   args?: TypedValue[];
 }
 

@@ -26,82 +26,75 @@ export const EndpointOutputComponent = (props: EndpointOutputUIType) => {
           <div className={classNames(globalStyles?.panelContent)}>
             <EndpointDefinitionList definitions={output} />
 
-            {result?.parsedResponse?.values &&
-              result.parsedResponse.values.length > 0 && (
-                <div className={classNames(styles?.endpointOutputResults)}>
-                  <span
-                    className={classNames(styles?.endpointOutputResultsTitle)}
-                  >
-                    Query Result:{' '}
-                  </span>
-                  {result.parsedResponse?.values.map((value, index) => {
-                    const displayValue = value?.valueOf();
-                    if (
-                      displayValue !== null &&
-                      (typeof displayValue === 'object' ||
-                        Array.isArray(displayValue))
-                    ) {
-                      const code = JSON.stringify(
-                        displayValue,
-                        (key, val) => {
-                          try {
-                            if (
-                              typeof val === 'number' ||
-                              !isNaN(Number(val)) ||
-                              BigNumber.isBigNumber(val)
-                            ) {
-                              return new BigNumber(val).toFixed();
-                            }
-
-                            return val;
-                          } catch (error) {
-                            return val;
+            {result?.parsedResponse && result.parsedResponse.length > 0 && (
+              <div className={classNames(styles?.endpointOutputResults)}>
+                <span
+                  className={classNames(styles?.endpointOutputResultsTitle)}
+                >
+                  Query Result:{' '}
+                </span>
+                {result.parsedResponse.map((value, index) => {
+                  const displayResponse = value?.valueOf();
+                  let output = displayResponse;
+                  if (
+                    displayResponse !== null &&
+                    (typeof displayResponse === 'object' ||
+                      Array.isArray(displayResponse))
+                  ) {
+                    output = JSON.stringify(
+                      displayResponse,
+                      (key, val) => {
+                        try {
+                          if (
+                            typeof val === 'number' ||
+                            !isNaN(Number(val)) ||
+                            BigNumber.isBigNumber(val)
+                          ) {
+                            return new BigNumber(val).toFixed();
                           }
-                        },
-                        2
-                      );
 
-                      return (
-                        <div
-                          className={classNames(globalStyles?.codeBlock)}
-                          key={index}
-                        >
-                          <div
-                            className={classNames(globalStyles?.buttonHolder)}
-                          >
-                            <CopyButton
-                              text={code}
-                              className={classNames(globalStyles?.copyButton)}
-                              copyIcon={copyIcon}
-                            />
-                          </div>
-                          <Code
-                            className={classNames(
-                              globalStyles?.endpointOutputResultsCode
-                            )}
-                            code={code}
-                            showLineNumbers={false}
-                            language='properties'
-                          />
-                        </div>
-                      );
-                    } else {
-                      return (
-                        <code
-                          key={index}
+                          return val;
+                        } catch (error) {
+                          return val;
+                        }
+                      },
+                      2
+                    );
+                  } else {
+                    try {
+                      output = displayResponse.toString();
+                    } catch {}
+                  }
+
+                  return (
+                    <div
+                      className={classNames(globalStyles?.codeBlock)}
+                      key={index}
+                    >
+                      <div className={classNames(globalStyles?.buttonHolder)}>
+                        <CopyButton
+                          text={String(output)}
+                          className={classNames(globalStyles?.copyButton)}
+                          copyIcon={copyIcon}
+                        />
+                      </div>
+                      {output === '' ? (
+                        '<empty string>'
+                      ) : (
+                        <Code
                           className={classNames(
-                            styles?.endpointOutputResultsString
+                            globalStyles?.endpointOutputResultsCode
                           )}
-                        >
-                          {displayValue === ''
-                            ? '<empty string>'
-                            : String(displayValue)}
-                        </code>
-                      );
-                    }
-                  })}
-                </div>
-              )}
+                          code={String(output)}
+                          showLineNumbers={false}
+                          language='properties'
+                        />
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
         </div>
       </div>

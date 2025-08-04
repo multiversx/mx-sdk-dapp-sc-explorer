@@ -1,6 +1,7 @@
 export * from './contract';
 export * from './provider';
 export * from './useGetAccountTokens';
+export * from './useGetEntrypoint';
 export * from './useGetTransaction';
 export * from './useGetTransactionCost';
 export * from './useGetTransactionCostDetails';

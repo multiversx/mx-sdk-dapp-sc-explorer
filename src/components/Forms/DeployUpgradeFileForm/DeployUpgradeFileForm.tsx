@@ -5,7 +5,7 @@ import {
   faCircleNotch
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Code, NativeSerializer } from '@multiversx/sdk-core/out';
+import { ICode, NativeSerializer } from '@multiversx/sdk-core/out';
 import { CopyButton } from '@multiversx/sdk-dapp/UI/CopyButton';
 import classNames from 'classnames';
 import { Formik, Form } from 'formik';
@@ -115,7 +115,7 @@ export const DeployUpgradeFileFormComponent = (
         const { wasmFileContent, ...rest } = sumbittedValues;
         const values = getNativeArgumentsFromValues(rest);
         onSubmit({
-          wasmFileContent: wasmFileContent as Code,
+          wasmFileContent: wasmFileContent as ICode,
           values
         });
         resetForm();
