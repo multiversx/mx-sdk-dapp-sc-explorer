@@ -811,10 +811,10 @@
   resolved "https://registry.yarnpkg.com/@multiversx/sdk-bls-wasm/-/sdk-bls-wasm-0.3.5.tgz#2e83308fdc7a0928c6d5a7f910d796fd8eb2d90b"
   integrity sha512-c0tIdQUnbBLSt6NYU+OpeGPYdL0+GV547HeHT8Xc0BKQ7Cj0v82QUoA2QRtWrR1G4MNZmLsIacZSsf6DrIS2Bw==
 
-"@multiversx/sdk-core@^15.x":
-  version "15.0.0"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-core/-/sdk-core-15.0.0.tgz#2ab17a7d2215dd15d914ce309e97afa72876c1e2"
-  integrity sha512-+goPa9TFitB3wjOL9JkDK/NDy84VDjOzGnzJ0m+Ia9auC0VUy+KCFiPOGZvyfSEPTrwWiagqNsK5NcihDlRlDg==
+"@multiversx/sdk-core@^14.x":
+  version "14.2.9"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-core/-/sdk-core-14.2.9.tgz#d98dc8e30c3645758d29bec46dfe47c33f9b2ad5"
+  integrity sha512-tssRDroQpYTLX7ZNQyVzb6Bai4N1Nz3mUuJCW7k0i179bGUKR/VFVa0RviAXkv+d3pUkP/NepxdUaVTyaj5jmg==
   dependencies:
     "@multiversx/sdk-transaction-decoder" "1.0.2"
     "@noble/ed25519" "1.7.3"
@@ -834,7 +834,7 @@
     axios "^1.10.0"
     bip39 "3.1.0"
 
-"@multiversx/sdk-dapp-form@3.x":
+"@multiversx/sdk-dapp-form@^3.x":
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/@multiversx/sdk-dapp-form/-/sdk-dapp-form-3.0.2.tgz#de20458abc38bc51252626a5a33e8c1ee3fe1d42"
   integrity sha512-dzp/Sb2kcX7jdIQkLkV/14SvvrjVB7GLoAyzkz2vHIK5eNpsBvf3KZmuyahykmBItnkTVYEa0Zo3HeZdEAizFg==
@@ -2166,7 +2166,7 @@ available-typed-arrays@^1.0.7:
   dependencies:
     possible-typed-array-names "^1.0.0"
 
-axios@^1.10.0:
+axios@^1.10.0, axios@^1.11.0:
   version "1.11.0"
   resolved "https://registry.yarnpkg.com/axios/-/axios-1.11.0.tgz#c2ec219e35e414c025b2095e8b8280278478fdb6"
   integrity sha512-1Lx3WLFQWm3ooKDYZD1eXmoGO9fxYQjrycfHFC8P0sCfQVXyROp0p9PFWBehewBOdCwHc+f/b8I0fMto5eSfwA==

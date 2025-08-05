@@ -13,23 +13,23 @@ export const getNetworkEntrypoint = ({
   network?: NetworkType;
 }) => {
   if (!network) {
-    return new MainnetEntrypoint();
+    return new DevnetEntrypoint();
   }
 
-  const generalEntrypointConfig = {
-    url: network.apiAddress,
-    kind: 'api',
-    clientName: CLIENT_NAME,
-    withGasLimitEstimator: true
-  };
+  // config for sdk-js v15
+  // const generalEntrypointConfig = {
+  //   url: network.apiAddress,
+  //   kind: 'api',
+  //   clientName: CLIENT_NAME,
+  //   withGasLimitEstimator: true
+  // };
   switch (network?.environment) {
-    case EnvironmentsEnum.devnet:
-      return new DevnetEntrypoint(generalEntrypointConfig);
     case EnvironmentsEnum.testnet:
-      return new TestnetEntrypoint(generalEntrypointConfig);
+      return new TestnetEntrypoint(network.apiAddress, 'api', CLIENT_NAME);
     case EnvironmentsEnum.mainnet:
-      return new MainnetEntrypoint(generalEntrypointConfig);
+      return new MainnetEntrypoint(network.apiAddress, 'api', CLIENT_NAME);
+    default:
+    case EnvironmentsEnum.devnet:
+      return new DevnetEntrypoint(network.apiAddress, 'api', CLIENT_NAME);
   }
-
-  return new MainnetEntrypoint();
 };

@@ -24,7 +24,7 @@ const ScAddressIconComponent = ({
       <FontAwesomeIcon
         title='Smart Contract'
         icon={faFileAlt}
-        className={classNames(globalStyles?.mr1, globalStyles?.textSecondary)}
+        className={classNames(globalStyles?.scIcon)}
         data-testid={DataTestIdsEnum.scIcon}
       />
     );

@@ -17,7 +17,7 @@ export const ExplorerLink = ({
       class={className}
       dataTestId={dataTestId}
     >
-      {children ? <span slot='content'>{children}</span> : null}
+      {children ? <>{children}</> : null}
     </MvxExplorerLink>
   );
 };

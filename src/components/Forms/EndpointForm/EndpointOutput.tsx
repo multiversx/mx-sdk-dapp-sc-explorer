@@ -8,6 +8,7 @@ import { useSCExplorerContext } from 'contexts';
 import { withStyles } from 'hocs/withStyles';
 import { MvxCopyButton } from 'lib';
 import { EndpointOutputUIType } from 'types';
+import { formatOutputDisplayValue } from 'helpers';
 
 export const EndpointOutputComponent = (props: EndpointOutputUIType) => {
   const { output, result, globalStyles, styles } = props;
@@ -43,26 +44,12 @@ export const EndpointOutputComponent = (props: EndpointOutputUIType) => {
                   ) {
                     output = JSON.stringify(
                       displayResponse,
-                      (key, val) => {
-                        try {
-                          if (
-                            typeof val === 'number' ||
-                            !isNaN(Number(val)) ||
-                            BigNumber.isBigNumber(val)
-                          ) {
-                            return new BigNumber(val).toFixed();
-                          }
-
-                          return val;
-                        } catch (error) {
-                          return val;
-                        }
-                      },
+                      (key, val) => formatOutputDisplayValue(val),
                       2
                     );
                   } else {
                     try {
-                      output = displayResponse.toString();
+                      output = formatOutputDisplayValue(displayResponse);
                     } catch {}
                   }
 
