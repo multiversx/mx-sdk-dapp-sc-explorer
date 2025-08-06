@@ -1,6 +1,7 @@
 import React from 'react';
-import { AccountType } from '@multiversx/sdk-dapp/types/account.types';
-import { OnProviderLoginType } from '@multiversx/sdk-dapp/types/login.types';
+
+import { AccountType, OnProviderLoginType } from 'lib';
+
 import {
   RawAbiType,
   VerifiedContractType,

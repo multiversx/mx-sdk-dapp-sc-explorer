@@ -1,22 +1,20 @@
 import React from 'react';
-import { getChainID } from '@multiversx/sdk-dapp/utils/network';
-import { getEgldLabel } from '@multiversx/sdk-dapp/utils/network/getEgldLabel';
-import { formatAmount } from '@multiversx/sdk-dapp/utils/operations/formatAmount';
-import { stringIsInteger } from '@multiversx/sdk-dapp/utils/validation/stringIsInteger';
-import { AmountSelect } from '@multiversx/sdk-dapp-form/UI/Fields/AmountSelect';
-import {
-  AmountErrorPropsType,
-  MaxButtonPropsType,
-  OptionType,
-  TokenBalancePropsType,
-  TokenSelectPropsType
-} from '@multiversx/sdk-dapp-form/UI/Fields/AmountSelect/components';
-import { AmountInputPropsType } from '@multiversx/sdk-dapp-form/UI/Fields/AmountSelect/components/AmountInput';
 import classNames from 'classnames';
 
 import { ZERO } from 'constants/general';
 import { useSCExplorerContext } from 'contexts';
+import { getChainId } from 'helpers';
 import { withStyles } from 'hocs/withStyles';
+import {
+  AmountSelect,
+  AmountInputPropsType,
+  MaxButtonPropsType,
+  OptionType,
+  TokenSelectPropsType,
+  formatAmount,
+  stringIsInteger,
+  getEgldLabel
+} from 'lib';
 import { AmountSelectInputUIType } from './types';
 
 export const AmountSelectInputComponent = ({
@@ -75,7 +73,7 @@ export const AmountSelectInputComponent = ({
     error: errorMessage,
     isInvalid: hasErrors,
     egldLabel: getEgldLabel(),
-    chainId: getChainID(),
+    chainId: getChainId(),
     className: '',
     showTokenPrice: false,
     showBalanceUsdValue: true,
@@ -99,7 +97,7 @@ export const AmountSelectInputComponent = ({
     disabled: isInputDisabled
   };
 
-  const amountErrorProps: AmountErrorPropsType = {
+  const amountErrorProps = {
     hasErrors: amountInputProps.isInvalid || tokenSelectProps.isInvalid,
     error: amountInputProps.error || tokenSelectProps.error,
     className: generatedClasses.error,
@@ -108,7 +106,7 @@ export const AmountSelectInputComponent = ({
       : `${selectName}Error`
   };
 
-  const tokenBalanceProps: TokenBalancePropsType = {
+  const tokenBalanceProps = {
     'data-testid': `available-${token?.value}`,
     'data-value': `${token?.token.balance} ${token?.value}`,
     label: balanceText,
@@ -135,7 +133,7 @@ export const AmountSelectInputComponent = ({
     <AmountSelect
       name={inputName}
       label={title}
-      className={generatedClasses.group}
+      // className={generatedClasses.group}
       wrapperControlsClassName={generatedClasses.wrapper}
       amountErrorProps={amountErrorProps}
       tokenSelectProps={tokenSelectProps}

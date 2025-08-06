@@ -1,21 +1,25 @@
 import React from 'react';
 import { faCopy, faBolt, faPowerOff } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { CopyButton } from '@multiversx/sdk-dapp/UI/CopyButton';
-import { Trim } from '@multiversx/sdk-dapp/UI/Trim';
-import { isWindowAvailable } from '@multiversx/sdk-dapp/utils/isWindowAvailable';
-import { logout } from '@multiversx/sdk-dapp/utils/logout';
 import classNames from 'classnames';
 
-import { useSCExplorerContext, useUserActionDispatch } from 'contexts';
+import { useSCExplorerContext } from 'contexts';
 import { withStyles } from 'hocs/withStyles';
-import { UserActionDispatchTypeEnum, LoginButtonUIType } from 'types';
+import {
+  getAccountProvider,
+  MvxCopyButton,
+  MvxTrim,
+  ProviderTypeEnum,
+  UnlockPanelManager
+} from 'lib';
+import { LoginButtonUIType } from 'types';
 
 export const LoginButtonComponent = (props: LoginButtonUIType) => {
   const { customClassNames, icons, accountInfo } = useSCExplorerContext();
   const { isLoggedIn, address } = accountInfo;
   const { className, globalStyles, styles } = props;
-  const userActionDispatch = useUserActionDispatch();
+
+  const provider = getAccountProvider();
 
   const {
     copyIcon = faCopy,
@@ -23,23 +27,38 @@ export const LoginButtonComponent = (props: LoginButtonUIType) => {
     disconnectIcon = faPowerOff
   } = icons ?? {};
 
-  const onOpenModalClick = () => {
-    userActionDispatch({
-      type: UserActionDispatchTypeEnum.setLoginModalState,
-      loginModalState: { loginModalOpen: true }
-    });
+  const loginHandler = () => {
+    // NOT USED. disable autologout
+    // LogoutManager.getInstance().stop();
   };
 
-  const onDisconnectClick = () => {
-    logout(isWindowAvailable() ? window.location.href : '/');
+  const allowedProviders = [
+    ProviderTypeEnum.ledger,
+    ProviderTypeEnum.webview,
+    ProviderTypeEnum.extension,
+    ProviderTypeEnum.crossWindow,
+    ProviderTypeEnum.walletConnect
+  ];
+  const unlockPanelManager = UnlockPanelManager.init({
+    loginHandler,
+    allowedProviders
+  });
+
+  const handleOnClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    unlockPanelManager.openUnlockPanel();
+  };
+
+  const onDisconnectClick = async () => {
+    await provider.logout();
   };
 
   return (
     <>
       {Boolean(address && isLoggedIn) ? (
         <div className={classNames(styles?.connectedWrapper)}>
-          <Trim text={address} />
-          <CopyButton text={address} copyIcon={copyIcon} />
+          <MvxTrim text={address} />
+          <MvxCopyButton text={address} copyIcon={copyIcon} />
           <button
             type='button'
             className={classNames(globalStyles?.button, styles?.buttonLogout)}
@@ -55,7 +74,7 @@ export const LoginButtonComponent = (props: LoginButtonUIType) => {
           </div>
           <button
             type='button'
-            onClick={onOpenModalClick}
+            onClick={handleOnClick}
             className={classNames(
               className,
               globalStyles?.button,

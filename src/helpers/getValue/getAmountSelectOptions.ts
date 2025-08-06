@@ -1,6 +1,4 @@
-import { DECIMALS } from '@multiversx/sdk-dapp/constants/index';
-import { getEgldLabel } from '@multiversx/sdk-dapp/utils/network/getEgldLabel';
-
+import { DECIMALS, getEgldLabel } from 'lib';
 import { SelectOptionType, PartialEsdtType } from 'types';
 
 export const getSelectOptions = ({

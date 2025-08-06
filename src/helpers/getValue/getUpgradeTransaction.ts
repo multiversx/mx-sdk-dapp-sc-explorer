@@ -1,15 +1,14 @@
+import { SC_DEPLOY_GAS_LIMIT } from 'constants/general';
+import { getChainId } from 'helpers';
 import {
   Address,
   TransactionsFactoryConfig,
   SmartContractTransactionsFactory,
   ContractUpgradeInput
-} from '@multiversx/sdk-core/out';
-import { getChainID } from '@multiversx/sdk-dapp/utils/network';
-
-import { SC_DEPLOY_GAS_LIMIT } from 'constants/general';
+} from 'lib/sdkCore';
 import { GetUpgradeTransactionType } from 'types';
 
-export const getUpgradeTransaction = ({
+export const getUpgradeTransaction = async ({
   callerAddress,
   contractAddress,
   abiRegistry,
@@ -24,7 +23,7 @@ export const getUpgradeTransaction = ({
       const contract = new Address(contractAddress);
       const caller = new Address(callerAddress);
       const config = new TransactionsFactoryConfig({
-        chainID: getChainID()
+        chainID: getChainId()
       });
       const factory = new SmartContractTransactionsFactory({
         config: config,
@@ -43,7 +42,7 @@ export const getUpgradeTransaction = ({
           isPayable: metadata.payable,
           isPayableBySmartContract: metadata.payableBySc
         } as ContractUpgradeInput;
-        const transaction = factory.createTransactionForUpgrade(
+        const transaction = await factory.createTransactionForUpgrade(
           caller,
           options
         );

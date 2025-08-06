@@ -1,4 +1,4 @@
-import { FieldDefinition } from '@multiversx/sdk-core/out';
+import { FieldDefinition } from 'lib/sdkCore';
 
 export const formatDefinitionsForDisplay = (definitions: FieldDefinition[]) => {
   if (definitions.length === 0) {

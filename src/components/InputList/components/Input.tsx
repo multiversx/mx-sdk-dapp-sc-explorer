@@ -1,5 +1,5 @@
 import React from 'react';
-import { Type } from '@multiversx/sdk-core/out';
+import { Type } from 'lib/sdkCore';
 import classNames from 'classnames';
 import { Field, getIn } from 'formik';
 

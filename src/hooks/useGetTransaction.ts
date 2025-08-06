@@ -1,6 +1,5 @@
-import { TransactionOnNetwork } from '@multiversx/sdk-network-providers/out/transactions';
-
 import { useNetworkProvider } from 'hooks';
+import { TransactionOnNetwork } from 'lib';
 
 export const useGetTransaction = () => {
   const { get } = useNetworkProvider();

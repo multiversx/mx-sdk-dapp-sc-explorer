@@ -1,18 +1,13 @@
+import { SC_GAS_LIMIT } from 'constants/general';
+import { getChainId } from 'helpers';
+import { EsdtEnumType, NftEnumType, parseAmount } from 'lib';
 import {
   Address,
   TokenTransfer,
   Token,
   TransactionsFactoryConfig,
   SmartContractTransactionsFactory
-} from '@multiversx/sdk-core/out';
-import {
-  EsdtEnumType,
-  NftEnumType
-} from '@multiversx/sdk-dapp/types/tokens.types';
-import { getChainID } from '@multiversx/sdk-dapp/utils/network';
-import { parseAmount } from '@multiversx/sdk-dapp/utils/operations/parseAmount';
-
-import { SC_GAS_LIMIT } from 'constants/general';
+} from 'lib/sdkCore';
 import { GetCallContractTransactionType, ProcessedFormTokenType } from 'types';
 
 const getTokenTransfers = ({
@@ -57,7 +52,7 @@ const getTokenTransfers = ({
   return [];
 };
 
-export const getCallContractTransaction = ({
+export const getCallContractTransaction = async ({
   contractAddress,
   callerAddress,
   abiRegistry,
@@ -72,7 +67,7 @@ export const getCallContractTransaction = ({
       const caller = new Address(callerAddress);
 
       const config = new TransactionsFactoryConfig({
-        chainID: getChainID()
+        chainID: getChainId()
       });
       const factory = new SmartContractTransactionsFactory({
         config: config,
@@ -82,7 +77,7 @@ export const getCallContractTransaction = ({
       if (factory) {
         // Accept only native EGLD, Fungible Tokens and metaESDTs for now
         const tokenTransfers = getTokenTransfers({ tokens });
-        const transaction = factory.createTransactionForExecute(caller, {
+        const transaction = await factory.createTransactionForExecute(caller, {
           contract: owner,
           gasLimit: BigInt(userGasLimit ?? SC_GAS_LIMIT),
           function: func?.toString() ?? '',

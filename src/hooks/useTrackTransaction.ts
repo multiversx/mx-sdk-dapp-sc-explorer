@@ -1,20 +1,29 @@
 import { useState } from 'react';
-import { useTrackTransactionStatus } from '@multiversx/sdk-dapp/hooks/transactions/useTrackTransactionStatus';
+
+import { getStore, TransactionManager, transactionsSliceSelector } from 'lib';
 
 export const useTrackTransaction = (sessionId: string = '0') => {
+  const store = getStore();
+  const allTransactionSessions = transactionsSliceSelector(store.getState());
+  const currentSession = allTransactionSessions[sessionId];
+  const currentTransaction = currentSession?.transactions?.[0];
+  const currentTransactionStatus = currentTransaction?.status;
+
   const [txProcessingFinished, setTxProcessingFinished] = useState(false);
 
-  const onTransactionStateChange = () => {
+  const onTransactionStateChange = async () => {
     setTxProcessingFinished(true);
   };
-  const transactionStatus = useTrackTransactionStatus({
-    onCancelled: onTransactionStateChange,
-    onFail: onTransactionStateChange,
-    onSuccess: onTransactionStateChange,
-    onTimedOut: onTransactionStateChange,
-    transactionId: sessionId
-  });
-  const { status, transactions } = transactionStatus;
 
-  return { txProcessingFinished, status, transactions };
+  const txManager = TransactionManager.getInstance();
+  txManager.setCallbacks({
+    onFail: onTransactionStateChange,
+    onSuccess: onTransactionStateChange
+  });
+
+  return {
+    txProcessingFinished,
+    status: currentTransactionStatus,
+    transactions: currentSession?.transactions
+  };
 };

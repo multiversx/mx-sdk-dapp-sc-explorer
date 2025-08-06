@@ -1,6 +1,7 @@
 export * from './getAbiRegistry';
 export * from './getAmountSelectOptions';
 export * from './getCallContractTransaction';
+export * from './getChainId';
 export * from './getComputedGasLimit';
 export * from './getContractFileContent';
 export * from './getDefinition';

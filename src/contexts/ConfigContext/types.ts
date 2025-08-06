@@ -1,4 +1,4 @@
-import { OnProviderLoginType } from '@multiversx/sdk-dapp/types/login.types';
+import { OnProviderLoginType } from 'lib';
 
 export interface ConfigStateType {
   canMutate: boolean | undefined;

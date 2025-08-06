@@ -5,9 +5,6 @@ import {
   faCircleNotch
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { CopyButton } from '@multiversx/sdk-dapp/UI/CopyButton';
-import { addressIsValid } from '@multiversx/sdk-dapp/utils/account/addressIsValid';
-import { isContract } from '@multiversx/sdk-dapp/utils/smartContracts';
 import classNames from 'classnames';
 import { Formik, Form, Field, getIn } from 'formik';
 import { mixed, object, string } from 'yup';
@@ -17,6 +14,7 @@ import { DropzoneAbi } from 'components/Dropzone/DropzoneAbi';
 import { useSCExplorerContext } from 'contexts';
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { useUpdateDeployedContractDetails } from 'hooks';
+import { addressIsValid, isContract, MvxCopyButton } from 'lib';
 import {
   FormikLoadAbiType,
   ContractLoadAbiFormikFieldsEnum,
@@ -218,7 +216,7 @@ export const ContractLoadAbiComponent = ({
                     </h6>
                     <div className={classNames(globalStyles?.codeBlock)}>
                       <div className={classNames(globalStyles?.buttonHolder)}>
-                        <CopyButton
+                        <MvxCopyButton
                           text={formattedContent}
                           className={classNames(globalStyles?.copyButton)}
                           copyIcon={copyIcon}

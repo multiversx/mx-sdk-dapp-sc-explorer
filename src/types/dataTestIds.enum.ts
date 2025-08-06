@@ -13,5 +13,6 @@ export enum DataTestIdsEnum {
   abiDropzone = 'mx-sdk-sc-abiDropzone',
   abiContractAddress = 'mx-sdk-sc-abiContractAddress',
   interactionFormBtn = 'mx-sdk-sc-interactionFormBtn',
-  interactionFormInput = 'mx-sdk-sc-interactionFormInput'
+  interactionFormInput = 'mx-sdk-sc-interactionFormInput',
+  scIcon = 'mx-sdk-sc-scIcon'
 }

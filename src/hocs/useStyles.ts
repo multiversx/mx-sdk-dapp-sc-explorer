@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import { isSSR } from '@multiversx/sdk-dapp/utils/isSSR';
+
+import { isWindowAvailable } from 'lib';
 
 type StylesType = typeof import('*.scss');
 
@@ -13,7 +14,8 @@ const defaultServerGlobalImport = async () =>
 const defaultClientGlobalImport = () =>
   require('assets/styles/globals.module.scss').default;
 
-const ssr = isSSR();
+const ssr = !isWindowAvailable();
+
 export function useStyles({
   ssrGlobalImportCallback,
   ssrImportCallback,

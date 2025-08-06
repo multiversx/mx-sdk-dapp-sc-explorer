@@ -1,4 +1,4 @@
-import { FieldDefinition } from '@multiversx/sdk-core/out';
+import { FieldDefinition } from 'lib/sdkCore';
 import { UserInterfaceType } from 'types';
 
 export interface EndpointDefinitionListType extends UserInterfaceType {

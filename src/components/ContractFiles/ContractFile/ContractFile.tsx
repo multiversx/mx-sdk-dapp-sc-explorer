@@ -1,7 +1,6 @@
 import React from 'react';
 import { faFileAlt, faLink, faCopy } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { CopyButton } from '@multiversx/sdk-dapp/UI/CopyButton';
 import classNames from 'classnames';
 import { Light as SyntaxHighlighter } from 'react-syntax-highlighter';
 import rust from 'react-syntax-highlighter/dist/esm/languages/hljs/rust';
@@ -11,6 +10,7 @@ import { CollapsibleCard } from 'components';
 import { useSCExplorerContext } from 'contexts';
 import { getContractFileContent } from 'helpers';
 import { withStyles } from 'hocs/withStyles';
+import { MvxCopyButton } from 'lib';
 
 import { ContractFileUIType } from '../types';
 
@@ -53,12 +53,12 @@ export const ContractFileComponent = (props: ContractFileUIType) => {
     >
       <div className={classNames(globalStyles?.codeBlock)}>
         <div className={classNames(globalStyles?.buttonHolder)}>
-          <CopyButton
+          <MvxCopyButton
             text={codeString}
             className={classNames(globalStyles?.copyButton)}
             copyIcon={copyIcon}
           />
-          <CopyButton
+          <MvxCopyButton
             text={`${fullPath}#${path}`}
             className={classNames(globalStyles?.linkButton)}
             copyIcon={linkIcon}

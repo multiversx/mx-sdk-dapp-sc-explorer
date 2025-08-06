@@ -1,5 +1,5 @@
-import { AbiRegistry } from '@multiversx/sdk-core/out';
-import { AccountType } from '@multiversx/sdk-dapp/types/account.types';
+import { AccountType } from 'lib';
+import { AbiRegistry } from 'lib/sdkCore';
 import { RawAbiType, VerifiedContractType } from 'types';
 
 export interface SmartContractStateType {

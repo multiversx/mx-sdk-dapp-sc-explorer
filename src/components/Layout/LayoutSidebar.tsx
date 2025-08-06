@@ -1,7 +1,6 @@
 import React, { memo, useEffect } from 'react';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { isWindowAvailable } from '@multiversx/sdk-dapp/utils/isWindowAvailable';
 import classNames from 'classnames';
 import { Nav } from 'react-bootstrap';
 
@@ -9,6 +8,7 @@ import { Badge } from 'components';
 import { useSCExplorerContext } from 'contexts';
 import { withStyles } from 'hocs/withStyles';
 import { useGetContractEndpointCount } from 'hooks';
+import { isWindowAvailable } from 'lib';
 import { VerifiedContractTabsEnum, DataTestIdsEnum } from 'types';
 
 import { LayoutComponentUIType, LayoutSidebarNavLinksType } from './types';

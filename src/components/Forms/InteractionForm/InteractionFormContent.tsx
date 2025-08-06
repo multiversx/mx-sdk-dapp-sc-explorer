@@ -6,7 +6,6 @@ import {
   faTriangleExclamation
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { DECIMALS } from '@multiversx/sdk-dapp/constants/index';
 import classNames from 'classnames';
 import { Form, Field, getIn } from 'formik';
 
@@ -23,6 +22,7 @@ import {
   ProcessedFormTokenType,
   DataTestIdsEnum
 } from 'types';
+import { DECIMALS } from 'lib';
 
 export const InteractionFormContentComponent = (
   props: InteractionFormContentUIType
