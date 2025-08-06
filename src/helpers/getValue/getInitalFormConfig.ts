@@ -1,4 +1,4 @@
-import { Type, StructType } from '@multiversx/sdk-core/out';
+import { Type, StructType } from 'lib/sdkCore';
 
 import { CUSTOM_TYPE_PREFIX } from 'constants/general';
 import { FormikAbiType } from 'types';

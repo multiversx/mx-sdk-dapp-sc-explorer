@@ -1,4 +1,4 @@
-import { Type } from '@multiversx/sdk-core/out';
+import { Type } from 'lib/sdkCore';
 
 function cleanName(inputString: string) {
   const regex = /\w*multiversx:types:.*/;

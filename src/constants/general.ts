@@ -14,6 +14,8 @@ export const ACCOUNT_TOKENS_SIZE = 200;
 
 /*-----------------------*/
 
+export const CLIENT_NAME = 'sdk-dapp-sc-explorer';
+
 export const CONTRACT_FILE_TEST_PATH = '/tests';
 export const CONTRACT_FILE_EXTENSION = '.rs';
 export const INTERFACE_NAME_PLACEHOLDER = '?';

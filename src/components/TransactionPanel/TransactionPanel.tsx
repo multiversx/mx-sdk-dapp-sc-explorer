@@ -7,16 +7,20 @@ import {
   faTimes
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { TransactionServerStatusesEnum } from '@multiversx/sdk-dapp/types/enums.types';
-import { CopyButton } from '@multiversx/sdk-dapp/UI/CopyButton';
-import { Trim } from '@multiversx/sdk-dapp/UI/Trim';
-import { TransactionEvent } from '@multiversx/sdk-network-providers/out/transactionEvents';
 import classNames from 'classnames';
 
 import { CardItem } from 'components';
 import { useSCExplorerContext } from 'contexts';
 import { withStyles } from 'hocs/withStyles';
 import { useGetTransaction, useUpdateDeployedContractDetails } from 'hooks';
+import {
+  MvxCopyButton,
+  MvxTrim,
+  TransactionServerStatusesEnum,
+  TransactionEvent,
+  isContract
+} from 'lib';
+import { Address } from 'lib/sdkCore';
 import { TransactionPanelUIType, TransactionEventIdentifierEnum } from 'types';
 
 export const TransactionPanelComponent = ({
@@ -63,8 +67,24 @@ export const TransactionPanelComponent = ({
               (event) =>
                 event?.identifier === TransactionEventIdentifierEnum.SCDeploy
             );
+
+            const topicAddress = scDeployEvent?.topics?.[0];
+            if (topicAddress) {
+              const formattedTopicAddress = new Address(
+                topicAddress.hex()
+              ).toBech32();
+              if (isContract(formattedTopicAddress)) {
+                setDeployedContractAddress(formattedTopicAddress);
+                await updateDeployedContractDetails({
+                  address: formattedTopicAddress
+                });
+                setIsTxStatusLoading(false);
+                return;
+              }
+            }
+
             const deployAddress = scDeployEvent?.address?.bech32();
-            if (deployAddress) {
+            if (deployAddress && isContract(deployAddress)) {
               setDeployedContractAddress(deployAddress);
               await updateDeployedContractDetails({
                 address: deployAddress
@@ -145,8 +165,8 @@ export const TransactionPanelComponent = ({
                   )}
                 >
                   <CardItem title='Contract Address' icon={faCogs}>
-                    <Trim text={deployedContractAddress} />
-                    <CopyButton
+                    <MvxTrim text={deployedContractAddress} />
+                    <MvxCopyButton
                       text={deployedContractAddress}
                       copyIcon={copyIcon}
                     />

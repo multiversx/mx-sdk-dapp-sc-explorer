@@ -1,11 +1,11 @@
-import { Transaction } from '@multiversx/sdk-core/out';
-import { EXTRA_GAS_LIMIT_GUARDED_TX } from '@multiversx/sdk-dapp/constants/index';
 import BigNumber from 'bignumber.js';
 
 import { SC_GAS_LIMIT, SC_DEPLOY_GAS_LIMIT } from 'constants/general';
 import { useSCExplorerContext } from 'contexts';
 import { getComputedGasLimit } from 'helpers';
 import { useNetworkProvider } from 'hooks';
+import { EXTRA_GAS_LIMIT_GUARDED_TX } from 'lib';
+import { Transaction } from 'lib/sdkCore';
 
 export interface TransactionCostResponseType {
   gasLimit?: number;

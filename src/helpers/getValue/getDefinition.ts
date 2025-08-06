@@ -1,4 +1,4 @@
-import { AbiRegistry } from '@multiversx/sdk-core/out';
+import { AbiRegistry } from 'lib/sdkCore';
 
 export const getDefinition = ({
   abiRegistry,
@@ -7,13 +7,21 @@ export const getDefinition = ({
   abiRegistry?: AbiRegistry;
   isUpgrade?: boolean;
 }) => {
-  if (isUpgrade && abiRegistry?.endpoints) {
-    const upgradeEndpoint = abiRegistry.endpoints.find(
-      (endpoint) => endpoint.name === 'upgrade'
-    );
-    if (upgradeEndpoint) {
-      return upgradeEndpoint;
+  if (isUpgrade) {
+    if (abiRegistry?.endpoints) {
+      const upgradeEndpoint = abiRegistry.endpoints.find(
+        (endpoint) => endpoint.name === 'upgrade'
+      );
+      if (upgradeEndpoint) {
+        return upgradeEndpoint;
+      }
     }
+
+    if (abiRegistry?.upgradeConstructorDefinition) {
+      return abiRegistry.upgradeConstructorDefinition;
+    }
+
+    return;
   }
 
   if (abiRegistry?.constructorDefinition) {

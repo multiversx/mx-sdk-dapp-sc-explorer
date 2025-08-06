@@ -1,10 +1,4 @@
 import {
-  EndpointDefinition,
-  ICode,
-  Transaction,
-  TypedValue
-} from '@multiversx/sdk-core/out';
-import {
   SC_GAS_LIMIT,
   SC_DEPLOY_GAS_LIMIT,
   SC_SIMULATE_GAS_LIMIT,
@@ -17,6 +11,12 @@ import {
   getUpgradeTransaction
 } from 'helpers';
 import { useGetTransactionCost } from 'hooks';
+import {
+  EndpointDefinition,
+  ICode,
+  Transaction,
+  TypedValue
+} from 'lib/sdkCore';
 import { MetadataFieldsInitialValuesType, ProcessedFormTokenType } from 'types';
 
 export interface TransactionCostDetailsType {
@@ -62,7 +62,7 @@ export const useGetTransactionCostDetails = ({
   }) => {
     let transaction: Transaction | undefined = undefined;
     if (isMutate) {
-      transaction = getCallContractTransaction({
+      transaction = await getCallContractTransaction({
         contractAddress,
         callerAddress,
         abiRegistry,
@@ -74,7 +74,7 @@ export const useGetTransactionCostDetails = ({
       });
     }
     if (isDeploy && code) {
-      transaction = getDeployTransaction({
+      transaction = await getDeployTransaction({
         callerAddress,
         abiRegistry,
         args,
@@ -86,7 +86,7 @@ export const useGetTransactionCostDetails = ({
       });
     }
     if (isUpgrade && code && contractAddress) {
-      transaction = getUpgradeTransaction({
+      transaction = await getUpgradeTransaction({
         contractAddress,
         callerAddress,
         abiRegistry,

@@ -1,4 +1,5 @@
 import { ScExplorerContainer } from 'containers';
 import { SCExplorerType } from 'types';
 
-export { SCExplorerType, ScExplorerContainer };
+export { ScExplorerContainer };
+export type { SCExplorerType };

@@ -1,9 +1,10 @@
+import { CLIENT_NAME } from 'constants/general';
+import { EnvironmentsEnum } from 'lib';
 import {
   DevnetEntrypoint,
   MainnetEntrypoint,
   TestnetEntrypoint
-} from '@multiversx/sdk-core/out';
-import { EnvironmentsEnum } from '@multiversx/sdk-dapp/types';
+} from 'lib/sdkCore';
 import { NetworkType } from 'types';
 
 export const getNetworkEntrypoint = ({
@@ -11,14 +12,24 @@ export const getNetworkEntrypoint = ({
 }: {
   network?: NetworkType;
 }) => {
-  switch (network?.environment) {
-    case EnvironmentsEnum.devnet:
-      return new DevnetEntrypoint(network.apiAddress);
-    case EnvironmentsEnum.testnet:
-      return new TestnetEntrypoint(network.apiAddress);
-    case EnvironmentsEnum.mainnet:
-      return new MainnetEntrypoint(network.apiAddress);
+  if (!network) {
+    return new DevnetEntrypoint();
   }
 
-  return new MainnetEntrypoint();
+  // config for sdk-js v15
+  // const generalEntrypointConfig = {
+  //   url: network.apiAddress,
+  //   kind: 'api',
+  //   clientName: CLIENT_NAME,
+  //   withGasLimitEstimator: true
+  // };
+  switch (network?.environment) {
+    case EnvironmentsEnum.testnet:
+      return new TestnetEntrypoint(network.apiAddress, 'api', CLIENT_NAME);
+    case EnvironmentsEnum.mainnet:
+      return new MainnetEntrypoint(network.apiAddress, 'api', CLIENT_NAME);
+    default:
+    case EnvironmentsEnum.devnet:
+      return new DevnetEntrypoint(network.apiAddress, 'api', CLIENT_NAME);
+  }
 };

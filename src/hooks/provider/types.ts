@@ -1,4 +1,4 @@
-import { ContractQueryResponse } from '@multiversx/sdk-network-providers/out/contractQueryResponse';
+import { ContractQueryResponse } from 'lib';
 
 export interface BasicPropsType {
   baseUrl?: ProviderPropsType['baseUrl'];

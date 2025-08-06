@@ -3,10 +3,10 @@ import { faBolt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
-import { useSCExplorerContext, useUserActionDispatch } from 'contexts';
+import { useSCExplorerContext } from 'contexts';
 import { withStyles } from 'hocs/withStyles';
+import { ProviderTypeEnum, UnlockPanelManager } from 'lib';
 import {
-  UserActionDispatchTypeEnum,
   LoginButtonWrapperUIType,
   ContractEndpointMutabilityEnum
 } from 'types';
@@ -25,18 +25,32 @@ export const LoginButtonWrapperComponent = (
   } = props;
   const { accountInfo, customClassNames, icons } = useSCExplorerContext();
   const { isLoggedIn, address, onLoginClick } = accountInfo;
-  const userActionDispatch = useUserActionDispatch();
 
   const { connectIcon = faBolt } = icons ?? {};
+
+  const loginHandler = () => {
+    // NOT USED. disable autologout
+    // LogoutManager.getInstance().stop();
+  };
+
+  const allowedProviders = [
+    ProviderTypeEnum.ledger,
+    ProviderTypeEnum.webview,
+    ProviderTypeEnum.extension,
+    ProviderTypeEnum.crossWindow,
+    ProviderTypeEnum.walletConnect
+  ];
+
+  const unlockPanelManager = UnlockPanelManager.init({
+    loginHandler,
+    allowedProviders
+  });
 
   const onButtonClick = () => {
     if (onLoginClick) {
       onLoginClick();
     } else {
-      userActionDispatch({
-        type: UserActionDispatchTypeEnum.setLoginModalState,
-        loginModalState: { loginModalOpen: true }
-      });
+      unlockPanelManager.openUnlockPanel();
     }
   };
 

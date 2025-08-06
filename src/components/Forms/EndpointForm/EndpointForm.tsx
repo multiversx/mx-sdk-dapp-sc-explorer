@@ -6,9 +6,6 @@ import {
   faTriangleExclamation
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { NativeSerializer } from '@multiversx/sdk-core/out';
-import { CopyButton } from '@multiversx/sdk-dapp/UI/CopyButton';
-import { Trim } from '@multiversx/sdk-dapp/UI/Trim';
 import classNames from 'classnames';
 import { Formik, Form } from 'formik';
 import { lazy, mixed, object } from 'yup';
@@ -17,7 +14,10 @@ import { LoginButtonWrapper } from 'components';
 import { useSCExplorerContext } from 'contexts';
 import { getInitalFormConfig, getNativeArgumentsFromValues } from 'helpers';
 import { withStyles } from 'hocs/withStyles';
+import { MvxCopyButton, MvxTrim } from 'lib';
+import { NativeSerializer } from 'lib/sdkCore';
 import { EndpointFormUIType, FormikAbiType } from 'types';
+
 import { EndpointInteraction } from './EndpointInteraction';
 
 export const EndpointFormComponent = (props: EndpointFormUIType) => {
@@ -184,8 +184,8 @@ export const EndpointFormComponent = (props: EndpointFormUIType) => {
                     <div
                       className={classNames(globalStyles?.formWarningAddress)}
                     >
-                      <Trim text={ownerAddress} />
-                      <CopyButton text={ownerAddress} copyIcon={copyIcon} />
+                      <MvxTrim text={ownerAddress} />
+                      <MvxCopyButton text={ownerAddress} copyIcon={copyIcon} />
                     </div>
                     <span className={classNames(globalStyles?.formWarningText)}>
                       to call this endpoint.

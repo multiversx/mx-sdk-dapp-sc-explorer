@@ -1,8 +1,4 @@
-import {
-  EndpointDefinition,
-  TypedValue,
-  ICode
-} from '@multiversx/sdk-core/out';
+import { EndpointDefinition, TypedValue, ICode } from 'lib/sdkCore';
 
 import { PartialEsdtType, PartialNftType } from 'types';
 

@@ -1,9 +1,9 @@
+import { EnvironmentsEnum } from 'lib';
 import {
   DevnetEntrypoint,
   MainnetEntrypoint,
   TestnetEntrypoint
-} from '@multiversx/sdk-core/out';
-import { EnvironmentsEnum } from '@multiversx/sdk-dapp/types/enums.types';
+} from 'lib/sdkCore';
 
 export interface NetworkType {
   environment: EnvironmentsEnum;

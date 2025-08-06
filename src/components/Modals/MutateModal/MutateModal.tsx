@@ -1,15 +1,10 @@
 import React, { useState } from 'react';
-import {
-  removeAllSignedTransactions,
-  removeAllTransactionsToSign
-} from '@multiversx/sdk-dapp/services/transactions/clearTransactions';
-import { sendTransactions } from '@multiversx/sdk-dapp/services/transactions/sendTransactions';
-import { refreshAccount } from '@multiversx/sdk-dapp/utils/account/refreshAccount';
 import { InteractionModalForm, TransactionPanel } from 'components';
 import { useUserActionDispatch, useSCExplorerContext } from 'contexts';
-import { getCallContractTransaction } from 'helpers';
+import { getCallContractTransaction, sendAndTrackTransactions } from 'helpers';
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { useTrackTransaction } from 'hooks';
+import { refreshAccount } from 'lib';
 import {
   UserActionDispatchTypeEnum,
   MutateModalInitialValuesType
@@ -52,9 +47,7 @@ export const MutateModalComponent = ({ styles }: WithStylesImportType) => {
       setSessionId(undefined);
       const { tokens, gasLimit } = values;
       if (contractAddress && deployedContractDetails) {
-        removeAllSignedTransactions();
-        removeAllTransactionsToSign();
-        const contractTransaction = getCallContractTransaction({
+        const contractTransaction = await getCallContractTransaction({
           contractAddress,
           callerAddress,
           abiRegistry,
@@ -69,19 +62,24 @@ export const MutateModalComponent = ({ styles }: WithStylesImportType) => {
         }
 
         await refreshAccount();
-        const { error, sessionId: mutateSessionId } = await sendTransactions({
-          transactions: [contractTransaction],
-          transactionsDisplayInfo: {
-            processingMessage: `Processing ${endpoint?.name} Transaction`,
-            errorMessage: `An error has occured during ${endpoint?.name} Transaction`,
-            successMessage: `${endpoint?.name} Transaction successful`
+        try {
+          const mutateSessionId = await sendAndTrackTransactions({
+            transactions: [contractTransaction],
+            options: {
+              transactionsDisplayInfo: {
+                processingMessage: `Processing ${endpoint?.name} Transaction`,
+                errorMessage: `An error has occured during ${endpoint?.name} Transaction`,
+                successMessage: `${endpoint?.name} Transaction successful`
+              }
+            }
+          });
+          if (mutateSessionId) {
+            setSessionId(mutateSessionId);
           }
-        });
-        if (mutateSessionId) {
-          setSessionId(mutateSessionId);
-        }
-        if (error) {
-          setGeneralError(String(error));
+        } catch (error) {
+          if (typeof error === 'string' || error instanceof String) {
+            setGeneralError(String(error));
+          }
         }
       } else {
         setGeneralError(

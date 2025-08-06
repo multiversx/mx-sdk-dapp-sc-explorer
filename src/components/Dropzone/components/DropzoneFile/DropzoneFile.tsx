@@ -1,10 +1,10 @@
 import React from 'react';
 import { faCheck, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Trim } from '@multiversx/sdk-dapp/UI/Trim';
 import classNames from 'classnames';
 
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
+import { MvxTrim } from 'lib';
 
 import { DropzoneFileUIType } from '../../types';
 
@@ -24,7 +24,7 @@ export const DropzoneFileComponent = ({
     })}
   >
     <div className={classNames(styles?.dropzoneFileLeft)}>
-      <Trim text={fileName} />
+      <MvxTrim text={fileName} />
       {fileError && (
         <div className={classNames(styles?.dropzoneFileError)}>{fileError}</div>
       )}

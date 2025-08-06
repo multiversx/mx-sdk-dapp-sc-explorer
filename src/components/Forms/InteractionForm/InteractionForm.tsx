@@ -1,9 +1,4 @@
 import React from 'react';
-
-import { DECIMALS } from '@multiversx/sdk-dapp/constants/index';
-import { getEgldLabel } from '@multiversx/sdk-dapp/utils/network/getEgldLabel';
-import { parseAmount } from '@multiversx/sdk-dapp/utils/operations/parseAmount';
-import { stringIsFloat } from '@multiversx/sdk-dapp/utils/validation/stringIsFloat';
 import BigNumber from 'bignumber.js';
 import { Formik } from 'formik';
 import { array, object, string } from 'yup';
@@ -15,7 +10,7 @@ import {
 } from 'constants/general';
 import { useSCExplorerContext } from 'contexts';
 import { getSelectOptions } from 'helpers';
-
+import { DECIMALS, getEgldLabel, parseAmount, stringIsFloat } from 'lib';
 import {
   MetadataFieldsInitialValuesType,
   InteractionFormUIType,

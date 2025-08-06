@@ -56,6 +56,10 @@ export const DropzoneAbi = ({
           if (!abi.name) {
             abi.name = INTERFACE_NAME_PLACEHOLDER;
           }
+          if (abi['constructor'] && !abi.upgradeConstructor) {
+            // Support older ABIs that lack the upgradeConstructor in order to avoid issues with later versions of sdk-js
+            abi.upgradeConstructor = abi['constructor'];
+          }
           smartContractDispatch({
             type: SmartContractDispatchTypeEnum.setVerifiedContract,
             verifiedContract: undefined

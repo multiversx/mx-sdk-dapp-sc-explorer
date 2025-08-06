@@ -1,8 +1,5 @@
-import { TypedValue, AbiRegistry, ICode } from '@multiversx/sdk-core/out';
-import {
-  EsdtEnumType,
-  NftEnumType
-} from '@multiversx/sdk-dapp/types/tokens.types';
+import { EsdtEnumType, NftEnumType } from 'lib';
+import { TypedValue, AbiRegistry, ICode } from 'lib/sdkCore';
 import { MetadataFieldsInitialValuesType } from 'types';
 
 export interface DocumentedTypesExampleType {

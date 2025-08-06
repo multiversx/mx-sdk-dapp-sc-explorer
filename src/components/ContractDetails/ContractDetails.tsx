@@ -11,22 +11,28 @@ import {
   faUser
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { CopyButton } from '@multiversx/sdk-dapp/UI/CopyButton';
-import { ExplorerLink } from '@multiversx/sdk-dapp/UI/ExplorerLink';
-import { FormatAmount } from '@multiversx/sdk-dapp/UI/FormatAmount';
-import { TimeAgo } from '@multiversx/sdk-dapp/UI/TimeAgo';
-import { ScAddressIcon } from '@multiversx/sdk-dapp/UI/TransactionsTable/components/ScAddressIcon';
-import { ShardSpan } from '@multiversx/sdk-dapp/UI/TransactionsTable/components/ShardSpan';
-import { Trim } from '@multiversx/sdk-dapp/UI/Trim';
-import { explorerUrlBuilder } from '@multiversx/sdk-dapp/utils/transactions/getInterpretedTransaction/helpers';
-import { getHumanReadableTimeFormat } from '@multiversx/sdk-dapp/utils/transactions/getInterpretedTransaction/helpers/getHumanReadableTimeFormat';
 import BigNumber from 'bignumber.js';
 import classNames from 'classnames';
 
 import MultiversXSymbol from 'assets/img/symbol.svg';
-import { CardItem, PanelHeader, PropertyPill } from 'components';
+import {
+  CardItem,
+  ExplorerLink,
+  FormatAmount,
+  PanelHeader,
+  PropertyPill,
+  ScAddressIcon,
+  ShardSpan
+} from 'components';
 import { useSCExplorerContext } from 'contexts';
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
+import {
+  explorerUrlBuilder,
+  getHumanReadableTimeFormat,
+  MvxCopyButton,
+  MvxTransactionAge,
+  MvxTrim
+} from 'lib';
 import { ContractPropertiesEnum } from 'types';
 
 export const ContractDetailsComponent = ({
@@ -81,8 +87,8 @@ export const ContractDetailsComponent = ({
           {deployedContractDetails?.address && (
             <CardItem title='Address' icon={faPassport}>
               <ScAddressIcon initiator={deployedContractDetails.address} />
-              <Trim text={deployedContractDetails.address} />
-              <CopyButton
+              <MvxTrim text={deployedContractDetails.address} />
+              <MvxCopyButton
                 text={deployedContractDetails.address}
                 copyIcon={copyIcon}
               />
@@ -129,8 +135,8 @@ export const ContractDetailsComponent = ({
                 <ScAddressIcon
                   initiator={deployedContractDetails.ownerAddress}
                 />
-                <Trim text={deployedContractDetails.ownerAddress} />
-                <CopyButton
+                <MvxTrim text={deployedContractDetails.ownerAddress} />
+                <MvxCopyButton
                   text={deployedContractDetails.ownerAddress}
                   copyIcon={copyIcon}
                 />
@@ -147,7 +153,9 @@ export const ContractDetailsComponent = ({
                 icon={faClock}
                 className={classNames(styles?.contractDetailsWrapContainer)}
               >
-                <TimeAgo value={deployedContractDetails.deployedAt} />
+                <MvxTransactionAge
+                  age={String(deployedContractDetails.deployedAt)}
+                />
                 &nbsp;ago &nbsp;
                 <span>
                   (

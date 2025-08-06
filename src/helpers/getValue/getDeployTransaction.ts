@@ -1,15 +1,15 @@
+import { SC_DEPLOY_GAS_LIMIT } from 'constants/general';
+import { getChainId } from 'helpers';
 import {
   Address,
   SmartContractTransactionsFactory,
   TransactionsFactoryConfig,
   ContractDeployInput
-} from '@multiversx/sdk-core/out';
-import { getChainID } from '@multiversx/sdk-dapp/utils/network';
+} from 'lib/sdkCore';
 
-import { SC_DEPLOY_GAS_LIMIT } from 'constants/general';
 import { GetDeployTransactionType } from 'types';
 
-export const getDeployTransaction = ({
+export const getDeployTransaction = async ({
   callerAddress,
   abiRegistry,
   args,
@@ -22,7 +22,7 @@ export const getDeployTransaction = ({
     try {
       const caller = new Address(callerAddress);
       const config = new TransactionsFactoryConfig({
-        chainID: getChainID()
+        chainID: getChainId()
       });
       const factory = new SmartContractTransactionsFactory({
         config: config,
@@ -40,7 +40,10 @@ export const getDeployTransaction = ({
           isPayable: metadata.payable,
           isPayableBySmartContract: metadata.payableBySc
         } as ContractDeployInput;
-        const transaction = factory.createTransactionForDeploy(caller, options);
+        const transaction = await factory.createTransactionForDeploy(
+          caller,
+          options
+        );
 
         if (nonce) {
           transaction.nonce = nonce;

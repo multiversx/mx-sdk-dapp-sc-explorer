@@ -1,25 +1,25 @@
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import type { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 
 export interface InterfaceIconsType {
-  expandedIcon?: IconProp;
-  collapsedIcon?: IconProp;
-  structTypeIcon?: IconProp;
-  enumTypeIcon?: IconProp;
-  hintIcon?: IconProp;
-  copyIcon?: IconProp;
-  linkIcon?: IconProp;
-  contractFileIcon?: IconProp;
-  mutableEndpointIcon?: IconProp;
-  readonlyEndpointIcon?: IconProp;
-  onlyOwnerEndpointIcon?: IconProp;
-  interactiveEndpointIcon?: IconProp;
-  payableEndpointIcon?: IconProp;
-  plusIcon?: IconProp;
-  minusIcon?: IconProp;
-  checkIcon?: IconProp;
-  crossIcon?: IconProp;
-  playIcon?: IconProp;
-  loadIcon?: IconProp;
-  connectIcon?: IconProp;
-  disconnectIcon?: IconProp;
+  expandedIcon?: IconDefinition;
+  collapsedIcon?: IconDefinition;
+  structTypeIcon?: IconDefinition;
+  enumTypeIcon?: IconDefinition;
+  hintIcon?: IconDefinition;
+  copyIcon?: IconDefinition;
+  linkIcon?: IconDefinition;
+  contractFileIcon?: IconDefinition;
+  mutableEndpointIcon?: IconDefinition;
+  readonlyEndpointIcon?: IconDefinition;
+  onlyOwnerEndpointIcon?: IconDefinition;
+  interactiveEndpointIcon?: IconDefinition;
+  payableEndpointIcon?: IconDefinition;
+  plusIcon?: IconDefinition;
+  minusIcon?: IconDefinition;
+  checkIcon?: IconDefinition;
+  crossIcon?: IconDefinition;
+  playIcon?: IconDefinition;
+  loadIcon?: IconDefinition;
+  connectIcon?: IconDefinition;
+  disconnectIcon?: IconDefinition;
 }

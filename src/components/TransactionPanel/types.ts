@@ -1,4 +1,4 @@
-import { SignedTransactionType } from '@multiversx/sdk-dapp/types/transactions.types';
+import { SignedTransactionType } from 'lib';
 import { UserInterfaceType } from 'types';
 
 export interface TransactionPanelUIType extends UserInterfaceType {

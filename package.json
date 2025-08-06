@@ -1,6 +1,6 @@
 {
   "name": "@multiversx/sdk-dapp-sc-explorer",
-  "version": "0.0.3-beta.0",
+  "version": "0.0.4-beta.0",
   "description": "A library to hold the main logic for Smart Contract Interactions on the MultiversX blockchain",
   "author": "MultiversX",
   "license": "GPL-3.0-or-later",
@@ -25,16 +25,18 @@
     "test:watch": "jest --watch"
   },
   "devDependencies": {
-    "@multiversx/sdk-core": "14.2.8",
-    "@multiversx/sdk-dapp": "4.2.4",
-    "@types/react": "19.1.8",
-    "@types/react-dom": "19.1.6",
+    "@multiversx/sdk-core": "^14.x",
+    "@multiversx/sdk-dapp": "^5.x",
+    "@multiversx/sdk-dapp-ui": "^0.x",
+    "@multiversx/sdk-dapp-utils": "^2.x",
+    "@types/react": "19.1.9",
+    "@types/react-dom": "19.1.7",
     "@types/react-syntax-highlighter": "15.5.13",
-    "@typescript-eslint/eslint-plugin": "6.7.0",
-    "@typescript-eslint/parser": "6.7.0",
-    "axios": "1.10.0",
-    "esbuild": "0.14.47",
-    "esbuild-node-externals": "1.4.1",
+    "@typescript-eslint/eslint-plugin": "8.38.0",
+    "@typescript-eslint/parser": "8.38.0",
+    "axios": "^1.11.0",
+    "esbuild": "0.25.8",
+    "esbuild-node-externals": "1.18.0",
     "esbuild-plugin-svgr": "1.0.1",
     "esbuild-sass-plugin": "2.2.6",
     "eslint": "8.49.0",
@@ -57,8 +59,7 @@
     "postcss-modules": "6.0.0",
     "prettier": "3.0.3",
     "sass": "1.66.1",
-    "tslib": "2.6.2",
-    "typescript": "4.7.4"
+    "typescript": "5.2.2"
   },
   "files": [
     "*.js",
@@ -74,21 +75,22 @@
     "transaction"
   ],
   "peerDependencies": {
-    "@multiversx/sdk-core": ">=13.12.0",
-    "@multiversx/sdk-dapp": ">=3.0.0",
-    "axios": ">=1.7.4",
+    "@multiversx/sdk-core": "^15.x",
+    "@multiversx/sdk-dapp": "^5.x",
+    "axios": "^1.11.0",
     "react": ">=18",
     "react-dom": ">=18"
   },
   "optionalDependencies": {
-    "@fortawesome/fontawesome-svg-core": "6.5.1",
-    "@fortawesome/free-brands-svg-icons": "6.5.1",
-    "@fortawesome/free-solid-svg-icons": "6.5.1",
+    "@fortawesome/fontawesome-svg-core": ">=6.7.2",
+    "@fortawesome/free-brands-svg-icons": ">=6.7.2",
+    "@fortawesome/free-solid-svg-icons": ">=6.7.2",
     "@fortawesome/react-fontawesome": "0.2.0",
     "classnames": "2.3.2"
   },
   "dependencies": {
-    "@multiversx/sdk-dapp-form": "2.0.5",
+    "@multiversx/sdk-dapp-form": "^3.x",
+    "@multiversx/sdk-dapp-ui": "^0.x",
     "@multiversx/sdk-network-providers": "2.9.3",
     "bignumber.js": "9.x",
     "formik": "2.4.6",
