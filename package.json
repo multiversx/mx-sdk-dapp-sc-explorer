@@ -1,6 +1,6 @@
 {
   "name": "@multiversx/sdk-dapp-sc-explorer",
-  "version": "0.0.4-beta.0",
+  "version": "0.0.5-beta.0",
   "description": "A library to hold the main logic for Smart Contract Interactions on the MultiversX blockchain",
   "author": "MultiversX",
   "license": "GPL-3.0-or-later",
@@ -10,7 +10,7 @@
   "types": "./",
   "react-native": "./",
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "scripts": {
     "start": "yarn watch",
@@ -20,15 +20,13 @@
     "publish-package": "yarn build && cd dist && npm publish",
     "publish-package-next": "yarn build && cd dist && npm publish --tag next",
     "publish-yalc": "yarn build && cd dist && yalc publish --push --sig",
-    "watch": "yarn node esbuild-watch.js && yarn build:esm-types && yarn build:cjs-types -- --watch",
-    "test": "jest",
-    "test:watch": "jest --watch"
+    "watch": "yarn node esbuild-watch.js && yarn build:esm-types && yarn build:cjs-types -- --watch"
   },
   "devDependencies": {
-    "@multiversx/sdk-core": "^14.x",
+    "@multiversx/sdk-core": "^15.x",
     "@multiversx/sdk-dapp": "^5.x",
     "@multiversx/sdk-dapp-ui": "^0.x",
-    "@multiversx/sdk-dapp-utils": "^2.x",
+    "@multiversx/sdk-dapp-utils": "^3.x",
     "@types/react": "19.1.9",
     "@types/react-dom": "19.1.7",
     "@types/react-syntax-highlighter": "15.5.13",
