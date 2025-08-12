@@ -1,14 +1,6 @@
 ### Issue/Feature
 
-### Reproduce
-
-Issue exists on version `` of sdk-dapp-sc-explorer
-
-### Root cause
-
-### Fix
-
-### Additional changes
+-
 
 ### Contains breaking changes
 
