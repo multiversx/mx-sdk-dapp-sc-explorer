@@ -66,10 +66,20 @@ export const TransactionPanelComponent = ({
                 event?.identifier === TransactionEventIdentifierEnum.SCDeploy
             );
 
+            const deployAddress = scDeployEvent?.address?.toBech32();
+            if (deployAddress && isContract(deployAddress)) {
+              setDeployedContractAddress(deployAddress);
+              await updateDeployedContractDetails({
+                address: deployAddress
+              });
+              setIsTxStatusLoading(false);
+              return;
+            }
+
             const topicAddress = scDeployEvent?.topics?.[0];
             if (topicAddress) {
               const formattedTopicAddress = new Address(
-                topicAddress
+                Buffer.from(topicAddress).toString('hex')
               ).toBech32();
               if (isContract(formattedTopicAddress)) {
                 setDeployedContractAddress(formattedTopicAddress);
@@ -79,14 +89,6 @@ export const TransactionPanelComponent = ({
                 setIsTxStatusLoading(false);
                 return;
               }
-            }
-
-            const deployAddress = scDeployEvent?.address?.toBech32();
-            if (deployAddress && isContract(deployAddress)) {
-              setDeployedContractAddress(deployAddress);
-              await updateDeployedContractDetails({
-                address: deployAddress
-              });
             }
           }
         }
