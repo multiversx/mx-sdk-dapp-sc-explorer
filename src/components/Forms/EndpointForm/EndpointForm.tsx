@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  faCopy,
   faPlay,
   faCircleNotch,
   faTriangleExclamation
@@ -40,11 +39,7 @@ export const EndpointFormComponent = (props: EndpointFormUIType) => {
   const { ownerAddress } = deployedContractDetails || {};
   const { input, modifiers } = endpoint;
   const { mutability } = modifiers;
-  const {
-    playIcon = faPlay,
-    loadIcon = faCircleNotch,
-    copyIcon = faCopy
-  } = icons ?? {};
+  const { playIcon = faPlay, loadIcon = faCircleNotch } = icons ?? {};
 
   const isOwnerConnected = Boolean(
     callerAddress && ownerAddress && callerAddress === ownerAddress
@@ -185,7 +180,7 @@ export const EndpointFormComponent = (props: EndpointFormUIType) => {
                       className={classNames(globalStyles?.formWarningAddress)}
                     >
                       <MvxTrim text={ownerAddress} />
-                      <MvxCopyButton text={ownerAddress} copyIcon={copyIcon} />
+                      <MvxCopyButton text={ownerAddress} />
                     </div>
                     <span className={classNames(globalStyles?.formWarningText)}>
                       to call this endpoint.

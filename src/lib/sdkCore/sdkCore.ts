@@ -13,7 +13,9 @@ export {
   Token,
   TokenTransfer,
   Transaction,
+  TransactionEvent,
   TransactionsFactoryConfig,
+  TransactionOnNetwork,
   TypedValue,
   TypeExpressionParser
 } from '@multiversx/sdk-core/out';

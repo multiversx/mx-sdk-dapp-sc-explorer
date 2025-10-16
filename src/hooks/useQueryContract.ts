@@ -1,12 +1,12 @@
+import { ContractQueryRequest } from '@multiversx/sdk-core/out/networkProviders/contractQueryRequest';
+
+import { useSCExplorerContext } from 'contexts';
+import { useGetEntrypoint, useNetworkProvider } from 'hooks';
 import {
   Address,
   QueryArguments,
   SmartContractQueryResponse
 } from 'lib/sdkCore';
-import { ContractQueryRequest } from '@multiversx/sdk-core/out/networkProviders/contractQueryRequest';
-
-import { useSCExplorerContext } from 'contexts';
-import { useGetEntrypoint, useNetworkProvider } from 'hooks';
 
 export const useQueryContract = () => {
   const { smartContract } = useSCExplorerContext();
@@ -51,6 +51,7 @@ export const useQueryContract = () => {
           return response;
         }
       } catch (error) {
+        console.error('Contract Query Error:', error);
         return {
           success: false,
           error: 'Unable to prepare SC Call'

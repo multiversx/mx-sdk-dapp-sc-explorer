@@ -1,6 +1,5 @@
 import React, { memo } from 'react';
 import {
-  faCopy,
   faCircleCheck,
   faCircleNotch
 } from '@fortawesome/free-solid-svg-icons';
@@ -29,7 +28,7 @@ export const ContractLoadAbiComponent = ({
     useSCExplorerContext();
   const { canLoadAbi } = support;
   const { rawAbi, deployedContractDetails, contractAddress } = smartContract;
-  const { copyIcon = faCopy, loadIcon = faCircleNotch } = icons ?? {};
+  const { loadIcon = faCircleNotch } = icons ?? {};
 
   const { updateDeployedContractDetails, isContractAddressCheckLoading } =
     useUpdateDeployedContractDetails();
@@ -219,7 +218,6 @@ export const ContractLoadAbiComponent = ({
                         <MvxCopyButton
                           text={formattedContent}
                           className={classNames(globalStyles?.copyButton)}
-                          copyIcon={copyIcon}
                         />
                       </div>
                       <Code

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import {
   faCircleNotch,
   faCogs,
-  faCopy,
   faCircleCheck,
   faTimes
 } from '@fortawesome/free-solid-svg-icons';
@@ -17,10 +16,9 @@ import {
   MvxCopyButton,
   MvxTrim,
   TransactionServerStatusesEnum,
-  TransactionEvent,
   isContract
 } from 'lib';
-import { Address } from 'lib/sdkCore';
+import { Address, TransactionEvent } from 'lib/sdkCore';
 import { TransactionPanelUIType, TransactionEventIdentifierEnum } from 'types';
 
 export const TransactionPanelComponent = ({
@@ -33,7 +31,7 @@ export const TransactionPanelComponent = ({
   styles
 }: TransactionPanelUIType) => {
   const { customClassNames, icons } = useSCExplorerContext();
-  const { loadIcon = faCircleNotch, copyIcon = faCopy } = icons ?? {};
+  const { loadIcon = faCircleNotch } = icons ?? {};
 
   const getTransaction = useGetTransaction();
   const { updateDeployedContractDetails, isContractAddressCheckLoading } =
@@ -71,7 +69,7 @@ export const TransactionPanelComponent = ({
             const topicAddress = scDeployEvent?.topics?.[0];
             if (topicAddress) {
               const formattedTopicAddress = new Address(
-                topicAddress.hex()
+                topicAddress
               ).toBech32();
               if (isContract(formattedTopicAddress)) {
                 setDeployedContractAddress(formattedTopicAddress);
@@ -83,7 +81,7 @@ export const TransactionPanelComponent = ({
               }
             }
 
-            const deployAddress = scDeployEvent?.address?.bech32();
+            const deployAddress = scDeployEvent?.address?.toBech32();
             if (deployAddress && isContract(deployAddress)) {
               setDeployedContractAddress(deployAddress);
               await updateDeployedContractDetails({
@@ -166,10 +164,7 @@ export const TransactionPanelComponent = ({
                 >
                   <CardItem title='Contract Address' icon={faCogs}>
                     <MvxTrim text={deployedContractAddress} />
-                    <MvxCopyButton
-                      text={deployedContractAddress}
-                      copyIcon={copyIcon}
-                    />
+                    <MvxCopyButton text={deployedContractAddress} />
                   </CardItem>
                 </div>
               )}

@@ -1,5 +1,5 @@
 import { useNetworkProvider } from 'hooks';
-import { TransactionOnNetwork } from 'lib';
+import { TransactionOnNetwork } from 'lib/sdkCore';
 
 export const useGetTransaction = () => {
   const { get } = useNetworkProvider();

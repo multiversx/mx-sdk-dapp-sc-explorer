@@ -1,5 +1,5 @@
 import React from 'react';
-import { faCopy, faBolt, faPowerOff } from '@fortawesome/free-solid-svg-icons';
+import { faBolt, faPowerOff } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
@@ -21,11 +21,7 @@ export const LoginButtonComponent = (props: LoginButtonUIType) => {
 
   const provider = getAccountProvider();
 
-  const {
-    copyIcon = faCopy,
-    connectIcon = faBolt,
-    disconnectIcon = faPowerOff
-  } = icons ?? {};
+  const { connectIcon = faBolt, disconnectIcon = faPowerOff } = icons ?? {};
 
   const loginHandler = () => {
     // NOT USED. disable autologout
@@ -58,7 +54,7 @@ export const LoginButtonComponent = (props: LoginButtonUIType) => {
       {Boolean(address && isLoggedIn) ? (
         <div className={classNames(styles?.connectedWrapper)}>
           <MvxTrim text={address} />
-          <MvxCopyButton text={address} copyIcon={copyIcon} />
+          <MvxCopyButton text={address} />
           <button
             type='button'
             className={classNames(globalStyles?.button, styles?.buttonLogout)}
