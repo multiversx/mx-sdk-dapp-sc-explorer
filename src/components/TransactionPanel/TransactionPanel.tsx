@@ -86,8 +86,6 @@ export const TransactionPanelComponent = ({
                 await updateDeployedContractDetails({
                   address: formattedTopicAddress
                 });
-                setIsTxStatusLoading(false);
-                return;
               }
             }
           }
