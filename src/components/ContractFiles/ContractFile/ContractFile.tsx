@@ -1,5 +1,5 @@
 import React from 'react';
-import { faFileAlt, faLink, faCopy } from '@fortawesome/free-solid-svg-icons';
+import { faFileAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import { Light as SyntaxHighlighter } from 'react-syntax-highlighter';
@@ -21,11 +21,7 @@ export const ContractFileComponent = (props: ContractFileUIType) => {
   const { file, title, entryNumber, totalEntries, className, globalStyles } =
     props;
   const { path } = file;
-  const {
-    contractFileIcon = faFileAlt,
-    copyIcon = faCopy,
-    linkIcon = faLink
-  } = icons ?? {};
+  const { contractFileIcon = faFileAlt } = icons ?? {};
 
   const fullPath = window.location.href;
   const codeString = getContractFileContent(file);
@@ -56,12 +52,10 @@ export const ContractFileComponent = (props: ContractFileUIType) => {
           <MvxCopyButton
             text={codeString}
             className={classNames(globalStyles?.copyButton)}
-            copyIcon={copyIcon}
           />
           <MvxCopyButton
             text={`${fullPath}#${path}`}
             className={classNames(globalStyles?.linkButton)}
-            copyIcon={linkIcon}
           />
         </div>
         <SyntaxHighlighter

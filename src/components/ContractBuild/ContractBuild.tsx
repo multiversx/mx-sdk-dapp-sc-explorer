@@ -12,12 +12,9 @@ export const ContractBuildComponent = ({
   globalStyles,
   styles
 }: WithStylesImportType) => {
-  const { smartContract, support, icons, customClassNames } =
-    useSCExplorerContext();
+  const { smartContract, support, customClassNames } = useSCExplorerContext();
   const { rawAbi, verifiedContract } = smartContract;
   const { hasBuildInfo } = support;
-
-  const { copyIcon = faCopy } = icons ?? {};
 
   if (!hasBuildInfo) {
     return null;
@@ -86,10 +83,7 @@ export const ContractBuildComponent = ({
               {rawAbi.buildInfo.rustc?.commitHash && (
                 <CardItem title='Commit Hash' icon={faRust}>
                   <MvxTrim text={rawAbi.buildInfo.rustc.commitHash} />
-                  <MvxCopyButton
-                    text={rawAbi.buildInfo.rustc.commitHash}
-                    copyIcon={copyIcon}
-                  />
+                  <MvxCopyButton text={rawAbi.buildInfo.rustc.commitHash} />
                 </CardItem>
               )}
               {rawAbi.buildInfo.rustc?.version && (

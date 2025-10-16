@@ -1,19 +1,14 @@
 import React from 'react';
-import { faCopy } from '@fortawesome/free-solid-svg-icons';
-import BigNumber from 'bignumber.js';
 import classNames from 'classnames';
 
 import { EndpointDefinitionList, Code } from 'components';
-import { useSCExplorerContext } from 'contexts';
+import { formatOutputDisplayValue } from 'helpers';
 import { withStyles } from 'hocs/withStyles';
 import { MvxCopyButton } from 'lib';
 import { EndpointOutputUIType } from 'types';
-import { formatOutputDisplayValue } from 'helpers';
 
 export const EndpointOutputComponent = (props: EndpointOutputUIType) => {
   const { output, result, globalStyles, styles } = props;
-  const { icons } = useSCExplorerContext();
-  const { copyIcon = faCopy } = icons ?? {};
 
   if (!output || output.length === 0) {
     return null;
@@ -62,7 +57,6 @@ export const EndpointOutputComponent = (props: EndpointOutputUIType) => {
                         <MvxCopyButton
                           text={String(output)}
                           className={classNames(globalStyles?.copyButton)}
-                          copyIcon={copyIcon}
                         />
                       </div>
                       {output === '' ? (
