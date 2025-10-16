@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { NativeSerializer } from 'lib/sdkCore';
 
 import { EndpointForm } from 'components';
 import { useSCExplorerContext } from 'contexts';
 import { useQueryContract } from 'hooks';
+import { NativeSerializer } from 'lib/sdkCore';
 import {
   ContractEndpointMutabilityEnum,
   QueryContractResponse,

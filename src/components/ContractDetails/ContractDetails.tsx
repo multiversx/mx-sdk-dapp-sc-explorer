@@ -2,7 +2,6 @@ import React, { memo } from 'react';
 import {
   faAddressCard,
   faArrowUpRightFromSquare,
-  faCopy,
   faClock,
   faDollarSign,
   faHandshake,
@@ -30,8 +29,8 @@ import {
   explorerUrlBuilder,
   getHumanReadableTimeFormat,
   MvxCopyButton,
-  MvxTransactionAge,
-  MvxTrim
+  MvxTrim,
+  timeAgo
 } from 'lib';
 import { ContractPropertiesEnum } from 'types';
 
@@ -39,12 +38,9 @@ export const ContractDetailsComponent = ({
   globalStyles,
   styles
 }: WithStylesImportType) => {
-  const { smartContract, support, icons, customClassNames } =
-    useSCExplorerContext();
+  const { smartContract, support, customClassNames } = useSCExplorerContext();
   const { deployedContractDetails } = smartContract;
   const { hasContractDetails } = support;
-
-  const { copyIcon = faCopy } = icons ?? {};
 
   if (!hasContractDetails) {
     return null;
@@ -88,10 +84,7 @@ export const ContractDetailsComponent = ({
             <CardItem title='Address' icon={faPassport}>
               <ScAddressIcon initiator={deployedContractDetails.address} />
               <MvxTrim text={deployedContractDetails.address} />
-              <MvxCopyButton
-                text={deployedContractDetails.address}
-                copyIcon={copyIcon}
-              />
+              <MvxCopyButton text={deployedContractDetails.address} />
             </CardItem>
           )}
           {deployedContractDetails?.assets?.name && (
@@ -136,10 +129,7 @@ export const ContractDetailsComponent = ({
                   initiator={deployedContractDetails.ownerAddress}
                 />
                 <MvxTrim text={deployedContractDetails.ownerAddress} />
-                <MvxCopyButton
-                  text={deployedContractDetails.ownerAddress}
-                  copyIcon={copyIcon}
-                />
+                <MvxCopyButton text={deployedContractDetails.ownerAddress} />
                 <ExplorerLink
                   page={explorerUrlBuilder.accountDetails(
                     deployedContractDetails.ownerAddress
@@ -153,9 +143,9 @@ export const ContractDetailsComponent = ({
                 icon={faClock}
                 className={classNames(styles?.contractDetailsWrapContainer)}
               >
-                <MvxTransactionAge
-                  age={String(deployedContractDetails.deployedAt)}
-                />
+                <span>
+                  {timeAgo(deployedContractDetails.deployedAt * 1000, true)}
+                </span>
                 &nbsp;ago &nbsp;
                 <span>
                   (

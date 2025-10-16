@@ -8,6 +8,7 @@ export { getAccountProvider } from '@multiversx/sdk-dapp/out/providers/helpers/a
 export { getShardText } from '@multiversx/sdk-dapp/out/utils/transactions/getInterpretedTransaction/helpers/getShardText';
 export { initApp } from '@multiversx/sdk-dapp/out/methods/initApp/initApp';
 export { refreshAccount } from '@multiversx/sdk-dapp/out/utils/account/refreshAccount';
+export { timeAgo } from '@multiversx/sdk-dapp/out/utils/operations/timeRemaining';
 
 export { useGetNetworkConfig } from '@multiversx/sdk-dapp/out/react/network/useGetNetworkConfig';
 

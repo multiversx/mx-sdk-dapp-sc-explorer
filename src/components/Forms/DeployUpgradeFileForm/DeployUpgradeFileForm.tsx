@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  faCopy,
-  faPlay,
-  faCircleNotch
-} from '@fortawesome/free-solid-svg-icons';
+import { faPlay, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import { Formik, Form } from 'formik';
@@ -52,11 +48,7 @@ export const DeployUpgradeFileFormComponent = (
   const endpointDefinition = getDefinition({ abiRegistry, isUpgrade });
   const { input } = endpointDefinition ?? { input: [] };
 
-  const {
-    playIcon = faPlay,
-    loadIcon = faCircleNotch,
-    copyIcon = faCopy
-  } = icons ?? {};
+  const { playIcon = faPlay, loadIcon = faCircleNotch } = icons ?? {};
 
   const initialValues: FormikAbiType = Object.fromEntries([
     ...input.map((input) => {
@@ -245,7 +237,6 @@ export const DeployUpgradeFileFormComponent = (
                         DeployUpgradeFileFormikFieldsEnum.wasmFileContent
                       ].toString()}
                       className={classNames(globalStyles?.copyButton)}
-                      copyIcon={copyIcon}
                     />
                   </div>
                   <CodeComponent

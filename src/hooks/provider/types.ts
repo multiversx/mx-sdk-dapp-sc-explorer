@@ -1,4 +1,4 @@
-import { ContractQueryResponse } from 'lib';
+import { SmartContractQueryResponse } from 'lib/sdkCore';
 
 export interface BasicPropsType {
   baseUrl?: ProviderPropsType['baseUrl'];
@@ -24,7 +24,7 @@ export interface ProviderPropsType {
   timestamp?: number;
 }
 
-export interface QueryContractResponse extends ContractQueryResponse {
+export interface QueryContractResponse extends SmartContractQueryResponse {
   parsedResponse?: any[];
 }
 
