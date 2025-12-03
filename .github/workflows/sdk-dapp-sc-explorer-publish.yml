@@ -23,14 +23,14 @@ jobs:
           node-version: 20
           registry-url: https://registry.npmjs.org/
 
-      - name: Setup yarn
-        run: npm install -g yarn
+      - name: Setup pnpm
+        run: npm install -g pnpm
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
 
       - name: Build project
-        run: yarn build
+        run: pnpm build
 
       - name: Get package info
         id: package
