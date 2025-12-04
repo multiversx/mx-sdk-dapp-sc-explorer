@@ -13,14 +13,13 @@
     "node": ">=20"
   },
   "scripts": {
-    "start": "npm watch",
-    "build:esm-types": "tsc --project tsconfig.json",
-    "build:cjs-types": "tsc --build tsconfig.cjs.json",
-    "build": "rimraf dist && node esbuild.js && npm run build:esm-types && npm run build:cjs-types && cp package.json dist && cp README.md dist",
+    "compile": "tsc && tsc-alias",
+    "clean-out": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
+    "build-esbuild": "npm run clean-out && node esbuild.js",
+    "build": "npm run build-esbuild && npm run compile",
     "publish-package": "npm build && cd dist && npm publish",
     "publish-package-next": "npm build && cd dist && npm publish --tag next",
-    "publish-yalc": "npm build && cd dist && yalc publish --push --sig",
-    "watch": "npm node esbuild-watch.js && npm run build:esm-types && npm run build:cjs-types -- --watch"
+    "publish-yalc": "npm build && cd dist && yalc publish --push --sig"
   },
   "devDependencies": {
     "@multiversx/sdk-core": "^15.x",
@@ -49,14 +48,15 @@
     "eslint-plugin-promise": "7.1.0",
     "eslint-plugin-react": "7.37.5",
     "eslint-plugin-react-hooks": "7.0.1",
-    "glob": "8.0.3",
+    "glob": "11.0.3",
     "node-stdlib-browser": "1.3.1",
     "postcss": "8.5.6",
     "postcss-modules": "6.0.0",
     "prettier": "3.0.3",
     "rimraf": "6.1.2",
     "sass": "1.66.1",
-    "typescript": "5.2.2"
+    "tsc-alias": "1.8.9",
+    "typescript": "5.4.5"
   },
   "files": [
     "*.js",
