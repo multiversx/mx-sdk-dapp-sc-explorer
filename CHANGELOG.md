@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Migrate to pnpm, update imports](https://github.com/multiversx/mx-sdk-dapp-sc-explorer/pull/36)
+
 ## [[0.0.6-beta.1]](https://github.com/multiversx/mx-sdk-dapp-sc-explorer/pull/35)] - 2025-10-16
 
 - [Update deploy address order](https://github.com/multiversx/mx-sdk-dapp-sc-explorer/pull/35)
