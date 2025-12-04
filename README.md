@@ -8,7 +8,7 @@
 
 # Installation
 
-The library can be installed via `npm` or `yarn`.
+The library can be installed via `npm`, `yarn` or `pnpm`.
 
 ```bash
 npm install @multiversx/sdk-dapp-sc-explorer
@@ -18,6 +18,12 @@ or
 
 ```bash
 yarn add @multiversx/sdk-dapp-sc-explorer
+```
+
+or
+
+```bash
+pnpm install @multiversx/sdk-dapp-sc-explorer
 ```
 
 # Usage
