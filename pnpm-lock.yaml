@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@multiversx/sdk-dapp-form':
-        specifier: ^3.x
-        version: 3.1.5(@multiversx/sdk-core@15.3.1(bignumber.js@9.3.1)(protobufjs@7.5.4))(@multiversx/sdk-dapp-utils@3.0.2(@multiversx/sdk-core@15.3.1(bignumber.js@9.3.1)(protobufjs@7.5.4))(bignumber.js@9.3.1))(@multiversx/sdk-dapp@5.5.0(@multiversx/sdk-core@15.3.1(bignumber.js@9.3.1)(protobufjs@7.5.4))(@multiversx/sdk-dapp-utils@3.0.2(@multiversx/sdk-core@15.3.1(bignumber.js@9.3.1)(protobufjs@7.5.4))(bignumber.js@9.3.1))(@types/react@19.1.9)(axios@1.13.2)(bignumber.js@9.3.1)(protobufjs@7.5.4)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(typescript@5.2.2)(vue@3.5.25(typescript@5.2.2)))(@types/react@19.1.9)(axios@1.13.2)(bignumber.js@9.3.1)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
+        specifier: 3.2.0-alpha.0
+        version: 3.2.0-alpha.0(@multiversx/sdk-core@15.3.1(bignumber.js@9.3.1)(protobufjs@7.5.4))(@multiversx/sdk-dapp-utils@3.0.2(@multiversx/sdk-core@15.3.1(bignumber.js@9.3.1)(protobufjs@7.5.4))(bignumber.js@9.3.1))(@multiversx/sdk-dapp@5.5.1(@multiversx/sdk-core@15.3.1(bignumber.js@9.3.1)(protobufjs@7.5.4))(@multiversx/sdk-dapp-utils@3.0.2(@multiversx/sdk-core@15.3.1(bignumber.js@9.3.1)(protobufjs@7.5.4))(bignumber.js@9.3.1))(@types/react@19.1.9)(axios@1.13.2)(bignumber.js@9.3.1)(protobufjs@7.5.4)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(typescript@5.2.2)(vue@3.5.25(typescript@5.2.2)))(@types/react@19.1.9)(axios@1.13.2)(bignumber.js@9.3.1)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
       '@multiversx/sdk-dapp-ui':
         specifier: ^0.x
         version: 0.1.4(@types/react@19.1.9)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(vue@3.5.25(typescript@5.2.2))
@@ -44,7 +44,7 @@ importers:
         version: 15.3.1(bignumber.js@9.3.1)(protobufjs@7.5.4)
       '@multiversx/sdk-dapp':
         specifier: ^5.x
-        version: 5.5.0(@multiversx/sdk-core@15.3.1(bignumber.js@9.3.1)(protobufjs@7.5.4))(@multiversx/sdk-dapp-utils@3.0.2(@multiversx/sdk-core@15.3.1(bignumber.js@9.3.1)(protobufjs@7.5.4))(bignumber.js@9.3.1))(@types/react@19.1.9)(axios@1.13.2)(bignumber.js@9.3.1)(protobufjs@7.5.4)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(typescript@5.2.2)(vue@3.5.25(typescript@5.2.2))
+        version: 5.5.1(@multiversx/sdk-core@15.3.1(bignumber.js@9.3.1)(protobufjs@7.5.4))(@multiversx/sdk-dapp-utils@3.0.2(@multiversx/sdk-core@15.3.1(bignumber.js@9.3.1)(protobufjs@7.5.4))(bignumber.js@9.3.1))(@types/react@19.1.9)(axios@1.13.2)(bignumber.js@9.3.1)(protobufjs@7.5.4)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(typescript@5.2.2)(vue@3.5.25(typescript@5.2.2))
       '@multiversx/sdk-dapp-utils':
         specifier: ^3.x
         version: 3.0.2(@multiversx/sdk-core@15.3.1(bignumber.js@9.3.1)(protobufjs@7.5.4))(bignumber.js@9.3.1)
@@ -129,6 +129,9 @@ importers:
       prettier:
         specifier: 3.0.3
         version: 3.0.3
+      rimraf:
+        specifier: 6.1.2
+        version: 6.1.2
       sass:
         specifier: 1.66.1
         version: 1.66.1
@@ -621,8 +624,8 @@ packages:
       bignumber.js: ^9.0.1
       protobufjs: ^7.2.6
 
-  '@multiversx/sdk-dapp-form@3.1.5':
-    resolution: {integrity: sha512-yliGxWjTcDEpb9Jitq6jazVOilQ/f9qW4r1W7piQlBVTBaY2bIsT5kUFi/uRPQcOmjWSwgZssY5oefjq7mXiWA==}
+  '@multiversx/sdk-dapp-form@3.2.0-alpha.0':
+    resolution: {integrity: sha512-EdziWfF+ryHvkmpFeJ3vsfG6wY6ddg3y68YWy5dDII1bEH/S1MUa5uAhD+BKZhORl06TH25MgriOBvmZV1Xvew==}
     engines: {node: '>=18'}
     peerDependencies:
       '@multiversx/sdk-core': ^15.x
@@ -643,8 +646,8 @@ packages:
       '@multiversx/sdk-core': ^14.0.0 || ^15.0.0
       bignumber.js: ^9.x
 
-  '@multiversx/sdk-dapp@5.5.0':
-    resolution: {integrity: sha512-72ddiZRjDnV+IkvHvOBMTiD8zJmHaoyUP6niyRLH/C10fh7imlHbMXTnvCEkDA9Nef+OJYPDrRxB+10ABtpHLw==}
+  '@multiversx/sdk-dapp@5.5.1':
+    resolution: {integrity: sha512-thK7NLuEwza4HB7XaZFlalVucCYVy/c2tloLGkmhkKdWMXKqQvqDUP7wxcMOk8m4gaC2aNh4BKtYKVLNJC4zEQ==}
     peerDependencies:
       '@multiversx/sdk-core': ^14.x || ^15.x
       '@multiversx/sdk-dapp-utils': ^3.x
@@ -1180,8 +1183,8 @@ packages:
   '@walletconnect/window-metadata@1.0.1':
     resolution: {integrity: sha512-9koTqyGrM2cqFRW517BPY/iEtUDx2r1+Pwwu5m7sJ7ka79wi3EyqhqcICk/yDmv6jAS1rjKgTKXlEhanYjijcA==}
 
-  abitype@1.2.0:
-    resolution: {integrity: sha512-fD3ROjckUrWsybaSor2AdWxzA0e/DSyV2dA4aYd7bd8orHsoJjl09fOgKfUkTDfk0BsDGBf4NBgu/c7JoS2Npw==}
+  abitype@1.2.1:
+    resolution: {integrity: sha512-AhkAWBE5QqzSuaPi6B9w5scl5739iBknQdFFAbY/CybASOBVWtVmPavUYW1OrDRX/iZWB/Je80xhJMZz2G4G1Q==}
     peerDependencies:
       typescript: '>=5.0.4'
       zod: ^3.22.0 || ^4.0.0
@@ -1203,9 +1206,6 @@ packages:
 
   ajv@6.12.6:
     resolution: {integrity: sha512-j3fVLgvTo527anyYyJOGTYJbG+vnnQYvE0m5mmkc1TK+nxAppkCLMIL0aZ4dblVCNoGShhm+kzE4ZUykBoMg4g==}
-
-  anchorme@2.1.2:
-    resolution: {integrity: sha512-2iPY3kxDDZvtRzauqKDb4v7a5sTF4GZ+esQTY8nGYvmhAtGTeFPMn4cRnvyWS1qmtPTP0Mv8hyLOp9l3ZzWMKg==}
 
   ansi-regex@5.0.1:
     resolution: {integrity: sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==}
@@ -1670,8 +1670,8 @@ packages:
   ed2curve@0.3.0:
     resolution: {integrity: sha512-8w2fmmq3hv9rCrcI7g9hms2pMunQr1JINfcjwR9tAyZqhtyaMN991lF/ZfHfr5tzZQ8c7y7aBgZbjfbd0fjFwQ==}
 
-  electron-to-chromium@1.5.263:
-    resolution: {integrity: sha512-DrqJ11Knd+lo+dv+lltvfMDLU27g14LMdH2b0O3Pio4uk0x+z7OR+JrmyacTPN2M8w3BrZ7/RTwG3R9B7irPlg==}
+  electron-to-chromium@1.5.264:
+    resolution: {integrity: sha512-1tEf0nLgltC3iy9wtlYDlQDc5Rg9lEKVjEmIHJ21rI9OcqkvD45K1oyNIRA4rR1z3LgJ7KeGzEBojVcV6m4qjA==}
 
   elliptic@6.6.1:
     resolution: {integrity: sha512-RaddvvMatK2LJHqFJ+YA4WysVN5Ita9E35botqIYspQ4TkRAlCicdzKOjlyv/1Za5RyTNn7di//eEV0uTAfe3g==}
@@ -2235,6 +2235,10 @@ packages:
     resolution: {integrity: sha512-2Nim7dha1KVkaiF4q6Dj+ngPPMdfvLJEOpZk/jKiUAkqKebpGAWQXAq9z1xu9HKu5lWfqw/FASuccEjyznjPaA==}
     engines: {node: 20 || >=22}
     hasBin: true
+
+  glob@13.0.0:
+    resolution: {integrity: sha512-tvZgpqk6fz4BaNZ66ZsRaZnbHvP/jG3uKJvAZOwEVUL4RTA5nJeeLYfyN9/VA8NX/V3IBG+hkeuGpKjvELkVhA==}
+    engines: {node: 20 || >=22}
 
   globals@13.24.0:
     resolution: {integrity: sha512-AhO5QUcj8llrbG09iWhPU2B204J1xnPeL8kQmVorSsy+Sjj1sk8gIyh6cUocGmH4L0UuhAJy+hJMRA4mgA4mFQ==}
@@ -3238,6 +3242,11 @@ packages:
     resolution: {integrity: sha512-g6QUff04oZpHs0eG5p83rFLhHeV00ug/Yf9nZM6fLeUrPguBTkTQOdpAWWspMh55TZfVQDPaN3NQJfbVRAxdIw==}
     engines: {iojs: '>=1.0.0', node: '>=0.10.0'}
 
+  rimraf@6.1.2:
+    resolution: {integrity: sha512-cFCkPslJv7BAXJsYlK1dZsbP8/ZNLkCAQ0bi1hf5EKX2QHegmDFEFA6QhuYJlk7UDdc+02JjO80YSOrWPpw06g==}
+    engines: {node: 20 || >=22}
+    hasBin: true
+
   ripemd160@2.0.3:
     resolution: {integrity: sha512-5Di9UC0+8h1L6ZD2d7awM7E/T4uA1fJRlx6zk/NvdCCVEoAnFqvHmCuNeIKoCeIixBX/q8uM+6ycDvF8woqosA==}
     engines: {node: '>= 0.8'}
@@ -3641,8 +3650,8 @@ packages:
       uploadthing:
         optional: true
 
-  update-browserslist-db@1.2.0:
-    resolution: {integrity: sha512-Dn+NlSF/7+0lVSEZ57SYQg6/E44arLzsVOGgrElBn/BlG1B8WKdbLppOocFrXwRNTkNlgdGNaBgH1o0lggDPiw==}
+  update-browserslist-db@1.2.2:
+    resolution: {integrity: sha512-E85pfNzMQ9jpKkA7+TJAi4TJN+tBCuWh5rUcS/sv6cFi+1q9LYDwDI5dpUL0u/73EElyQ8d3TEaeW4sPedBqYA==}
     hasBin: true
     peerDependencies:
       browserslist: '>= 4.21.0'
@@ -4316,14 +4325,12 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  '@multiversx/sdk-dapp-form@3.1.5(@multiversx/sdk-core@15.3.1(bignumber.js@9.3.1)(protobufjs@7.5.4))(@multiversx/sdk-dapp-utils@3.0.2(@multiversx/sdk-core@15.3.1(bignumber.js@9.3.1)(protobufjs@7.5.4))(bignumber.js@9.3.1))(@multiversx/sdk-dapp@5.5.0(@multiversx/sdk-core@15.3.1(bignumber.js@9.3.1)(protobufjs@7.5.4))(@multiversx/sdk-dapp-utils@3.0.2(@multiversx/sdk-core@15.3.1(bignumber.js@9.3.1)(protobufjs@7.5.4))(bignumber.js@9.3.1))(@types/react@19.1.9)(axios@1.13.2)(bignumber.js@9.3.1)(protobufjs@7.5.4)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(typescript@5.2.2)(vue@3.5.25(typescript@5.2.2)))(@types/react@19.1.9)(axios@1.13.2)(bignumber.js@9.3.1)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)':
+  '@multiversx/sdk-dapp-form@3.2.0-alpha.0(@multiversx/sdk-core@15.3.1(bignumber.js@9.3.1)(protobufjs@7.5.4))(@multiversx/sdk-dapp-utils@3.0.2(@multiversx/sdk-core@15.3.1(bignumber.js@9.3.1)(protobufjs@7.5.4))(bignumber.js@9.3.1))(@multiversx/sdk-dapp@5.5.1(@multiversx/sdk-core@15.3.1(bignumber.js@9.3.1)(protobufjs@7.5.4))(@multiversx/sdk-dapp-utils@3.0.2(@multiversx/sdk-core@15.3.1(bignumber.js@9.3.1)(protobufjs@7.5.4))(bignumber.js@9.3.1))(@types/react@19.1.9)(axios@1.13.2)(bignumber.js@9.3.1)(protobufjs@7.5.4)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(typescript@5.2.2)(vue@3.5.25(typescript@5.2.2)))(@types/react@19.1.9)(axios@1.13.2)(bignumber.js@9.3.1)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)':
     dependencies:
       '@multiversx/sdk-core': 15.3.1(bignumber.js@9.3.1)(protobufjs@7.5.4)
-      '@multiversx/sdk-dapp': 5.5.0(@multiversx/sdk-core@15.3.1(bignumber.js@9.3.1)(protobufjs@7.5.4))(@multiversx/sdk-dapp-utils@3.0.2(@multiversx/sdk-core@15.3.1(bignumber.js@9.3.1)(protobufjs@7.5.4))(bignumber.js@9.3.1))(@types/react@19.1.9)(axios@1.13.2)(bignumber.js@9.3.1)(protobufjs@7.5.4)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(typescript@5.2.2)(vue@3.5.25(typescript@5.2.2))
+      '@multiversx/sdk-dapp': 5.5.1(@multiversx/sdk-core@15.3.1(bignumber.js@9.3.1)(protobufjs@7.5.4))(@multiversx/sdk-dapp-utils@3.0.2(@multiversx/sdk-core@15.3.1(bignumber.js@9.3.1)(protobufjs@7.5.4))(bignumber.js@9.3.1))(@types/react@19.1.9)(axios@1.13.2)(bignumber.js@9.3.1)(protobufjs@7.5.4)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(typescript@5.2.2)(vue@3.5.25(typescript@5.2.2))
       '@multiversx/sdk-dapp-utils': 3.0.2(@multiversx/sdk-core@15.3.1(bignumber.js@9.3.1)(protobufjs@7.5.4))(bignumber.js@9.3.1)
-      anchorme: 2.1.2
       axios: 1.13.2
-      bech32: 2.0.0
       bignumber.js: 9.3.1
       formik: 2.2.9(react@19.2.1)
       lodash-es: 4.17.21
@@ -4365,7 +4372,7 @@ snapshots:
       '@multiversx/sdk-core': 15.3.1(bignumber.js@9.3.1)(protobufjs@7.5.4)
       bignumber.js: 9.3.1
 
-  '@multiversx/sdk-dapp@5.5.0(@multiversx/sdk-core@15.3.1(bignumber.js@9.3.1)(protobufjs@7.5.4))(@multiversx/sdk-dapp-utils@3.0.2(@multiversx/sdk-core@15.3.1(bignumber.js@9.3.1)(protobufjs@7.5.4))(bignumber.js@9.3.1))(@types/react@19.1.9)(axios@1.13.2)(bignumber.js@9.3.1)(protobufjs@7.5.4)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(typescript@5.2.2)(vue@3.5.25(typescript@5.2.2))':
+  '@multiversx/sdk-dapp@5.5.1(@multiversx/sdk-core@15.3.1(bignumber.js@9.3.1)(protobufjs@7.5.4))(@multiversx/sdk-dapp-utils@3.0.2(@multiversx/sdk-core@15.3.1(bignumber.js@9.3.1)(protobufjs@7.5.4))(bignumber.js@9.3.1))(@types/react@19.1.9)(axios@1.13.2)(bignumber.js@9.3.1)(protobufjs@7.5.4)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(typescript@5.2.2)(vue@3.5.25(typescript@5.2.2))':
     dependencies:
       '@lifeomic/axios-fetch': 3.0.1
       '@multiversx/sdk-core': 15.3.1(bignumber.js@9.3.1)(protobufjs@7.5.4)
@@ -5215,7 +5222,7 @@ snapshots:
       '@walletconnect/window-getters': 1.0.1
       tslib: 1.14.1
 
-  abitype@1.2.0(typescript@5.2.2):
+  abitype@1.2.1(typescript@5.2.2):
     optionalDependencies:
       typescript: 5.2.2
 
@@ -5231,8 +5238,6 @@ snapshots:
       fast-json-stable-stringify: 2.1.0
       json-schema-traverse: 0.4.1
       uri-js: 4.4.1
-
-  anchorme@2.1.2: {}
 
   ansi-regex@5.0.1: {}
 
@@ -5471,9 +5476,9 @@ snapshots:
     dependencies:
       baseline-browser-mapping: 2.9.0
       caniuse-lite: 1.0.30001759
-      electron-to-chromium: 1.5.263
+      electron-to-chromium: 1.5.264
       node-releases: 2.0.27
-      update-browserslist-db: 1.2.0(browserslist@4.28.1)
+      update-browserslist-db: 1.2.2(browserslist@4.28.1)
 
   bs58@6.0.0:
     dependencies:
@@ -5779,7 +5784,7 @@ snapshots:
     dependencies:
       tweetnacl: 1.0.3
 
-  electron-to-chromium@1.5.263: {}
+  electron-to-chromium@1.5.264: {}
 
   elliptic@6.6.1:
     dependencies:
@@ -6492,6 +6497,12 @@ snapshots:
       package-json-from-dist: 1.0.1
       path-scurry: 2.0.1
 
+  glob@13.0.0:
+    dependencies:
+      minimatch: 10.1.1
+      minipass: 7.1.2
+      path-scurry: 2.0.1
+
   globals@13.24.0:
     dependencies:
       type-fest: 0.20.2
@@ -7144,7 +7155,7 @@ snapshots:
       '@noble/hashes': 1.8.0
       '@scure/bip32': 1.7.0
       '@scure/bip39': 1.6.0
-      abitype: 1.2.0(typescript@5.2.2)
+      abitype: 1.2.1(typescript@5.2.2)
       eventemitter3: 5.0.1
     optionalDependencies:
       typescript: 5.2.2
@@ -7583,6 +7594,11 @@ snapshots:
 
   reusify@1.1.0: {}
 
+  rimraf@6.1.2:
+    dependencies:
+      glob: 13.0.0
+      package-json-from-dist: 1.0.1
+
   ripemd160@2.0.3:
     dependencies:
       hash-base: 3.1.2
@@ -8000,7 +8016,7 @@ snapshots:
     optionalDependencies:
       idb-keyval: 6.2.2
 
-  update-browserslist-db@1.2.0(browserslist@4.28.1):
+  update-browserslist-db@1.2.2(browserslist@4.28.1):
     dependencies:
       browserslist: 4.28.1
       escalade: 3.2.0

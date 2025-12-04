@@ -27,7 +27,7 @@ module.exports = function esbuildWrapper(buildType = 'esm') {
   const { format, splitting, tsconfig, destination } = buildTypes[buildType];
 
   return function executeBuildCommand(customOptions = {}) {
-    glob(
+    glob.sync(
       '{./src/**/*.tsx,./src/**/*.ts,./src/**/*.scss}',
       function (err, allFiles) {
         if (err) {

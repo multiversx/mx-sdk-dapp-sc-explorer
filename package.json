@@ -1,6 +1,6 @@
 {
   "name": "@multiversx/sdk-dapp-sc-explorer",
-  "version": "0.0.6-beta.2",
+  "version": "0.0.6-alpha.1",
   "description": "A library to hold the main logic for Smart Contract Interactions on the MultiversX blockchain",
   "author": "MultiversX",
   "license": "GPL-3.0-or-later",
@@ -16,11 +16,11 @@
     "start": "npm watch",
     "build:esm-types": "tsc --project tsconfig.json",
     "build:cjs-types": "tsc --build tsconfig.cjs.json",
-    "build": "rimraf dist && node esbuild.js && npm build:esm-types && npm build:cjs-types && cp package.json dist && cp README.md dist",
+    "build": "rimraf dist && node esbuild.js && npm run build:esm-types && npm run build:cjs-types && cp package.json dist && cp README.md dist",
     "publish-package": "npm build && cd dist && npm publish",
     "publish-package-next": "npm build && cd dist && npm publish --tag next",
     "publish-yalc": "npm build && cd dist && yalc publish --push --sig",
-    "watch": "npm node esbuild-watch.js && npm build:esm-types && npm build:cjs-types -- --watch"
+    "watch": "npm node esbuild-watch.js && npm run build:esm-types && npm run build:cjs-types -- --watch"
   },
   "devDependencies": {
     "@multiversx/sdk-core": "^15.x",
@@ -54,6 +54,7 @@
     "postcss": "8.5.6",
     "postcss-modules": "6.0.0",
     "prettier": "3.0.3",
+    "rimraf": "6.1.2",
     "sass": "1.66.1",
     "typescript": "5.2.2"
   },
@@ -85,7 +86,7 @@
     "classnames": "2.3.2"
   },
   "dependencies": {
-    "@multiversx/sdk-dapp-form": "^3.x",
+    "@multiversx/sdk-dapp-form": "3.2.0-alpha.0",
     "@multiversx/sdk-dapp-ui": "^0.x",
     "bignumber.js": "9.x",
     "formik": "2.4.6",
