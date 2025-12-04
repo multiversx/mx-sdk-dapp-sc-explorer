@@ -1,6 +1,6 @@
 {
   "name": "@multiversx/sdk-dapp-sc-explorer",
-  "version": "0.0.7-alpha.1",
+  "version": "0.0.7-beta.1",
   "description": "A library to hold the main logic for Smart Contract Interactions on the MultiversX blockchain",
   "author": "MultiversX",
   "license": "GPL-3.0-or-later",
@@ -17,12 +17,12 @@
   },
   "scripts": {
     "compile": "tsc && tsc-alias",
-    "clean-out": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
+    "clean-out": "node -e \"require('fs').rmSync('out',{recursive:true,force:true})\"",
     "build-esbuild": "npm run clean-out && node esbuild.js",
-    "build": "npm run build-esbuild && npm run compile && cp package.json dist && cp README.md dist",
-    "publish-package": "npm build && cd dist && npm publish",
-    "publish-package-next": "npm build && cd dist && npm publish --tag next",
-    "publish-yalc": "npm build && cd dist && yalc publish --push --sig"
+    "build": "npm run build-esbuild && npm run compile",
+    "publish-package": "npm build && npm publish",
+    "publish-package-next": "npm build && npm publish --tag next",
+    "publish-yalc": "npm build && yalc publish --push --sig"
   },
   "devDependencies": {
     "@multiversx/sdk-core": "^15.x",
@@ -62,10 +62,14 @@
     "typescript": "5.4.5"
   },
   "files": [
-    "*.js",
-    "**/*.js",
-    "*.d.ts",
-    "**/*.d.ts"
+    "out/*",
+    "!**/*.test.*",
+    "!**/*.jest.*",
+    "!**/*.playwright.*",
+    "!**/*.puppeteer.*",
+    "!**/__mocks__/**",
+    "!**/__tests__/**",
+    "!**/*-mock.*"
   ],
   "keywords": [
     "multiversx",

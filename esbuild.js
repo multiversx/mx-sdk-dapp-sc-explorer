@@ -20,7 +20,6 @@ const commonConfig = {
     process: 'process',
     Buffer: 'Buffer'
   },
-  inject: [require.resolve('node-stdlib-browser/helpers/esbuild/shim')],
   plugins: [
     svgrPlugin(),
     plugin(stdLibBrowser),
@@ -52,7 +51,7 @@ async function build() {
       ...commonConfig,
       splitting: true,
       format: 'esm',
-      outdir: 'dist',
+      outdir: 'out',
       bundle: true,
       minify: true,
       sourcemap: true,
@@ -67,7 +66,7 @@ async function build() {
     await esbuild.build({
       ...commonConfig,
       format: 'cjs',
-      outdir: 'dist/__commonjs',
+      outdir: 'out',
       minify: true,
       sourcemap: true,
       target: ['es2021'],
