@@ -1,16 +1,19 @@
 {
   "name": "@multiversx/sdk-dapp-sc-explorer",
-  "version": "0.0.7-alpha.0",
+  "version": "0.0.7-alpha.1",
   "description": "A library to hold the main logic for Smart Contract Interactions on the MultiversX blockchain",
   "author": "MultiversX",
   "license": "GPL-3.0-or-later",
-  "repository": "multiversx/mx-sdk-dapp-sc-explorer",
   "main": "./__commonjs",
   "module": "./",
   "types": "./",
   "react-native": "./",
   "engines": {
     "node": ">=20"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/multiversx/mx-sdk-dapp-sc-explorer.git"
   },
   "scripts": {
     "compile": "tsc && tsc-alias",
@@ -59,14 +62,10 @@
     "typescript": "5.4.5"
   },
   "files": [
-    "dist/**/*",
-    "!**/*.test.*",
-    "!**/*.jest.*",
-    "!**/*.playwright.*",
-    "!**/*.puppeteer.*",
-    "!**/__mocks__/**",
-    "!**/__tests__/**",
-    "!**/*-mock.*"
+    "*.js",
+    "**/*.js",
+    "*.d.ts",
+    "**/*.d.ts"
   ],
   "keywords": [
     "multiversx",
