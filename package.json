@@ -1,6 +1,6 @@
 {
   "name": "@multiversx/sdk-dapp-sc-explorer",
-  "version": "0.0.7-beta.1",
+  "version": "0.0.7-beta.2",
   "description": "A library to hold the main logic for Smart Contract Interactions on the MultiversX blockchain",
   "author": "MultiversX",
   "license": "GPL-3.0-or-later",
@@ -20,9 +20,9 @@
     "clean-out": "node -e \"require('fs').rmSync('out',{recursive:true,force:true})\"",
     "build-esbuild": "npm run clean-out && node esbuild.js",
     "build": "npm run build-esbuild && npm run compile",
-    "publish-package": "npm build && npm publish",
-    "publish-package-next": "npm build && npm publish --tag next",
-    "publish-yalc": "npm build && yalc publish --push --sig"
+    "publish-package": "npm run build && npm publish",
+    "publish-package-next": "npm run build && npm publish --tag next",
+    "publish-yalc": "npm run build && yalc publish --push --sig"
   },
   "devDependencies": {
     "@multiversx/sdk-core": "^15.x",
