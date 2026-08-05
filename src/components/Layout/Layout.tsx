@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import { Tab } from 'react-bootstrap';
 
 import { LoginButton } from 'components';
+import componentStyles from 'components/Layout/styles.module.scss';
 import { useSCExplorerContext } from 'contexts';
 import { withStyles } from 'hocs/withStyles';
 import { MvxPreloader } from 'lib';
@@ -73,7 +74,4 @@ export const LayoutComponent = (props: SCExplorerType) => {
 
 export const MemoizedLayout = memo(LayoutComponent);
 
-export const Layout = withStyles(MemoizedLayout, {
-  ssrStyles: () => import('components/Layout/styles.module.scss'),
-  clientStyles: () => require('components/Layout/styles.module.scss').default
-});
+export const Layout = withStyles(MemoizedLayout, { styles: componentStyles });

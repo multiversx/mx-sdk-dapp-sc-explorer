@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
 import { CardItem } from 'components';
+import componentStyles from 'components/TransactionPanel/styles.module.scss';
 import { useSCExplorerContext } from 'contexts';
 import { withStyles } from 'hocs/withStyles';
 import { useGetTransaction, useUpdateDeployedContractDetails } from 'hooks';
@@ -190,7 +191,5 @@ export const TransactionPanelComponent = ({
 };
 
 export const TransactionPanel = withStyles(TransactionPanelComponent, {
-  ssrStyles: () => import('components/TransactionPanel/styles.module.scss'),
-  clientStyles: () =>
-    require('components/TransactionPanel/styles.module.scss').default
+  styles: componentStyles
 });

@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
 import { Overlay } from 'components';
+import componentStyles from 'components/DocsTooltip/styles.module.scss';
 import { useSCExplorerContext } from 'contexts';
 import { withStyles } from 'hocs/withStyles';
 
@@ -36,7 +37,5 @@ export const DocsTooltipComponent = (props: DocsTooltipUIType) => {
 };
 
 export const DocsTooltip = withStyles(DocsTooltipComponent, {
-  ssrStyles: () => import('components/DocsTooltip/styles.module.scss'),
-  clientStyles: () =>
-    require('components/DocsTooltip/styles.module.scss').default
+  styles: componentStyles
 });

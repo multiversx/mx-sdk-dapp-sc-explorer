@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import { Nav } from 'react-bootstrap';
 
 import { Badge } from 'components';
+import componentStyles from 'components/Layout/styles.module.scss';
 import { useSCExplorerContext } from 'contexts';
 import { withStyles } from 'hocs/withStyles';
 import { useGetContractEndpointCount } from 'hooks';
@@ -158,6 +159,5 @@ export const LayoutSidebarComponent = (props: LayoutComponentUIType) => {
 export const MemoizedLayoutSidebar = memo(LayoutSidebarComponent);
 
 export const LayoutSidebar = withStyles(MemoizedLayoutSidebar, {
-  ssrStyles: () => import('components/Layout/styles.module.scss'),
-  clientStyles: () => require('components/Layout/styles.module.scss').default
+  styles: componentStyles
 });

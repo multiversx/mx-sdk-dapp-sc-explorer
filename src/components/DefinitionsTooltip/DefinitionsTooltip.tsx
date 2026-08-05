@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
 import { Code, Overlay, EndpointDefinitionList } from 'components';
+import componentStyles from 'components/DefinitionsTooltip/styles.module.scss';
 import { DOCUMENTED_TYPES } from 'constants/general';
 import { useSCExplorerContext } from 'contexts';
 import { formatDefinitionsForDisplay } from 'helpers';
@@ -115,7 +116,5 @@ export const DefinitionsTooltipComponent = (
 };
 
 export const DefinitionsTooltip = withStyles(DefinitionsTooltipComponent, {
-  ssrStyles: () => import('components/DefinitionsTooltip/styles.module.scss'),
-  clientStyles: () =>
-    require('components/DefinitionsTooltip/styles.module.scss').default
+  styles: componentStyles
 });

@@ -11,6 +11,7 @@ import {
   InputList
 } from 'components';
 import { DropzoneWasm } from 'components/Dropzone/DropzoneWasm';
+import componentStyles from 'components/Forms/DeployUpgradeFileForm/styles.module.scss';
 import { useSCExplorerContext } from 'contexts';
 import {
   getInitalFormConfig,
@@ -262,11 +263,5 @@ export const DeployUpgradeFileFormComponent = (
 
 export const DeployUpgradeFileForm = withStyles(
   DeployUpgradeFileFormComponent,
-  {
-    ssrStyles: () =>
-      import('components/Forms/DeployUpgradeFileForm/styles.module.scss'),
-    clientStyles: () =>
-      require('components/Forms/DeployUpgradeFileForm/styles.module.scss')
-        .default
-  }
+  { styles: componentStyles }
 );

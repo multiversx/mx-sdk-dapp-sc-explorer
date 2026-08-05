@@ -1,7 +1,6 @@
 import React, { FunctionComponent } from 'react';
-import { useStyles } from './useStyles';
 
-type StylesType = typeof import('*.scss');
+import defaultGlobalStyles from 'assets/styles/globals.module.scss';
 
 export type WithStylesImportType = {
   globalStyles?: Record<any, any>;
@@ -10,25 +9,21 @@ export type WithStylesImportType = {
 
 export function withStyles<TProps>(
   Component: FunctionComponent<TProps & WithStylesImportType>,
-  imports: {
-    ssrGlobalStyles?: () => Promise<StylesType>;
-    ssrStyles?: () => Promise<StylesType>;
-    clientStyles?: () => StylesType;
+  imports?: {
+    globalStyles?: Record<any, any>;
+    styles?: Record<any, any>;
   }
 ) {
-  return (props: TProps) => {
-    const { globalStyles, styles } = useStyles({
-      ssrGlobalImportCallback: imports.ssrGlobalStyles,
-      ssrImportCallback: imports.ssrStyles,
-      clientImportCallback: imports.clientStyles
-    });
+  const styles = imports?.styles ?? {};
+  const globalStyles = imports?.globalStyles ?? defaultGlobalStyles ?? {};
 
-    return (
-      <Component
-        {...props}
-        globalStyles={globalStyles ?? {}}
-        styles={styles ?? {}}
-      />
-    );
-  };
+  const WithStyles = (props: TProps) => (
+    <Component {...props} globalStyles={globalStyles} styles={styles} />
+  );
+
+  WithStyles.displayName = `withStyles(${
+    Component.displayName || Component.name || 'Component'
+  })`;
+
+  return WithStyles;
 }

@@ -2,6 +2,7 @@ import React, { memo, useState } from 'react';
 import classNames from 'classnames';
 
 import { PanelHeader } from 'components';
+import componentStyles from 'components/ContractEvents/styles.module.scss';
 import { useSCExplorerContext } from 'contexts';
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { useGetContractEvents } from 'hooks';
@@ -62,7 +63,5 @@ export const ContractEventsComponent = ({
 export const MemoizedContractEvents = memo(ContractEventsComponent);
 
 export const ContractEvents = withStyles(MemoizedContractEvents, {
-  ssrStyles: () => import('components/ContractEvents/styles.module.scss'),
-  clientStyles: () =>
-    require('components/ContractEvents/styles.module.scss').default
+  styles: componentStyles
 });

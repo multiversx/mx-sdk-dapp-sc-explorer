@@ -2,6 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
+import componentStyles from 'components/CardItem/styles.module.scss';
 import { useSCExplorerContext } from 'contexts';
 import { withStyles } from 'hocs/withStyles';
 import { CardItemUIType } from './types';
@@ -57,6 +58,5 @@ export const CardItemComponent = ({
 };
 
 export const CardItem = withStyles(CardItemComponent, {
-  ssrStyles: () => import('components/CardItem/styles.module.scss'),
-  clientStyles: () => require('components/CardItem/styles.module.scss').default
+  styles: componentStyles
 });

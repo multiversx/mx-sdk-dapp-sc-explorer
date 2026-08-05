@@ -11,6 +11,7 @@ import {
   PanelHeader,
   UpgradeModal
 } from 'components';
+import componentStyles from 'components/ContractUpgrade/styles.module.scss';
 import { useSCExplorerContext, useUserActionDispatch } from 'contexts';
 import { getDefinition } from 'helpers';
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
@@ -100,7 +101,5 @@ export const ContractUpgradeComponent = ({
 };
 
 export const ContractUpgrade = withStyles(ContractUpgradeComponent, {
-  ssrStyles: () => import('components/ContractUpgrade/styles.module.scss'),
-  clientStyles: () =>
-    require('components/ContractUpgrade/styles.module.scss').default
+  styles: componentStyles
 });

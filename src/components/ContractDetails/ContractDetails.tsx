@@ -13,7 +13,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 import classNames from 'classnames';
 
-import MultiversXSymbol from 'assets/img/symbol.svg';
+import { MultiversXSymbol } from 'assets/img/MultiversXSymbol';
 import {
   CardItem,
   ExplorerLink,
@@ -23,6 +23,7 @@ import {
   ScAddressIcon,
   ShardSpan
 } from 'components';
+import componentStyles from 'components/ContractDetails/styles.module.scss';
 import { useSCExplorerContext } from 'contexts';
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import {
@@ -200,7 +201,5 @@ export const ContractDetailsComponent = ({
 export const MemoizedContractDetails = memo(ContractDetailsComponent);
 
 export const ContractDetails = withStyles(MemoizedContractDetails, {
-  ssrStyles: () => import('components/ContractDetails/styles.module.scss'),
-  clientStyles: () =>
-    require('components/ContractDetails/styles.module.scss').default
+  styles: componentStyles
 });

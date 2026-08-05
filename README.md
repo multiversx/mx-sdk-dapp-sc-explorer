@@ -95,10 +95,18 @@ This library was built for applications that use React, it might not be suitable
 
 The **`<ScExplorerContainer />`** component, which is exported by the library, is needed to create a Context to be able to manipulate the data.
 
+- import the stylesheet once, at the root of your app:
+
+```typescript
+import '@multiversx/sdk-dapp-sc-explorer/out/styles.css';
+```
+
+  Per-component stylesheets are also published (e.g. `@multiversx/sdk-dapp-sc-explorer/out/components/CardItem/styles.module.css`) if you prefer to import only what you render.
+
 - import the Container:
 
 ```typescript
-import { ScExplorerContainer } from '@multiversx/sdk-dapp-sc-explorer/containers/ScExplorerContainer';
+import { ScExplorerContainer } from '@multiversx/sdk-dapp-sc-explorer/out/containers/ScExplorerContainer';
 ```
 
 ```jsx

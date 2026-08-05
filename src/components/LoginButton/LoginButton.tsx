@@ -3,6 +3,7 @@ import { faBolt, faPowerOff } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
+import componentStyles from 'components/LoginButton/styles.module.scss';
 import { useSCExplorerContext } from 'contexts';
 import { withStyles } from 'hocs/withStyles';
 import {
@@ -90,7 +91,5 @@ export const LoginButtonComponent = (props: LoginButtonUIType) => {
 };
 
 export const LoginButton = withStyles(LoginButtonComponent, {
-  ssrStyles: () => import('components/LoginButton/styles.module.scss'),
-  clientStyles: () =>
-    require('components/LoginButton/styles.module.scss').default
+  styles: componentStyles
 });
