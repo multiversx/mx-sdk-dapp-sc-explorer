@@ -1,7 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 const esbuild = require('esbuild');
-const glob = require('glob');
 const stylePlugin = require('esbuild-style-plugin');
 const { replaceTscAliasPaths } = require('tsc-alias');
 
@@ -14,12 +13,12 @@ const excludeFromBuild =
 // `_*.scss` are sass partials consumed via @use by globals.module.scss,
 const isSassPartial = (file) => path.basename(file).startsWith('_');
 
-const scriptFiles = glob
-  .sync('./src/**/*.{ts,tsx}')
+const scriptFiles = fs
+  .globSync('./src/**/*.{ts,tsx}')
   .filter((file) => !excludeFromBuild.test(file));
 
-const styleFiles = glob
-  .sync('./src/**/*.scss')
+const styleFiles = fs
+  .globSync('./src/**/*.scss')
   .filter((file) => !excludeFromBuild.test(file) && !isSassPartial(file));
 
 const stripStyleExtensionPlugin = {
@@ -44,6 +43,8 @@ const stripStyleExtensionPlugin = {
   }
 };
 
+const sourcemap = process.env.SOURCEMAP === 'true';
+
 // Scripts: one output file per source module, no bundling, no code splitting.
 const scriptConfig = {
   entryPoints: scriptFiles,
@@ -51,7 +52,7 @@ const scriptConfig = {
   bundle: false,
   outbase: basedir,
   minify: true,
-  sourcemap: true,
+  sourcemap,
   target: ['es2021'],
   plugins: [stripStyleExtensionPlugin]
 };
@@ -108,7 +109,7 @@ const targets = [
 ];
 
 function writeStylesheet() {
-  const files = glob.sync('out/**/*.css').sort((fileA, fileB) => {
+  const files = fs.globSync('out/**/*.css').sort((fileA, fileB) => {
     const isGlobal = (file) => (file.includes('globals.module') ? 0 : 1);
     return isGlobal(fileA) - isGlobal(fileB) || fileA.localeCompare(fileB);
   });
