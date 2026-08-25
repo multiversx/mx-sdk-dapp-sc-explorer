@@ -101,7 +101,7 @@ The **`<ScExplorerContainer />`** component, which is exported by the library, i
 import '@multiversx/sdk-dapp-sc-explorer/out/styles.css';
 ```
 
-  Per-component stylesheets are also published (e.g. `@multiversx/sdk-dapp-sc-explorer/out/components/CardItem/styles.module.css`) if you prefer to import only what you render.
+Per-component stylesheets are also published (e.g. `@multiversx/sdk-dapp-sc-explorer/out/components/CardItem/styles.module.css`) if you prefer to import only what you render.
 
 - import the Container:
 
@@ -165,6 +165,48 @@ import { ScExplorerContainer } from '@multiversx/sdk-dapp-sc-explorer/out/contai
 
 </details>
 
+## Development
+
+This repository is a **library only** — there is no standalone app, dev server, or test runner. Development happens by building the package and linking it into a consumer app.
+
+Requirements: **Node ≥ 24** and **pnpm** (a `pnpm-lock.yaml` is committed).
+
+```bash
+pnpm install --frozen-lockfile
+```
+
+| Command | Description |
+| --- | --- |
+| `pnpm lint` / `pnpm lint:fix` | ESLint 9 flat config (`eslint.config.mjs`) |
+| `pnpm compile` | Type-check and emit declarations (`tsc` + `tsc-alias`) |
+| `pnpm build-esbuild` | Build ESM + CJS output only, no declarations |
+| `pnpm build` | Full build into `out/` (esbuild + declarations) |
+| `pnpm publish-yalc` | Build and `yalc publish --push` for testing in a consumer app |
+| `pnpm publish-package` / `pnpm publish-package-next` | Build and publish to npm (`next` tag for prereleases) |
+
+### Project layout
+
+```
+src/
+  index.tsx        single public entry point
+  containers/      ScExplorerContainer — the exported component
+  contexts/        nested provider stack, read via useSCExplorerContext()
+  components/      UI, each styled through the withStyles HOC
+  hooks/           contract queries and provider selection
+  helpers/         ABI parsing, transaction building and tracking
+  lib/             the only place @multiversx/* packages are imported
+  types/           public and internal types
+esbuild.js         per-module ESM + CJS build, emits out/styles.css
+```
+
+### Publishing
+
+Publishing is automated by `.github/workflows/sdk-dapp-sc-explorer-publish.yml` on push to `main`: a prerelease `version` in `package.json` (e.g. `0.0.8-alpha.0`) goes out under the `next` npm tag, a plain version under `latest`. The version is bumped by hand, and every PR must add a `CHANGELOG.md` entry — this is enforced by CI.
+
+### Working with AI agents
+
+Repository-wide instructions for coding agents live in [AGENTS.md](AGENTS.md) — architecture, build-pipeline invariants, conventions, common workflows, and guardrails. [CLAUDE.md](CLAUDE.md) simply points there. If you change how the project is built or structured, update `AGENTS.md` in the same PR.
+
 ## Roadmap
 
 See the [open issues](https://github.com/multiversx/mx-sdk-dapp-sc-explorer/issues) for a list of proposed features (and known issues).
@@ -173,13 +215,15 @@ See the [open issues](https://github.com/multiversx/mx-sdk-dapp-sc-explorer/issu
 
 Contributions are what make the open-source community such an amazing place to be, learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
-One can contribute by creating _pull requests_, or by opening _issues_ for discovered bugs or desired features.
+One can contribute by creating _pull requests_, or by opening _issues_ for discovered bugs or desired features. See [CONTRIBUTING.md](.github/CONTRIBUTING.md) for the full guidelines.
 
 1. Fork the Project
 2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
 3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+4. Run `pnpm lint && pnpm compile && pnpm build`
+5. Add an entry to `CHANGELOG.md` (enforced by CI)
+6. Push to the Branch (`git push origin feature/AmazingFeature`)
+7. Open a Pull Request — features against `development`, bugfixes against `main`
 
 ## License
 
