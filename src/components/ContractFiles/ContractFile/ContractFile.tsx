@@ -54,7 +54,7 @@ export const ContractFileComponent = (props: ContractFileUIType) => {
             className={classNames(globalStyles?.copyButton)}
           />
           <MvxCopyButton
-            text={`${fullPath}#${path}`}
+            text={`${fullPath}#${encodeURIComponent(path)}`}
             className={classNames(globalStyles?.linkButton)}
           />
         </div>

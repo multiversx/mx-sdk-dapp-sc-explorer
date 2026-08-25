@@ -12,6 +12,14 @@ export const SC_SIMULATE_GAS_LIMIT = 1_000_000_000;
 export const ZERO = 0;
 export const ACCOUNT_TOKENS_SIZE = 200;
 
+// `\0asm` magic bytes followed by the little-endian module version,
+// the first 8 bytes of every WebAssembly binary.
+export const WASM_FILE_HEADER = [
+  0x00, 0x61, 0x73, 0x6d, 0x01, 0x00, 0x00, 0x00
+];
+export const WASM_FILE_MAX_SIZE = 4 * 1024 * 1024;
+export const ERROR_MESSAGE_MAX_LENGTH = 200;
+
 /*-----------------------*/
 
 export const CLIENT_NAME = 'sdk-dapp-sc-explorer';

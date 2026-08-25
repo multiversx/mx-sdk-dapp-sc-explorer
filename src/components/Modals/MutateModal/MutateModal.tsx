@@ -44,6 +44,10 @@ export const MutateModalComponent = ({ styles }: WithStylesImportType) => {
   };
 
   const onSubmit = async (values: MutateModalInitialValuesType) => {
+    if (!isLoggedIn) {
+      return;
+    }
+
     try {
       setIsLoading(true);
       setSessionId(undefined);

@@ -43,6 +43,10 @@ export const DeployModalComponent = ({ styles }: WithStylesImportType) => {
   };
 
   const onSubmit = async (values: DeployUpgradeModalInitialValuesType) => {
+    if (!isLoggedIn) {
+      return;
+    }
+
     try {
       setIsLoading(true);
       setSessionId(undefined);
