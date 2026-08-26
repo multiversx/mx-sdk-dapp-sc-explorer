@@ -20,9 +20,10 @@ export const LayoutComponent = (props: SCExplorerType) => {
     setActiveSection,
     styles
   } = props;
-  const { support, accountInfo } = useSCExplorerContext();
+  const { support, accountInfo, config } = useSCExplorerContext();
   const { canView, canMutate, canLoadAbi } = support;
   const { onLoginClick } = accountInfo;
+  const { hasGeneralLogin } = config;
 
   const [activeKey, setActiveKey] = useState<VerifiedContractTabsEnum>(
     activeSection ?? VerifiedContractTabsEnum.details
@@ -37,6 +38,8 @@ export const LayoutComponent = (props: SCExplorerType) => {
   const activePanel =
     activeSection && setActiveSection ? activeSection : activeKey;
 
+  const hasLoginButton = (hasGeneralLogin || canMutate) && !onLoginClick;
+
   if (!(canView || canLoadAbi)) {
     return loaderComponent ? <>{loaderComponent}</> : <MvxPreloader />;
   }
@@ -48,7 +51,7 @@ export const LayoutComponent = (props: SCExplorerType) => {
           Smart Contract Explorer{' '}
           <span className={classNames(styles?.layoutHeaderSubtitle)}>BETA</span>
         </div>
-        {!Boolean(onLoginClick) && canMutate && <LoginButton />}
+        {hasLoginButton && <LoginButton />}
       </div>
       <div className={classNames(styles?.layoutContent)}>
         <Tab.Container
