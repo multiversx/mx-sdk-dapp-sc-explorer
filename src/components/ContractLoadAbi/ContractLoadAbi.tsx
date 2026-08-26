@@ -9,6 +9,7 @@ import { Formik, Form, Field, getIn } from 'formik';
 import { mixed, object, string } from 'yup';
 
 import { Card, Code, PanelHeader } from 'components';
+import componentStyles from 'components/ContractLoadAbi/styles.module.scss';
 import { DropzoneAbi } from 'components/Dropzone/DropzoneAbi';
 import { useSCExplorerContext } from 'contexts';
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
@@ -243,7 +244,5 @@ export const ContractLoadAbiComponent = ({
 export const MemoizedContractLoadAbi = memo(ContractLoadAbiComponent);
 
 export const ContractLoadAbi = withStyles(MemoizedContractLoadAbi, {
-  ssrStyles: () => import('components/ContractLoadAbi/styles.module.scss'),
-  clientStyles: () =>
-    require('components/ContractLoadAbi/styles.module.scss').default
+  styles: componentStyles
 });

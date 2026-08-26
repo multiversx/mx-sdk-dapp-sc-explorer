@@ -69,6 +69,7 @@ export default [
               position: 'before'
             }
           ],
+          pathGroupsExcludedImportTypes: [],
           'newlines-between': 'ignore',
           alphabetize: {
             order: 'asc',

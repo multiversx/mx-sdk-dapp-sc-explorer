@@ -7,6 +7,8 @@ export interface ConfigStateType {
   canUpgrade: boolean | undefined;
   canDisplayContractDetails: boolean | undefined;
   loginParams: OnProviderLoginType | undefined;
+  hasViewInExplorer: boolean | undefined;
+  hasGeneralLogin: boolean | undefined;
 }
 
 export enum ConfigDispatchTypeEnum {
@@ -15,7 +17,9 @@ export enum ConfigDispatchTypeEnum {
   setCanDeploy = 'setCanDeploy',
   setCanUpgrade = 'setCanUpgrade',
   setCanDisplayContractDetails = 'setCanDisplayContractDetails',
-  setLoginParams = 'setLoginParams'
+  setLoginParams = 'setLoginParams',
+  setHasViewInExplorer = 'setHasViewInExplorer',
+  setHasGeneralLogin = 'setHasGeneralLogin'
 }
 
 export type ConfigDispatchType = (action: ConfigDispatchActionType) => void;
@@ -28,4 +32,6 @@ export interface ConfigDispatchActionType {
   canUpgrade?: boolean;
   canDisplayContractDetails?: boolean;
   loginParams?: OnProviderLoginType;
+  hasViewInExplorer?: boolean;
+  hasGeneralLogin?: boolean;
 }

@@ -5,6 +5,7 @@ import properties from 'react-syntax-highlighter/dist/esm/languages/hljs/propert
 import rust from 'react-syntax-highlighter/dist/esm/languages/hljs/rust';
 import androidstudio from 'react-syntax-highlighter/dist/esm/styles/hljs/androidstudio';
 
+import componentStyles from 'components/Code/styles.module.scss';
 import { withStyles } from 'hocs/withStyles';
 import type { CodeUIType } from './types';
 
@@ -31,7 +32,4 @@ export const CodeComponent = ({
   );
 };
 
-export const Code = withStyles(CodeComponent, {
-  ssrStyles: () => import('components/Code/styles.module.scss'),
-  clientStyles: () => require('components/Code/styles.module.scss').default
-});
+export const Code = withStyles(CodeComponent, { styles: componentStyles });

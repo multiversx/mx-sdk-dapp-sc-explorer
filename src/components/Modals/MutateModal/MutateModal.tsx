@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+
 import { InteractionModalForm, TransactionPanel } from 'components';
+import componentStyles from 'components/Modals/MutateModal/styles.module.scss';
 import { useUserActionDispatch, useSCExplorerContext } from 'contexts';
 import { getCallContractTransaction, sendAndTrackTransactions } from 'helpers';
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
@@ -42,6 +44,10 @@ export const MutateModalComponent = ({ styles }: WithStylesImportType) => {
   };
 
   const onSubmit = async (values: MutateModalInitialValuesType) => {
+    if (!isLoggedIn) {
+      return;
+    }
+
     try {
       setIsLoading(true);
       setSessionId(undefined);
@@ -134,7 +140,5 @@ export const MutateModalComponent = ({ styles }: WithStylesImportType) => {
 };
 
 export const MutateModal = withStyles(MutateModalComponent, {
-  ssrStyles: () => import('components/Modals/MutateModal/styles.module.scss'),
-  clientStyles: () =>
-    require('components/Modals/MutateModal/styles.module.scss').default
+  styles: componentStyles
 });

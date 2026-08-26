@@ -3,6 +3,7 @@ import { faCheck, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
+import componentStyles from 'components/Dropzone/components/DropzoneFile/styles.module.scss';
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { MvxTrim } from 'lib';
 
@@ -57,9 +58,5 @@ export const DropzoneFileComponent = ({
 );
 
 export const DropzoneFile = withStyles(DropzoneFileComponent, {
-  ssrStyles: () =>
-    import('components/Dropzone/components/DropzoneFile/styles.module.scss'),
-  clientStyles: () =>
-    require('components/Dropzone/components/DropzoneFile/styles.module.scss')
-      .default
+  styles: componentStyles
 });

@@ -6,5 +6,7 @@ export const initializer: ConfigStateType = {
   canDeploy: false,
   canUpgrade: false,
   canDisplayContractDetails: false,
-  loginParams: undefined
+  loginParams: undefined,
+  hasGeneralLogin: false,
+  hasViewInExplorer: false
 };

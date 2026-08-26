@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import { InteractionModalForm, TransactionPanel } from 'components';
+import componentStyles from 'components/Modals/UpgradeModal/styles.module.scss';
 import { useUserActionDispatch, useSCExplorerContext } from 'contexts';
 import { getUpgradeTransaction, sendAndTrackTransactions } from 'helpers';
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
@@ -43,6 +44,10 @@ export const UpgradeModalComponent = ({ styles }: WithStylesImportType) => {
   };
 
   const onSubmit = async (values: DeployUpgradeModalInitialValuesType) => {
+    if (!isLoggedIn) {
+      return;
+    }
+
     try {
       setIsLoading(true);
       setSessionId(undefined);
@@ -140,7 +145,5 @@ export const UpgradeModalComponent = ({ styles }: WithStylesImportType) => {
 };
 
 export const UpgradeModal = withStyles(UpgradeModalComponent, {
-  ssrStyles: () => import('components/Modals/UpgradeModal/styles.module.scss'),
-  clientStyles: () =>
-    require('components/Modals/UpgradeModal/styles.module.scss').default
+  styles: componentStyles
 });

@@ -2,6 +2,7 @@ import React, { memo, Fragment, useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 
 import { PanelHeader } from 'components';
+import componentStyles from 'components/ContractFiles/styles.module.scss';
 import { useSCExplorerContext } from 'contexts';
 import { withStyles } from 'hocs/withStyles';
 import { useGetContractFiles } from 'hooks';
@@ -85,7 +86,5 @@ export const ContractFilesComponent = ({
 export const MemoizedContractFiles = memo(ContractFilesComponent);
 
 export const ContractFiles = withStyles(MemoizedContractFiles, {
-  ssrStyles: () => import('components/ContractFiles/styles.module.scss'),
-  clientStyles: () =>
-    require('components/ContractFiles/styles.module.scss').default
+  styles: componentStyles
 });

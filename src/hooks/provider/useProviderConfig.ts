@@ -1,4 +1,6 @@
-import { TIMEOUT } from 'constants/general';
+import axios from 'axios';
+
+import { ERROR_MESSAGE_MAX_LENGTH, TIMEOUT } from 'constants/general';
 import { useSCExplorerContext } from 'contexts';
 import { apiProvider } from './api';
 import { proxyProvider } from './proxy';
@@ -13,12 +15,20 @@ async function wrap(asyncRequest: () => Promise<ApiProviderResponseType>) {
       error: undefined
     };
   } catch (err) {
-    const errorResponse = (err as any)?.response?.data;
-    const error = errorResponse
-      ? `${errorResponse?.code}${
-          errorResponse?.message ? `: ${errorResponse.message}` : ''
-        }`
-      : '';
+    const errorResponse =
+      axios.isAxiosError(err) && typeof err.response?.data === 'object'
+        ? (err.response.data as Record<string, unknown>)
+        : undefined;
+
+    const code =
+      typeof errorResponse?.code === 'string' ? errorResponse.code : '';
+    const message =
+      typeof errorResponse?.message === 'string' ? errorResponse.message : '';
+
+    const error = [code, message]
+      .filter(Boolean)
+      .join(': ')
+      .slice(0, ERROR_MESSAGE_MAX_LENGTH);
 
     return {
       success: false,

@@ -19,11 +19,27 @@ We use Visual Studio code internally and have also included some specific settin
 
 If contributing from other tools such as Jetbrains Webstorm, there might be slight formatting differences which might interfere with later edits from the internal team or from other external contributors.
 
+## Use pnpm
+
+This repository uses **pnpm** (Node ≥ 24) and commits a `pnpm-lock.yaml`. Install with `pnpm install --frozen-lockfile`; do not commit a `package-lock.json` or `yarn.lock`.
+
 ## Use linter
 
-Before opening a pull request, run `npm run lint` against your local changes to make sure the code adheres to the accepted standards within the repo.
+Before opening a pull request, run `pnpm lint` against your local changes to make sure the code adheres to the accepted standards within the repo.
 
-You can also run `npm run lint:fix` to apply automatic fixes to the code.
+You can also run `pnpm lint:fix` to apply automatic fixes to the code.
+
+## Type-check and build
+
+There is no test runner in this repository. Verify your change with `pnpm compile` (type-check and declarations) and `pnpm build` (full output into `out/`) before opening a pull request.
+
+## Update the changelog
+
+Every pull request must add an entry to `CHANGELOG.md` — this is enforced by CI. Add a new section on top, with a short description and a link to the pull request.
+
+## Working with AI coding agents
+
+Repository-wide instructions for coding agents live in [AGENTS.md](../AGENTS.md). If your pull request changes the architecture, the build pipeline, or the conventions described there, update that file in the same pull request.
 
 ## Manual testing
 

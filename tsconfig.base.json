@@ -16,5 +16,5 @@
     "baseUrl": "./src"
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "out"]
+  "exclude": ["node_modules", "out", "out-esm", "out-cjs"]
 }

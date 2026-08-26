@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
 import { CollapsibleCard, EndpointInteraction } from 'components';
+import componentStyles from 'components/ContractEndpoints/styles.module.scss';
 import { useSCExplorerContext } from 'contexts';
 import { withStyles } from 'hocs/withStyles';
 import { ContractEndpointMutabilityEnum, ContractEndpointUIType } from 'types';
@@ -84,7 +85,5 @@ export const ContractEndpointComponent = (props: ContractEndpointUIType) => {
 };
 
 export const ContractEndpoint = withStyles(ContractEndpointComponent, {
-  ssrStyles: () => import('components/ContractEndpoints/styles.module.scss'),
-  clientStyles: () =>
-    require('components/ContractEndpoints/styles.module.scss').default
+  styles: componentStyles
 });
