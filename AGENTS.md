@@ -196,7 +196,10 @@ this chain when editing `className` props.
 (`react-bootstrap`) with `LayoutSidebar` (tab list) + `LayoutPanels` (tab contents). Tabs
 are gated by `support` flags derived from `config` (`canView`, `canMutate`, `canLoadAbi`,
 `canDeploy`, `canUpgrade`, `canDisplayContractDetails`) and by whether an ABI / contract
-address is present. `activeSection` can be controlled externally via props for
+address is present. Two `config` flags are read directly instead of through `support`:
+`hasGeneralLogin` (shows the header `LoginButton` even without `canMutate`, unless the
+host passes `onLoginClick`) and `hasViewInExplorer` (shows the `View in Explorer` link in
+the Contract Details panel header). `activeSection` can be controlled externally via props for
 host-driven routing.
 
 ## Conventions

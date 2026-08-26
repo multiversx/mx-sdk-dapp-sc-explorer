@@ -125,7 +125,9 @@ import { ScExplorerContainer } from '@multiversx/sdk-dapp-sc-explorer/out/contai
     canLoadAbi: true,
     canDeploy: true,
     canUpgrade: true,
-    canDisplayContractDetails: true
+    canDisplayContractDetails: true,
+    hasGeneralLogin: true,
+    hasViewInExplorer: true
   }}
   customClassNames={customClassNames}
   icons={icons}
@@ -157,6 +159,8 @@ import { ScExplorerContainer } from '@multiversx/sdk-dapp-sc-explorer/out/contai
 - `canDeploy` - show the Deploy Contract Panel in the Layout
 - `canUpgrade` - show the Upgrade Contract Panel in the Layout
 - `canDisplayContractDetails` - show the Contract Details Panel in the Layout ( if a valid contract address is used )
+- `hasGeneralLogin` - `optional` - always show the `Connect Wallet` button in the Layout header, even when `canMutate` is not set ( ignored if `onLoginClick` is provided )
+- `hasViewInExplorer` - `optional` - show the `View in Explorer` link in the Contract Details Panel header
 - `loginParams` - `optional` - custom login actions based on sdk-dapps OnProviderLoginType
 
 `customClassNames` - `optional` - an object that provides existing css classes for an easier styling configuration
