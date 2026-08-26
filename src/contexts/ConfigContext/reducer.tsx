@@ -45,6 +45,18 @@ export const reducer = (
         loginParams: action.loginParams
       };
     }
+    case ConfigDispatchTypeEnum.setHasGeneralLogin: {
+      return {
+        ...state,
+        hasGeneralLogin: action.hasGeneralLogin
+      };
+    }
+    case ConfigDispatchTypeEnum.setHasViewInExplorer: {
+      return {
+        ...state,
+        hasViewInExplorer: action.hasViewInExplorer
+      };
+    }
 
     default: {
       throw new Error(`Unhandled action type: ${action}`);

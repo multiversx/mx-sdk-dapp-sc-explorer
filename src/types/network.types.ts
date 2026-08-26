@@ -7,7 +7,7 @@ import {
 
 export interface NetworkType {
   environment: EnvironmentsEnum;
-  networkEntrypoint: DevnetEntrypoint | TestnetEntrypoint | MainnetEntrypoint;
+  networkEntrypoint?: DevnetEntrypoint | TestnetEntrypoint | MainnetEntrypoint;
   provider?: 'api' | 'proxy';
   apiAddress?: string;
   proxyUrl?: string;

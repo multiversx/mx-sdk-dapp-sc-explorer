@@ -1,6 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 
+import componentStyles from 'components/InputList/styles.module.scss';
 import { getInitalFormConfig } from 'helpers';
 import { withStyles } from 'hocs/withStyles';
 import { InputListUIType, DeployUpgradeFileFormikFieldsEnum } from 'types';
@@ -51,6 +52,5 @@ export const InputListComponent = (props: InputListUIType) => {
 };
 
 export const InputList = withStyles(InputListComponent, {
-  ssrStyles: () => import('components/InputList/styles.module.scss'),
-  clientStyles: () => require('components/InputList/styles.module.scss').default
+  styles: componentStyles
 });

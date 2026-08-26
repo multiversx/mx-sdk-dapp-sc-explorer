@@ -3,7 +3,10 @@ import React, { useState, useEffect } from 'react';
 import { getIn } from 'formik';
 
 import { Dropzone } from 'components';
+import { WASM_FILE_MAX_SIZE } from 'constants/general';
 import { AcceptedFileTypeEnum, FileType, DropzoneWasmUIType } from 'types';
+
+import { isWasmBinary } from './helpers';
 
 export const DropzoneWasm = ({
   fieldName,
@@ -37,24 +40,44 @@ export const DropzoneWasm = ({
     setFieldTouched(fieldName, true);
     setFieldError(fieldName, undefined);
     setFieldValue(fieldName, undefined);
+
+    const onFileError = (message: string) => {
+      setFieldError(fieldName, message);
+      setFieldTouched(fieldName, false);
+    };
+
     fileReader.onload = () => {
       if (fileReader.result) {
         try {
-          const buffer = toBuffer(fileReader.result as ArrayBuffer);
+          const arrayBuffer = fileReader.result as ArrayBuffer;
+
+          if (!isWasmBinary(arrayBuffer)) {
+            onFileError('Not a valid WASM module');
+            return;
+          }
+
+          const buffer = toBuffer(arrayBuffer);
           const wasmCode = buffer.toString('hex');
           setFieldValue(fieldName, wasmCode);
           setFieldError(fieldName, undefined);
-        } catch (error) {
-          setFieldError(fieldName, 'Invalid WASM File');
-          console.warn('WASM File Error: ', error);
-        } finally {
           setFieldTouched(fieldName, false);
+        } catch (error) {
+          onFileError('Invalid WASM File');
+          console.warn('WASM File Error: ', error);
         }
       }
     };
 
     if (newFile) {
       setFile({ fileName: newFile.name });
+
+      if (newFile.size > WASM_FILE_MAX_SIZE) {
+        onFileError(
+          `WASM file is too large (max ${WASM_FILE_MAX_SIZE / (1024 * 1024)} MB)`
+        );
+        return;
+      }
+
       fileReader.readAsArrayBuffer(newFile);
     }
   };

@@ -1,13 +1,14 @@
 import React, { Fragment } from 'react';
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Type } from 'lib/sdkCore';
 import classNames from 'classnames';
 
 import { DefinitionsTooltip } from 'components';
+import componentStyles from 'components/InputList/styles.module.scss';
 import { TYPE_PREFIX_REGEX } from 'constants/general';
 import { useSCExplorerContext } from 'contexts';
 import { withStyles } from 'hocs/withStyles';
+import { Type } from 'lib/sdkCore';
 import { RecursiveContainerUIType, FormikAbiType } from 'types';
 
 import { Input } from './Input';
@@ -237,6 +238,5 @@ export const RecursiveContainerComponent = ({
 };
 
 export const RecursiveContainer = withStyles(RecursiveContainerComponent, {
-  ssrStyles: () => import('components/InputList/styles.module.scss'),
-  clientStyles: () => require('components/InputList/styles.module.scss').default
+  styles: componentStyles
 });

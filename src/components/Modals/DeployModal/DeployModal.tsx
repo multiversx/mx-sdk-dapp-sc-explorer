@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import { InteractionModalForm, TransactionPanel } from 'components';
+import componentStyles from 'components/Modals/DeployModal/styles.module.scss';
 import { useUserActionDispatch, useSCExplorerContext } from 'contexts';
 import { getDeployTransaction, sendAndTrackTransactions } from 'helpers';
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
@@ -42,6 +43,10 @@ export const DeployModalComponent = ({ styles }: WithStylesImportType) => {
   };
 
   const onSubmit = async (values: DeployUpgradeModalInitialValuesType) => {
+    if (!isLoggedIn) {
+      return;
+    }
+
     try {
       setIsLoading(true);
       setSessionId(undefined);
@@ -137,7 +142,5 @@ export const DeployModalComponent = ({ styles }: WithStylesImportType) => {
 };
 
 export const DeployModal = withStyles(DeployModalComponent, {
-  ssrStyles: () => import('components/Modals/DeployModal/styles.module.scss'),
-  clientStyles: () =>
-    require('components/Modals/DeployModal/styles.module.scss').default
+  styles: componentStyles
 });

@@ -1,3 +1,4 @@
+import componentStyles from 'components/Modals/LoginModal/styles.module.scss';
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 
 export const LoginModalComponent = ({
@@ -8,7 +9,5 @@ export const LoginModalComponent = ({
 };
 
 export const LoginModal = withStyles(LoginModalComponent, {
-  ssrStyles: () => import('components/Modals/LoginModal/styles.module.scss'),
-  clientStyles: () =>
-    require('components/Modals/LoginModal/styles.module.scss').default
+  styles: componentStyles
 });

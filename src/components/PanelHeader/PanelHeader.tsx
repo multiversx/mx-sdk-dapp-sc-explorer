@@ -1,6 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 
+import componentStyles from 'components/PanelHeader/styles.module.scss';
 import { useSCExplorerContext } from 'contexts';
 import { withStyles } from 'hocs/withStyles';
 
@@ -60,7 +61,5 @@ export const PanelHeaderComponent = ({
 };
 
 export const PanelHeader = withStyles(PanelHeaderComponent, {
-  ssrStyles: () => import('components/PanelHeader/styles.module.scss'),
-  clientStyles: () =>
-    require('components/PanelHeader/styles.module.scss').default
+  styles: componentStyles
 });

@@ -2,6 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import { Modal as BsModal } from 'react-bootstrap';
 
+import componentStyles from 'components/Modals/Modal/styles.module.scss';
 import { withStyles } from 'hocs/withStyles';
 import { ModalUIType } from 'types';
 
@@ -48,8 +49,4 @@ export const ModalComponent = (props: ModalUIType) => {
   );
 };
 
-export const Modal = withStyles(ModalComponent, {
-  ssrStyles: () => import('components/Modals/Modal/styles.module.scss'),
-  clientStyles: () =>
-    require('components/Modals/Modal/styles.module.scss').default
-});
+export const Modal = withStyles(ModalComponent, { styles: componentStyles });

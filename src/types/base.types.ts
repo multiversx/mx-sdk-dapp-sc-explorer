@@ -40,6 +40,8 @@ export interface ConfigType {
   canUpgrade?: boolean;
   canDisplayContractDetails?: boolean;
   loginParams?: OnProviderLoginType;
+  hasViewInExplorer?: boolean;
+  hasGeneralLogin?: boolean;
 }
 
 export type AccountConsumerHandlersType = {

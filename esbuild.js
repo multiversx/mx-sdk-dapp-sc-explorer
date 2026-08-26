@@ -1,79 +1,169 @@
-const svgrPlugin = require('esbuild-plugin-svgr');
+const fs = require('fs');
+const path = require('path');
 const esbuild = require('esbuild');
-const glob = require('glob');
-const plugin = require('node-stdlib-browser/helpers/esbuild/plugin');
-const stdLibBrowser = require('node-stdlib-browser');
-const { nodeExternalsPlugin } = require('esbuild-node-externals');
-const { sassPlugin, postcssModules } = require('esbuild-sass-plugin');
+const stylePlugin = require('esbuild-style-plugin');
+const { replaceTscAliasPaths } = require('tsc-alias');
 
 const basedir = 'src';
 
-const files = glob
-  .sync('{./src/**/*.tsx,./src/**/*.ts,./src/**/*.scss}')
-  .filter((file) => !file.includes('.test.') && !file.includes('/__mocks__/'));
+// exclude tests and mocks
+const excludeFromBuild =
+  /(\/__mocks__\/|\/__tests__\/|\.test\.|\.spec\.|\.jest\.|\.playwright\.|\.puppeteer\.|-mock\.|\.d\.ts$)/;
 
-const commonConfig = {
-  entryPoints: files,
+// `_*.scss` are sass partials consumed via @use by globals.module.scss,
+const isSassPartial = (file) => path.basename(file).startsWith('_');
+
+const scriptFiles = fs
+  .globSync('./src/**/*.{ts,tsx}')
+  .filter((file) => !excludeFromBuild.test(file));
+
+const styleFiles = fs
+  .globSync('./src/**/*.scss')
+  .filter((file) => !excludeFromBuild.test(file) && !isSassPartial(file));
+
+const stripStyleExtensionPlugin = {
+  name: 'strip-style-extension',
+  setup(build) {
+    build.onLoad({ filter: /\.tsx?$/ }, async (args) => {
+      const source = await fs.promises.readFile(args.path, 'utf8');
+      const contents = source.replace(
+        /(['"])([^'"\n]+)\.module\.scss\1/g,
+        '$1$2.module$1'
+      );
+
+      if (contents === source) {
+        return null;
+      }
+
+      return {
+        contents,
+        loader: args.path.endsWith('.tsx') ? 'tsx' : 'ts'
+      };
+    });
+  }
+};
+
+const sourcemap = process.env.SOURCEMAP === 'true';
+
+// Scripts: one output file per source module, no bundling, no code splitting.
+const scriptConfig = {
+  entryPoints: scriptFiles,
   platform: 'node',
-  define: {
-    global: 'global',
-    process: 'process',
-    Buffer: 'Buffer'
-  },
+  bundle: false,
+  outbase: basedir,
+  minify: true,
+  sourcemap,
+  target: ['es2021'],
+  plugins: [stripStyleExtensionPlugin]
+};
+
+const styleConfig = {
+  entryPoints: styleFiles,
+  outbase: basedir,
+  bundle: true,
+  splitting: false,
+  minify: true,
+  target: ['es2021'],
   plugins: [
-    svgrPlugin(),
-    plugin(stdLibBrowser),
-    nodeExternalsPlugin(),
-    sassPlugin({
-      loadPaths: [`./${basedir}`, 'node_modules'],
-      basedir,
-      transform: postcssModules({
-        basedir,
+    stylePlugin({
+      extract: true,
+      cssModulesMatch: /\.module\./,
+      cssModulesOptions: {
         scopeBehaviour: 'local',
         localsConvention: 'dashes',
         generateScopedName: 'mx-sdk-sc-[local]'
-      }),
-      silenceDeprecations: [
-        'legacy-js-api',
-        'import',
-        'global-builtin',
-        'abs-percent',
-        'color-functions'
-      ]
+      },
+      renderOptions: {
+        sassOptions: {
+          loadPaths: [`./${basedir}`, 'node_modules'],
+          silenceDeprecations: [
+            'legacy-js-api',
+            'import',
+            'global-builtin',
+            'abs-percent',
+            'color-functions'
+          ]
+        }
+      }
     })
   ]
 };
 
+const targets = [
+  {
+    label: 'ESM',
+    format: 'esm',
+    outdir: 'out-esm',
+    extension: '.mjs',
+    tsconfig: './tsconfig.esm.json',
+    aliasConfig: './tsconfig.alias-esm.json'
+  },
+  {
+    label: 'CJS',
+    format: 'cjs',
+    outdir: 'out-cjs',
+    extension: '.cjs',
+    tsconfig: './tsconfig.cjs.json',
+    aliasConfig: './tsconfig.alias-cjs.json'
+  }
+];
+
+function writeStylesheet() {
+  const files = fs.globSync('out/**/*.css').sort((fileA, fileB) => {
+    const isGlobal = (file) => (file.includes('globals.module') ? 0 : 1);
+    return isGlobal(fileA) - isGlobal(fileB) || fileA.localeCompare(fileB);
+  });
+
+  const stylesheet = files
+    .map((file) => fs.readFileSync(file, 'utf8').trim())
+    .filter(Boolean)
+    .join('\n\n');
+
+  fs.writeFileSync('out/styles.css', `${stylesheet}\n`);
+
+  return { count: files.length, bytes: Buffer.byteLength(stylesheet) };
+}
+
 async function build() {
   try {
-    // ESM build
-    await esbuild.build({
-      ...commonConfig,
-      splitting: true,
-      format: 'esm',
-      outdir: 'out',
-      bundle: true,
-      minify: true,
-      sourcemap: true,
-      chunkNames: '__chunks__/[name]-[hash]',
-      target: ['es2021'],
-      outExtension: { '.js': '.mjs' },
-      tsconfig: './tsconfig.esm.json'
-    });
-    console.log('[sdk-dapp-sc-explorer][Build] ✅ ESM build completed');
+    fs.rmSync('out', { recursive: true, force: true });
 
-    // CJS build
-    await esbuild.build({
-      ...commonConfig,
-      format: 'cjs',
-      outdir: 'out',
-      minify: true,
-      sourcemap: true,
-      target: ['es2021'],
-      outExtension: { '.js': '.cjs' },
-      tsconfig: './tsconfig.cjs.json'
-    });
-    console.log('[sdk-dapp-sc-explorer][Build] ✅ CJS build completed');
+    for (const target of targets) {
+      fs.rmSync(target.outdir, { recursive: true, force: true });
+
+      await esbuild.build({
+        ...styleConfig,
+        format: target.format,
+        outdir: target.outdir,
+        outExtension: { '.js': target.extension }
+      });
+
+      await esbuild.build({
+        ...scriptConfig,
+        format: target.format,
+        outdir: target.outdir,
+        outExtension: { '.js': target.extension },
+        tsconfig: target.tsconfig
+      });
+
+      await replaceTscAliasPaths({
+        configFile: target.aliasConfig,
+        resolveFullPaths: true,
+        resolveFullExtension: target.extension
+      });
+
+      fs.cpSync(target.outdir, 'out', { recursive: true });
+      fs.rmSync(target.outdir, { recursive: true, force: true });
+
+      console.log(
+        `[sdk-dapp-sc-explorer][Build] ✅ ${target.label} build completed`
+      );
+    }
+
+    const { count, bytes } = writeStylesheet();
+    console.log(
+      `[sdk-dapp-sc-explorer][Build] ✅ out/styles.css written (${count} stylesheets, ${bytes} bytes)`
+    );
   } catch (err) {
     console.error(err);
     process.exit(1);

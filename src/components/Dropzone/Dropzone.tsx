@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import { DropEvent, FileRejection, useDropzone } from 'react-dropzone';
 
+import componentStyles from 'components/Dropzone/styles.module.scss';
 import { withStyles } from 'hocs/withStyles';
 
 import { DropzoneFile } from './components/DropzoneFile';
@@ -129,6 +130,5 @@ export const DropzoneComponent = ({
 };
 
 export const Dropzone = withStyles(DropzoneComponent, {
-  ssrStyles: () => import('components/Dropzone/styles.module.scss'),
-  clientStyles: () => require('components/Dropzone/styles.module.scss').default
+  styles: componentStyles
 });

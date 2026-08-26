@@ -10,11 +10,13 @@ import classNames from 'classnames';
 import { Form, Field, getIn } from 'formik';
 
 import { AmountSelectInput } from 'components';
+import componentStyles from 'components/Forms/InteractionForm/styles.module.scss';
 import { SC_GAS_LIMIT, SC_DEPLOY_GAS_LIMIT, ZERO } from 'constants/general';
 import { useSCExplorerContext } from 'contexts';
 import { getSelectOptions } from 'helpers';
 import { withStyles } from 'hocs/withStyles';
 import { useGetTransactionCostDetails } from 'hooks';
+import { DECIMALS } from 'lib';
 import {
   InteractionFormContentUIType,
   InteractionModalFormikFieldsEnum,
@@ -22,7 +24,6 @@ import {
   ProcessedFormTokenType,
   DataTestIdsEnum
 } from 'types';
-import { DECIMALS } from 'lib';
 
 export const InteractionFormContentComponent = (
   props: InteractionFormContentUIType
@@ -82,12 +83,12 @@ export const InteractionFormContentComponent = (
 
   const isButtonDisabled = Boolean(
     isLoading ||
-      !formik.isValid ||
-      generalError ||
-      Boolean((isUpgrade || isDeploy) && !code) ||
-      Boolean(
-        (isUpgrade || isMutate) && !contractAddress && !deployedContractDetails
-      )
+    !formik.isValid ||
+    generalError ||
+    Boolean((isUpgrade || isDeploy) && !code) ||
+    Boolean(
+      (isUpgrade || isMutate) && !contractAddress && !deployedContractDetails
+    )
   );
 
   useEffect(() => {
@@ -252,7 +253,7 @@ export const InteractionFormContentComponent = (
                     hasErrors={Boolean(
                       (getIn(errors, tokenAmount) &&
                         getIn(touched, tokenAmount)) ||
-                        getIn(errors, tokenIdentifier)
+                      getIn(errors, tokenIdentifier)
                     )}
                     inputName={tokenAmount}
                     inputPlaceholder='Amount'
@@ -327,10 +328,5 @@ export const InteractionFormContentComponent = (
 
 export const InteractionFormContent = withStyles(
   InteractionFormContentComponent,
-  {
-    ssrStyles: () =>
-      import('components/Forms/InteractionForm/styles.module.scss'),
-    clientStyles: () =>
-      require('components/Forms/InteractionForm/styles.module.scss').default
-  }
+  { styles: componentStyles }
 );

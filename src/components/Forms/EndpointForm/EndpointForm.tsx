@@ -10,6 +10,7 @@ import { Formik, Form } from 'formik';
 import { lazy, mixed, object } from 'yup';
 
 import { LoginButtonWrapper } from 'components';
+import componentStyles from 'components/Forms/EndpointForm/styles.module.scss';
 import { useSCExplorerContext } from 'contexts';
 import { getInitalFormConfig, getNativeArgumentsFromValues } from 'helpers';
 import { withStyles } from 'hocs/withStyles';
@@ -196,7 +197,5 @@ export const EndpointFormComponent = (props: EndpointFormUIType) => {
 };
 
 export const EndpointForm = withStyles(EndpointFormComponent, {
-  ssrStyles: () => import('components/Forms/EndpointForm/styles.module.scss'),
-  clientStyles: () =>
-    require('components/Forms/EndpointForm/styles.module.scss').default
+  styles: componentStyles
 });

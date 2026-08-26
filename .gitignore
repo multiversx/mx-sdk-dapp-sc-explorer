@@ -9,6 +9,8 @@ yalc.lock
 build
 dist
 out
+out-esm
+out-cjs
 .yalc
 .idea
 .idea/workspace.xml

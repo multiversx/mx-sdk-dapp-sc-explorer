@@ -3,6 +3,7 @@ import { faBolt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
+import componentStyles from 'components/LoginButton/styles.module.scss';
 import { useSCExplorerContext } from 'contexts';
 import { withStyles } from 'hocs/withStyles';
 import { ProviderTypeEnum, UnlockPanelManager } from 'lib';
@@ -99,7 +100,5 @@ export const LoginButtonWrapperComponent = (
 };
 
 export const LoginButtonWrapper = withStyles(LoginButtonWrapperComponent, {
-  ssrStyles: () => import('components/LoginButton/styles.module.scss'),
-  clientStyles: () =>
-    require('components/LoginButton/styles.module.scss').default
+  styles: componentStyles
 });

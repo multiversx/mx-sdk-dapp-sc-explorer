@@ -2,6 +2,7 @@ import React, { memo, useState } from 'react';
 import classNames from 'classnames';
 
 import { PanelHeader } from 'components';
+import componentStyles from 'components/ContractTypings/styles.module.scss';
 import { useSCExplorerContext } from 'contexts';
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { useGetContractTypings } from 'hooks';
@@ -58,7 +59,5 @@ export const ContractTypingsComponent = ({
 export const MemoizedContractTypings = memo(ContractTypingsComponent);
 
 export const ContractTypings = withStyles(MemoizedContractTypings, {
-  ssrStyles: () => import('components/ContractTypings/styles.module.scss'),
-  clientStyles: () =>
-    require('components/ContractTypings/styles.module.scss').default
+  styles: componentStyles
 });

@@ -2,6 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 import { EndpointDefinitionList, Code } from 'components';
+import componentStyles from 'components/Forms/EndpointForm/styles.module.scss';
 import { formatOutputDisplayValue } from 'helpers';
 import { withStyles } from 'hocs/withStyles';
 import { MvxCopyButton } from 'lib';
@@ -84,7 +85,5 @@ export const EndpointOutputComponent = (props: EndpointOutputUIType) => {
 };
 
 export const EndpointOutput = withStyles(EndpointOutputComponent, {
-  ssrStyles: () => import('components/Forms/EndpointForm/styles.module.scss'),
-  clientStyles: () =>
-    require('components/Forms/EndpointForm/styles.module.scss').default
+  styles: componentStyles
 });

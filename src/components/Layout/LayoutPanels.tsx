@@ -14,6 +14,7 @@ import {
   ContractUpgrade,
   ContractDetails
 } from 'components';
+import componentStyles from 'components/Layout/styles.module.scss';
 import { useSCExplorerContext } from 'contexts';
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import {
@@ -161,6 +162,5 @@ export const LayoutPanelsComponent = ({ styles }: WithStylesImportType) => {
 export const MemoizedLayoutPanels = memo(LayoutPanelsComponent);
 
 export const LayoutPanels = withStyles(MemoizedLayoutPanels, {
-  ssrStyles: () => import('components/Layout/styles.module.scss'),
-  clientStyles: () => require('components/Layout/styles.module.scss').default
+  styles: componentStyles
 });

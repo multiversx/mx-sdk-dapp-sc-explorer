@@ -1,9 +1,10 @@
 import React, { memo } from 'react';
 import { faDocker, faRust } from '@fortawesome/free-brands-svg-icons';
-import { faCogs, faCopy } from '@fortawesome/free-solid-svg-icons';
+import { faCogs } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
 
 import { CardItem, PanelHeader } from 'components';
+import componentStyles from 'components/ContractBuild/styles.module.scss';
 import { useSCExplorerContext } from 'contexts';
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { MvxCopyButton, MvxTrim } from 'lib';
@@ -112,7 +113,5 @@ export const ContractBuildComponent = ({
 export const MemoizedContractBuild = memo(ContractBuildComponent);
 
 export const ContractBuild = withStyles(MemoizedContractBuild, {
-  ssrStyles: () => import('components/ContractBuild/styles.module.scss'),
-  clientStyles: () =>
-    require('components/ContractBuild/styles.module.scss').default
+  styles: componentStyles
 });

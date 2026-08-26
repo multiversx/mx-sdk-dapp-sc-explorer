@@ -1,6 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 
+import componentStyles from 'components/AmountSelectInput/styles.module.scss';
 import { ZERO } from 'constants/general';
 import { useSCExplorerContext } from 'contexts';
 import { getChainId } from 'helpers';
@@ -113,7 +114,7 @@ export const AmountSelectInputComponent = ({
     token: token?.token as OptionType['token'],
     value: formatAmount({
       input: stringIsInteger(token?.token.balance ?? ZERO)
-        ? token?.token.balance ?? ZERO
+        ? (token?.token.balance ?? ZERO)
         : ZERO,
       decimals: token?.token.decimals,
       addCommas: true
@@ -145,7 +146,5 @@ export const AmountSelectInputComponent = ({
 };
 
 export const AmountSelectInput = withStyles(AmountSelectInputComponent, {
-  ssrStyles: () => import('components/AmountSelectInput/styles.module.scss'),
-  clientStyles: () =>
-    require('components/AmountSelectInput/styles.module.scss').default
+  styles: componentStyles
 });

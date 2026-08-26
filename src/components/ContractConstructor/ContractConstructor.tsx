@@ -7,6 +7,7 @@ import {
   PanelHeader,
   DocsPanel
 } from 'components';
+import componentStyles from 'components/ContractConstructor/styles.module.scss';
 import { useSCExplorerContext } from 'contexts';
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 
@@ -59,7 +60,5 @@ export const ContractConstructorComponent = ({
 export const MemoizedContractConstructor = memo(ContractConstructorComponent);
 
 export const ContractConstructor = withStyles(MemoizedContractConstructor, {
-  ssrStyles: () => import('components/ContractConstructor/styles.module.scss'),
-  clientStyles: () =>
-    require('components/ContractConstructor/styles.module.scss').default
+  styles: componentStyles
 });

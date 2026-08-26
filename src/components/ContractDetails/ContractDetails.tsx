@@ -13,7 +13,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 import classNames from 'classnames';
 
-import MultiversXSymbol from 'assets/img/symbol.svg';
+import { MultiversXSymbol } from 'assets/img/MultiversXSymbol';
 import {
   CardItem,
   ExplorerLink,
@@ -23,6 +23,7 @@ import {
   ScAddressIcon,
   ShardSpan
 } from 'components';
+import componentStyles from 'components/ContractDetails/styles.module.scss';
 import { useSCExplorerContext } from 'contexts';
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import {
@@ -38,9 +39,11 @@ export const ContractDetailsComponent = ({
   globalStyles,
   styles
 }: WithStylesImportType) => {
-  const { smartContract, support, customClassNames } = useSCExplorerContext();
+  const { smartContract, support, customClassNames, config } =
+    useSCExplorerContext();
   const { deployedContractDetails } = smartContract;
   const { hasContractDetails } = support;
+  const { hasViewInExplorer } = config;
 
   if (!hasContractDetails) {
     return null;
@@ -56,18 +59,23 @@ export const ContractDetailsComponent = ({
     >
       <PanelHeader
         extraButtons={
-          <ExplorerLink
-            page={explorerUrlBuilder.accountDetails(
-              deployedContractDetails?.address ?? ''
+          <>
+            {hasViewInExplorer && (
+              <ExplorerLink
+                page={explorerUrlBuilder.accountDetails(
+                  deployedContractDetails?.address ?? ''
+                )}
+                className={classNames(
+                  globalStyles?.button,
+                  globalStyles?.buttonUnstyled,
+                  customClassNames?.buttonClassName
+                )}
+              >
+                View in Explorer{' '}
+                <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
+              </ExplorerLink>
             )}
-            className={classNames(
-              globalStyles?.button,
-              globalStyles?.buttonUnstyled,
-              customClassNames?.buttonClassName
-            )}
-          >
-            View in Explorer <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
-          </ExplorerLink>
+          </>
         }
       >
         Contract Details
@@ -200,7 +208,5 @@ export const ContractDetailsComponent = ({
 export const MemoizedContractDetails = memo(ContractDetailsComponent);
 
 export const ContractDetails = withStyles(MemoizedContractDetails, {
-  ssrStyles: () => import('components/ContractDetails/styles.module.scss'),
-  clientStyles: () =>
-    require('components/ContractDetails/styles.module.scss').default
+  styles: componentStyles
 });

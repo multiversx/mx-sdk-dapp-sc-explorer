@@ -33,6 +33,8 @@ const ConfigContextProvider = ({
     canDeploy = false,
     canUpgrade = false,
     canDisplayContractDetails = false,
+    hasViewInExplorer = false,
+    hasGeneralLogin = false,
     loginParams
   } = value;
 
@@ -79,6 +81,20 @@ const ConfigContextProvider = ({
       loginParams
     });
   }, [loginParams]);
+
+  useEffect(() => {
+    dispatch({
+      type: ConfigDispatchTypeEnum.setHasViewInExplorer,
+      hasViewInExplorer
+    });
+  }, [hasViewInExplorer]);
+
+  useEffect(() => {
+    dispatch({
+      type: ConfigDispatchTypeEnum.setHasGeneralLogin,
+      hasGeneralLogin
+    });
+  }, [hasGeneralLogin]);
 
   return (
     <Context.Provider value={state}>

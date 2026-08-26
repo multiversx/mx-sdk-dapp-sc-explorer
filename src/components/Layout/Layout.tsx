@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import { Tab } from 'react-bootstrap';
 
 import { LoginButton } from 'components';
+import componentStyles from 'components/Layout/styles.module.scss';
 import { useSCExplorerContext } from 'contexts';
 import { withStyles } from 'hocs/withStyles';
 import { MvxPreloader } from 'lib';
@@ -19,9 +20,10 @@ export const LayoutComponent = (props: SCExplorerType) => {
     setActiveSection,
     styles
   } = props;
-  const { support, accountInfo } = useSCExplorerContext();
+  const { support, accountInfo, config } = useSCExplorerContext();
   const { canView, canMutate, canLoadAbi } = support;
   const { onLoginClick } = accountInfo;
+  const { hasGeneralLogin } = config;
 
   const [activeKey, setActiveKey] = useState<VerifiedContractTabsEnum>(
     activeSection ?? VerifiedContractTabsEnum.details
@@ -36,6 +38,8 @@ export const LayoutComponent = (props: SCExplorerType) => {
   const activePanel =
     activeSection && setActiveSection ? activeSection : activeKey;
 
+  const hasLoginButton = (hasGeneralLogin || canMutate) && !onLoginClick;
+
   if (!(canView || canLoadAbi)) {
     return loaderComponent ? <>{loaderComponent}</> : <MvxPreloader />;
   }
@@ -47,7 +51,7 @@ export const LayoutComponent = (props: SCExplorerType) => {
           Smart Contract Explorer{' '}
           <span className={classNames(styles?.layoutHeaderSubtitle)}>BETA</span>
         </div>
-        {!Boolean(onLoginClick) && canMutate && <LoginButton />}
+        {hasLoginButton && <LoginButton />}
       </div>
       <div className={classNames(styles?.layoutContent)}>
         <Tab.Container
@@ -73,7 +77,4 @@ export const LayoutComponent = (props: SCExplorerType) => {
 
 export const MemoizedLayout = memo(LayoutComponent);
 
-export const Layout = withStyles(MemoizedLayout, {
-  ssrStyles: () => import('components/Layout/styles.module.scss'),
-  clientStyles: () => require('components/Layout/styles.module.scss').default
-});
+export const Layout = withStyles(MemoizedLayout, { styles: componentStyles });

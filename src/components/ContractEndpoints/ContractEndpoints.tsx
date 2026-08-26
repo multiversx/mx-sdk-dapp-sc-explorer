@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import classNames from 'classnames';
 
 import { Card, PanelHeader, MutateModal } from 'components';
+import componentStyles from 'components/ContractEndpoints/styles.module.scss';
 import { useSCExplorerContext } from 'contexts';
 import { withStyles } from 'hocs/withStyles';
 import { useGetContractEndpoints } from 'hooks';
@@ -88,7 +89,5 @@ export const ContractEndpointsComponent = ({
 };
 
 export const ContractEndpoints = withStyles(ContractEndpointsComponent, {
-  ssrStyles: () => import('components/ContractEndpoints/styles.module.scss'),
-  clientStyles: () =>
-    require('components/ContractEndpoints/styles.module.scss').default
+  styles: componentStyles
 });

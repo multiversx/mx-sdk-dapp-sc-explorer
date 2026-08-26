@@ -9,6 +9,7 @@ import {
   PanelHeader,
   DeployModal
 } from 'components';
+import componentStyles from 'components/ContractDeploy/styles.module.scss';
 import { useSCExplorerContext, useUserActionDispatch } from 'contexts';
 import { getDefinition } from 'helpers';
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
@@ -80,7 +81,5 @@ export const ContractDeployComponent = ({
 };
 
 export const ContractDeploy = withStyles(ContractDeployComponent, {
-  ssrStyles: () => import('components/ContractDeploy/styles.module.scss'),
-  clientStyles: () =>
-    require('components/ContractDeploy/styles.module.scss').default
+  styles: componentStyles
 });

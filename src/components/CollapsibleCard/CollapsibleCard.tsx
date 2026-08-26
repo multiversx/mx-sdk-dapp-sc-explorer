@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { Collapse } from 'react-bootstrap';
 
 import { Badge } from 'components';
+import componentStyles from 'components/CollapsibleCard/styles.module.scss';
 import { useSCExplorerContext } from 'contexts';
 import { withStyles } from 'hocs/withStyles';
 import { isWindowAvailable } from 'lib';
@@ -88,7 +89,5 @@ export const CollapsibleCardComponent = (props: CollapsibleCardUIType) => {
 };
 
 export const CollapsibleCard = withStyles(CollapsibleCardComponent, {
-  ssrStyles: () => import('components/CollapsibleCard/styles.module.scss'),
-  clientStyles: () =>
-    require('components/CollapsibleCard/styles.module.scss').default
+  styles: componentStyles
 });
